@@ -1,0 +1,71 @@
+// ─── Moxie Brand Visibility & Product Flags ───────────────────────────────────
+//
+// Brand visibility — solo Americanino
+// ─────────────────────────────────────────────────────────────────────────────
+// [data-brand-show="mic"] y [data-brand-show="all"] son siempre visibles.
+// [data-brand-show="little-mic"] se oculta (marca eliminada).
+
+[data-brand-show='little-mic'] {
+  display: none !important;
+}
+
+[data-brand-show='mic'],
+[data-brand-show='all'] {
+  display: block !important;
+}
+
+// ─── Product Flags ────────────────────────────────────────────────────────────
+// Colors are injected by custom_brand_config section as CSS custom properties:
+//   --flag-new-bg / --flag-new-color
+//   --flag-sale-bg / --flag-sale-color
+//   --flag-free-bg / --flag-free-color
+//   --flag-custom-bg / --flag-custom-color
+
+.product-flags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.product-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  white-space: nowrap;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 0.2s ease;
+  }
+}
+
+.product-flag--new {
+  background-color: var(--flag-new-bg, #1a1a1a);
+  color: var(--flag-new-color, #fff);
+}
+
+.product-flag--sale {
+  background-color: var(--flag-sale-bg, #e63946);
+  color: var(--flag-sale-color, #fff);
+}
+
+.product-flag--free {
+  background-color: var(--flag-free-bg, #2d6a4f);
+  color: var(--flag-free-color, #fff);
+}
+
+.product-flag--custom {
+  background-color: var(--flag-custom-bg, #1a1a1a);
+  color: var(--flag-custom-color, #fff);
+}

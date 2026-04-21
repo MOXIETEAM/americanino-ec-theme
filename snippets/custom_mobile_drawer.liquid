@@ -1,0 +1,442 @@
+{%- doc -%}
+  Custom mobile drawer menu.
+
+  @param {object} block_settings  - Settings del bloque _custom-header-menu
+{%- enddoc -%}
+
+{%- liquid
+  assign alt_text = shop.name | escape
+  assign logo_h   = settings.logo_height_mobile | default: 40
+-%}
+
+<script src="{{ 'header-drawer.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+<header-drawer
+  class="header-drawer custom-mobile-drawer"
+  style="--menu-image-border-radius: {{ block_settings.image_border_radius | default: 0 }}px; --resource-card-corner-radius: {{ block_settings.image_border_radius | default: 0 }}px;"
+>
+  <details
+    id="Details-menu-drawer-container"
+    data-skip-node-update="true"
+    class="menu-drawer-container"
+    ref="details"
+    scroll-lock
+  >
+    {%- comment -%} ── Hamburger trigger ──────────────────────────────────── {%- endcomment -%}
+    <summary
+      class="header__icon header__icon--menu header__icon--summary"
+      aria-label="{{ 'accessibility.menu' | t }}"
+      on:click="/toggle"
+    >
+      <span class="svg-wrapper header-drawer-icon header-drawer-icon--open">
+        {{- 'icon-menu.svg' | inline_asset_content -}}
+      </span>
+      <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </span>
+    </summary>
+
+    {%- comment -%} ── Panel ──────────────────────────────────────────────── {%- endcomment -%}
+    <div
+      ref="menuDrawer"
+      class="menu-drawer custom-mobile-drawer__panel color-{{ block_settings.color_scheme }}"
+    >
+
+      {%- comment -%} ── Cabecera: logo + botón cerrar ──────────────────── {%- endcomment -%}
+      <div class="custom-mobile-drawer__header">
+        <a href="{{ routes.root_url }}" class="custom-mobile-drawer__logo-link" aria-label="{{ alt_text }}">
+
+          {%- comment -%} Logo del drawer: custom si está configurado, sino el logo general {%- endcomment -%}
+          {%- if block_settings.mobile_logo_mic != blank -%}
+            {%- liquid assign logo_w = logo_h | times: block_settings.mobile_logo_mic.aspect_ratio | ceil -%}
+            <img
+              src="{{ block_settings.mobile_logo_mic | image_url: height: logo_h }}"
+              height="{{ logo_h }}"
+              width="{{ logo_w }}"
+              alt="{{ alt_text }}"
+              loading="eager"
+              class="custom-mobile-drawer__logo-img"
+            >
+          {%- elsif settings.logo != blank -%}
+            {%- liquid assign def_w = logo_h | times: settings.logo.aspect_ratio | ceil -%}
+            <img
+              src="{{ settings.logo | image_url: height: logo_h }}"
+              height="{{ logo_h }}"
+              width="{{ def_w }}"
+              alt="{{ alt_text }}"
+              loading="eager"
+              class="custom-mobile-drawer__logo-img"
+            >
+          {%- else -%}
+            <span class="custom-mobile-drawer__logo-text">{{ shop.name }}</span>
+          {%- endif -%}
+
+        </a>
+
+        <button
+          class="button button-unstyled custom-mobile-drawer__close-btn"
+          type="button"
+          aria-label="{{ 'actions.close' | t }}"
+          on:click="/close"
+        >
+          <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+        </button>
+      </div>
+
+      {%- comment -%} ── Etiqueta "Menú" ─────────────────────────────────── {%- endcomment -%}
+      <div class="custom-mobile-drawer__menu-label">
+        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-menu.svg' | inline_asset_content -}}</span>
+        <span>Menú</span>
+      </div>
+
+      {%- comment -%} ── Navegación ─────────────────────────────────────── {%- endcomment -%}
+      <nav
+        class="custom-mobile-drawer__nav"
+        style="{%- render 'menu-font-styles', settings: block_settings, menu_type: 'drawer' -%}"
+        aria-label="{{ 'accessibility.header_navigation_label' | t }}"
+      >
+
+        <ul
+          class="custom-mobile-drawer__list list-unstyled"
+          role="list"
+        >
+          {%- for link in block_settings.menu.links -%}
+            {%- assign dec_image = blank -%}{%- assign dec_position = 'right' -%}{%- assign dec_brand = 'all' -%}{%- assign dec_size = 20 -%}
+            {%- for n in (1..10) -%}
+              {%- assign _dk = 'decorator_' | append: n | append: '_item' -%}
+              {%- assign _dv = block_settings[_dk] -%}
+              {%- if _dv != blank and _dv == link.title -%}
+                {%- assign dec_key_img  = 'decorator_' | append: n | append: '_image' -%}
+                {%- assign dec_key_pos  = 'decorator_' | append: n | append: '_position' -%}
+                {%- assign dec_key_brd  = 'decorator_' | append: n | append: '_brand' -%}
+                {%- assign dec_key_sz   = 'decorator_' | append: n | append: '_size' -%}
+                {%- assign dec_image    = block_settings[dec_key_img] -%}
+                {%- assign dec_position = block_settings[dec_key_pos] -%}
+                {%- assign dec_brand    = block_settings[dec_key_brd] -%}
+                {%- assign dec_size     = block_settings[dec_key_sz] -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <li class="custom-mobile-drawer__item" style="--menu-drawer-animation-index: {{ forloop.index }};">
+              {%- if link.links.size > 0 -%}
+                <details id="Mobile-drawer-{{ link.handle }}" class="custom-mobile-drawer__submenu-details">
+                  <summary class="custom-mobile-drawer__link menu-drawer__animated-element focus-inset" on:click="header-drawer/open/submenu">
+                    <span class="custom-mobile-drawer__link-inner">
+                      {%- if dec_image != blank and dec_position == 'left' -%}<span class="nav-decorator nav-decorator--left" data-brand-show="{{ dec_brand }}"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
+                      <span class="custom-mobile-drawer__link-text{% if link.active %} custom-mobile-drawer__link-text--active{% endif %}">{{ link.title | escape }}</span>
+                      {%- if dec_image != blank and dec_position == 'right' -%}<span class="nav-decorator nav-decorator--right" data-brand-show="{{ dec_brand }}"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
+                    </span>
+                    <span class="svg-wrapper icon-caret icon-caret--forward" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+                  </summary>
+                  <div id="Mobile-drawer-submenu-{{ link.handle }}" class="menu-drawer__submenu has-submenu" tabindex="-1" style="--menu-drawer-animation-index: {{ forloop.index }};">
+                    <div class="menu-drawer__inner-submenu">
+                      <div class="menu-drawer__nav-buttons">
+                        <button class="button menu-drawer__back-button focus-inset" on:click="header-drawer/back" aria-label="{{ 'actions.back_to' | t: title: link.title }}">
+                          <span class="svg-wrapper icon-caret icon-caret--backward">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+                          <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                        </button>
+                        <button class="button button-unstyled close-button menu-drawer__close-button" type="button" aria-label="{{ 'actions.close' | t }}" on:click="header-drawer/close">
+                          <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+                        </button>
+                      </div>
+                      <ul class="menu-drawer__menu menu-drawer__menu--childlist" role="list" tabindex="-1">
+                        {%- for childlink in link.links -%}
+                          <li class="menu-drawer__list-item" style="--menu-drawer-animation-index: {{ forloop.index }};">
+                            <a href="{{ childlink.url }}" class="menu-drawer__menu-item menu-drawer__menu-item--parent focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}" {% if childlink.current %}aria-current="page"{% endif %}>
+                              <span class="menu-drawer__menu-item-text wrap-text">{{ childlink.title | escape }}</span>
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    </div>
+                  </div>
+                </details>
+              {%- else -%}
+                <a href="{{ link.url }}" class="custom-mobile-drawer__link menu-drawer__animated-element focus-inset{% if link.current %} custom-mobile-drawer__link--active{% endif %}" {% if link.current %}aria-current="page"{% endif %}>
+                  <span class="custom-mobile-drawer__link-inner">
+                    {%- if dec_image != blank and dec_position == 'left' -%}<span class="nav-decorator nav-decorator--left" data-brand-show="{{ dec_brand }}"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
+                    <span class="custom-mobile-drawer__link-text{% if link.active %} custom-mobile-drawer__link-text--active{% endif %}">{{ link.title | escape }}</span>
+                    {%- if dec_image != blank and dec_position == 'right' -%}<span class="nav-decorator nav-decorator--right" data-brand-show="{{ dec_brand }}"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
+                  </span>
+                </a>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+
+      </nav>
+
+      {%- comment -%} ── Accesos directos al pie ─────────────────────────── {%- endcomment -%}
+      {%- liquid
+        assign has_util_1 = false
+        assign has_util_2 = false
+        if block_settings.mobile_util_1_url != blank
+          assign has_util_1 = true
+        endif
+        if block_settings.mobile_util_2_url != blank
+          assign has_util_2 = true
+        elsif shop.customer_accounts_enabled
+          assign has_util_2 = true
+        endif
+      -%}
+      {%- if has_util_1 or has_util_2 -%}
+        <div class="custom-mobile-drawer__utility">
+          {%- if has_util_1 -%}
+            <a href="{{ block_settings.mobile_util_1_url }}" class="custom-mobile-drawer__utility-link">
+              {%- if block_settings.mobile_util_1_icon == 'account' -%}
+                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
+              {%- elsif block_settings.mobile_util_1_icon == 'cart' -%}
+                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
+              {%- elsif block_settings.mobile_util_1_icon == 'search' -%}
+                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
+              {%- else -%}
+                <span class="svg-wrapper" aria-hidden="true">
+                  <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 2h12a1 1 0 0 1 1 1v15.382a.5.5 0 0 1-.724.447L9 16.236l-6.276 2.593A.5.5 0 0 1 2 18.382V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {%- endif -%}
+              <span>{{ block_settings.mobile_util_1_label | default: 'Guardados' }}</span>
+            </a>
+          {%- endif -%}
+          {%- if has_util_2 -%}
+            {%- liquid
+              if block_settings.mobile_util_2_url != blank
+                assign util_2_href = block_settings.mobile_util_2_url
+              else
+                assign util_2_href = routes.account_url
+              endif
+            -%}
+            <a href="{{ util_2_href }}" class="custom-mobile-drawer__utility-link">
+              {%- if block_settings.mobile_util_2_icon == 'bookmark' -%}
+                <span class="svg-wrapper" aria-hidden="true">
+                  <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 2h12a1 1 0 0 1 1 1v15.382a.5.5 0 0 1-.724.447L9 16.236l-6.276 2.593A.5.5 0 0 1 2 18.382V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              {%- elsif block_settings.mobile_util_2_icon == 'cart' -%}
+                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
+              {%- elsif block_settings.mobile_util_2_icon == 'search' -%}
+                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
+              {%- else -%}
+                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
+              {%- endif -%}
+              <span>{{ block_settings.mobile_util_2_label | default: 'Mi cuenta' }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </details>
+</header-drawer>
+
+{% stylesheet %}
+  /* ─── Custom Mobile Drawer ──────────────────────────────────────────────── */
+
+  .custom-mobile-drawer .menu-drawer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  /* Cabecera */
+  .custom-mobile-drawer__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--padding-lg);
+    min-height: 64px;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .custom-mobile-drawer__logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 40px;
+  }
+
+  .custom-mobile-drawer__logo-img {
+    height: 40px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .custom-mobile-drawer__logo-text {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-foreground);
+  }
+
+  .custom-mobile-drawer__close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--color-foreground);
+    flex-shrink: 0;
+    margin-right: -8px;
+  }
+
+  .custom-mobile-drawer__close-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Etiqueta Menú */
+  .custom-mobile-drawer__menu-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 var(--padding-lg);
+    min-height: 52px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .custom-mobile-drawer__menu-label svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  /* Nav */
+  .custom-mobile-drawer__nav {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .custom-mobile-drawer__list {
+    margin: 0;
+    padding: 0;
+  }
+
+  .custom-mobile-drawer__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .custom-mobile-drawer__item:last-child {
+    border-bottom: none;
+  }
+
+  /* Links */
+  .custom-mobile-drawer__link,
+  .custom-mobile-drawer__submenu-details > summary.custom-mobile-drawer__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--padding-lg);
+    min-height: 56px;
+    width: 100%;
+    color: var(--color-foreground);
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: left;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    font-weight: 400;
+    transition: background-color 0.15s ease;
+  }
+
+  .custom-mobile-drawer__link:hover,
+  .custom-mobile-drawer__link:focus-visible {
+    background-color: rgb(var(--color-foreground-rgb) / 0.04);
+    color: var(--color-foreground);
+    text-decoration: none;
+    outline: none;
+  }
+
+  .custom-mobile-drawer__submenu-details > summary { list-style: none; }
+  .custom-mobile-drawer__submenu-details > summary::-webkit-details-marker { display: none; }
+
+  .custom-mobile-drawer__link-inner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .custom-mobile-drawer__link-text {
+    flex: 1;
+  }
+
+  .custom-mobile-drawer__link--active .custom-mobile-drawer__link-text,
+  .custom-mobile-drawer__link-text--active {
+    color: var(--brand-color-primary, var(--color-foreground));
+  }
+
+  .custom-mobile-drawer__link .icon-caret--forward {
+    flex-shrink: 0;
+    opacity: 0.45;
+  }
+
+  .custom-mobile-drawer__link .icon-caret--forward svg {
+    width: 12px;
+    height: 12px;
+    transform: rotate(-90deg);
+  }
+
+  /* Utilidades al pie */
+  .custom-mobile-drawer__utility {
+    padding: 4px var(--padding-lg);
+    border-top: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .custom-mobile-drawer__utility-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    min-height: 50px;
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .custom-mobile-drawer__utility-link:last-child { border-bottom: none; }
+  .custom-mobile-drawer__utility-link:hover { text-decoration: none; color: var(--color-foreground); }
+
+  .custom-mobile-drawer__utility-link .svg-wrapper {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .custom-mobile-drawer__utility-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Animación de entrada */
+  @media (prefers-reduced-motion: no-preference) {
+    .custom-mobile-drawer__item .menu-drawer__animated-element {
+      animation: mobile-drawer-item-in var(--animation-speed, 300ms) var(--animation-easing, ease)
+        calc(var(--menu-drawer-animation-index, 1) * 40ms) both;
+    }
+
+    @keyframes mobile-drawer-item-in {
+      from { opacity: 0; translate: -12px 0; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+  }
+{% endstylesheet %}

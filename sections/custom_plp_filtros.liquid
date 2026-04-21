@@ -1,0 +1,151 @@
+{%- comment -%}
+  MOXIE: PLP Filtros Personalizados
+  Metaobjeto : filtro_coleccion_plp_personalizado
+  Metacampo  : custom.mox_plp_filtro_coleccion_personalizado (lista de referencias)
+
+  Claves del metaobjeto:
+    activo                          → boolean
+    etiqueta_del_filtro             → texto corto
+    query_del_filtro                → enlace (URL)
+    forma_del_filtro                → lista de opciones: "Redondo" | "Cuadrado"
+    color_del_borde_del_filtro      → color
+    fondo_del_filtro                → color
+    color_del_texto_de_la_etiqueta  → color
+{%- endcomment -%}
+
+{%- liquid
+  assign filtros_raw = collection.metafields.custom.mox_plp_filtro_coleccion_personalizado.value
+
+  comment
+    Construir lista de filtros activos (activo == true)
+  endcomment
+  assign filtros = ''
+  assign tiene_filtros = false
+  if filtros_raw != blank
+    for filtro in filtros_raw
+      if filtro.activo.value
+        assign tiene_filtros = true
+        break
+      endif
+    endfor
+  endif
+-%}
+
+{%- if tiene_filtros -%}
+  <div class="custom-center-container">
+    <div
+      class="custom-plp-filtros custom-standar-max-width"
+      id="plp-filtros-{{ section.id }}"
+      style="
+        {%- if section.settings.bg_color != blank %}background-color: {{ section.settings.bg_color }};{% endif -%}
+        --plp-filtros-padding-v: {{ section.settings.padding_v | default: 12 }}px;
+      "
+      {{ section.shopify_attributes }}
+    >
+      <div class="custom-plp-filtros__inner page-width" role="list">
+        {%- for filtro in filtros_raw -%}
+          {%- unless filtro.activo.value -%}{%- continue -%}{%- endunless -%}
+
+          {%- liquid
+            assign forma = filtro.forma_del_filtro.value | default: 'Redondo' | downcase
+            assign border_color = filtro.color_del_borde_del_filtro.value
+            assign bg_color = filtro.fondo_del_filtro.value
+            assign text_color = filtro.color_del_texto_de_la_etiqueta.value
+            assign pill_url = filtro.query_del_filtro.value | default: '#'
+            assign pill_label = filtro.etiqueta_del_filtro.value
+          -%}
+
+          <a
+            class="plp-filtro plp-filtro--{{ forma }}"
+            href="{{ pill_url }}"
+            role="listitem"
+            style="
+              {%- if border_color != blank %}--pf-border: {{ border_color }};{% endif -%}
+              {%- if bg_color     != blank %}--pf-bg: {{ bg_color }};{% endif -%}
+              {%- if text_color   != blank %}--pf-color: {{ text_color }};{% endif -%}
+            "
+          >
+            {{- pill_label -}}
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      /* Marcar el filtro activo segun la URL actual */
+      var container = document.getElementById('plp-filtros-{{ section.id }}');
+      if (!container) return;
+
+      var currentURL = new URL(window.location.href);
+      var currentPath = currentURL.pathname;
+
+      container.querySelectorAll('.plp-filtro').forEach(function (pill) {
+        try {
+          var pillURL = new URL(pill.href, window.location.origin);
+          var pillPath = pillURL.pathname;
+
+          // Paths deben coincidir
+          if (currentPath !== pillPath) return;
+
+          // Si el pill no tiene params → activo solo si la página tampoco tiene params de filtro
+          var pillParams = Array.from(pillURL.searchParams.entries());
+          if (pillParams.length === 0) {
+            var hasFilterParams = Array.from(currentURL.searchParams.keys()).some(function (k) {
+              return k.startsWith('filter.') || k === 'sort_by';
+            });
+            if (!hasFilterParams) {
+              pill.classList.add('plp-filtro--active');
+              pill.setAttribute('aria-current', 'page');
+            }
+            return;
+          }
+
+          // Si el pill tiene params → todos deben estar presentes en la URL actual
+          var allMatch = pillParams.every(function (entry) {
+            return currentURL.searchParams.get(entry[0]) === entry[1];
+          });
+          if (allMatch) {
+            pill.classList.add('plp-filtro--active');
+            pill.setAttribute('aria-current', 'page');
+          }
+        } catch (e) {}
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Moxie PLP Filtros",
+  "tag": "section",
+  "class": "section-wrapper",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo de la barra"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie PLP Filtros",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}

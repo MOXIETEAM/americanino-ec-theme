@@ -1,0 +1,104 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Native Filters — Drawer-only mode ────────────────────────────────
+// Horizon con filter_style:"vertical" renderiza los filtros como sidebar inline
+// en desktop y oculta el botón de drawer (.facets-toggle) con display:none.
+// Este override invierte ese comportamiento: siempre abre desde el drawer.
+//
+// Layout en una sola fila del collection-wrapper grid (14 cols):
+//   [col-1..col-4]  = .facets-toggle  (botón "Mostrar filtros", izquierda)
+//   [col-4..col-12] = .facets-controls-wrapper  (ordenar + densidad, derecha)
+//   [col-1..col-14] = .main-collection-grid  (fila 2, ancho completo)
+
+@include tablet-up {
+  // 1. Ocultar el sidebar vertical inline (el dialog #filters-drawer conserva su layout)
+  .facets-block-wrapper--vertical:not(#filters-drawer) {
+    display: none !important; // stylelint-disable-line declaration-no-important
+  }
+
+  // 2. Mostrar el botón de drawer en desktop (normalmente display:none en ≥750px)
+  //    Posicionarlo en el extremo izquierdo de la fila de controles
+  .facets-toggle {
+    display: flex !important; // stylelint-disable-line declaration-no-important
+    grid-column: column-1 / column-4;
+    grid-row: 1;
+    justify-content: flex-start;
+    align-items: center;
+    height: auto;
+    padding-block: var(--padding-xs);
+    margin: 0;
+  }
+
+  .facets-toggle__button {
+    display: inline-flex !important; // stylelint-disable-line declaration-no-important
+  }
+
+  // 3. Mover la barra de controles (ordenar + densidad) al resto de la fila,
+  //    alineada a la derecha para que quede separada del botón de filtros
+  .facets.facets-controls-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  // 4. El grid de productos ocupa la fila 2, ancho centrado completo
+  .collection-wrapper:has(.facets--vertical) .main-collection-grid {
+    grid-column: 2 / var(--full-width-column-number) !important; // stylelint-disable-line declaration-no-important
+  }
+
+  // 5. Ocultar el título "Filtros" en el controls bar (redundante — el toggle lo reemplaza)
+  .facets--filters-title {
+    display: none !important; // stylelint-disable-line declaration-no-important
+  }
+}
+
+// ── Columnas personalizadas del selector Moxie ────────────────────────────────
+// Valores de product-grid-view: list-2 (lista horizontal), col-2/3/4 (grid cards).
+//
+// ESPECIFICIDAD: product-grid.liquid genera inline <style> con selector
+// .product-grid--{id}:is(.product-grid--grid) → (0,2,0). Para ganarle
+// en moxie.css (cargado antes), usamos .product-grid.product-grid[attr] → (0,3,0).
+
+// stylelint-disable selector-class-pattern
+
+@include tablet-up {
+  // Card grids — columnas exactas
+  .product-grid.product-grid[product-grid-view='col-2'] {
+    --product-grid-columns-desktop: repeat(2, 1fr);
+  }
+
+  .product-grid.product-grid[product-grid-view='col-3'] {
+    --product-grid-columns-desktop: repeat(3, 1fr);
+  }
+
+  .product-grid.product-grid[product-grid-view='col-4'] {
+    --product-grid-columns-desktop: repeat(4, 1fr);
+  }
+
+  // Vista lista — 2 columnas, card horizontal (imagen izq. + info der.)
+  .product-grid.product-grid[product-grid-view='list-2'] {
+    --product-grid-columns-desktop: repeat(2, 1fr);
+  }
+}
+
+// Modo lista: card en fila (imagen | info) — aplica a ambos viewports
+[product-grid-view='list-2'] .product-grid__card.product-grid__card {
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+[product-grid-view='list-2'] .card-gallery {
+  width: 42%;
+  flex-shrink: 0;
+}
+
+// Mobile: col-2 y list-2 en 2 columnas
+@include mobile-only {
+  .product-grid[product-grid-view='col-2'],
+  .product-grid[product-grid-view='list-2'] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+// stylelint-enable selector-class-pattern

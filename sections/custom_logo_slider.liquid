@@ -1,0 +1,288 @@
+{%- comment -%} MOXIE: Logo Slider - carrusel de logos de marcas/socios {%- endcomment -%}
+
+{%- liquid
+  assign brand_visibility = section.settings.brand_visibility | default: 'all'
+  assign logo_height      = section.settings.logo_height      | default: 48
+  assign padding_v        = section.settings.padding_v        | default: 20
+  assign spv_desktop      = section.settings.slides_desktop   | default: 6
+  assign spv_mobile       = section.settings.slides_mobile    | default: 3
+  assign autoplay_speed   = section.settings.autoplay_speed   | default: 0
+-%}
+
+{%- comment -%} Load Swiper from CDN (once per page) {%- endcomment -%}
+<script>
+  (function () {
+    if (!document.getElementById('cdn-swiper-css')) {
+      var l = document.createElement('link');
+      l.id = 'cdn-swiper-css'; l.rel = 'stylesheet';
+      l.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      document.head.appendChild(l);
+    }
+    if (!document.getElementById('cdn-swiper-js')) {
+      var s = document.createElement('script');
+      s.id = 'cdn-swiper-js';
+      s.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      document.head.appendChild(s);
+    }
+  })();
+</script>
+
+<div class="custom-center-container">
+<div
+  class="custom-logo-slider custom-standar-max-width"
+  id="logo-slider-{{ section.id }}"
+  data-brand-show="{{ brand_visibility }}"
+  data-slides-desktop="{{ spv_desktop }}"
+  data-slides-mobile="{{ spv_mobile }}"
+  data-autoplay="{{ autoplay_speed }}"
+  style="
+    padding-block: {{ padding_v }}px;
+    --logo-height: {{ logo_height }}px;
+    {%- if section.settings.bg_color != blank -%} background-color: {{ section.settings.bg_color }};{%- endif -%}
+    {%- if section.settings.divider_color != blank -%}
+      border-top: 1px solid {{ section.settings.divider_color }};
+      border-bottom: 1px solid {{ section.settings.divider_color }};
+    {%- endif -%}
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="logo-slider-wrap page-width">
+    <div class="swiper logo-swiper" id="logo-swiper-{{ section.id }}">
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+          <div class="swiper-slide logo-slide" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a class="logo-slide__link" href="{{ block.settings.link }}" aria-label="{{ block.settings.image.alt | default: block.settings.label }}">
+            {%- endif -%}
+
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: height: logo_height
+                | image_tag:
+                  loading: 'lazy',
+                  alt: block.settings.image.alt | default: block.settings.label,
+                  class: 'logo-slide__img',
+                  height: logo_height,
+                  width: 'auto'
+              }}
+            {%- else -%}
+              <span class="logo-slide__placeholder">{{ block.settings.label }}</span>
+            {%- endif -%}
+
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <button class="logo-nav logo-nav--prev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button class="logo-nav logo-nav--next" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+    </button>
+  </div>
+</div>
+</div>
+
+<script>
+(function () {
+  var sectionEl = document.getElementById('logo-slider-{{ section.id }}');
+  if (!sectionEl) return;
+
+  var spvDesktop   = parseInt(sectionEl.dataset.slidesDesktop) || 6;
+  var spvMobile    = parseInt(sectionEl.dataset.slidesMobile)  || 3;
+  var spvTablet    = Math.round((spvMobile + spvDesktop) / 2);
+  var autoplayMs   = parseInt(sectionEl.dataset.autoplay)      || 0;
+  var swiperEl     = document.getElementById('logo-swiper-{{ section.id }}');
+
+  function initSwiper() {
+    if (!swiperEl || swiperEl._logoSwiper) return;
+    var config = {
+      slidesPerView: spvMobile,
+      spaceBetween: 16,
+      navigation: {
+        prevEl: sectionEl.querySelector('.logo-nav--prev'),
+        nextEl: sectionEl.querySelector('.logo-nav--next')
+      },
+      breakpoints: {
+        768: { slidesPerView: spvTablet, spaceBetween: 20 },
+        990: { slidesPerView: spvDesktop, spaceBetween: 28 }
+      }
+    };
+    if (autoplayMs > 0) {
+      config.loop = true;
+      config.autoplay = { delay: autoplayMs, disableOnInteraction: false };
+    }
+    swiperEl._logoSwiper = new Swiper(swiperEl, config);
+  }
+
+  function tryInit() {
+    if (typeof Swiper !== 'undefined') {
+      initSwiper();
+    } else {
+      var jsTag = document.getElementById('cdn-swiper-js');
+      if (jsTag) jsTag.addEventListener('load', initSwiper);
+    }
+  }
+
+  tryInit();
+
+  document.addEventListener('shopify:section:load', function (e) {
+    if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+      if (swiperEl && swiperEl._logoSwiper) {
+        swiperEl._logoSwiper.destroy(true, true);
+        delete swiperEl._logoSwiper;
+      }
+      tryInit();
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Moxie Logo Slider",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 20,
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nombre (alt text / placeholder)",
+          "default": "Marca"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace (opcional)"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Marca"
+    },
+    {
+      "type": "select",
+      "id": "brand_visibility",
+      "label": "Visible para",
+      "options": [
+        { "value": "all",        "label": "Ambas marcas" },
+        { "value": "mic",        "label": "Solo MIC" },
+        { "value": "little-mic", "label": "Solo Little MIC" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "header",
+      "content": "Logos"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Alto de los logos (px)",
+      "min": 24,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Logos visibles en desktop",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "label": "Logos visibles en mobile",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color de la linea separadora (opcional)"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Velocidad de autoplay (ms, 0 = desactivado)",
+      "min": 0,
+      "max": 6000,
+      "step": 500,
+      "unit": "ms",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Logo Slider",
+      "category": "Moxie",
+      "settings": {
+        "logo_height": 48,
+        "slides_desktop": 7,
+        "slides_mobile": 3,
+        "padding_v": 20
+      },
+      "blocks": [
+        { "type": "logo", "settings": { "label": "Marca 1" } },
+        { "type": "logo", "settings": { "label": "Marca 2" } },
+        { "type": "logo", "settings": { "label": "Marca 3" } },
+        { "type": "logo", "settings": { "label": "Marca 4" } },
+        { "type": "logo", "settings": { "label": "Marca 5" } },
+        { "type": "logo", "settings": { "label": "Marca 6" } },
+        { "type": "logo", "settings": { "label": "Marca 7" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

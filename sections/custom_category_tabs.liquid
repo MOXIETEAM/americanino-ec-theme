@@ -1,0 +1,491 @@
+{%- comment -%} MOXIE: Category Tabs - filtro por pestanas + slider de tarjetas de categoria {%- endcomment -%}
+
+{%- liquid
+  assign padding_v        = section.settings.padding_v | default: 48
+  assign tab_blocks       = section.blocks | where: 'type', 'tab'
+  assign card_blocks      = section.blocks | where: 'type', 'card'
+  assign spv_desktop      = section.settings.slides_desktop | default: 4.3
+  assign spv_mobile       = section.settings.slides_mobile  | default: 2.2
+  assign card_ratio       = section.settings.card_ratio     | default: '3 / 4'
+  assign show_tabs        = false
+  if tab_blocks.size > 1
+    assign show_tabs = true
+  endif
+-%}
+
+{%- comment -%} Load Swiper from CDN (once per page) {%- endcomment -%}
+<script>
+  (function () {
+    if (!document.getElementById('cdn-swiper-css')) {
+      var l = document.createElement('link');
+      l.id = 'cdn-swiper-css'; l.rel = 'stylesheet';
+      l.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      document.head.appendChild(l);
+    }
+    if (!document.getElementById('cdn-swiper-js')) {
+      var s = document.createElement('script');
+      s.id = 'cdn-swiper-js';
+      s.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      document.head.appendChild(s);
+    }
+  })();
+</script>
+
+<div class="custom-center-container">
+<div
+  class="custom-category-tabs custom-standar-max-width"
+  id="cat-tabs-{{ section.id }}"
+  data-slides-desktop="{{ spv_desktop }}"
+  data-slides-mobile="{{ spv_mobile }}"
+  style="
+    padding-block: {{ padding_v }}px;
+    {%- if section.settings.bg_color != blank -%} background-color: {{ section.settings.bg_color }};{%- endif -%}
+    --cat-tab-color: {{ section.settings.tab_color | default: '#1a1a1a' }};
+    --cat-tab-active-bg: {{ section.settings.tab_active_bg | default: '#1a1a1a' }};
+    --cat-tab-active-text: {{ section.settings.tab_active_text | default: '#ffffff' }};
+    --cat-card-ratio: {{ card_ratio }};
+  "
+  {{ section.shopify_attributes }}
+>
+
+  {%- comment -%} ── Title ─────────────────────────────────────────────────── {%- endcomment -%}
+  {%- if section.settings.title != blank -%}
+    <div class="custom-category-tabs__header page-width">
+      {%- render 'custom_section_title',
+        title:          section.settings.title,
+        title_align:    section.settings.title_align,
+        title_color:    section.settings.title_color,
+        title_weight:   section.settings.title_font_weight,
+        title_style:    section.settings.title_font_style,
+        dec_1_image:    section.settings.dec_1_image,
+        dec_1_size:     section.settings.dec_1_size,
+        dec_1_position: section.settings.dec_1_position,
+        dec_1_top:      section.settings.dec_1_top,
+        dec_1_right:    section.settings.dec_1_right,
+        dec_1_bottom:   section.settings.dec_1_bottom,
+        dec_1_left:     section.settings.dec_1_left,
+        dec_2_image:    section.settings.dec_2_image,
+        dec_2_size:     section.settings.dec_2_size,
+        dec_2_position: section.settings.dec_2_position,
+        dec_2_top:      section.settings.dec_2_top,
+        dec_2_right:    section.settings.dec_2_right,
+        dec_2_bottom:   section.settings.dec_2_bottom,
+        dec_2_left:     section.settings.dec_2_left
+      -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Tab pills ─────────────────────────────────────────────── {%- endcomment -%}
+  {%- if show_tabs -%}
+    <div class="custom-category-tabs__pills page-width" role="tablist">
+      {%- for tab in tab_blocks -%}
+        <button
+          class="category-tab{% if forloop.first %} category-tab--active{% endif %}"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          data-tab="{{ tab.settings.tab_id }}"
+          {{ tab.shopify_attributes }}
+        >{{ tab.settings.label }}</button>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Panels (one per tab) ──────────────────────────────────── {%- endcomment -%}
+  {%- if tab_blocks.size > 0 -%}
+
+    {%- for tab in tab_blocks -%}
+      {%- assign panel_id = tab.settings.tab_id -%}
+      <div
+        class="category-panel{% if forloop.first %} category-panel--active{% endif %}"
+        data-panel="{{ panel_id }}"
+        role="tabpanel"
+      >
+        <div class="cat-swiper-wrap page-width">
+          <div class="swiper cat-swiper" id="cat-swiper-{{ section.id }}-{{ forloop.index }}">
+            <div class="swiper-wrapper">
+              {%- for card in card_blocks -%}
+                {%- if card.settings.tab_id == panel_id -%}
+                  <div class="swiper-slide">
+                    <a
+                      class="cat-card"
+                      href="{{ card.settings.link | default: '#' }}"
+                      {{ card.shopify_attributes }}
+                    >
+                      <div class="cat-card__media">
+                        {%- if card.settings.image != blank -%}
+                          {{
+                            card.settings.image
+                            | image_url: width: 600
+                            | image_tag:
+                              loading: 'lazy',
+                              alt: card.settings.label,
+                              class: 'cat-card__img',
+                              widths: '300, 600',
+                              sizes: '(min-width: 990px) 22vw, 45vw'
+                          }}
+                        {%- else -%}
+                          {{ 'collection-1' | placeholder_svg_tag: 'cat-card__img cat-card__img--placeholder' }}
+                        {%- endif -%}
+                      </div>
+                      {%- if card.settings.label != blank -%}
+                        <p class="cat-card__label">{{ card.settings.label }}</p>
+                      {%- endif -%}
+                    </a>
+                  </div>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+          <button class="cat-nav cat-nav--prev" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="cat-nav cat-nav--next" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
+      </div>
+    {%- endfor -%}
+
+  {%- else -%}
+
+    {%- comment -%} Sin tabs: slider unico con todas las tarjetas {%- endcomment -%}
+    <div class="category-panel category-panel--active" data-panel="all" role="tabpanel">
+      <div class="cat-swiper-wrap page-width">
+        <div class="swiper cat-swiper" id="cat-swiper-{{ section.id }}-1">
+          <div class="swiper-wrapper">
+            {%- for card in card_blocks -%}
+              <div class="swiper-slide">
+                <a class="cat-card" href="{{ card.settings.link | default: '#' }}" {{ card.shopify_attributes }}>
+                  <div class="cat-card__media">
+                    {%- if card.settings.image != blank -%}
+                      {{
+                        card.settings.image
+                        | image_url: width: 600
+                        | image_tag:
+                          loading: 'lazy',
+                          alt: card.settings.label,
+                          class: 'cat-card__img',
+                          widths: '300, 600',
+                          sizes: '(min-width: 990px) 22vw, 45vw'
+                      }}
+                    {%- else -%}
+                      {{ 'collection-1' | placeholder_svg_tag: 'cat-card__img cat-card__img--placeholder' }}
+                    {%- endif -%}
+                  </div>
+                  {%- if card.settings.label != blank -%}
+                    <p class="cat-card__label">{{ card.settings.label }}</p>
+                  {%- endif -%}
+                </a>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+        <button class="cat-nav cat-nav--prev" aria-label="Anterior">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="cat-nav cat-nav--next" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+      </div>
+    </div>
+
+  {%- endif -%}
+
+</div>
+</div>
+
+<script>
+(function () {
+  var sectionEl = document.getElementById('cat-tabs-{{ section.id }}');
+  if (!sectionEl) return;
+
+  var spvDesktop = parseFloat(sectionEl.dataset.slidesDesktop) || 4.3;
+  var spvMobile  = parseFloat(sectionEl.dataset.slidesMobile)  || 2.2;
+  var spvTablet  = Math.min(spvDesktop, 3.5);
+
+  function initSwiper(panelEl) {
+    var swiperEl = panelEl.querySelector('.cat-swiper');
+    if (!swiperEl || swiperEl._catSwiper) return;
+    swiperEl._catSwiper = new Swiper(swiperEl, {
+      slidesPerView: spvMobile,
+      spaceBetween: 10,
+      navigation: {
+        prevEl: panelEl.querySelector('.cat-nav--prev'),
+        nextEl: panelEl.querySelector('.cat-nav--next')
+      },
+      breakpoints: {
+        768: { slidesPerView: spvTablet, spaceBetween: 14 },
+        990: { slidesPerView: spvDesktop, spaceBetween: 18 }
+      }
+    });
+  }
+
+  function initSection() {
+    var firstPanel = sectionEl.querySelector('.category-panel--active');
+    if (firstPanel) initSwiper(firstPanel);
+
+    sectionEl.querySelectorAll('.category-tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var tabId = btn.dataset.tab;
+        sectionEl.querySelectorAll('.category-tab').forEach(function (b) {
+          b.classList.toggle('category-tab--active', b === btn);
+          b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+        });
+        sectionEl.querySelectorAll('.category-panel').forEach(function (p) {
+          var active = p.dataset.panel === tabId;
+          p.classList.toggle('category-panel--active', active);
+          if (active) initSwiper(p);
+        });
+      });
+    });
+  }
+
+  function tryInit() {
+    if (typeof Swiper !== 'undefined') {
+      initSection();
+    } else {
+      var jsTag = document.getElementById('cdn-swiper-js');
+      if (jsTag) jsTag.addEventListener('load', initSection);
+    }
+  }
+
+  tryInit();
+
+  document.addEventListener('shopify:section:load', function (e) {
+    if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+      sectionEl.querySelectorAll('.cat-swiper').forEach(function (el) {
+        if (el._catSwiper) { el._catSwiper.destroy(true, true); delete el._catSwiper; }
+      });
+      tryInit();
+    }
+  });
+
+  document.addEventListener('shopify:block:select', function (e) {
+    if (!e.target) return;
+    var panel = e.target.closest('.category-panel');
+    if (panel && sectionEl.contains(panel)) {
+      sectionEl.querySelectorAll('.category-panel').forEach(function (p) {
+        p.classList.toggle('category-panel--active', p === panel);
+      });
+      initSwiper(panel);
+      var panelId = panel.dataset.panel;
+      sectionEl.querySelectorAll('.category-tab').forEach(function (b) {
+        var active = b.dataset.tab === panelId;
+        b.classList.toggle('category-tab--active', active);
+        b.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Moxie Category Tabs",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 10,
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Pestana",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Nombre de la pestana",
+          "default": "Categoria"
+        },
+        {
+          "type": "text",
+          "id": "tab_id",
+          "label": "ID de la pestana",
+          "info": "Identificador unico (sin espacios ni tildes). Ej: bebe-nina. Las tarjetas deben usar el mismo valor.",
+          "default": "tab-1"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "name": "Tarjeta",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etiqueta",
+          "default": "Pijamas"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        },
+        {
+          "type": "text",
+          "id": "tab_id",
+          "label": "ID de la pestana a la que pertenece",
+          "info": "Debe coincidir exactamente con el ID de la pestana. Dejar vacio si no hay pestanas.",
+          "default": "tab-1"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Titulo"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Titulo"
+    },
+    {
+      "type": "select",
+      "id": "title_align",
+      "label": "Alineacion del titulo",
+      "options": [
+        { "value": "left",   "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right",  "label": "Derecha" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color del titulo"
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Peso de la fuente",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "700", "label": "Negrita" },
+        { "value": "800", "label": "Extra negrita" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "select",
+      "id": "title_font_style",
+      "label": "Estilo de la fuente",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "italic", "label": "Italica" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Pestanas"
+    },
+    {
+      "type": "color",
+      "id": "tab_color",
+      "label": "Color del texto y borde",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_bg",
+      "label": "Fondo activo",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "tab_active_text",
+      "label": "Texto activo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Tarjetas"
+    },
+    {
+      "type": "select",
+      "id": "card_ratio",
+      "label": "Proporcion de la imagen",
+      "options": [
+        { "value": "1 / 1",  "label": "Cuadrado (1:1)" },
+        { "value": "3 / 4",  "label": "Retrato (3:4)" },
+        { "value": "4 / 3",  "label": "Paisaje (4:3)" }
+      ],
+      "default": "3 / 4"
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Tarjetas visibles en desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "label": "Tarjetas visibles en mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo de la seccion"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Category Tabs",
+      "category": "Moxie",
+      "settings": {
+        "title": "<p>Compra por categoria<\/p>",
+        "title_align": "center",
+        "slides_desktop": 4,
+        "slides_mobile": 2
+      },
+      "blocks": [
+        { "type": "tab",  "settings": { "label": "Bebe Nina",  "tab_id": "bebe-nina"  } },
+        { "type": "tab",  "settings": { "label": "Bebe Nino",  "tab_id": "bebe-nino"  } },
+        { "type": "tab",  "settings": { "label": "Nina",       "tab_id": "nina"        } },
+        { "type": "tab",  "settings": { "label": "Nino",       "tab_id": "nino"        } },
+        { "type": "card", "settings": { "label": "Pijamas",        "tab_id": "bebe-nina" } },
+        { "type": "card", "settings": { "label": "Conjuntos",      "tab_id": "bebe-nina" } },
+        { "type": "card", "settings": { "label": "Vestidos",       "tab_id": "bebe-nina" } },
+        { "type": "card", "settings": { "label": "Buzos",          "tab_id": "bebe-nina" } },
+        { "type": "card", "settings": { "label": "Pijamas",        "tab_id": "bebe-nino" } },
+        { "type": "card", "settings": { "label": "Conjuntos",      "tab_id": "bebe-nino" } },
+        { "type": "card", "settings": { "label": "Ropa interior",  "tab_id": "bebe-nino" } },
+        { "type": "card", "settings": { "label": "Buzos",          "tab_id": "bebe-nino" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

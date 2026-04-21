@@ -1,0 +1,222 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: PLP Filtros Personalizados ───────────────────────────────────────
+// Pills de navegacion configurables por coleccion via metaobjetos.
+// No interfieren con los filtros nativos de Shopify (facets).
+
+// ── Contenedor ────────────────────────────────────────────────────────────────
+
+.custom-plp-filtros {
+  width: 100%;
+  padding-block: var(--plp-filtros-padding-v, 12px);
+}
+
+.custom-plp-filtros__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; // Firefox
+  -ms-overflow-style: none; // IE/Edge
+
+  &::-webkit-scrollbar {
+    display: none; // Chrome/Safari
+  }
+
+  @include tablet-up {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+}
+
+// ── Pill ──────────────────────────────────────────────────────────────────────
+
+.plp-filtro {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  border: 1.5px solid var(--pf-border, currentColor);
+  background-color: var(--pf-bg, transparent);
+  color: var(--pf-color, currentColor);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  cursor: pointer;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition:
+      background-color var(--animation-speed, 0.2s) ease,
+      color var(--animation-speed, 0.2s) ease,
+      opacity var(--animation-speed, 0.2s) ease;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+
+  // Formas
+  &--redondo {
+    border-radius: 999px;
+  }
+
+  &--cuadrado {
+    border-radius: 8px;
+  }
+
+  // Estado activo (URL actual coincide con el filtro)
+  &--active {
+    background-color: var(--pf-border, currentColor);
+    color: var(--pf-bg, #fff);
+    pointer-events: none;
+  }
+
+  &:hover:not(.plp-filtro--active) {
+    opacity: 0.65;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+
+.products-count-wrapper {
+  margin: 0;
+}
+
+
+.facets.facets-controls-wrapper  {
+  margin: 10px 0px;
+
+  .facets-toggle {
+    gap: 20px;
+    
+    .facets-toggle__wrapper {
+      display: flex;
+      align-items: center;
+      
+      .facets-toggle__button {
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 18px;
+        vertical-align: middle;
+        text-transform: uppercase;
+        color: black;
+      }
+    }
+    .products-count-wrapper
+    span {
+      color: #979292;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 20px;
+      vertical-align: middle;
+    }
+
+  }
+  .sorting-filter {
+      .accordion-custom-container {
+        width: 100%;
+      }
+
+    .facets__panel
+    .facets__summary  {
+      border: 1px solid #000000;
+      min-width: 154px;
+      min-height: 31px;
+      max-height: 31px;
+      border-radius: 15px;
+      padding: 0;
+      height: auto;
+      display: flex;
+      justify-content: space-around;
+
+      .svg-wrapper {
+        margin: 0;
+      }
+
+    }
+  }
+
+  .products-count-wrapper {
+    margin: 0;
+  }
+}
+
+// FILTROS Y ORDENADOR PERSONALIZADOS PLP
+
+.moxie-grid-density {
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+  }
+
+  .moxie-grid-density--hide-desktop {
+    @media screen and (min-width: 750px) {
+      /* stylelint-disable-next-line declaration-no-important */
+      display: none !important;
+    }
+  }
+
+  .moxie-grid-density--hide-mobile {
+    @media screen and (max-width: 749px) {
+      /* stylelint-disable-next-line declaration-no-important */
+      display: none !important;
+    }
+  }
+
+  .moxie-grid-density__options {
+    display: flex;
+    gap: var(--gap-2xs);
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .moxie-grid-density__option {
+    position: relative;
+    display: flex;
+    // border: 2px solid red;
+    background-color: transparent;
+  }
+
+  /* Input oculto — mismo patrón que .column-options__option-input nativo */
+  .moxie-grid-density__option .column-options__option-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+  }
+
+  .moxie-grid-density__label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: var(--minimum-touch-target, 44px);
+    padding-inline: var(--padding-xs);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: #D9D9D9;
+    border-radius: var(--style-border-radius-xs);
+    transition: background-color var(--animation-speed) ease, color var(--animation-speed) ease;
+  }
+
+  .moxie-grid-density__option:hover .moxie-grid-density__label {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .moxie-grid-density__option .column-options__option-input:checked ~ .moxie-grid-density__label {
+    color: black;
+    // background-color: purple;
+  }

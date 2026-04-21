@@ -1,0 +1,180 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_hero_yVxjyj": {
+      "type": "custom_hero",
+      "blocks": {
+        "text_PUQgip": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>Afterclass</strong></p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_yVTyLh": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Diversión sin límites",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_PUQgip",
+        "button_yVTyLh"
+      ],
+      "name": "Moxie Hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/Hero_banner.jpg",
+        "media_type_2": "image",
+        "stack_media_on_mobile": true,
+        "custom_mobile_media": true,
+        "media_type_1_mobile": "image",
+        "image_1_mobile": "shopify://shop_images/Afterclass_43_1.png",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "full-width",
+        "section_height": "full-screen",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#000000c2",
+        "overlay_style": "gradient",
+        "gradient_direction": "to bottom",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "custom_category_tabs_iW3kin": {
+      "type": "custom_category_tabs",
+      "blocks": {
+        "card_rQmWqC": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Firefly_Gemini_Flash_genera_imagen_con_las_prendas_de_las_imagenes_de_referencia_16077_1.jpg",
+            "label": "Camisetas",
+            "link": "",
+            "tab_id": "bebe-nina"
+          }
+        },
+        "card_7T3TPz": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Firefly_GeminiFlash_genera_imagen_con_las_prendas_en_dos_persona_de_las_imagenes_de_referencia_16077_1.jpg",
+            "label": "Buzos y Chaquetas",
+            "link": "",
+            "tab_id": "bebe-nina"
+          }
+        },
+        "card_izbLyd": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Firefly_Gemini_Flash_genera_imagen_con_las_prendas_de_las_imagenes_de_referencia_16077_1.jpg",
+            "label": "Camisetas",
+            "link": "",
+            "tab_id": "bebe-nina"
+          }
+        },
+        "card_ymc7UL": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Firefly_GeminiFlash_genera_imagen_con_las_prendas_en_dos_persona_de_las_imagenes_de_referencia_16077_1.jpg",
+            "label": "Conjuntos",
+            "link": "",
+            "tab_id": "bebe-nina"
+          }
+        },
+        "card_iQk8jV": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/Firefly_Gemini_Flash_genera_imagen_con_las_prendas_de_las_imagenes_de_referencia_16077_1.jpg",
+            "label": "Pijamas",
+            "link": "",
+            "tab_id": "bebe-nina"
+          }
+        }
+      },
+      "block_order": [
+        "card_rQmWqC",
+        "card_7T3TPz",
+        "card_izbLyd",
+        "card_ymc7UL",
+        "card_iQk8jV"
+      ],
+      "name": "Moxie Category Tabs",
+      "settings": {
+        "title": "<p>Compra por categoria</p>",
+        "title_align": "center",
+        "title_color": "",
+        "title_font_weight": "700",
+        "title_font_style": "normal",
+        "decorator_1_size": 25,
+        "decorator_1_position": "right",
+        "decorator_2_size": 28,
+        "decorator_2_position": "left",
+        "decorator_3_size": 28,
+        "decorator_3_position": "below",
+        "decorator_4_size": 28,
+        "decorator_4_position": "below",
+        "tab_color": "#1a1a1a",
+        "tab_active_bg": "#1a1a1a",
+        "tab_active_text": "#ffffff",
+        "card_ratio": "3 / 4",
+        "slides_desktop": 3,
+        "slides_mobile": 2,
+        "bg_color": "",
+        "padding_v": 48
+      }
+    }
+  },
+  "order": [
+    "custom_hero_yVxjyj",
+    "custom_category_tabs_iW3kin",
+  ]
+}

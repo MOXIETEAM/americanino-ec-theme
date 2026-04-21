@@ -1,0 +1,66 @@
+{%- comment -%}
+  MOXIE: Product flags renderer.
+  Uses CSS custom properties from custom_brand_config section — colors change automatically per brand.
+
+  Usage: {% render 'custom_product_flags', product: product %}
+
+  Flag detection (by product tag):
+    new / nuevo           → Flag "Nuevo"
+    free / gratis         → Flag "Envío Gratis"
+    flag:<text>           → Custom flag with whatever text follows "flag:"
+    Compare-at price > price → Discount % badge (auto-calculated)
+{%- endcomment -%}
+
+{%- liquid
+  assign _product = product
+
+  assign show_new    = false
+  assign show_free   = false
+  assign show_sale   = false
+  assign custom_label = nil
+  assign discount_pct = 0
+
+  for tag in _product.tags
+    assign tag_lower = tag | downcase | strip
+
+    if tag_lower == 'new' or tag_lower == 'nuevo'
+      assign show_new = true
+    endif
+
+    if tag_lower == 'free' or tag_lower == 'gratis' or tag_lower == 'envio gratis' or tag_lower == 'envío gratis'
+      assign show_free = true
+    endif
+
+    if tag_lower contains 'flag:'
+      assign custom_label = tag | split: ':' | last | strip
+    endif
+  endfor
+
+  if _product.compare_at_price > _product.price
+    assign show_sale = true
+    assign diff = _product.compare_at_price | minus: _product.price
+    assign discount_pct = diff | times: 100 | divided_by: _product.compare_at_price | round
+  endif
+-%}
+
+{%- if show_new or show_sale or show_free or custom_label -%}
+  <div class="product-flags" aria-label="Etiquetas de producto">
+
+    {%- if show_new -%}
+      <span class="product-flag product-flag--new">Nuevo</span>
+    {%- endif -%}
+
+    {%- if show_sale -%}
+      <span class="product-flag product-flag--sale">-{{ discount_pct }}%</span>
+    {%- endif -%}
+
+    {%- if show_free -%}
+      <span class="product-flag product-flag--free">Envío Gratis</span>
+    {%- endif -%}
+
+    {%- if custom_label -%}
+      <span class="product-flag product-flag--custom">{{ custom_label | escape }}</span>
+    {%- endif -%}
+
+  </div>
+{%- endif -%}

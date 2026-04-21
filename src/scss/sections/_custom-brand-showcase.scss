@@ -1,0 +1,413 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Brand Showcase ────────────────────────────────────────────────────
+
+.custom-brand-showcase {
+  width: 100%;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.custom-brand-showcase__header {
+  margin-block-end: 28px;
+  
+  .custom-section-title
+  .custom-section-title__row
+  .custom-section-title__text
+  p, h1, h2, h3, h4, h5, h6  {
+    font-size: 63px;
+    font-weight: 700;
+    line-height: 68px;
+    color: #000;
+    margin: 0;
+  
+  }
+}
+
+// ── Tabs ──────────────────────────────────────────────────────────────────────
+
+.custom-brand-showcase__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-block-end: 32px;
+}
+
+.brand-tab {
+  min-width: 160px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 22px;
+  border: 1px solid black;
+  border-radius: 24px;
+  background-color: #ffffff;
+  color: black;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--animation-speed) var(--animation-easing),
+    color var(--animation-speed) var(--animation-easing);
+
+  &:hover:not(.brand-tab--active) {
+    opacity: 0.65;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &--active {
+    background-color: black;
+    border-color: black;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// ── Panels ────────────────────────────────────────────────────────────────────
+
+.brand-panel {
+  display: none;
+}
+
+.brand-panel--active {
+  display: block;
+}
+
+// ── Hero ──────────────────────────────────────────────────────────────────────
+
+.brand-panel__hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-block-end: 32px;
+  align-items: center;
+
+  @include tablet-up {
+    grid-template-columns: 55fr 45fr;
+    gap: 40px;
+  }
+}
+
+.brand-panel__hero-img {
+  border-radius: var(--brand-hero-radius, 12px);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+
+  @include mobile-only {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.brand-panel__hero-img-el {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.brand-panel__hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.brand-panel__logo img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-panel__name {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.brand-panel__description {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground-rgb) / 0.75);
+  margin: 0;
+
+  p { margin: 0; }
+}
+
+.brand-panel__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 11px 28px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-block-start: 4px;
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  &:hover { opacity: 0.65; }
+  &:focus-visible { @include focus-ring; }
+
+  @include reduced-motion { transition: none; }
+}
+
+// ── Products slider ───────────────────────────────────────────────────────────
+
+.brand-panel__products {
+  position: relative;
+}
+
+.brand-products-swiper {
+  padding-inline: 40px;
+
+  @include tablet-up {
+    padding-inline: 52px;
+  }
+}
+
+// ── Nav arrows (shared with chars slider) ─────────────────────────────────────
+
+.brand-nav {
+  position: absolute;
+  top: 38%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgb(var(--color-background-rgb, 255 255 255));
+  box-shadow: 0 2px 8px rgb(0 0 0 / 14%);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: rgb(var(--color-foreground-rgb, 0 0 0));
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  &::after { display: none; }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &--prev { left: 0; }
+  &--next { right: 0; }
+
+  &.swiper-button-disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  &:hover:not(.swiper-button-disabled) { opacity: 0.7; }
+  &:focus-visible { @include focus-ring; }
+
+  @include reduced-motion { transition: none; }
+}
+
+// ── Product card ──────────────────────────────────────────────────────────────
+
+.brand-product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .brand-product-card__img {
+    transform: scale(1.04);
+  }
+}
+
+.brand-product-card__media {
+  position: relative;
+  background: rgb(var(--color-background-2-rgb, 245 245 242));
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 236 / 320;
+}
+
+.brand-product-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8%;
+  display: block;
+  transition: transform var(--animation-speed) var(--animation-easing);
+
+  &--placeholder {
+    padding: 15%;
+    opacity: 0.3;
+  }
+
+  &--hover {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  @include reduced-motion { transition: none; }
+}
+
+.brand-product-card:hover .brand-product-card__img--hover {
+  opacity: 1;
+}
+
+// Badges
+.brand-product-card__badges {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.4;
+
+  &--discount {
+    background: rgb(var(--color-primary-rgb, 255 100 0));
+    color: #fff;
+  }
+
+  &--sale {
+    background: rgb(var(--color-primary-rgb, 255 100 0));
+    color: #fff;
+  }
+
+  &--nuevo {
+    background: rgb(var(--color-primary-rgb, 255 100 0));
+    color: #fff;
+  }
+}
+
+// Card body
+.brand-product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.brand-product-card__vendor {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin: 0;
+}
+
+.brand-product-card__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.brand-product-card__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.875rem;
+  margin-block-start: 2px;
+}
+
+.brand-product-card__price-compare {
+  opacity: 0.45;
+  font-size: 0.8125rem;
+}
+
+.brand-product-card__price-sale {
+  font-weight: 600;
+  color: rgb(var(--color-primary-rgb, 255 100 0));
+}
+
+// ── Brand visibility ──────────────────────────────────────────────────────────
+
+.custom-brand-showcase[data-brand-show='little-mic'] { display: none; }
+
+.custom-brand-showcase[data-brand-show='mic'],
+.custom-brand-showcase[data-brand-show='all'] {
+  display: block;
+}
+
+
+@media (max-width: 768px) {
+
+  .custom-brand-showcase {
+    .custom-brand-showcase__header 
+    .custom-section-title 
+    .custom-section-title__row 
+    .custom-section-title__text p {
+      font-size: 25px;
+      line-height: 28px;
+      font-weight: 700;
+    }
+
+    .brand-panel {
+      .brand-panel__hero {
+        gap: 5px;
+      }
+      .brand-panel__hero-img {
+        aspect-ratio: 339 / 154;
+      }
+
+      .brand-panel__hero-content {
+        gap: 2px;
+        .brand-panel__logo {
+          max-width: 54px;
+        }
+
+        .brand-panel__cta {
+          max-width: 112px;
+          min-width: 112px;
+          max-height: 26px;
+          min-height: 26px;
+          padding: 0;
+          font-size: 10px;
+          line-height: 14px;
+          font-weight: 600;
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

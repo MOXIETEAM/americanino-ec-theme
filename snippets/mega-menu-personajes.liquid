@@ -1,0 +1,206 @@
+{%- comment -%}
+  mega-menu-personajes.liquid
+  Panel especial de 4 columnas para el ítem "Personajes / Licencias".
+
+  Layout:
+    Col 1 — Primera mitad de licencias (logo + nombre)
+    Col 2 — Segunda mitad de licencias (logo + nombre)
+    Col 3 — Sub-ítems de la licencia activa (cambia al hacer hover)
+    Col 4 — Banner de la licencia activa (cambia al hacer hover)
+
+  Parámetros:
+    link      {link}    Ítem de 1er nivel del menú (ej: "Personajes")
+    brand     {string}  'mic' | 'little-mic'
+    licencias {array}   shop.metaobjects['licencias_megamenu_*_item_personajes'].values
+
+  Sub-ítems (col 3): se resuelven en orden de prioridad:
+    1. Campo 'subcategorias' del metaobjeto (list.metaobject_reference con campos titulo + enlace)
+    2. 3er nivel del menú de navegación (link → licencia_link → sub)
+{%- endcomment -%}
+
+{%- liquid
+  assign panel_key = link.title | handleize
+  assign lic_count = licencias.size
+  assign half      = lic_count | divided_by: 2 | ceil
+-%}
+
+<div
+  class="moxie-mega__panel moxie-mega__panel--licenses"
+  data-panel="{{ panel_key }}"
+  data-brand="{{ brand }}"
+  role="region"
+  aria-label="{{ link.title }}"
+>
+  <div class="moxie-mega__panel-inner custom-center-container">
+    <div class="moxie-mega__lic-layout custom-standar-max-width">
+
+      {%- comment -%} ── COL 1: Primera mitad de licencias ── {%- endcomment -%}
+      <div class="moxie-mega__lic-col">
+        {%- assign lic_i = 0 -%}
+        {%- for lic in licencias -%}
+          {%- assign lic_i = lic_i | plus: 1 -%}
+          {%- if lic_i <= half -%}
+            {%- assign lic_key = lic.titulo.value | handleize -%}
+            <button
+              type="button"
+              class="moxie-mega__lic-item"
+              data-lic="{{ lic_key }}"
+              aria-pressed="false"
+            >
+              {%- if lic.icono_o_imagen_de_licencia.value != blank -%}
+                <span class="moxie-mega__lic-logo" aria-hidden="true">
+                  {{- lic.icono_o_imagen_de_licencia.value
+                    | image_url: width: 80
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'moxie-mega__lic-logo-img',
+                      alt: '',
+                      widths: '40, 80',
+                      sizes: '40px'
+                  -}}
+                </span>
+              {%- endif -%}
+              <span class="moxie-mega__lic-name">{{ lic.titulo.value }}</span>
+              <span class="moxie-mega__lic-arrow" aria-hidden="true">›</span>
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} ── COL 2: Segunda mitad de licencias ── {%- endcomment -%}
+      <div class="moxie-mega__lic-col">
+        {%- assign lic_i = 0 -%}
+        {%- for lic in licencias -%}
+          {%- assign lic_i = lic_i | plus: 1 -%}
+          {%- if lic_i > half -%}
+            {%- assign lic_key = lic.titulo.value | handleize -%}
+            <button
+              type="button"
+              class="moxie-mega__lic-item"
+              data-lic="{{ lic_key }}"
+              aria-pressed="false"
+            >
+              {%- if lic.icono_o_imagen_de_licencia.value != blank -%}
+                <span class="moxie-mega__lic-logo" aria-hidden="true">
+                  {{- lic.icono_o_imagen_de_licencia.value
+                    | image_url: width: 80
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'moxie-mega__lic-logo-img',
+                      alt: '',
+                      widths: '40, 80',
+                      sizes: '40px'
+                  -}}
+                </span>
+              {%- endif -%}
+              <span class="moxie-mega__lic-name">{{ lic.titulo.value }}</span>
+              <span class="moxie-mega__lic-arrow" aria-hidden="true">›</span>
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%}
+        ── COL 3: Sub-ítems por licencia ──
+        Renderizamos un bloque por cada licencia. El JS muestra el activo.
+        Prioridad: metaobjeto.subcategorias → navegación 3er nivel.
+      {%- endcomment -%}
+      <div class="moxie-mega__lic-subitems">
+        {%- for lic in licencias -%}
+          {%- liquid
+            assign lic_key    = lic.titulo.value | handleize
+            assign meta_subs  = lic.subcategorias.value
+            assign has_meta_subs = false
+            if meta_subs != blank and meta_subs.size > 0
+              assign has_meta_subs = true
+            endif
+
+            comment
+              Buscar el link de navegación correspondiente a esta licencia
+              para obtener: URL de "Ver todo" y sub-ítems del 3er nivel como fallback.
+            endcomment
+            assign nav_lic = blank
+            for nl in link.links
+              assign nl_key = nl.title | handleize
+              if nl_key == lic_key
+                assign nav_lic = nl
+                break
+              endif
+            endfor
+
+            assign lic_href = lic.link.value.url | default: ''
+            if lic_href == blank and nav_lic != blank
+              assign lic_href = nav_lic.url
+            endif
+          -%}
+
+          <div
+            class="moxie-mega__lic-subgroup"
+            data-lic-sub="{{ lic_key }}"
+          >
+            <ul class="moxie-mega__lic-sublist list-unstyled">
+              {%- if has_meta_subs -%}
+                {%- comment -%}
+                  Fuente 1: metaobjeto.subcategorias
+                  Asumimos que cada entrada tiene campos 'titulo' y 'enlace'.
+                  Si el campo es de tipo list.metaobject_reference, iteramos
+                  los objetos referenciados. Si es list.url o list.single_line_text,
+                  la lógica puede necesitar ajustarse al tipo de campo definido.
+                {%- endcomment -%}
+                {%- for sub in meta_subs -%}
+                  {%- liquid
+                    assign sub_titulo = sub.titulo.value | default: sub.title | default: sub
+                    assign sub_enlace = sub.enlace.value | default: sub.url | default: '#'
+                  -%}
+                  <li>
+                    <a href="{{ sub_enlace }}" class="moxie-mega__sublink">{{ sub_titulo }}</a>
+                  </li>
+                {%- endfor -%}
+              {%- elsif nav_lic != blank and nav_lic.links.size > 0 -%}
+                {%- comment -%} Fuente 2: 3er nivel del menú de navegación {%- endcomment -%}
+                {%- for sub in nav_lic.links -%}
+                  <li>
+                    <a href="{{ sub.url }}" class="moxie-mega__sublink">{{ sub.title }}</a>
+                  </li>
+                {%- endfor -%}
+              {%- endif -%}
+            </ul>
+
+            {%- if lic_href != blank and lic_href != '#' -%}
+              <a href="{{ lic_href }}" class="moxie-mega__lic-viewall">
+                Ver todo
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} ── COL 4: Banner por licencia ── {%- endcomment -%}
+      <div class="moxie-mega__lic-banners">
+        {%- for lic in licencias -%}
+          {%- if lic.banner_interno.value != blank -%}
+            {%- assign lic_key    = lic.titulo.value | handleize -%}
+            {%- assign lic_b_href = lic.link.value.url | default: '' -%}
+            <a
+              href="{{ lic_b_href | default: '#' }}"
+              class="moxie-mega__lic-banner"
+              data-lic-banner="{{ lic_key }}"
+              {% if lic_b_href == blank %}aria-hidden="true" tabindex="-1"{% endif %}
+            >
+              {{- lic.banner_interno.value
+                | image_url: width: 400
+                | image_tag:
+                  loading: 'lazy',
+                  class: 'moxie-mega__banner-lic-img',
+                  alt: lic.titulo.value,
+                  widths: '390',
+                  sizes: '390'
+              -}}
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+    </div>
+  </div>
+</div>

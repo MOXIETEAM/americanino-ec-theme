@@ -1,0 +1,85 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Features Bar ──────────────────────────────────────────────────────
+
+.custom-features-bar {
+  width: 100%;
+}
+
+// ── Grid ──────────────────────────────────────────────────────────────────────
+
+.custom-features-bar__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--features-cols-mobile, 1), 1fr);
+  gap: 12px;
+
+  @include tablet-up {
+    grid-template-columns: repeat(var(--features-cols-desktop, 4), 1fr);
+    gap: 16px;
+  }
+}
+
+// ── Feature card ──────────────────────────────────────────────────────────────
+
+.feature-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+
+  @include tablet-up {
+    padding: 20px 22px;
+    gap: 16px;
+  }
+}
+
+// ── Icon ──────────────────────────────────────────────────────────────────────
+
+.feature-card__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--feature-icon-color, inherit);
+}
+
+.feature-card__icon-img {
+  display: block;
+  width: auto;
+  height: var(--feature-icon-size, 40px);
+  object-fit: contain;
+  color: var(--feature-icon-color, inherit);
+}
+
+// ── Text body ─────────────────────────────────────────────────────────────────
+
+.feature-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.feature-card__title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.feature-card__desc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  opacity: 0.65;
+  margin: 0;
+}
+
+// ── Brand visibility ──────────────────────────────────────────────────────────
+
+.custom-features-bar[data-brand-show='little-mic'] { display: none; }
+
+.custom-features-bar[data-brand-show='mic'],
+.custom-features-bar[data-brand-show='all'] {
+  display: block;
+}

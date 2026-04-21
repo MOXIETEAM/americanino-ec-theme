@@ -1,0 +1,254 @@
+{%- comment -%} MOXIE: Features Bar - barra de caracteristicas/beneficios con icono y texto {%- endcomment -%}
+
+{%- liquid
+  assign brand_visibility = section.settings.brand_visibility | default: 'all'
+  assign cols_desktop = section.settings.columns_desktop | default: 4
+  assign cols_mobile = section.settings.columns_mobile | default: 1
+  assign padding_v = section.settings.padding_v | default: 24
+  assign icon_size = section.settings.icon_size | default: 40
+-%}
+
+<div class="custom-center-container custom-features-bar-mox">
+  <div
+    class="custom-features-bar custom-standar-max-width"
+    data-brand-show="{{ brand_visibility }}"
+    style="
+      padding-block: {{ padding_v }}px;
+      {%- if section.settings.bg_color != blank -%} background-color: {{ section.settings.bg_color }};{%- endif -%}
+      {%- if section.settings.border_color != blank -%}
+        border-top: 1px solid {{ section.settings.border_color }};
+        border-bottom: 1px solid {{ section.settings.border_color }};
+      {%- endif -%}
+      --features-cols-desktop: {{ cols_desktop }};
+      --features-cols-mobile: {{ cols_mobile }};
+      --feature-icon-size: {{ icon_size }}px;
+      {%- if section.settings.icon_color != blank -%} --feature-icon-color: {{ section.settings.icon_color }};{%- endif -%}
+    "
+    {{ section.shopify_attributes }}
+  >
+    <div class="custom-features-bar__grid page-width">
+      {%- for block in section.blocks -%}
+        {%- assign card_icon = block.settings.icon -%}
+        <div
+          class="feature-card"
+          style="
+            {%- if section.settings.card_bg != blank -%} background-color: {{ section.settings.card_bg }};{%- endif -%}
+            {%- if section.settings.card_border_color != blank -%} border: 1px solid {{ section.settings.card_border_color }};{%- endif -%}
+            border-radius: {{ section.settings.card_radius | default: 10 }}px;
+            {%- if block.settings.icon_color != blank -%} --feature-icon-color: {{ block.settings.icon_color }};{%- endif -%}
+          "
+          {{ block.shopify_attributes }}
+        >
+          {%- if card_icon != blank -%}
+            <div class="feature-card__icon" aria-hidden="true">
+              <img
+                src="{{ card_icon | image_url: height: icon_size }}"
+                width="auto"
+                height="{{ icon_size }}"
+                alt=""
+                loading="lazy"
+                class="feature-card__icon-img"
+              >
+            </div>
+          {%- endif -%}
+
+          <div class="feature-card__body">
+            {%- if block.settings.title != blank -%}
+              <p class="feature-card__title">{{ block.settings.title }}</p>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="feature-card__desc">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Moxie Features Bar",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Caracteristica",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icono (SVG / PNG)"
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Color del icono (anula el global)",
+          "info": "Solo aplica si el icono es un SVG con fill:currentColor"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titulo",
+          "default": "Envio gratuito"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Descripcion",
+          "default": "Envio gratis a partir de $150.000"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Marca"
+    },
+    {
+      "type": "select",
+      "id": "brand_visibility",
+      "label": "Visible para",
+      "options": [
+        { "value": "all", "label": "Ambas marcas" },
+        { "value": "mic", "label": "Solo MIC" },
+        { "value": "little-mic", "label": "Solo Little MIC" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "header",
+      "content": "Columnas"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columnas en desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columnas en mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Iconos"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamano del icono (px)",
+      "min": 20,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Color global del icono",
+      "info": "Solo aplica si el icono es un SVG con fill:currentColor"
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fondo de la seccion"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Linea separadora (superior e inferior)"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Fondo de cada tarjeta"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Borde de cada tarjeta",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Radio de borde de tarjeta (px)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical de la seccion",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Features Bar",
+      "category": "Moxie",
+      "settings": {
+        "columns_desktop": 4,
+        "columns_mobile": 1,
+        "card_border_color": "#e5e5e5",
+        "card_radius": 10,
+        "padding_v": 24
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": { "title": "Envio gratuito", "description": "Envio gratis a partir de $150.000 a todo el pais" }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Atencion al cliente",
+            "description": "Nuestro equipo estara disponible para ayudarte"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Facil devolucion",
+            "description": "Puedes realizar el proceso de devolucion completamente GRATIS"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Seguimiento de pedido",
+            "description": "Te enviamos el numero de guia para que puedas rastrearlo"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

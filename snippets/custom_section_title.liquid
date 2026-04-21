@@ -1,0 +1,185 @@
+{%- comment -%}
+  MOXIE: Reusable section title with up to 4 independent decorators.
+
+  Parameters:
+  - title          {String}  Richtext / HTML content
+  - title_align    {String}  'left' | 'center' | 'right'   (default: 'center')
+  - title_color    {String}  CSS color value                (optional)
+  - title_weight   {String}  font-weight value              (default: '700')
+  - title_style    {String}  font-style value               (default: 'normal')
+
+  Decorators (repeat pattern for dec_1 … dec_4):
+  - dec_N_image    {Object}  Shopify image object                               (optional)
+  - dec_N_size     {Number}  decorator height in px                             (default: 40)
+  - dec_N_position {String}  'top-left' | 'top-center' | 'top-right' |
+                              'bottom-left' | 'bottom-center' | 'bottom-right'  (default: 'top-left')
+  - dec_N_top      {Number}  offset from the top edge in px                     (default: 0)
+  - dec_N_right    {Number}  offset from the right edge in px                   (default: 0)
+  - dec_N_bottom   {Number}  offset from the bottom edge in px                  (default: 0)
+  - dec_N_left     {Number}  offset from the left edge in px                    (default: 0)
+
+  Backwards-compat alias (maps to dec_1):
+  - dec_image    → dec_1_image
+  - dec_size     → dec_1_size
+  - dec_position → dec_1_position  (remaps: above→top-center, below→bottom-center, left→top-left, right→top-right)
+  - dec_top      → dec_1_top
+  - dec_right    → dec_1_right
+  - dec_bottom   → dec_1_bottom
+  - dec_left     → dec_1_left
+{%- endcomment -%}
+
+{%- liquid
+  assign _align  = title_align  | default: 'center'
+  assign _weight = title_weight | default: '700'
+  assign _style  = title_style  | default: 'normal'
+
+  comment ── Decorator 1 (with backwards-compat alias)
+  endcomment
+  assign _d1_img = dec_1_image | default: dec_image
+  assign _d1_sz  = dec_1_size  | default: dec_size | default: 40
+
+  assign _d1_pos_raw = dec_1_position | default: dec_position | default: 'top-left'
+  case _d1_pos_raw
+    when 'above'
+      assign _d1_pos = 'top-center'
+    when 'below'
+      assign _d1_pos = 'bottom-center'
+    when 'left'
+      assign _d1_pos = 'top-left'
+    when 'right'
+      assign _d1_pos = 'top-right'
+    else
+      assign _d1_pos = _d1_pos_raw
+  endcase
+
+  assign _d1_top    = dec_1_top    | default: dec_top    | default: 0
+  assign _d1_right  = dec_1_right  | default: dec_right  | default: 0
+  assign _d1_bottom = dec_1_bottom | default: dec_bottom | default: 0
+  assign _d1_left   = dec_1_left   | default: dec_left   | default: 0
+
+  comment ── Decorator 2
+  endcomment
+  assign _d2_img = dec_2_image
+  assign _d2_sz  = dec_2_size | default: 40
+
+  assign _d2_pos_raw = dec_2_position | default: 'top-left'
+  case _d2_pos_raw
+    when 'above'
+      assign _d2_pos = 'top-center'
+    when 'below'
+      assign _d2_pos = 'bottom-center'
+    when 'left'
+      assign _d2_pos = 'top-left'
+    when 'right'
+      assign _d2_pos = 'top-right'
+    else
+      assign _d2_pos = _d2_pos_raw
+  endcase
+
+  assign _d2_top    = dec_2_top    | default: 0
+  assign _d2_right  = dec_2_right  | default: 0
+  assign _d2_bottom = dec_2_bottom | default: 0
+  assign _d2_left   = dec_2_left   | default: 0
+
+  comment ── Decorator 3
+  endcomment
+  assign _d3_img = dec_3_image
+  assign _d3_sz  = dec_3_size | default: 40
+
+  assign _d3_pos_raw = dec_3_position | default: 'top-left'
+  case _d3_pos_raw
+    when 'above'
+      assign _d3_pos = 'top-center'
+    when 'below'
+      assign _d3_pos = 'bottom-center'
+    when 'left'
+      assign _d3_pos = 'top-left'
+    when 'right'
+      assign _d3_pos = 'top-right'
+    else
+      assign _d3_pos = _d3_pos_raw
+  endcase
+
+  assign _d3_top    = dec_3_top    | default: 0
+  assign _d3_right  = dec_3_right  | default: 0
+  assign _d3_bottom = dec_3_bottom | default: 0
+  assign _d3_left   = dec_3_left   | default: 0
+
+  comment ── Decorator 4
+  endcomment
+  assign _d4_img = dec_4_image
+  assign _d4_sz  = dec_4_size | default: 40
+
+  assign _d4_pos_raw = dec_4_position | default: 'top-left'
+  case _d4_pos_raw
+    when 'above'
+      assign _d4_pos = 'top-center'
+    when 'below'
+      assign _d4_pos = 'bottom-center'
+    when 'left'
+      assign _d4_pos = 'top-left'
+    when 'right'
+      assign _d4_pos = 'top-right'
+    else
+      assign _d4_pos = _d4_pos_raw
+  endcase
+
+  assign _d4_top    = dec_4_top    | default: 0
+  assign _d4_right  = dec_4_right  | default: 0
+  assign _d4_bottom = dec_4_bottom | default: 0
+  assign _d4_left   = dec_4_left   | default: 0
+-%}
+
+{%- if title != blank -%}
+<div
+  class="custom-section-title"
+  style="--title-align: {{ _align }}; text-align: {{ _align }};"
+>
+  <div class="custom-section-title__row">
+    <div class="custom-section-title__text-wrapper">
+
+      <div
+        class="custom-section-title__text rte"
+        style="
+          font-weight: {{ _weight }};
+          font-style: {{ _style }};
+          {%- if title_color != blank -%} color: {{ title_color }};{%- endif -%}
+        "
+      >{{ title }}</div>
+
+      {%- if _d1_img -%}
+        <span
+          class="custom-section-title__decorator custom-section-title__decorator--{{ _d1_pos }}"
+          style="--dec-top:{{ _d1_top }}px;--dec-right:{{ _d1_right }}px;--dec-bottom:{{ _d1_bottom }}px;--dec-left:{{ _d1_left }}px;--dec-h:{{ _d1_sz }}px;"
+          aria-hidden="true"
+        ><img src="{{ _d1_img | image_url: height: _d1_sz }}" alt="" loading="eager"></span>
+      {%- endif -%}
+
+      {%- if _d2_img -%}
+        <span
+          class="custom-section-title__decorator custom-section-title__decorator--{{ _d2_pos }}"
+          style="--dec-top:{{ _d2_top }}px;--dec-right:{{ _d2_right }}px;--dec-bottom:{{ _d2_bottom }}px;--dec-left:{{ _d2_left }}px;--dec-h:{{ _d2_sz }}px;"
+          aria-hidden="true"
+        ><img src="{{ _d2_img | image_url: height: _d2_sz }}" alt="" loading="eager"></span>
+      {%- endif -%}
+
+      {%- if _d3_img -%}
+        <span
+          class="custom-section-title__decorator custom-section-title__decorator--{{ _d3_pos }}"
+          style="--dec-top:{{ _d3_top }}px;--dec-right:{{ _d3_right }}px;--dec-bottom:{{ _d3_bottom }}px;--dec-left:{{ _d3_left }}px;--dec-h:{{ _d3_sz }}px;"
+          aria-hidden="true"
+        ><img src="{{ _d3_img | image_url: height: _d3_sz }}" alt="" loading="eager"></span>
+      {%- endif -%}
+
+      {%- if _d4_img -%}
+        <span
+          class="custom-section-title__decorator custom-section-title__decorator--{{ _d4_pos }}"
+          style="--dec-top:{{ _d4_top }}px;--dec-right:{{ _d4_right }}px;--dec-bottom:{{ _d4_bottom }}px;--dec-left:{{ _d4_left }}px;--dec-h:{{ _d4_sz }}px;"
+          aria-hidden="true"
+        ><img src="{{ _d4_img | image_url: height: _d4_sz }}" alt="" loading="eager"></span>
+      {%- endif -%}
+
+    </div>
+  </div>
+</div>
+{%- endif -%}

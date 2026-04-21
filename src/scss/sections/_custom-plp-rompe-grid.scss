@@ -1,0 +1,129 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: PLP Rompe-Grid ────────────────────────────────────────────────────
+// Banners inyectados dentro del grid de productos como items CSS grid nativos.
+// Los elementos son <li class="product-grid__item plp-rompe-grid"> creados por JS.
+
+// ── Item del grid ─────────────────────────────────────────────────────────────
+
+.plp-rompe-grid {
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 220px;
+  position: relative;
+
+  &--span-2 {
+    grid-column: span 2;
+  }
+
+  @include mobile-only {
+    // En mobile (2 columnas) span-2 ocupa todo el ancho — correcto.
+    min-height: 160px;
+  }
+}
+
+// ── Wrapper interior (a o div) ────────────────────────────────────────────────
+
+.plp-rompe-grid__inner {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+
+  &[href]:hover {
+    .plp-rompe-grid__img {
+      transform: scale(1.04);
+    }
+
+    .plp-rompe-grid__btn {
+      opacity: 0.75;
+    }
+  }
+}
+
+// ── Imagen ────────────────────────────────────────────────────────────────────
+
+.plp-rompe-grid__media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.plp-rompe-grid__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform var(--animation-speed, 0.35s) var(--animation-easing, ease);
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// ── Contenido de texto ────────────────────────────────────────────────────────
+
+.plp-rompe-grid__content {
+  position: relative;
+  z-index: 1;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+
+  @include tablet-up {
+    padding: 28px 32px;
+  }
+}
+
+.plp-rompe-grid__title {
+  font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 6px;
+}
+
+.plp-rompe-grid__desc {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0 0 14px;
+  opacity: 0.88;
+}
+
+.plp-rompe-grid__btn {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 8px 20px;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: opacity var(--animation-speed, 0.2s) ease;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// ── Placeholder en el editor de Shopify ───────────────────────────────────────
+
+.plp-rompe-grid__editor-placeholder {
+  background: #f5f5f5;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 20px 24px;
+  font-size: 0.875rem;
+  color: #666;
+  text-align: center;
+  margin: 0;
+}

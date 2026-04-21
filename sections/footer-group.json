@@ -1,0 +1,139 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "custom_seo_text_MqLxez": {
+      "type": "custom_seo_text",
+      "blocks": {
+        "content_hzzT4F": {
+          "type": "content",
+          "settings": {
+            "heading": "Ropa de hombre y mujer",
+            "body": "<p>Nada mejor para una aventura que contar con prendas atemporales, llenas de estilo y que vibran en sincronía con espíritus que aman los desafíos y emprenden retos diarios. Inspirados en este pensamiento, creamos ropa para hombre. Modernas elecciones que trazarán un antes y un después en la vida de quienes la lleven puesta. Nada mejor para una aventura que contar con prendas atemporales, llenas de estilo y que vibran en sincronía con espíritus que aman los desafíos y emprenden retos diarios. Inspirados en este pensamiento, creamos ropa para hombre. Modernas elecciones que trazarán un antes y un después en la vida de quienes la lleven puesta. Nada mejor para una aventura que contar con prendas atemporales, llenas de estilo y que vibran en sincronía con espíritus que aman los desafíos y emprenden retos diarios. Inspirados en este pensamiento, creamos ropa para hombre. Modernas elecciones que trazarán un antes y un después en la vida de quienes la lleven puesta.</p>"
+          }
+        },
+        "tag_njg6FD": {
+          "type": "tag",
+          "settings": {
+            "label": "Somos Denim",
+            "link": ""
+          }
+        },
+        "tag_etTzCa": {
+          "type": "tag",
+          "settings": {
+            "label": "Nueva Coleccion",
+            "link": ""
+          }
+        },
+        "tag_RYaHLA": {
+          "type": "tag",
+          "settings": {
+            "label": "Camisetas para Hombres",
+            "link": ""
+          }
+        },
+        "tag_dbT8Kk": {
+          "type": "tag",
+          "settings": {
+            "label": "Camisetas para Mujeres",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "content_hzzT4F",
+        "tag_njg6FD",
+        "tag_etTzCa",
+        "tag_RYaHLA",
+        "tag_dbT8Kk"
+      ],
+      "name": "Moxie SEO Text",
+      "settings": {
+        "text_align": "center",
+        "collapse_enabled": true,
+        "collapse_height": 210,
+        "label_more": "Ver mas",
+        "label_less": "Ver menos",
+        "bg_color": "",
+        "border_color": "",
+        "padding_v": 40
+      }
+    },
+    "custom_footer_moxie": {
+      "type": "custom_footer",
+      "blocks": {
+        "brand_info_TE9bp4": {
+          "type": "brand_info",
+          "settings": {
+            "logo": "shopify://shop_images/logo-mic.png",
+            "whatsapp_url": "/",
+            "whatsapp_label": "Chat con un asesor de whatsapp",
+            "phone": "+57 300 910 83 11",
+            "email": "/",
+            "store_locator_url": "/",
+            "instagram_url": "/",
+            "facebook_url": "/",
+            "tiktok_url": "/",
+            "youtube_url": "/"
+          }
+        },
+        "nav_column_EPHYRQ": {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Ayuda",
+            "menu": "ayuda"
+          }
+        },
+        "nav_column_LfMpQY": {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Empresa",
+            "menu": "customer-account-main-menu"
+          }
+        },
+        "nav_column_YT4abe": {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Legales",
+            "menu": "footer-info-legal"
+          }
+        }
+      },
+      "block_order": [
+        "brand_info_TE9bp4",
+        "nav_column_EPHYRQ",
+        "nav_column_LfMpQY",
+        "nav_column_YT4abe"
+      ],
+      "name": "Moxie Footer",
+      "settings": {
+        "show_newsletter": true,
+        "newsletter_title": "<p>Suscríbete a nuestro newsletter y <strong>recibe 30% OFF en tu primera compra</strong></p>",
+        "newsletter_sub": "Todas las novedades, lanzamientos, descuentos exclusivos y mucho más",
+        "newsletter_btn_label": "Suscríbete",
+        "newsletter_url": "/",
+        "newsletter_bg_color": "#f7f6f1",
+        "newsletter_bg_imagec": "shopify://shop_images/Vector_7_1.svg",
+        "tagline_mic": "AMERICANINO",
+        "tagline_color": "",
+        "payments_image": "shopify://shop_images/payments.png",
+        "color_scheme": "scheme-1",
+        "bg_color": "#eeeeee"
+      }
+    }
+  },
+  "order": [
+    "custom_seo_text_MqLxez",
+    "custom_footer_moxie"
+  ]
+}

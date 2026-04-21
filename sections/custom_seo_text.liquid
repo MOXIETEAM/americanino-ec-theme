@@ -1,0 +1,287 @@
+{%- comment -%} MOXIE: SEO Text - contenido de texto optimizado para SEO con colapso y pills de keywords {%- endcomment -%}
+
+{%- liquid
+  assign brand_visibility  = section.settings.brand_visibility | default: 'all'
+  assign text_align        = section.settings.text_align       | default: 'center'
+  assign collapse_enabled  = section.settings.collapse_enabled
+  assign collapse_height   = section.settings.collapse_height  | default: 120
+  assign content_blocks    = section.blocks | where: 'type', 'content'
+  assign tag_blocks        = section.blocks | where: 'type', 'tag'
+  assign padding_v         = section.settings.padding_v        | default: 40
+-%}
+
+<div
+  class="custom-seo-text"
+  id="seo-text-{{ section.id }}"
+  data-brand-show="{{ brand_visibility }}"
+  style="
+    padding-block: {{ padding_v }}px;
+    --seo-text-align: {{ text_align }};
+    {%- if section.settings.bg_color != blank -%} background-color: {{ section.settings.bg_color }};{%- endif -%}
+    {%- if section.settings.border_color != blank -%}
+      border-top: 1px solid {{ section.settings.border_color }};
+    {%- endif -%}
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="custom-seo-text__inner page-width">
+
+    {%- comment -%} ── Content blocks ─────────────────────────────────────── {%- endcomment -%}
+    {%- if content_blocks.size > 0 -%}
+      <div
+        class="custom-seo-text__body{% if collapse_enabled %} custom-seo-text__body--collapsible custom-seo-text__body--collapsed{% endif %}"
+        {%- if collapse_enabled -%}
+          style="--seo-collapse-height: {{ collapse_height }}px;"
+          data-collapsible
+        {%- endif -%}
+      >
+        {%- for block in content_blocks -%}
+          <div class="seo-content-block" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}
+              <p class="seo-content-block__heading">{{ block.settings.heading }}</p>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="seo-content-block__body rte">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if collapse_enabled -%}
+        <div class="custom-seo-text__toggle-wrap" data-toggle-wrap>
+          <button class="custom-seo-text__toggle" data-toggle aria-expanded="false">
+            <span data-label-more>{{ section.settings.label_more | default: 'Ver mas' }}</span>
+            <span data-label-less hidden>{{ section.settings.label_less | default: 'Ver menos' }}</span>
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} ── Tag pills ──────────────────────────────────────────── {%- endcomment -%}
+    {%- if tag_blocks.size > 0 -%}
+      <div class="custom-seo-text__tags">
+        {%- for tag in tag_blocks -%}
+          {%- if tag.settings.link != blank -%}
+            <a class="seo-tag" href="{{ tag.settings.link }}" {{ tag.shopify_attributes }}>{{ tag.settings.label }}</a>
+          {%- else -%}
+            <span class="seo-tag" {{ tag.shopify_attributes }}>{{ tag.settings.label }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var section = document.getElementById('seo-text-{{ section.id }}');
+  if (!section) return;
+
+  var body       = section.querySelector('[data-collapsible]');
+  var toggleWrap = section.querySelector('[data-toggle-wrap]');
+  var toggle     = section.querySelector('[data-toggle]');
+  if (!body || !toggle) return;
+
+  var collapseH  = parseFloat(getComputedStyle(body).getPropertyValue('--seo-collapse-height')) || 120;
+
+  function checkOverflow() {
+    body.style.maxHeight = 'none';
+    var fullH = body.scrollHeight;
+    if (fullH <= collapseH) {
+      toggleWrap.style.display = 'none';
+      body.classList.remove('custom-seo-text__body--collapsed');
+    } else {
+      toggleWrap.style.display = '';
+      body.classList.add('custom-seo-text__body--collapsed');
+      body.style.maxHeight = '';
+    }
+  }
+
+  checkOverflow();
+
+  toggle.addEventListener('click', function () {
+    var isCollapsed = body.classList.contains('custom-seo-text__body--collapsed');
+    if (isCollapsed) {
+      body.classList.remove('custom-seo-text__body--collapsed');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.querySelector('[data-label-more]').hidden = true;
+      toggle.querySelector('[data-label-less]').hidden = false;
+    } else {
+      body.classList.add('custom-seo-text__body--collapsed');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.querySelector('[data-label-more]').hidden = false;
+      toggle.querySelector('[data-label-less]').hidden = true;
+    }
+  });
+
+  document.addEventListener('shopify:section:load', function (e) {
+    if (e.detail && e.detail.sectionId === '{{ section.id }}') checkOverflow();
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Moxie SEO Text",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 30,
+  "blocks": [
+    {
+      "type": "content",
+      "name": "Bloque de contenido",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Titulo (opcional)"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Texto"
+        }
+      ]
+    },
+    {
+      "type": "tag",
+      "name": "Pill de keyword",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Texto del pill",
+          "default": "Somos Denim"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace (opcional)"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Marca"
+    },
+    {
+      "type": "select",
+      "id": "brand_visibility",
+      "label": "Visible para",
+      "options": [
+        { "value": "all",        "label": "Ambas marcas" },
+        { "value": "mic",        "label": "Solo MIC" },
+        { "value": "little-mic", "label": "Solo Little MIC" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alineacion del texto",
+      "options": [
+        { "value": "left",   "label": "Izquierda" },
+        { "value": "center", "label": "Centro" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colapso de contenido"
+    },
+    {
+      "type": "checkbox",
+      "id": "collapse_enabled",
+      "label": "Activar colapso (Ver mas / Ver menos)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "collapse_height",
+      "label": "Altura visible al colapsar (px)",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "text",
+      "id": "label_more",
+      "label": "Texto del boton expandir",
+      "default": "Ver mas"
+    },
+    {
+      "type": "text",
+      "id": "label_less",
+      "label": "Texto del boton colapsar",
+      "default": "Ver menos"
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Linea separadora superior"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie SEO Text",
+      "category": "Moxie",
+      "settings": {
+        "text_align": "center",
+        "collapse_enabled": true,
+        "collapse_height": 120
+      },
+      "blocks": [
+        {
+          "type": "content",
+          "settings": {
+            "heading": "Ropa infantil",
+            "body": "<p>La mejor tienda de ropa infantil esta aqui. Compra ya desde camisetas hasta pijamas, itodo para tus pequenos lo tiene MIC!</p>"
+          }
+        },
+        {
+          "type": "content",
+          "settings": {
+            "heading": "Ropa de hombre y mujer",
+            "body": "<p>Nada mejor para una aventura que contar con prendas atemporales, llenas de estilo y que vibran en sincronía con espíritus que aman los desafíos y emprenden retos diarios. Inspirados en este pensamiento, creamos ropa para hombre y mujer. Modernas elecciones que trazarán un antes y un después en la vida de quienes la lleven puesta.</p>"
+          }
+        },
+        { "type": "tag", "settings": { "label": "Somos Denim" } },
+        { "type": "tag", "settings": { "label": "Somos Denim" } },
+        { "type": "tag", "settings": { "label": "Camisetas para Hombres" } },
+        { "type": "tag", "settings": { "label": "Camisetas para Mujeres" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

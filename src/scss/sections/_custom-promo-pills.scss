@@ -1,0 +1,181 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Promo Pills Banner ────────────────────────────────────────────────
+
+.custom-promo-pills {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-promo-pills__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  @include tablet-up {
+    flex-direction: row;
+    gap: 28px;
+  }
+}
+
+// ── Title wrapper — layout adapts to decorator position ──────────────────────
+
+.custom-promo-pills__title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.custom-promo-pills__title-wrap--above,
+.custom-promo-pills__title-wrap--below {
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.custom-promo-pills__title {
+  font-size: 37px;
+  font-weight: 700;
+  line-height: 42px;
+  margin: 0;
+  white-space: nowrap;
+  color: #000;
+
+  // Normalise richtext block-level elements
+  p, h1, h2, h3 {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
+
+.custom-promo-pills__decorator img {
+  display: block;
+  width: auto;
+  object-fit: contain;
+}
+
+// ── Pills ─────────────────────────────────────────────────────────────────────
+
+.custom-promo-pills__list {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.custom-promo-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 999px;
+  padding: 8px 22px;
+  min-width: 170px;
+  max-height: 64px;
+  text-decoration: none;
+  line-height: 1;
+  gap: 1px;
+}
+
+a.custom-promo-pill {
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  &:hover {
+    opacity: var(--opacity-subdued-text);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.custom-promo-pill__main {
+  font-size: 1.375rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.custom-promo-pill__sub {
+  font-size: 0.5625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+// ── Image pill variant ────────────────────────────────────────────────────────
+
+.custom-promo-pill--image {
+  padding: 6px 16px;
+  overflow: hidden; // red de seguridad: la imagen nunca desborda la pill
+}
+
+.custom-promo-pill__img {
+  display: block;
+  width: auto;
+  // max-height = pill max-height (64px) - padding vertical (6px × 2 = 12px)
+  max-height: 52px;
+  object-fit: contain;
+}
+
+// ── Brand visibility ──────────────────────────────────────────────────────────
+
+.custom-promo-pills[data-brand-show='little-mic'] { display: none; }
+
+.custom-promo-pills[data-brand-show='mic'],
+.custom-promo-pills[data-brand-show='all'] {
+  display: block;
+}
+
+
+@media (max-width: 768px) {
+
+  .custom-promo-pills {
+    .custom-promo-pills__title {
+      font-size: 21px;
+      line-height: 28px;
+      font-weight: 700;
+    }
+  
+    .custom-promo-pill  {
+      min-width: 75px;
+      max-height: 28px;
+      min-height: 28px;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+
+      .custom-promo-pill__main {
+        font-size: 13px;
+        line-height: 15px;
+      }
+      .custom-promo-pill__sub {
+        font-size: 13px;
+        line-height: 15px;
+      }
+    }
+
+    .custom-promo-pill--image {
+      padding: 4px 10px;
+
+      // max-height = pill height (28px) - padding vertical (4px × 2 = 8px)
+      .custom-promo-pill__img {
+        max-height: 20px;
+      }
+    }
+
+  }
+}

@@ -1,0 +1,306 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Grid Panels ───────────────────────────────────────────────────────
+
+.custom-grid-panels {
+  width: 100%;
+}
+
+// ── Grid container ────────────────────────────────────────────────────────────
+
+.custom-grid-panels__grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols-mobile, 1), 1fr);
+  grid-auto-rows: var(--grid-row-h-mobile, 220px);
+  gap: var(--grid-gap, 8px);
+
+  @include tablet-up {
+    grid-template-columns: repeat(var(--grid-cols-desktop, 3), 1fr);
+    grid-auto-rows: var(--grid-row-h-desktop, 320px);
+  }
+}
+
+// ── Individual panel ──────────────────────────────────────────────────────────
+
+.grid-panel {
+  grid-column: span 1;
+  grid-row: span 1;
+  min-width: 0;
+  min-height: 0;
+
+  @include tablet-up {
+    grid-column: span var(--panel-col-span, 1);
+    grid-row: span var(--panel-row-span, 1);
+  }
+}
+
+// ── Frame (fills the panel cell) ──────────────────────────────────────────────
+
+.grid-panel__frame {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  border-radius: inherit;
+}
+
+// ── Image ─────────────────────────────────────────────────────────────────────
+
+.grid-panel__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+
+  &--placeholder {
+    opacity: 0.25;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.grid-panel__frame:hover .grid-panel__img:not(.grid-panel__img--placeholder) {
+  transform: scale(1.04);
+}
+
+// ── Overlay ───────────────────────────────────────────────────────────────────
+
+.grid-panel__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  &--gradient {
+    background: linear-gradient(
+      to top,
+      var(--overlay-color, rgba(0, 0, 0, 0.55)) 0%,
+      transparent 60%
+    );
+  }
+
+  &--solid {
+    background: var(--overlay-color, rgba(0, 0, 0, 0.35));
+  }
+}
+
+// ── Content layer ─────────────────────────────────────────────────────────────
+
+.grid-panel__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  padding: 16px 18px;
+  z-index: 2;
+
+  @include tablet-up {
+    padding: 20px 24px;
+  }
+}
+
+// ── Content align: bottom-spread ─────────────────────────────────────────────
+// Title on the left, CTA pill on the right — both at the bottom
+
+.grid-panel--bottom-spread .grid-panel__content {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.grid-panel--bottom-spread .grid-panel__decorator {
+  display: none; // decorator not shown in spread layout
+}
+
+// ── Content align: bottom-center ─────────────────────────────────────────────
+
+.grid-panel--bottom-center .grid-panel__content {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  text-align: center;
+}
+
+// ── Content align: center ─────────────────────────────────────────────────────
+
+.grid-panel--center .grid-panel__content {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+// ── Decorator image ───────────────────────────────────────────────────────────
+
+.grid-panel__decorator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  img {
+    display: block;
+    height: auto;
+    width: auto;
+    max-height: 48px;
+    object-fit: contain;
+  }
+}
+
+// ── Title ─────────────────────────────────────────────────────────────────────
+
+.grid-panel__title {
+  font-size: clamp(0.9375rem, 2vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+
+  p, h1, h2, h3, h4 {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+
+  strong { font-weight: 800; }
+  em     { font-style: italic; }
+
+  .grid-panel--bottom-spread & {
+    font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  }
+}
+
+// ── CTA pill ──────────────────────────────────────────────────────────────────
+
+.grid-panel__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #1a1a1a;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  .grid-panel__frame:hover & {
+    opacity: 0.85;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// ── Promo frame ───────────────────────────────────────────────────────────────
+
+.grid-panel__frame--promo {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+// ── Promo content ─────────────────────────────────────────────────────────────
+
+.grid-promo {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 20px 18px;
+  width: 100%;
+  height: 100%;
+}
+
+.grid-promo__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgb(var(--color-primary-rgb, 255 100 0));
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.grid-promo__amount {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 4px;
+  line-height: 1;
+}
+
+.grid-promo__main {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.grid-promo__sub {
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.grid-promo__body {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.grid-panel__cta--promo {
+  margin-block-start: 4px;
+}
+
+.grid-promo__disclaimer {
+  font-size: 0.6875rem;
+  opacity: 0.6;
+  margin: 0;
+  line-height: 1.4;
+}
+
+// ── Brand visibility ──────────────────────────────────────────────────────────
+
+.custom-grid-panels[data-brand-show='little-mic'] { display: none; }
+
+.custom-grid-panels[data-brand-show='mic'],
+.custom-grid-panels[data-brand-show='all'] {
+  display: block;
+}
+
+@media (max-width: 768px) {
+
+  .custom-grid-panels {
+    .grid-panel__content {
+      .grid-panel__title {
+        font-size: 45px;
+        font-weight: 600;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.5019607843);
+
+      }
+    }
+  }
+}

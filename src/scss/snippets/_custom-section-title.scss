@@ -1,0 +1,49 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Reusable section title snippet ────────────────────────────────────
+
+// Outer wrapper: always column so above/below groups stack naturally
+.custom-section-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+// Middle row: left decorators · title text · right decorators
+.custom-section-title__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: var(--title-align, center);
+  width: 100%;
+  gap: 8px;
+}
+
+// Above / below decorator groups (horizontal strip)
+.custom-section-title__dec-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: var(--title-align, center);
+  gap: 6px;
+}
+
+.custom-section-title__text {
+  margin: 0;
+
+  // Normalise richtext block elements
+  p, h1, h2, h3, h4 {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
+
+.custom-section-title__decorator img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}

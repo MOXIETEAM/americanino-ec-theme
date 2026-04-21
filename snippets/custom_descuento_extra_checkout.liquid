@@ -1,0 +1,36 @@
+{%- comment -%}
+  MOXIE: Descuento Extra — aplica el descuento en el checkout
+
+  Busca el metaobject descuento_extra activo y, si tiene un
+  `discount_code` configurado, inyecta un input oculto en el
+  formulario del carrito para que el código se aplique
+  automáticamente al hacer clic en "Finalizar compra".
+
+  ───────────────────────────────────────────────────────────
+  Requisito en Shopify Admin:
+    1. Ve a Descuentos > Crear descuento > Código de descuento
+    2. Crea un descuento de porcentaje que coincida con el
+       `discount_pct` del metaobject (ej. 15% sobre productos
+       de la colección correcta).
+    3. Copia el código (ej. "EXTRA15") en el campo
+       `discount_code` del metaobject descuento_extra.
+  ───────────────────────────────────────────────────────────
+{%- endcomment -%}
+
+{%- liquid
+  assign mox_code = nil
+
+  for d in shop.metaobjects.descuento_extra.values
+    if d.active.value == true
+      assign raw_code = d.discount_code.value | strip
+      if raw_code != blank
+        assign mox_code = raw_code
+      endif
+      break
+    endif
+  endfor
+-%}
+
+{%- if mox_code != blank -%}
+  {{- '<input type="hidden" name="discount" value="' | append: mox_code | append: '">' -}}
+{%- endif -%}

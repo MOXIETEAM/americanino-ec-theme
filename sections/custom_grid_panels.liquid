@@ -1,0 +1,768 @@
+{%- comment -%} MOXIE: Grid Panels - cuadricula configurable de imagenes y paneles promocionales {%- endcomment -%}
+
+{%- liquid
+  assign brand_visibility  = section.settings.brand_visibility | default: 'all'
+  assign cols_desktop      = section.settings.columns_desktop | default: 3
+  assign cols_mobile       = section.settings.columns_mobile  | default: 1
+  assign row_h_desktop     = section.settings.row_height      | default: 320
+  assign row_h_mobile      = section.settings.row_height_mobile | default: 220
+  assign grid_gap          = section.settings.gap             | default: 8
+  assign padding_v         = section.settings.padding_v       | default: 0
+  assign border_w          = section.settings.border_width    | default: 0
+  assign border_r          = section.settings.border_radius   | default: 0
+-%}
+
+<div
+  class="custom-grid-panels"
+  data-brand-show="{{ brand_visibility }}"
+  style="
+    padding-block: {{ padding_v }}px;
+    {%- if section.settings.bg_color != blank -%} background-color: {{ section.settings.bg_color }};{%- endif -%}
+    {%- if border_w > 0 and section.settings.border_color != blank -%}
+      border: {{ border_w }}px solid {{ section.settings.border_color }};
+    {%- endif -%}
+    border-radius: {{ border_r }}px;
+    overflow: hidden;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div
+    class="custom-grid-panels__grid"
+    style="
+      --grid-cols-desktop: {{ cols_desktop }};
+      --grid-cols-mobile: {{ cols_mobile }};
+      --grid-row-h-desktop: {{ row_h_desktop }}px;
+      --grid-row-h-mobile: {{ row_h_mobile }}px;
+      --grid-gap: {{ grid_gap }}px;
+    "
+  >
+    {%- for block in section.blocks -%}
+      {%- liquid
+        assign content_type  = block.settings.content_type | default: 'image'
+        assign col_span      = block.settings.col_span | default: 1
+        assign row_span      = block.settings.row_span | default: 1
+        assign content_align = block.settings.content_align | default: 'bottom-spread'
+        assign block_link    = block.settings.cta_link
+        assign cta_label     = block.settings.cta_label
+        assign cta_bg        = block.settings.cta_bg
+        assign cta_tc        = block.settings.cta_text_color
+        assign title         = block.settings.title
+        assign title_color   = block.settings.title_color
+
+        assign _d1_img = block.settings.dec_1_image
+        assign _d1_sz  = block.settings.dec_1_size | default: 40
+        assign _d1_pos_raw = block.settings.dec_1_position | default: 'top-left'
+        case _d1_pos_raw
+          when 'above'
+            assign _d1_pos = 'top-center'
+          when 'below'
+            assign _d1_pos = 'bottom-center'
+          when 'left'
+            assign _d1_pos = 'top-left'
+          when 'right'
+            assign _d1_pos = 'top-right'
+          else
+            assign _d1_pos = _d1_pos_raw
+        endcase
+        assign _d1_top    = block.settings.dec_1_top    | default: 0
+        assign _d1_right  = block.settings.dec_1_right  | default: 0
+        assign _d1_bottom = block.settings.dec_1_bottom | default: 0
+        assign _d1_left   = block.settings.dec_1_left   | default: 0
+
+        assign _d2_img = block.settings.dec_2_image
+        assign _d2_sz  = block.settings.dec_2_size | default: 40
+        assign _d2_pos_raw = block.settings.dec_2_position | default: 'top-left'
+        case _d2_pos_raw
+          when 'above'
+            assign _d2_pos = 'top-center'
+          when 'below'
+            assign _d2_pos = 'bottom-center'
+          when 'left'
+            assign _d2_pos = 'top-left'
+          when 'right'
+            assign _d2_pos = 'top-right'
+          else
+            assign _d2_pos = _d2_pos_raw
+        endcase
+        assign _d2_top    = block.settings.dec_2_top    | default: 0
+        assign _d2_right  = block.settings.dec_2_right  | default: 0
+        assign _d2_bottom = block.settings.dec_2_bottom | default: 0
+        assign _d2_left   = block.settings.dec_2_left   | default: 0
+      -%}
+
+      <div
+        class="grid-panel grid-panel--{{ content_type }} grid-panel--{{ content_align }}"
+        style="--panel-col-span: {{ col_span }}; --panel-row-span: {{ row_span }};"
+        {{ block.shopify_attributes }}
+      >
+
+        {%- comment -%} ── IMAGE panel ─────────────────────────────────── {%- endcomment -%}
+        {%- if content_type == 'image' -%}
+
+          {%- if block_link != blank -%}
+            <a class="grid-panel__frame" href="{{ block_link }}">
+          {%- else -%}
+            <div class="grid-panel__frame">
+          {%- endif -%}
+
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  alt: block.settings.image.alt,
+                  widths: '400, 800, 1200',
+                  sizes: '(min-width: 990px) 33vw, 100vw',
+                  class: 'grid-panel__img',
+                  style: 'object-position: ' | append: block.settings.image_focal | default: 'center'
+              }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'grid-panel__img grid-panel__img--placeholder' }}
+            {%- endif -%}
+
+            {%- comment -%} Overlay {%- endcomment -%}
+            {%- unless block.settings.overlay_style == 'none' -%}
+              <div
+                class="grid-panel__overlay grid-panel__overlay--{{ block.settings.overlay_style | default: 'gradient' }}"
+                {%- if block.settings.overlay_color != blank %} style="--overlay-color: {{ block.settings.overlay_color }};"{% endif %}
+              ></div>
+            {%- endunless -%}
+
+            {%- comment -%} Content {%- endcomment -%}
+            <div class="grid-panel__content">
+
+              {%- if title != blank -%}
+                <div class="grid-panel__title-wrap">
+                  <div
+                    class="grid-panel__title"
+                    {%- if title_color != blank %} style="color: {{ title_color }};"{% endif %}
+                  >{{ title }}</div>
+                  {%- if _d1_img -%}
+                    <span
+                      class="grid-panel__dec grid-panel__dec--{{ _d1_pos }}"
+                      style="--dec-top:{{ _d1_top }}px;--dec-right:{{ _d1_right }}px;--dec-bottom:{{ _d1_bottom }}px;--dec-left:{{ _d1_left }}px;--dec-h:{{ _d1_sz }}px;"
+                      aria-hidden="true"
+                    ><img src="{{ _d1_img | image_url: height: _d1_sz }}" alt="" loading="eager"></span>
+                  {%- endif -%}
+                  {%- if _d2_img -%}
+                    <span
+                      class="grid-panel__dec grid-panel__dec--{{ _d2_pos }}"
+                      style="--dec-top:{{ _d2_top }}px;--dec-right:{{ _d2_right }}px;--dec-bottom:{{ _d2_bottom }}px;--dec-left:{{ _d2_left }}px;--dec-h:{{ _d2_sz }}px;"
+                      aria-hidden="true"
+                    ><img src="{{ _d2_img | image_url: height: _d2_sz }}" alt="" loading="eager"></span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if cta_label != blank -%}
+                <span
+                  class="grid-panel__cta"
+                  {%- if cta_bg != blank or cta_tc != blank %}
+                    style="
+                      {%- if cta_bg != blank %}background-color: {{ cta_bg }};{%- endif -%}
+                      {%- if cta_tc != blank %}color: {{ cta_tc }};{%- endif -%}
+                    "
+                  {%- endif %}
+                >{{ cta_label }}</span>
+              {%- endif -%}
+
+            </div>
+
+          {%- if block_link != blank -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+
+        {%- comment -%} ── PROMO panel ─────────────────────────────────── {%- endcomment -%}
+        {%- elsif content_type == 'promo' -%}
+
+          {%- if block_link != blank -%}
+            <a
+              class="grid-panel__frame grid-panel__frame--promo"
+              href="{{ block_link }}"
+              {%- if block.settings.promo_bg_color != blank %} style="background-color: {{ block.settings.promo_bg_color }};"{% endif %}
+            >
+          {%- else -%}
+            <div
+              class="grid-panel__frame grid-panel__frame--promo"
+              {%- if block.settings.promo_bg_color != blank %} style="background-color: {{ block.settings.promo_bg_color }};"{% endif %}
+            >
+          {%- endif -%}
+
+          {%- if block.settings.promo_bg_image != blank -%}
+            {{
+              block.settings.promo_bg_image
+              | image_url: width: 1000
+              | image_tag:
+                loading: 'lazy',
+                alt: '',
+                class: 'grid-panel__img'
+            }}
+            <div class="grid-panel__overlay grid-panel__overlay--solid" style="--overlay-color: {{ block.settings.promo_bg_color | default: 'rgba(0,0,0,0.3)' }};"></div>
+          {%- endif -%}
+
+            <div class="grid-panel__content grid-promo">
+
+              {%- if block.settings.badge_text != blank -%}
+                <span
+                  class="grid-promo__badge"
+                  style="
+                    {%- if block.settings.badge_bg != blank %}background-color: {{ block.settings.badge_bg }};{%- endif -%}
+                    {%- if block.settings.badge_tc != blank %}color: {{ block.settings.badge_tc }};{%- endif -%}
+                  "
+                >{{ block.settings.badge_text }}</span>
+              {%- endif -%}
+
+              {%- if block.settings.main_text != blank -%}
+                <div
+                  class="grid-promo__amount"
+                  {%- if block.settings.main_text_color != blank %} style="color: {{ block.settings.main_text_color }};"{% endif %}
+                >
+                  <span class="grid-promo__main">{{ block.settings.main_text }}</span>
+                  {%- if block.settings.sub_text != blank -%}
+                    <span class="grid-promo__sub">{{ block.settings.sub_text }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.body_text != blank -%}
+                <p class="grid-promo__body" {%- if title_color != blank %} style="color: {{ title_color }};"{% endif %}>{{ block.settings.body_text }}</p>
+              {%- endif -%}
+
+              {%- if cta_label != blank -%}
+                <span
+                  class="grid-panel__cta grid-panel__cta--promo"
+                  {%- if cta_bg != blank or cta_tc != blank %}
+                    style="
+                      {%- if cta_bg != blank %}background-color: {{ cta_bg }};{%- endif -%}
+                      {%- if cta_tc != blank %}color: {{ cta_tc }};{%- endif -%}
+                    "
+                  {%- endif %}
+                >{{ cta_label }}</span>
+              {%- endif -%}
+
+              {%- if block.settings.disclaimer != blank -%}
+                <p class="grid-promo__disclaimer">{{ block.settings.disclaimer }}</p>
+              {%- endif -%}
+
+            </div>
+
+          {%- if block_link != blank -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+
+        {%- endif -%}
+
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Moxie Grid Panels",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Panel",
+      "settings": [
+        {
+          "type": "select",
+          "id": "content_type",
+          "label": "Tipo de panel",
+          "options": [
+            { "value": "image", "label": "Imagen" },
+            { "value": "promo", "label": "Promocion (texto)" }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "header",
+          "content": "Tamano en la cuadricula"
+        },
+        {
+          "type": "range",
+          "id": "col_span",
+          "label": "Columnas que ocupa",
+          "min": 1,
+          "max": 6,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "range",
+          "id": "row_span",
+          "label": "Filas que ocupa",
+          "min": 1,
+          "max": 4,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "header",
+          "content": "Imagen"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen",
+          "visible_if": "{{ block.settings.content_type == 'image' }}"
+        },
+        {
+          "type": "select",
+          "id": "image_focal",
+          "label": "Punto focal de la imagen",
+          "options": [
+            { "value": "center",       "label": "Centro" },
+            { "value": "top center",   "label": "Arriba" },
+            { "value": "bottom center","label": "Abajo" },
+            { "value": "left center",  "label": "Izquierda" },
+            { "value": "right center", "label": "Derecha" }
+          ],
+          "default": "center",
+          "visible_if": "{{ block.settings.content_type == 'image' }}"
+        },
+        {
+          "type": "select",
+          "id": "overlay_style",
+          "label": "Overlay",
+          "options": [
+            { "value": "gradient", "label": "Degradado (de abajo hacia arriba)" },
+            { "value": "solid",    "label": "Color solido" },
+            { "value": "none",     "label": "Sin overlay" }
+          ],
+          "default": "gradient",
+          "visible_if": "{{ block.settings.content_type == 'image' }}"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Color del overlay",
+          "alpha": true,
+          "default": "#00000066",
+          "visible_if": "{{ block.settings.content_type == 'image' and block.settings.overlay_style != 'none' }}"
+        },
+        {
+          "type": "header",
+          "content": "Contenido del panel"
+        },
+        {
+          "type": "select",
+          "id": "content_align",
+          "label": "Posicion del contenido",
+          "options": [
+            { "value": "bottom-spread", "label": "Abajo: titulo izq + boton der" },
+            { "value": "bottom-center", "label": "Abajo: centrado" },
+            { "value": "center",        "label": "Centro: columna centrada" }
+          ],
+          "default": "bottom-spread"
+        },
+        {
+          "type": "header",
+          "content": "Decorador 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "dec_1_image",
+          "label": "Imagen / GIF del decorador 1"
+        },
+        {
+          "type": "range",
+          "id": "dec_1_size",
+          "label": "Tamano (px)",
+          "min": 5,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 40
+        },
+        {
+          "type": "select",
+          "id": "dec_1_position",
+          "label": "Posicion",
+          "options": [
+            { "value": "top-left",      "label": "Arriba izquierda" },
+            { "value": "top-center",    "label": "Arriba centro" },
+            { "value": "top-right",     "label": "Arriba derecha" },
+            { "value": "bottom-left",   "label": "Abajo izquierda" },
+            { "value": "bottom-center", "label": "Abajo centro" },
+            { "value": "bottom-right",  "label": "Abajo derecha" }
+          ],
+          "default": "top-left"
+        },
+        {
+          "type": "range",
+          "id": "dec_1_top",
+          "label": "Offset superior (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "dec_1_right",
+          "label": "Offset derecho (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "dec_1_bottom",
+          "label": "Offset inferior (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "dec_1_left",
+          "label": "Offset izquierdo (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Decorador 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "dec_2_image",
+          "label": "Imagen / GIF del decorador 2"
+        },
+        {
+          "type": "range",
+          "id": "dec_2_size",
+          "label": "Tamano (px)",
+          "min": 5,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 40
+        },
+        {
+          "type": "select",
+          "id": "dec_2_position",
+          "label": "Posicion",
+          "options": [
+            { "value": "top-left",      "label": "Arriba izquierda" },
+            { "value": "top-center",    "label": "Arriba centro" },
+            { "value": "top-right",     "label": "Arriba derecha" },
+            { "value": "bottom-left",   "label": "Abajo izquierda" },
+            { "value": "bottom-center", "label": "Abajo centro" },
+            { "value": "bottom-right",  "label": "Abajo derecha" }
+          ],
+          "default": "top-right"
+        },
+        {
+          "type": "range",
+          "id": "dec_2_top",
+          "label": "Offset superior (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "dec_2_right",
+          "label": "Offset derecho (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "dec_2_bottom",
+          "label": "Offset inferior (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "dec_2_left",
+          "label": "Offset izquierdo (px)",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Titulo"
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Color del titulo",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Texto del boton",
+          "default": "Ver todo"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Enlace"
+        },
+        {
+          "type": "color",
+          "id": "cta_bg",
+          "label": "Fondo del boton"
+        },
+        {
+          "type": "color",
+          "id": "cta_text_color",
+          "label": "Color del texto del boton"
+        },
+        {
+          "type": "header",
+          "content": "Contenido de la promocion",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "color",
+          "id": "promo_bg_color",
+          "label": "Color de fondo del panel",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "promo_bg_image",
+          "label": "Imagen de fondo (opcional)",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Texto del badge",
+          "info": "Ej: SALE, OFERTA, HOT SALE",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "color",
+          "id": "badge_bg",
+          "label": "Fondo del badge",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "color",
+          "id": "badge_tc",
+          "label": "Texto del badge",
+          "default": "#ffffff",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "text",
+          "id": "main_text",
+          "label": "Texto principal grande",
+          "info": "Ej: 30%",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "text",
+          "id": "sub_text",
+          "label": "Texto secundario",
+          "info": "Ej: OFF",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "color",
+          "id": "main_text_color",
+          "label": "Color del texto principal",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "text",
+          "id": "body_text",
+          "label": "Texto del cuerpo",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        },
+        {
+          "type": "text",
+          "id": "disclaimer",
+          "label": "Texto legal / aviso",
+          "info": "Ej: *Aplica en referencias seleccionadas",
+          "visible_if": "{{ block.settings.content_type == 'promo' }}"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Marca"
+    },
+    {
+      "type": "select",
+      "id": "brand_visibility",
+      "label": "Visible para",
+      "options": [
+        { "value": "all",        "label": "Ambas marcas" },
+        { "value": "mic",        "label": "Solo MIC" },
+        { "value": "little-mic", "label": "Solo Little MIC" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "header",
+      "content": "Cuadricula"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columnas en desktop",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columnas en mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "row_height",
+      "label": "Alto de fila en desktop (px)",
+      "min": 150,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "row_height_mobile",
+      "label": "Alto de fila en mobile (px)",
+      "min": 120,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 220
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Separacion entre paneles (px)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo de la seccion"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color del borde de la seccion"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Grosor del borde",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Radio del borde (px)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Grid Panels - 2 columnas",
+      "category": "Moxie",
+      "settings": { "columns_desktop": 2, "row_height": 420, "gap": 8 },
+      "blocks": [
+        { "type": "panel", "settings": { "title": "<p>Ninas<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient", "content_align": "bottom-center" } },
+        { "type": "panel", "settings": { "title": "<p>Ninos<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient", "content_align": "bottom-center" } }
+      ]
+    },
+    {
+      "name": "Moxie Grid Panels - 3 columnas con promo",
+      "category": "Moxie",
+      "settings": { "columns_desktop": 3, "row_height": 380, "gap": 8 },
+      "blocks": [
+        { "type": "panel", "settings": { "title": "<p>Nueva coleccion<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient" } },
+        { "type": "panel", "settings": { "content_type": "promo", "badge_text": "SALE", "main_text": "30%", "sub_text": "OFF", "cta_label": "Lo quiero todo", "content_align": "center" } },
+        { "type": "panel", "settings": { "title": "<p>Regalos que sorprenden<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient" } }
+      ]
+    },
+    {
+      "name": "Moxie Grid Panels - 5 paneles",
+      "category": "Moxie",
+      "settings": { "columns_desktop": 3, "row_height": 280, "gap": 8 },
+      "blocks": [
+        { "type": "panel", "settings": { "title": "<p>Bebe Nina<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient" } },
+        { "type": "panel", "settings": { "title": "<p>Nina<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient" } },
+        { "type": "panel", "settings": { "content_type": "promo", "col_span": 1, "row_span": 2, "badge_text": "SALE", "main_text": "30%", "sub_text": "OFF", "cta_label": "Lo quiero todo", "content_align": "center" } },
+        { "type": "panel", "settings": { "title": "<p>Bebe Nino<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient" } },
+        { "type": "panel", "settings": { "title": "<p>Nino<\/p>", "cta_label": "Ver todo", "overlay_style": "gradient" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

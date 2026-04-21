@@ -1,0 +1,118 @@
+{%- doc -%}
+  MOXIE: Custom Search Drawer
+  Input real en la píldora del header. Clic en la píldora activa el input
+  y despliega el panel de resultados fijo debajo del header.
+
+  @param {string} [style] - Pass 'none' to suppress rendering.
+  @param {string} [class] - Additional CSS classes.
+{%- enddoc -%}
+
+{%- comment -%} MOXIE: Custom search drawer — input en header, panel fijo debajo {%- endcomment -%}
+
+<script src="{{ 'predictive-search.js' | asset_url }}" type="module" fetchpriority="low"></script>
+<script src="{{ 'custom-search-drawer.js' | asset_url }}" type="module"></script>
+
+{% unless style == 'none' %}
+  <custom-search-drawer
+    class="search-action custom-search-bar{% if class != blank %} {{ class | strip }}{% endif %}"
+  >
+    <predictive-search-component
+      class="mox-sdrawer__psc"
+      style="
+        --product-corner-radius: {{ settings.product_corner_radius | default: 8 | append: 'px' }};
+        --card-corner-radius: {{ settings.card_corner_radius | default: 8 | append: 'px' }};
+        {%- if settings.card_title_case == 'uppercase' %} --title-case: uppercase;{%- endif -%}
+      "
+      data-section-id="predictive-search"
+      role="search"
+      aria-label="{{ 'content.search_input_label' | t }}"
+    >
+      <form
+        action="{{ routes.search_url }}"
+        method="get"
+        role="search"
+        on:keydown="/onSearchKeyDown"
+      >
+        {%- comment -%} ── Píldora con input real (siempre visible en header) ── {%- endcomment -%}
+        <div class="mox-spill">
+          <label for="mox-search-input" class="visually-hidden">
+            {{- 'content.search_input_label' | t -}} 
+          </label>
+          <input
+            id="mox-search-input"
+            class="mox-spill__input"
+            type="search"
+            name="q"
+            role="combobox"
+            aria-expanded="false"
+            aria-owns="mox-search-results"
+            aria-controls="mox-search-results"
+            aria-haspopup="listbox"
+            aria-autocomplete="list"
+            autocomplete="off"
+            placeholder="Buscar..."
+            tabindex="-1"
+            ref="searchInput"
+            on:input="/search"
+            on:keydown="/onSearchKeyDown"
+          >
+          <input name="options[prefix]" type="hidden" value="last">
+
+          <span class="svg-wrapper mox-spill__icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 11.5C2 12.7476 2.24572 13.9829 2.72314 15.1355C3.20056 16.2881 3.90033 17.3354 4.78249 18.2175C5.66464 19.0997 6.71191 19.7994 7.86451 20.2769C9.0171 20.7543 10.2524 21 11.5 21C12.7476 21 13.9829 20.7543 15.1355 20.2769C16.2881 19.7994 17.3354 19.0997 18.2175 18.2175C19.0997 17.3354 19.7994 16.2881 20.2769 15.1355C20.7543 13.9829 21 12.7476 21 11.5C21 10.2524 20.7543 9.0171 20.2769 7.86451C19.7994 6.71191 19.0997 5.66464 18.2175 4.78249C17.3354 3.90033 16.2881 3.20056 15.1355 2.72314C13.9829 2.24572 12.7476 2 11.5 2C10.2524 2 9.0171 2.24572 7.86451 2.72314C6.71191 3.20056 5.66464 3.90033 4.78249 4.78249C3.90033 5.66464 3.20056 6.71191 2.72314 7.86451C2.24572 9.0171 2 10.2524 2 11.5Z" stroke="black" stroke-width="1.5"/>
+              <path d="M18.5 18.5L22 22" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+
+          <button
+            type="button"
+            class="mox-spill__clear"
+            ref="resetButton"
+            hidden
+            on:click="/resetSearch"
+            aria-label="{{ 'actions.clear' | t }}"
+          >
+            {{ 'actions.clear' | t }}
+          </button>
+        </div>
+
+        {%- comment -%} ── Panel fijo de resultados (oculto por defecto) ──────── {%- endcomment -%}
+        <div class="mox-sdrawer" hidden>
+          <div class="mox-sdrawer__inner">
+            <div class="mox-sdrawer__toolbar">
+              <button
+                type="button"
+                class="mox-sdrawer__close"
+                aria-label="{{ 'accessibility.close_dialog' | t }}"
+                on:click="custom-search-drawer/closeDrawer"
+              >
+                <span class="svg-wrapper" aria-hidden="true">
+                  {{ 'icon-close.svg' | inline_asset_content }}
+                </span>
+              </button>
+            </div>
+
+            <div
+              id="mox-search-results"
+              class="mox-sdrawer__results"
+              ref="predictiveSearchResults"
+            >
+              {% render 'predictive-search-empty-state',
+                load_empty_state: true,
+                shadow_opacity: 0.1,
+                products_test_id: 'products-list-default--drawer'
+              %}
+            </div>
+
+            <div class="mox-sdrawer__foot">
+              <button class="button mox-sdrawer__viewall" ref="viewAllButton">
+                {{ 'content.search_results_view_all' | t }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </predictive-search-component>
+  </custom-search-drawer>
+{% endunless %}

@@ -1,0 +1,38 @@
+// ─── Moxie Custom Styles ──────────────────────────────────────────────────────
+// Compiled to assets/moxie.css — loaded globally on every page.
+//
+// Use this for global Moxie overrides and custom components.
+// Section/block-scoped styles that only load when the component is on the page
+// should stay in the Liquid {% stylesheet %} tags instead.
+
+// ── Snippets ─────────────────────────────────────────────────────────────────
+@use 'snippets/custom-section-title';
+
+// ── Blocks ───────────────────────────────────────────────────────────────────
+@use 'blocks/custom-header-menu';
+
+// ── Sections ─────────────────────────────────────────────────────────────────
+@use 'sections/custom-descuento-extra';
+@use 'sections/custom-styles';
+@use 'sections/custom-header';
+@use 'sections/custom-hero';
+@use 'sections/custom-mega-menu';
+@use 'sections/custom-vendor-switcher';
+@use 'sections/custom-brand';
+@use 'sections/custom-promo-topbar';
+@use 'sections/custom-promo-pills';
+@use 'sections/custom-characters-slider';
+@use 'sections/custom-brand-showcase';
+@use 'sections/custom-grid-panels';
+@use 'sections/custom-category-tabs';
+@use 'sections/custom-logo-slider';
+@use 'sections/custom-features-bar';
+@use 'sections/custom-seo-text';
+@use 'sections/custom-plp-hero';
+@use 'sections/custom-plp-rompe-grid';
+@use 'sections/custom-plp-filtros';
+@use 'sections/custom-plp-native-filters';
+@use 'sections/custom-product-detail-page';
+@use 'sections/custom-store-locator';
+@use 'sections/custom-footer';
+

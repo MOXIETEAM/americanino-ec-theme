@@ -1,0 +1,318 @@
+{%- comment -%}
+  MOXIE: PLP Rompe-Grid
+  Metaobjeto: banner_rompegrids_plp
+  Metacampo en coleccion: moxie.plp_banners (lista de referencias a banner_rompegrids_plp)
+
+  Claves de campo del metaobjeto:
+    donde_mostrar           → texto (se filtra si vale "little-mic")
+    imagen                  → archivo (imagen)
+    titulo                  → texto corto
+    descripcion             → texto multilinea
+    texto_boton             → texto corto
+    url_boton               → enlace (URL)
+    color_de_fondo_cuando_no_hay_imagen → color
+    color_de_texto          → color
+    posicion                → entero (despues de cual producto insertar, 1-based)
+    columnas_a_ocupar       → lista de opciones: "1" | "2"
+{%- endcomment -%}
+
+{%- liquid
+  assign plp_banners = collection.metafields.custom.mox_plp_banners_rompegrids.value
+-%}
+
+{%- comment -%} ── DEBUG: activo con ?moxie_debug=1 en la URL ── {%- endcomment -%}
+{%- if request.query_string contains 'moxie_debug=1' -%}
+<div style="background:#1e1e1e;color:#d4d4d4;font-family:monospace;font-size:12px;padding:16px;margin:8px;border-radius:8px;white-space:pre-wrap;z-index:9999;position:relative;">
+<strong style="color:#4ec9b0;">MOXIE ROMPE-GRID DEBUG</strong>
+
+<strong style="color:#9cdcfe;">Coleccion:</strong> {{ collection.title }} ({{ collection.handle }})
+<strong style="color:#9cdcfe;">Metacampo custom.mox_plp_banners_rompegrids:</strong>
+{%- if plp_banners != blank -%}
+  {{ plp_banners.size }} banner(s) encontrado(s)
+{%- else -%}
+  <span style="color:#f44747;">VACIO — el metacampo no esta asignado a esta coleccion o la clave es incorrecta</span>
+{%- endif -%}
+
+{%- if plp_banners != blank -%}
+  {%- for banner in plp_banners -%}
+<hr style="border-color:#444;margin:8px 0;">
+<strong style="color:#dcdcaa;">Banner {{ forloop.index }}</strong>
+  donde_mostrar     = {{ banner.donde_mostrar.value | json }}
+  posicion          = {{ banner.posicion.value | json }}
+  columnas_a_ocupar = {{ banner.columnas_a_ocupar.value | json }}
+  imagen (blank?)   = {{ banner.imagen.value | json }}
+  titulo            = {{ banner.titulo.value | json }}
+  descripcion       = {{ banner.descripcion.value | json }}
+  texto_boton       = {{ banner.texto_boton.value | json }}
+  url_boton         = {{ banner.url_boton.value | json }}
+  bg_color          = {{ banner.color_de_fondo_cuando_no_hay_imagen.value | json }}
+  text_color        = {{ banner.color_de_texto.value | json }}
+  {%- endfor -%}
+{%- endif -%}
+</div>
+{%- endif -%}
+
+{%- comment -%} Placeholder visible solo en el editor de Shopify {%- endcomment -%}
+{%- if request.design_mode -%}
+  <div class="plp-rompe-grid__editor-placeholder">
+    <strong>Moxie PLP Rompe-Grid</strong><br>
+    Los banners se configuran desde el metacampo <code>moxie.plp_banners</code> de cada coleccion (metaobjeto <code>banner_rompegrids_plp</code>).
+    {%- if plp_banners != blank -%}
+      <br>✓ {{ plp_banners.size }} banner(s) configurado(s) para esta coleccion.
+    {%- else -%}
+      <br>Sin banners configurados para esta coleccion.
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- comment -%} Serializar datos de banners como JSON para el JS {%- endcomment -%}
+{%- if plp_banners != blank and plp_banners.size > 0 -%}
+<script id="plp-rompe-grid-data-{{ section.id }}" type="application/json">
+[
+  {%- for banner in plp_banners -%}
+  {
+    "donde_mostrar": {{ banner.donde_mostrar.value | json }},
+    "posicion":      {{ banner.posicion.value | default: 2 | json }},
+    "columnas":      {{ banner.columnas_a_ocupar.value | default: '2' | json }},
+    "imagen":        {%- if banner.imagen.value != blank -%}{{ banner.imagen.value | image_url: width: 1400 | json }}{%- else -%}null{%- endif -%},
+    "imagen_alt":    {{ banner.imagen.value.alt | default: '' | json }},
+    "titulo":        {{ banner.titulo.value | json }},
+    "descripcion":   {{ banner.descripcion.value | json }},
+    "texto_boton":   {{ banner.texto_boton.value | json }},
+    "url_boton":     {{ banner.url_boton.value | json }},
+    "bg_color":      {{ banner.color_de_fondo_cuando_no_hay_imagen.value | json }},
+    "text_color":    {{ banner.color_de_texto.value | json }}
+  }{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+]
+</script>
+{%- endif -%}
+
+<script>
+(function () {
+  console.log('[RompeGrid] script cargado — seccion {{ section.id }}');
+
+  /* ── Helpers ─────────────────────────────────────────────────────────────── */
+
+  function debounce(fn, ms) {
+    var t;
+    return function () { clearTimeout(t); t = setTimeout(fn, ms); };
+  }
+
+  /* ── Debug (siempre activo — quitar tras resolver el problema) ────────────── */
+
+  function log(msg, data) {
+    if (data !== undefined) { console.log('[RompeGrid] ' + msg, data); }
+    else { console.log('[RompeGrid] ' + msg); }
+  }
+  function warn(msg, data) {
+    if (data !== undefined) { console.warn('[RompeGrid] ' + msg, data); }
+    else { console.warn('[RompeGrid] ' + msg); }
+  }
+
+  /* ── Leer datos ──────────────────────────────────────────────────────────── */
+
+  var dataEl = document.getElementById('plp-rompe-grid-data-{{ section.id }}');
+  var banners = [];
+  if (!dataEl) {
+    warn('Script <data> no encontrado → el metacampo custom.mox_plp_banners_rompegrids esta vacio o no asignado a esta coleccion');
+  } else {
+    try {
+      banners = JSON.parse(dataEl.textContent) || [];
+      log('Banners parseados del JSON:', banners);
+    } catch (e) {
+      warn('Error al parsear JSON de banners:', e, '\nContenido raw:', dataEl.textContent);
+    }
+  }
+
+  /* ── Crear elemento de banner ────────────────────────────────────────────── */
+
+  function createBannerEl(banner) {
+    var colSpan = parseInt(banner.columnas, 10) || 2;
+
+    var li = document.createElement('li');
+    li.className = 'product-grid__item plp-rompe-grid plp-rompe-grid--span-' + colSpan;
+    li.setAttribute('role', 'listitem');
+
+    if (banner.bg_color)   li.style.backgroundColor = banner.bg_color;
+    if (banner.text_color) li.style.color = banner.text_color;
+
+    /* Wrapper: <a> si tiene URL de boton, <div> si no */
+    var hasLink = banner.url_boton && banner.url_boton.length > 0;
+    var inner = document.createElement(hasLink ? 'a' : 'div');
+    inner.className = 'plp-rompe-grid__inner';
+    if (hasLink) inner.href = banner.url_boton;
+
+    /* Imagen de fondo */
+    if (banner.imagen) {
+      var media = document.createElement('div');
+      media.className = 'plp-rompe-grid__media';
+      var img = document.createElement('img');
+      img.src = banner.imagen;
+      img.alt = banner.imagen_alt || banner.titulo || '';
+      img.loading = 'lazy';
+      img.className = 'plp-rompe-grid__img';
+      media.appendChild(img);
+      inner.appendChild(media);
+    }
+
+    /* Contenido de texto */
+    if (banner.titulo || banner.descripcion || banner.texto_boton) {
+      var content = document.createElement('div');
+      content.className = 'plp-rompe-grid__content';
+
+      if (banner.titulo) {
+        var h = document.createElement('p');
+        h.className = 'plp-rompe-grid__title';
+        h.textContent = banner.titulo;
+        content.appendChild(h);
+      }
+
+      if (banner.descripcion) {
+        var d = document.createElement('p');
+        d.className = 'plp-rompe-grid__desc';
+        d.textContent = banner.descripcion;
+        content.appendChild(d);
+      }
+
+      if (banner.texto_boton) {
+        var btn = document.createElement('span');
+        btn.className = 'plp-rompe-grid__btn';
+        btn.textContent = banner.texto_boton;
+        content.appendChild(btn);
+      }
+
+      inner.appendChild(content);
+    }
+
+    li.appendChild(inner);
+    return li;
+  }
+
+  /* ── Inyectar banners en el grid ─────────────────────────────────────────── */
+
+  function injectBanners() {
+    log('--- injectBanners() ---');
+
+    var grid = document.querySelector('.product-grid[data-testid="product-grid"]');
+    if (!grid) {
+      warn('Grid no encontrado: .product-grid[data-testid="product-grid"]');
+      return;
+    }
+    log('Grid encontrado:', grid);
+
+    /* Eliminar banners previos para re-inyectar limpios */
+    grid.querySelectorAll('.plp-rompe-grid').forEach(function (el) { el.remove(); });
+
+    if (!banners.length) {
+      warn('banners[] esta vacio — no hay nada que inyectar');
+      return;
+    }
+
+    /* Filtrar banners desactivados y ordenar por posicion DESC */
+    var visible = banners
+      .filter(function (b) {
+        var dm = (b.donde_mostrar || '').trim().toLowerCase();
+        return dm !== 'little-mic';
+      })
+      .sort(function (a, b) { return b.posicion - a.posicion; });
+
+    if (!visible.length) {
+      warn('Ningun banner activo encontrado — revisa los metaobjetos de esta coleccion');
+      return;
+    }
+    log('Banners visibles:', visible);
+
+    /* Solo los items reales (excluir banners ya existentes) */
+    var items = Array.from(
+      grid.querySelectorAll('.product-grid__item:not(.plp-rompe-grid)')
+    );
+    log('Productos en grid:', items.length);
+    if (!items.length) {
+      warn('No se encontraron .product-grid__item en el grid');
+      return;
+    }
+
+    visible.forEach(function (banner) {
+      var pos = Math.max(parseInt(banner.posicion, 10) || 1, 1);
+      var bannerEl = createBannerEl(banner);
+
+      if (pos <= 1) {
+        // Posicion 1: antes del primer producto
+        log('Insertando banner "' + banner.titulo + '" ANTES del item 0 (posicion 1)');
+        if (items[0]) items[0].before(bannerEl);
+      } else {
+        // Posicion N: el banner ocupa el Nvo lugar → insertar despues del producto N-1
+        var idx = Math.min(pos - 2, items.length - 1);
+        var refEl = items[idx];
+        log('Insertando banner "' + banner.titulo + '" en posicion=' + pos + ' (despues de item idx=' + idx + ')', refEl);
+        if (refEl) refEl.after(bannerEl);
+      }
+    });
+
+    log('Inyeccion completada');
+  }
+
+  /* ── Observar el grid para infinite scroll / filtros ─────────────────────── */
+
+  function observeGrid() {
+    var grid = document.querySelector('.product-grid[data-testid="product-grid"]');
+    if (!grid || grid._rompeObserver) return;
+
+    var debouncedInject = debounce(injectBanners, 300);
+
+    grid._rompeObserver = new MutationObserver(function (mutations) {
+      var hasNewRealItems = mutations.some(function (m) {
+        return Array.from(m.addedNodes).some(function (n) {
+          return n.nodeType === 1
+            && n.classList.contains('product-grid__item')
+            && !n.classList.contains('plp-rompe-grid');
+        });
+      });
+      if (hasNewRealItems) debouncedInject();
+    });
+
+    grid._rompeObserver.observe(grid, { childList: true });
+  }
+
+  /* ── Inicializacion ──────────────────────────────────────────────────────── */
+
+  function init() {
+    injectBanners();
+    observeGrid();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  /* Recarga desde el editor de Shopify */
+  document.addEventListener('shopify:section:load', function (e) {
+    if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+      injectBanners();
+      observeGrid();
+    }
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Moxie PLP Rompe-Grid",
+  "tag": "section",
+  "class": "section-wrapper",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "Moxie PLP Rompe-Grid",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}

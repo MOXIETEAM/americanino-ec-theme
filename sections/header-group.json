@@ -1,0 +1,258 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "custom_header_announcements_CeV7fU": {
+      "type": "custom-header-announcements",
+      "blocks": {
+        "announcement_X6yfep": {
+          "type": "_announcement",
+          "settings": {
+            "text": "¡Comparte la fantasía!",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_XkirFb": {
+          "type": "_announcement",
+          "settings": {
+            "text": "¡Los esenciales evolucionan!",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "announcement_X6yfep",
+        "announcement_XkirFb"
+      ]
+    },
+    "header_section": {
+      "type": "header",
+      "blocks": {
+        "header-logo": {
+          "type": "_header-logo",
+          "static": true,
+          "settings": {
+            "hide_logo_on_home_page": false,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          },
+          "blocks": {}
+        },
+        "header-menu": {
+          "type": "_header-menu",
+          "static": true,
+          "settings": {
+            "menu": "main-menu",
+            "color_scheme": "",
+            "type_font_primary_size": "0.875rem",
+            "menu_font_style": "inverse",
+            "type_font_primary_link": "body",
+            "type_case_primary_link": "none",
+            "menu_style": "featured_products",
+            "featured_products_aspect_ratio": "4 / 5",
+            "featured_collections_aspect_ratio": "16 / 9",
+            "image_border_radius": 0,
+            "navigation_bar": false,
+            "color_scheme_navigation_bar": "",
+            "drawer_accordion": false,
+            "drawer_accordion_expand_first": false,
+            "drawer_dividers": false
+          },
+          "blocks": {}
+        }
+      },
+      "disabled": true,
+      "settings": {
+        "logo_position": "left",
+        "menu_position": "left",
+        "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
+        "show_search": true,
+        "search_position": "right",
+        "search_row": "top",
+        "show_country": true,
+        "country_selector_style": false,
+        "show_language": true,
+        "localization_font": "heading",
+        "localization_font_size": "0.875rem",
+        "localization_position": "right",
+        "localization_row": "top",
+        "section_width": "page-width",
+        "section_height": "standard",
+        "enable_sticky_header": "always",
+        "divider_width": 0,
+        "divider_size": "page-width",
+        "border_width": 0,
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
+        "color_scheme_top": "scheme-1",
+        "color_scheme_bottom": "",
+        "color_scheme_transparent": "scheme-6",
+        "enable_transparent_header_home": false,
+        "home_color_scheme": "inverse",
+        "enable_transparent_header_product": false,
+        "product_color_scheme": "default",
+        "enable_transparent_header_collection": false,
+        "collection_color_scheme": "default"
+      }
+    },
+    "custom_header_b9ngeC": {
+      "type": "custom-header",
+      "blocks": {
+        "header-logo": {
+          "type": "_custom-header-logo",
+          "static": true,
+          "settings": {
+            "hide_logo_on_home_page": false,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "logo_mic": "shopify://shop_images/logo-mic.png",
+            "logo_little_mic": "shopify://shop_images/little-mic.svg"
+          },
+          "blocks": {}
+        },
+        "header-menu": {
+          "type": "_custom-header-menu",
+          "static": true,
+          "settings": {
+            "menu": "menu-mic",
+            "menu_little_mic": "menu-little-mic",
+            "color_scheme": "",
+            "type_font_primary_size": "1rem",
+            "menu_font_style": "inverse",
+            "type_font_primary_link": "heading",
+            "type_case_primary_link": "none",
+            "menu_style": "collection_images",
+            "featured_products_aspect_ratio": "4 / 5",
+            "featured_collections_aspect_ratio": "16 / 9",
+            "image_border_radius": 0,
+            "navigation_bar": false,
+            "color_scheme_navigation_bar": "",
+            "drawer_accordion": false,
+            "drawer_accordion_expand_first": false,
+            "drawer_dividers": false,
+            "mobile_util_1_url": "",
+            "mobile_util_1_label": "Guardados",
+            "mobile_util_1_icon": "bookmark",
+            "mobile_util_2_url": "",
+            "mobile_util_2_label": "Mi cuenta",
+            "mobile_util_2_icon": "account",
+            "decorator_1_item": "Personajes",
+            "decorator_1_image": "shopify://shop_images/decorator-orange-personajes.svg",
+            "decorator_1_size": 20,
+            "decorator_1_position": "above",
+            "decorator_1_brand": "mic",
+            "decorator_2_item": "Personajes",
+            "decorator_2_image": "shopify://shop_images/decorator-white-personajes.svg",
+            "decorator_2_size": 10,
+            "decorator_2_position": "above",
+            "decorator_2_brand": "little-mic",
+            "decorator_3_item": "Nuevos",
+            "decorator_3_image": "shopify://shop_images/decorator-new-orange.svg",
+            "decorator_3_size": 10,
+            "decorator_3_position": "below",
+            "decorator_3_brand": "mic",
+            "decorator_4_item": "Nuevos",
+            "decorator_4_image": "shopify://shop_images/decorator-new-white.svg",
+            "decorator_4_size": 10,
+            "decorator_4_position": "below",
+            "decorator_4_brand": "little-mic",
+            "decorator_5_item": "Ofertas",
+            "decorator_5_image": "shopify://shop_images/decorator-ofertas-orange.svg",
+            "decorator_5_size": 10,
+            "decorator_5_position": "right",
+            "decorator_5_brand": "mic",
+            "decorator_6_item": "Ofertas",
+            "decorator_6_image": "shopify://shop_images/decorator-ofertas-white.svg",
+            "decorator_6_size": 10,
+            "decorator_6_position": "right",
+            "decorator_6_brand": "little-mic",
+            "decorator_7_item": "",
+            "decorator_7_size": 10,
+            "decorator_7_position": "right",
+            "decorator_7_brand": "all",
+            "decorator_8_item": "",
+            "decorator_8_size": 10,
+            "decorator_8_position": "right",
+            "decorator_8_brand": "all",
+            "decorator_9_item": "",
+            "decorator_9_size": 10,
+            "decorator_9_position": "right",
+            "decorator_9_brand": "all",
+            "decorator_10_item": "",
+            "decorator_10_size": 10,
+            "decorator_10_position": "right",
+            "decorator_10_brand": "all"
+          },
+          "blocks": {}
+        }
+      },
+      "name": "Moxie Header",
+      "settings": {
+        "logo_position": "center",
+        "menu_position": "center",
+        "menu_row": "bottom",
+        "highlight_items": "",
+        "highlight_color": "",
+        "highlight_font_weight": "bold",
+        "show_search": true,
+        "search_display": "bar",
+        "search_position": "right",
+        "search_row": "top",
+        "show_country": true,
+        "country_selector_style": true,
+        "show_language": true,
+        "localization_font": "heading",
+        "localization_font_size": "1rem",
+        "localization_position": "right",
+        "localization_row": "top",
+        "section_width": "page-width",
+        "section_height": "standard",
+        "enable_sticky_header": "always",
+        "divider_width": 0,
+        "divider_size": "page-width",
+        "border_width": 0,
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
+        "color_scheme_top": "",
+        "color_scheme_bottom": "",
+        "enable_transparent_header_home": true,
+        "home_color_scheme": "default",
+        "enable_transparent_header_product": false,
+        "product_color_scheme": "default",
+        "enable_transparent_header_collection": false,
+        "collection_color_scheme": "default"
+      }
+    }
+  },
+  "order": [
+    "custom_header_announcements_CeV7fU",
+    "header_section",
+    "custom_header_b9ngeC"
+  ]
+}

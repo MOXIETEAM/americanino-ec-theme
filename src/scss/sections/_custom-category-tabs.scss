@@ -1,0 +1,231 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Category Tabs ─────────────────────────────────────────────────────
+
+.custom-category-tabs {
+  width: 100%;
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.custom-category-tabs__header {
+  margin-block-end: 28px;
+
+  @include tablet-up {
+    margin-block-end: 36px;
+  }
+
+  .custom-section-title
+  .custom-section-title__row
+  .custom-section-title__text
+  p, h1, h2, h3, h4, h5, h6  {
+    font-size: 63px;
+    font-weight: 700;
+    line-height: 68px;
+    color: #000;
+    margin: 0;
+  
+  }
+}
+
+// ── Tab pills ─────────────────────────────────────────────────────────────────
+
+.custom-category-tabs__pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-block-end: 28px;
+
+  @include tablet-up {
+    gap: 10px;
+    margin-block-end: 32px;
+  }
+}
+
+.category-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 20px;
+  border: 1.5px solid var(--cat-tab-color, #1a1a1a);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cat-tab-color, #1a1a1a);
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--animation-speed) var(--animation-easing),
+    color var(--animation-speed) var(--animation-easing);
+
+  &:hover:not(.category-tab--active) {
+    opacity: 0.65;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &--active {
+    background-color: var(--cat-tab-active-bg, #1a1a1a);
+    border-color: var(--cat-tab-active-bg, #1a1a1a);
+    color: var(--cat-tab-active-text, #ffffff);
+    font-weight: 600;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// ── Panels ────────────────────────────────────────────────────────────────────
+
+.category-panel {
+  display: none;
+}
+
+.category-panel--active {
+  display: block;
+}
+
+// ── Swiper wrapper (arrows + container) ───────────────────────────────────────
+
+.cat-swiper-wrap {
+  position: relative;
+  padding-inline: 36px;
+
+  @include tablet-up {
+    padding-inline: 44px;
+  }
+}
+
+// ── Nav arrows ────────────────────────────────────────────────────────────────
+
+.cat-nav {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgb(var(--color-background-rgb, 255 255 255));
+  box-shadow: 0 2px 8px rgb(0 0 0 / 14%);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: rgb(var(--color-foreground-rgb, 0 0 0));
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  &::after { display: none; }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &--prev { left: 0; }
+  &--next { right: 0; }
+
+  &.swiper-button-disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  &:hover:not(.swiper-button-disabled) { opacity: 0.7; }
+  &:focus-visible { @include focus-ring; }
+
+  @include reduced-motion { transition: none; }
+}
+
+// ── Category card ─────────────────────────────────────────────────────────────
+
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .cat-card__img:not(.cat-card__img--placeholder) {
+    transform: scale(1.04);
+  }
+}
+
+.cat-card__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  aspect-ratio: var(--cat-card-ratio, 3 / 4);
+  background: rgb(var(--color-background-2-rgb));
+}
+
+.cat-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--animation-speed) var(--animation-easing);
+
+  &--placeholder {
+    opacity: 0.3;
+    padding: 15%;
+    object-fit: contain;
+  }
+
+  @include reduced-motion { transition: none; }
+}
+
+.cat-card__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.3;
+  margin: 0;
+}
+
+// ── Brand visibility ──────────────────────────────────────────────────────────
+
+.custom-category-tabs[data-brand-show='little-mic'] { display: none; }
+
+.custom-category-tabs[data-brand-show='mic'],
+.custom-category-tabs[data-brand-show='all'] {
+  display: block;
+}
+
+// ── Reduced motion ────────────────────────────────────────────────────────────
+
+@include reduced-motion {
+  .cat-swiper .swiper-wrapper {
+    transition-duration: 0ms !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-category-tabs {
+    .custom-category-tabs__header 
+    .custom-section-title 
+    .custom-section-title__row 
+    .custom-section-title__text p
+     {
+      font-size: 25px;
+      line-height: 28px;
+      font-weight: 700;
+    }
+
+    .cat-swiper-wrap {
+      padding-inline: 0px;
+    } 
+  }
+}

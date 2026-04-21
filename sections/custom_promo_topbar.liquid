@@ -1,0 +1,222 @@
+{%- comment -%} MOXIE: Promotional top bar - for seasonal events (Hot Sale, etc.) {%- endcomment -%}
+
+{%- liquid
+  assign show_promo    = section.settings.show_promo
+  assign promo_type    = section.settings.promo_type
+  assign bar_height    = section.settings.bar_height
+  assign visibility    = section.settings.brand_visibility | default: 'all'
+  assign promo_text    = section.settings.promo_text
+  assign promo_link    = section.settings.promo_link
+  assign font_weight   = section.settings.font_weight
+  assign font_style    = section.settings.font_style
+-%}
+
+<style>
+  :root { --promo-bar-height: {% if visibility == 'all' or visibility == 'mic' %}{{ bar_height }}px{% else %}0px{% endif %}; }
+</style>
+
+<div
+  class="custom-promo-topbar{% unless show_promo %} custom-promo-topbar--inactive{% endunless %}"
+  style="height: {{ bar_height }}px;"
+  {{ section.shopify_attributes }}
+>
+  {%- if show_promo -%}
+    <div
+      class="custom-promo-topbar__content"
+      data-promo-brand="{{ visibility }}"
+      style="{% unless section.settings.bg_color == blank %}background-color: {{ section.settings.bg_color }};{% endunless %}"
+    >
+
+      {%- if promo_type == 'image' and section.settings.promo_image != blank -%}
+
+        {%- liquid
+          assign img_h = bar_height
+        -%}
+        <a
+          class="custom-promo-topbar__image-link"
+          {% if promo_link != blank %}href="{{ promo_link }}"{% endif %}
+        >
+          {%- render 'image',
+            image: section.settings.promo_image,
+            class: 'custom-promo-topbar__image',
+            height: img_h
+          -%}
+        </a>
+
+      {%- elsif promo_type == 'ribbon' -%}
+
+        {%- comment -%} Ribbon: repeating scrolling text strip {%- endcomment -%}
+        <div
+          class="custom-promo-topbar__ribbon"
+          style="
+            {% unless section.settings.ribbon_bg == blank %}background-color: {{ section.settings.ribbon_bg }};{% endunless %}
+            {% unless section.settings.text_color == blank %}color: {{ section.settings.text_color }};{% endunless %}
+            font-weight: {{ font_weight }};
+            font-style: {{ font_style }};
+          "
+        >
+          {%- comment -%} Duplicate items to create seamless loop {%- endcomment -%}
+          <div class="custom-promo-topbar__ribbon-inner" aria-hidden="false">
+            {%- for i in (1..8) -%}
+              <span class="custom-promo-topbar__ribbon-item">
+                {%- if promo_link != blank -%}
+                  <a class="custom-promo-topbar__ribbon-link" href="{{ promo_link }}">{{ promo_text }}</a>
+                {%- else -%}
+                  {{ promo_text }}
+                {%- endif -%}
+              </span>
+            {%- endfor -%}
+          </div>
+        </div>
+
+      {%- else -%}
+
+        {%- comment -%} Default: static text {%- endcomment -%}
+        <div
+          class="custom-promo-topbar__text-wrap"
+          style="
+            {% unless section.settings.text_color == blank %}color: {{ section.settings.text_color }};{% endunless %}
+            font-weight: {{ font_weight }};
+            font-style: {{ font_style }};
+          "
+        >
+          {%- if promo_link != blank -%}
+            <a class="custom-promo-topbar__text-link" href="{{ promo_link }}">{{ promo_text }}</a>
+          {%- else -%}
+            <span class="custom-promo-topbar__text-link">{{ promo_text }}</span>
+          {%- endif -%}
+        </div>
+
+      {%- endif -%}
+
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Moxie Promo Top Bar",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Activacion"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_promo",
+      "label": "Mostrar barra promocional",
+      "info": "El espacio se reserva siempre. Desactivar oculta el contenido sin mover el layout.",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Marca"
+    },
+    {
+      "type": "select",
+      "id": "brand_visibility",
+      "label": "Visible para",
+      "options": [
+        { "value": "all",        "label": "Ambas marcas" },
+        { "value": "mic",        "label": "Solo MIC" },
+        { "value": "little-mic", "label": "Solo Little MIC" }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "header",
+      "content": "Tipo de contenido"
+    },
+    {
+      "type": "select",
+      "id": "promo_type",
+      "label": "Tipo",
+      "options": [
+        { "value": "text",   "label": "Texto estatico" },
+        { "value": "ribbon", "label": "Cinta animada (Ribbon)" },
+        { "value": "image",  "label": "Imagen" }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "promo_text",
+      "label": "Texto",
+      "default": "HOT SALE"
+    },
+    {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Enlace (opcional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Imagen (solo para tipo Imagen)"
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "range",
+      "id": "bar_height",
+      "label": "Alto de la barra",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fondo de la barra"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto"
+    },
+    {
+      "type": "color",
+      "id": "ribbon_bg",
+      "label": "Fondo del ribbon (solo tipo Cinta)"
+    },
+    {
+      "type": "header",
+      "content": "Tipografia"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Peso",
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "600", "label": "Seminegrita" },
+        { "value": "700", "label": "Negrita" }
+      ],
+      "default": "600"
+    },
+    {
+      "type": "select",
+      "id": "font_style",
+      "label": "Estilo",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "italic", "label": "Italica" }
+      ],
+      "default": "normal"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Promo Top Bar",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}

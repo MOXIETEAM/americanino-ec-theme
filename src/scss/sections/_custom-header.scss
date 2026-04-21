@@ -1,0 +1,310 @@
+@use '../mixins' as *;
+
+// ─── Custom Header section overrides ─────────────────────────────────────────
+// Add custom-header specific styles here.
+// The base structural styles live in the section's {% stylesheet %} tag.
+.custom-announcement-bar-moxie-container {
+    min-height: 46px;
+}
+
+.mox-custom-header-component {
+    .header__row--top {
+        margin-top: 46px;
+    }
+}
+
+// Cuando el header es sticky (data-sticky-state="active"), el fondo pasa a blanco →
+// el texto del navbar debe ser oscuro (foreground del color scheme activo).
+#header-component[data-sticky-state='active'] .custom-navbar__link {
+    color: var(--mox-navbar-font-color, var(--color-foreground));
+    transition: color var(--animation-speed) var(--animation-easing);
+}
+
+// Cuando el drawer de búsqueda está abierto, forzar fondo blanco y texto negro
+// en todas las filas del header para que el contenido no se pierda.
+#header-component:has(custom-search-drawer[data-open]) {
+  .header__row {
+    background-color: #fff;
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .custom-navbar__link {
+    color: #000;
+    transition: color var(--animation-speed) var(--animation-easing);
+  }
+}
+
+// ── Inline Search Bar (neutralización de márgenes negativos del tema base) ─────
+.custom-search-bar.search-action,
+[data-menu-style='menu'] .header__column--left .custom-search-bar.search-action,
+.header__column--right .custom-search-bar.search-action {
+  @include tablet-up {
+    margin-inline: 0;
+  }
+}
+
+// ── Custom Search Drawer ──────────────────────────────────────────────────────
+// Clases con prefijo `mox-sp*` / `mox-sd*` para evitar conflictos con los
+// estilos globales de search-modal.liquid (cargado en theme.liquid).
+
+// El elemento custom es display:contents para encajar en el flex del header
+custom-search-drawer {
+  display: contents;
+}
+
+// ── Píldora con input real en el header ──────────────────────────────────────
+.mox-spill {
+  max-width: 257px;
+  max-height: 31px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 10px;
+  // border: 1px solid #ADADAD;
+  border-radius: 58px;
+  background-color: #FFFFFFD1;
+  cursor: pointer;
+
+}
+
+.mox-spill__icon {
+  color: black;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  width: 24px;
+  height: 24px;
+}
+
+// Input dentro de la píldora — inactivo por defecto
+// (pointer-events:none → los clics caen al .mox-spill que abre el drawer)
+.mox-spill__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+  font-size: 0.875rem;
+  line-height: 1;
+  color: var(--color-foreground);
+  pointer-events: none;
+  cursor: text;
+  border-color: transparent !important;
+  background-color: transparent !important;
+
+  &::placeholder {
+    color: rgb(var(--color-foreground-rgb) / 0.50);
+  }
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  @include mobile-only {
+    // En móvil solo se muestra el ícono
+    max-width: 0;
+    overflow: hidden;
+  }
+}
+
+// Cuando el drawer está abierto, el input recibe interacción real
+custom-search-drawer[data-open] .mox-spill__input {
+  pointer-events: auto;
+}
+
+// Botón "Limpiar" dentro de la píldora
+.mox-spill__clear {
+  display: none;
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 999px;
+  transition: background-color var(--animation-speed) var(--animation-easing);
+
+  &:hover {
+    background-color: rgb(var(--color-foreground-rgb) / 0.08);
+  }
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+// ── Panel desplegable fijo bajo el header ─────────────────────────────────────
+.mox-sdrawer {
+  position: fixed;
+  inset-inline: 0;
+  top: var(--header-height, 64px);
+  z-index: calc(var(--layer-sticky) - 1); // justo debajo del header sticky
+  background-color: var(--color-background);
+  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.08);
+
+  // Estado cerrado: panel fuera de pantalla arriba
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 200ms var(--animation-easing),
+              transform 200ms var(--animation-easing);
+
+  // Estado abierto (atributo añadido por JS)
+  &[data-open] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// El hidden nativo lo gestiona JS; cuando NO está hidden el panel es visible.
+// Esto garantiza que NO hay flash en carga — el panel empieza con hidden.
+
+.mox-sdrawer__inner {
+  max-width: 860px;
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+  padding-block: var(--padding-md);
+}
+
+// Reset de estilos globales que search-modal.liquid inyecta en predictive-search-component
+.mox-sdrawer__psc {
+  display: block !important;
+  width: auto !important;
+  position: static !important;
+  background-color: transparent !important;
+  z-index: auto !important;
+  margin-inline: 0 !important;
+}
+
+// Barra superior del panel: solo tiene el botón cerrar (alineado a la derecha)
+.mox-sdrawer__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-block-end: var(--padding-xs);
+}
+
+.mox-sdrawer__close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--minimum-touch-target, 44px);
+  height: var(--minimum-touch-target, 44px);
+  border-radius: 50%;
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+  transition: background-color var(--animation-speed) var(--animation-easing),
+              color var(--animation-speed) var(--animation-easing);
+
+  &:hover {
+    background-color: rgb(var(--color-foreground-rgb) / 0.06);
+    color: var(--color-foreground);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+  }
+}
+
+// ── Área de resultados ────────────────────────────────────────────────────────
+.mox-sdrawer__results {
+  max-height: 52dvh;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ── Botón "Ver todos" ─────────────────────────────────────────────────────────
+.mox-sdrawer__foot {
+  display: none;
+  padding-block-start: var(--padding-sm);
+  text-align: center;
+}
+
+.mox-sdrawer__psc:has([data-search-results]):not(:has(.predictive-search-results__no-results)) {
+  .mox-sdrawer__foot {
+    display: block;
+  }
+}
+
+
+/* MOXIE: Iconos blancos sin scroll, negros con scroll */
+#header-component:not([data-sticky-state=active]) header-actions .header-actions__action {
+  color: #ffffff;
+  transition: color var(--animation-speed) var(--animation-easing);
+}
+
+#header-component:not([data-sticky-state=active]) header-actions svg {
+  color: #ffffff;
+  transition: color var(--animation-speed) var(--animation-easing);
+}
+
+#header-component[data-sticky-state=active] header-actions .header-actions__action {
+  color: #000000;
+  transition: color var(--animation-speed) var(--animation-easing);
+}
+
+#header-component[data-sticky-state=active] header-actions svg {
+  color: #000000;
+  transition: color var(--animation-speed) var(--animation-easing);
+}
+
+/* MOXIE: Color del icono de cuenta */
+#header-component:not([data-sticky-state=active]) .account-button__icon,
+#header-component:not([data-sticky-state=active]) .account-button__text {
+  color: #ffffff;
+}
+
+#header-component[data-sticky-state=active] .account-button__icon,
+#header-component[data-sticky-state=active] .account-button__text {
+  color: #000000;
+}
+
+#header-component:not([data-sticky-state=active]) shopify-account {
+  --color-account-icon: #ffffff;
+}
+
+#header-component[data-sticky-state=active] shopify-account {
+  --color-account-icon: #000000;
+}
+
+/* MOXIE: Color de la burbuja del carrito */
+#header-component:not([data-sticky-state=active]) .cart-bubble {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+#header-component[data-sticky-state=active] .cart-bubble {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* MOXIE: Color del contador del carrito */
+.cart-bubble__background {
+  background-color: #EF8903 !important;
+}
+
+/* MOXIE: Color del texto del contador - blanco sin scroll, negro con scroll */
+#header-component:not([data-sticky-state=active]) .cart-bubble__text-count {
+  color: #ffffff;
+}
+
+#header-component[data-sticky-state=active] .cart-bubble__text-count {
+  color: #000000;
+}
+
+
+
+@media (max-width: 768px) {
+
+}

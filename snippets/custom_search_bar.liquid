@@ -1,0 +1,30 @@
+{%- doc -%}
+  Renders a pill-shaped inline search bar that opens the predictive search modal.
+  Replaces the icon-only search button for a better search affordance in the header.
+
+  @param {string} [style] - Pass 'none' to suppress rendering.
+  @param {string} [class]  - Additional CSS classes.
+{%- enddoc -%}
+
+{%- comment -%} MOXIE: Custom inline search bar — wraps the base modal trigger {%- endcomment -%}
+
+{% unless style == 'none' %}
+<search-button
+  class="search-action custom-search-bar{% if class != blank %} {{ class | strip }}{% endif %}"
+>
+  <button
+    on:click="#search-modal/showDialog"
+    class="button-unstyled custom-search-bar__trigger"
+    aria-label="{{ 'content.search_input_label' | t }}"
+    aria-haspopup="dialog"
+    type="button"
+  >
+    <span class="svg-wrapper custom-search-bar__icon" aria-hidden="true">
+      {{ 'icon-search.svg' | inline_asset_content }}
+    </span>
+    <span class="custom-search-bar__placeholder">
+      {{- 'content.search_input_placeholder' | t -}}
+    </span>
+  </button>
+</search-button>
+{% endunless %}

@@ -1,0 +1,398 @@
+
+/* =============================================================================
+   MOXIE MEGAMENU — mega-menu.liquid + mega-menu.js
+   Estilos para el megamenu multimarca impulsado por Metaobjects.
+   ============================================================================= */
+
+/* ── Contenedor principal (fixed, debajo del header sticky) ─────────────── */
+.moxie-mega {
+  position: fixed;
+  top: var(--moxie-mega-top, 80px);
+  left: 0;
+  right: 0;
+  z-index: var(--layer-header-menu, 200);
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 0.22s;
+}
+
+.moxie-mega--open {
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+/* ── Brand wrap: display:contents para no interferir con el layout ───────── */
+.moxie-mega__brand-wrap {
+  display: contents;
+}
+
+/* ── Paneles de marca ────────────────────────────────────────────────────── */
+.moxie-mega__panel[data-brand=little-mic] {
+  display: none !important;
+}
+
+/* ── Backdrop ────────────────────────────────────────────────────────────── */
+.moxie-mega__backdrop {
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.moxie-mega--open .moxie-mega__backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Panel (compartido) ──────────────────────────────────────────────────── */
+.moxie-mega__panel {
+  position: fixed;
+  top: var(--moxie-mega-top, 80px);
+  left: 0;
+  width: 100%;
+  max-height: 450px;
+  overflow-y: auto;
+  background-color: var(--color-background);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border-bottom-left-radius: var(--mega-border-radius, 0px);
+  border-bottom-right-radius: var(--mega-border-radius, 0px);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0.22s;
+  pointer-events: none;
+}
+
+.moxie-mega__panel--active {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0s;
+}
+
+/* ── Panel inner — centrado con el mismo sistema que las secciones del tema ── */
+.moxie-mega__panel-inner {
+  display: grid;
+  gap: 3rem;
+  padding-block: 2rem 2.5rem;
+  /* Centrado manual equivalente a .page-width-normal */
+//   max-width: calc(var(--normal-page-width, 120rem) + 80px);
+  margin-inline: auto;
+  padding-inline: 40px;
+  box-sizing: border-box;
+}
+
+/* ── PANEL ESTÁNDAR: [categorías] [banners] ──────────────────────────────── */
+.moxie-mega__panel--standard .moxie-mega__panel-inner {
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 2rem;
+}
+
+/* Columna de categorías */
+.moxie-mega__categories {
+  display: flex;
+  flex-direction: column;
+  // flex-wrap: wrap;
+  gap: 2rem 3.5rem;
+}
+
+.moxie-mega__catgroup {
+  min-width: 0;
+}
+
+.moxie-mega__cat-title {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--color-foreground);
+  margin-bottom: 0.75rem;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.moxie-mega__catgroup--active .moxie-mega__cat-title,
+.moxie-mega__cat-title:hover {
+  opacity: 1;
+}
+
+/* Sub-ítems en 2 columnas para coincidir con el diseño */
+.moxie-mega__sublinks {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 2.5rem;
+  row-gap: 0.45rem;
+}
+
+.moxie-mega__sublink {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #000000;
+  text-decoration: none;
+  opacity: 0.72;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+// .moxie-mega__sublink:hover {
+//   opacity: 1;
+//   text-decoration: underline;
+//   text-underline-offset: 2px;
+// }
+
+/* Columna de banners — sin ancho fijo, los banners se ponen en fila */
+.moxie-mega__banners-col {
+  position: relative;
+  min-height: 80px;
+}
+
+.moxie-mega__banner-set {
+  display: flex;
+  flex-direction: row;   /* banners en fila, uno al lado del otro */
+  gap: 0.75rem;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+}
+
+.moxie-mega__banner-set--active {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.moxie-mega__banner-link {
+  display: block;
+  // width: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  line-height: 0;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Si hay solo un banner, que ocupe más espacio */
+.moxie-mega__banner-set .moxie-mega__banner-link:only-child {
+  width: 380px;
+}
+
+.moxie-mega__banner-link:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+}
+
+.moxie-mega__banner-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 8px;
+  max-height: 220px;
+  max-width: 350px;
+}
+
+/* ── PANEL LICENCIAS: 4 columnas ─────────────────────────────────────────── */
+.moxie-mega__panel--licenses .moxie-mega__panel-inner {
+  grid-template-columns: 1fr;
+  padding-block: 1.25rem 1.75rem;
+}
+
+.moxie-mega__lic-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 0 2rem;
+  align-items: start;
+}
+
+/* Cols 1 y 2: botones de licencia — sin borde entre ellas */
+.moxie-mega__lic-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+/* El separador va solo después de la segunda columna de licencias */
+.moxie-mega__lic-col:last-of-type {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  padding-right: 1.5rem;
+}
+
+.moxie-mega__lic-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 8px;
+  width: 100%;
+  color: var(--color-foreground);
+  font-size: 0.8125rem;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.moxie-mega__lic-item:hover,
+.moxie-mega__lic-item--active {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.moxie-mega__lic-item--active .moxie-mega__lic-name {
+  font-weight: 600;
+}
+
+.moxie-mega__lic-logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moxie-mega__lic-logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.moxie-mega__lic-name {
+  flex: 1;
+  line-height: 1.2;
+}
+
+.moxie-mega__lic-arrow {
+  font-size: 1rem;
+  opacity: 0.3;
+  margin-left: auto;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.moxie-mega__lic-item--active .moxie-mega__lic-arrow {
+  opacity: 0.7;
+  transform: translateX(2px);
+}
+
+/* Col 3: sub-ítems */
+.moxie-mega__lic-subitems {
+  position: relative;
+  min-height: 80px;
+}
+
+.moxie-mega__lic-subgroup {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  pointer-events: none;
+}
+
+.moxie-mega__lic-subgroup--active {
+  position: relative;
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.moxie-mega__lic-sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.moxie-mega__lic-viewall {
+  font-size: 0.75rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--color-foreground);
+  opacity: 0.6;
+  display: block;
+  transition: opacity 0.15s;
+}
+
+.moxie-mega__lic-viewall:hover {
+  opacity: 1;
+}
+
+/* Col 4: banner por licencia */
+.moxie-mega__lic-banners {
+  // width: 340px;
+  position: relative;
+  // min-height: 160px;
+}
+
+.moxie-mega__banner-lic-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 8px;
+  max-height: 260px;
+  max-width:3900px;
+}
+.moxie-mega__lic-banner {
+  display: block;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  border-radius: var(--mega-border-radius, 8px);
+  overflow: hidden;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.moxie-mega__lic-banner--active {
+  position: relative;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.moxie-mega__lic-banner--active:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+}
+
+/* ── Estado activo del trigger en el navbar ──────────────────────────────── */
+.custom-navbar__link[data-mega-trigger] {
+  cursor: pointer;
+}
+
+/* ── Movimiento reducido ─────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .moxie-mega__panel,
+  .moxie-mega__banner-set,
+  .moxie-mega__lic-subgroup,
+  .moxie-mega__lic-banner,
+  .moxie-mega__backdrop {
+    transition: none;
+  }
+}
+
+/* ── Ocultar en mobile (el drawer maneja la nav móvil) ───────────────────── */
+@media screen and (max-width: 989px) {
+  .moxie-mega {
+    display: none !important;
+  }
+}
+

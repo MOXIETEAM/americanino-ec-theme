@@ -1,0 +1,156 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: PLP Hero ──────────────────────────────────────────────────────────
+// Layout split: panel de info a la izquierda + slider de subcategorias a la derecha.
+// Reutiliza las clases .cat-swiper-wrap / .cat-nav / .cat-card de _custom-category-tabs.
+
+.custom-plp-hero {
+  width: 100%;
+  border-bottom: 2px solid var(--plp-border-color, transparent);
+}
+
+// ── Grid de dos columnas ──────────────────────────────────────────────────────
+
+.custom-plp-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  gap: 0 24px;
+
+  @include mobile-only {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+// ── Panel izquierdo ───────────────────────────────────────────────────────────
+
+.custom-plp-hero__info {
+  padding-inline-end: 24px;
+  border-inline-end: 1px solid var(--plp-col-sep-color, #e0e0e0);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  @include mobile-only {
+    padding-inline-end: 0;
+    border-inline-end: none;
+    border-block-end: 1px solid var(--plp-col-sep-color, #e0e0e0);
+    padding-block-end: 20px;
+  }
+}
+
+// ── Breadcrumb ────────────────────────────────────────────────────────────────
+
+.plp-hero__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.8rem;
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+  margin-block-end: 14px;
+  flex-wrap: wrap;
+}
+
+.plp-hero__bc-brand { display: none; }
+.plp-hero__bc-brand--mic { display: inline; }
+
+.plp-hero__bc-sep,
+.plp-hero__bc-collection {
+  display: inline;
+}
+
+// ── Titulo ────────────────────────────────────────────────────────────────────
+
+.plp-hero__title {
+  font-size: clamp(1.375rem, 2.8vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  color: rgb(var(--color-foreground-rgb));
+}
+
+// ── Descripcion ───────────────────────────────────────────────────────────────
+
+.plp-hero__desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground-rgb) / 0.7);
+  margin: 0;
+
+  p {
+    margin: 0;
+  }
+}
+
+// ── Panel derecho (slider) ────────────────────────────────────────────────────
+
+.custom-plp-hero__slider {
+  min-width: 0; // evitar overflow en grid
+}
+
+// ── Estilos críticos del swiper (evitan layout shift antes de que cargue CDN) ─
+// Swiper se carga async desde CDN. Sin estos estilos los slides se apilan
+// verticalmente hasta que llega su CSS, causando un flash de sección gigante.
+// --spv-mobile y --spv-desktop se inyectan via inline style desde el Liquid
+// para que el ancho de cada slide sea correcto desde el primer paint.
+
+.custom-plp-hero .cat-swiper {
+  overflow: hidden;
+}
+
+.custom-plp-hero .cat-swiper .swiper-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  box-sizing: content-box;
+}
+
+.custom-plp-hero .cat-swiper .swiper-slide {
+  flex-shrink: 0;
+  // ancho = espacio disponible ÷ slides visibles
+  width: calc(100% / var(--spv-mobile, 2));
+
+  @include tablet-up {
+    width: calc(100% / var(--spv-desktop, 4));
+  }
+}
+
+// ── Brand visibility a nivel de seccion ───────────────────────────────────────
+
+.custom-plp-hero[data-brand-show='little-mic'] { display: none; }
+
+.custom-plp-hero[data-brand-show='mic'],
+.custom-plp-hero[data-brand-show='all'] {
+  display: block;
+}
+
+// ── Animacion de entrada ──────────────────────────────────────────────────────
+
+@media (prefers-reduced-motion: no-preference) {
+  .custom-plp-hero__info {
+    animation: plp-hero-fade-in 0.4s var(--animation-easing, ease) both;
+  }
+
+  .custom-plp-hero__slider {
+    animation: plp-hero-fade-in 0.4s 0.08s var(--animation-easing, ease) both;
+  }
+}
+
+@keyframes plp-hero-fade-in {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@include reduced-motion {
+  .custom-plp-hero__info,
+  .custom-plp-hero__slider {
+    animation: none;
+  }
+}

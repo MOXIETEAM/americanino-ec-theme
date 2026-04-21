@@ -1,0 +1,618 @@
+{%- comment -%} MOXIE: Custom footer — newsletter · bloques · tagline · medios de pago {%- endcomment -%}
+
+{%- assign bg_color = section.settings.bg_color -%}
+
+{%- comment -%} ── Fondo del newsletter {%- endcomment -%}
+{%- if section.settings.newsletter_bg_color != blank or section.settings.newsletter_bg_image != blank -%}
+  <style>
+    #shopify-section-{{ section.id }} .custom-footer__newsletter {
+      {%- if section.settings.newsletter_bg_color != blank -%}background-color: {{ section.settings.newsletter_bg_color }};{%- endif -%}
+      {%- if section.settings.newsletter_bg_image != blank -%}background-image: url({{ section.settings.newsletter_bg_image | image_url: width: 1400 }}); background-size: cover; background-position: center; background-repeat: no-repeat;{%- endif -%}
+    }
+  </style>
+{%- endif -%}
+
+<div class="moxie-brand-section custom-main-container-footer">
+  {%- comment -%} ── Newsletter ───────────────────────────────────────────────── {%- endcomment -%}
+  {%- if section.settings.show_newsletter -%}
+    <div class="custom-footer__newsletter custom-center-container">
+      <div class="custom-footer__newsletter_container custom-standar-max-width">
+        {%- if section.settings.newsletter_deco_left_mic != blank -%}
+          <img
+            class="custom-footer__newsletter-deco custom-footer__newsletter-deco--left"
+            src="{{ section.settings.newsletter_deco_left_mic | image_url: width: 200 }}"
+            width="140"
+            height="140"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          >
+        {%- endif -%}
+        {%- if section.settings.newsletter_deco_right_mic != blank -%}
+          <img
+            class="custom-footer__newsletter-deco custom-footer__newsletter-deco--right"
+            src="{{ section.settings.newsletter_deco_right_mic | image_url: width: 200 }}"
+            width="140"
+            height="140"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          >
+        {%- endif -%}
+
+        <div class="custom-footer__newsletter-inner custom-standar-max-width">
+          <div class="custom-footer__newsletter-text">
+            {%- if section.settings.newsletter_title != blank -%}
+              <div class="custom-footer__newsletter-title">{{ section.settings.newsletter_title }}</div>
+            {%- endif -%}
+            {%- if section.settings.newsletter_sub != blank -%}
+              <p class="custom-footer__newsletter-sub">{{ section.settings.newsletter_sub }}</p>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.newsletter_url != blank -%}
+            <a class="custom-footer__newsletter-btn" href="{{ section.settings.newsletter_url }}">
+              {{- section.settings.newsletter_btn_label | default: 'Suscríbete' -}}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Decoradores GIF (zona entre newsletter y footer) ─────────── {%- endcomment -%}
+  {%- liquid
+    assign _gd1_img    = section.settings.gif_dec_1_image
+    assign _gd1_sz     = section.settings.gif_dec_1_size | default: 80
+    assign _gd1_pos    = section.settings.gif_dec_1_position | default: 'top-center'
+    assign _gd1_top    = section.settings.gif_dec_1_top    | default: 0
+    assign _gd1_right  = section.settings.gif_dec_1_right  | default: 0
+    assign _gd1_bottom = section.settings.gif_dec_1_bottom | default: 0
+    assign _gd1_left   = section.settings.gif_dec_1_left   | default: 0
+
+    assign _gd2_img    = section.settings.gif_dec_2_image
+    assign _gd2_sz     = section.settings.gif_dec_2_size | default: 80
+    assign _gd2_pos    = section.settings.gif_dec_2_position | default: 'top-center'
+    assign _gd2_top    = section.settings.gif_dec_2_top    | default: 0
+    assign _gd2_right  = section.settings.gif_dec_2_right  | default: 0
+    assign _gd2_bottom = section.settings.gif_dec_2_bottom | default: 0
+    assign _gd2_left   = section.settings.gif_dec_2_left   | default: 0
+
+    assign _gd3_img    = section.settings.gif_dec_3_image
+    assign _gd3_sz     = section.settings.gif_dec_3_size | default: 80
+    assign _gd3_pos    = section.settings.gif_dec_3_position | default: 'top-center'
+    assign _gd3_top    = section.settings.gif_dec_3_top    | default: 0
+    assign _gd3_right  = section.settings.gif_dec_3_right  | default: 0
+    assign _gd3_bottom = section.settings.gif_dec_3_bottom | default: 0
+    assign _gd3_left   = section.settings.gif_dec_3_left   | default: 0
+
+    assign _gd4_img    = section.settings.gif_dec_4_image
+    assign _gd4_sz     = section.settings.gif_dec_4_size | default: 80
+    assign _gd4_pos    = section.settings.gif_dec_4_position | default: 'top-center'
+    assign _gd4_top    = section.settings.gif_dec_4_top    | default: 0
+    assign _gd4_right  = section.settings.gif_dec_4_right  | default: 0
+    assign _gd4_bottom = section.settings.gif_dec_4_bottom | default: 0
+    assign _gd4_left   = section.settings.gif_dec_4_left   | default: 0
+
+    assign _has_gif_decs = false
+    if _gd1_img or _gd2_img or _gd3_img or _gd4_img
+      assign _has_gif_decs = true
+    endif
+  -%}
+  {%- if _has_gif_decs -%}
+    <div class="custom-footer__gif-strip" aria-hidden="true">
+      {%- if _gd1_img -%}
+        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd1_pos }}" style="--dec-top:{{ _gd1_top }}px;--dec-right:{{ _gd1_right }}px;--dec-bottom:{{ _gd1_bottom }}px;--dec-left:{{ _gd1_left }}px;--dec-h:{{ _gd1_sz }}px;"
+        ><img src="{{ _gd1_img | image_url: height: _gd1_sz }}" alt="" loading="lazy"></span>
+      {%- endif -%}
+      {%- if _gd2_img -%}
+        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd2_pos }}" style="--dec-top:{{ _gd2_top }}px;--dec-right:{{ _gd2_right }}px;--dec-bottom:{{ _gd2_bottom }}px;--dec-left:{{ _gd2_left }}px;--dec-h:{{ _gd2_sz }}px;"
+        ><img src="{{ _gd2_img | image_url: height: _gd2_sz }}" alt="" loading="lazy"></span>
+      {%- endif -%}
+      {%- if _gd3_img -%}
+        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd3_pos }}" style="--dec-top:{{ _gd3_top }}px;--dec-right:{{ _gd3_right }}px;--dec-bottom:{{ _gd3_bottom }}px;--dec-left:{{ _gd3_left }}px;--dec-h:{{ _gd3_sz }}px;"
+        ><img src="{{ _gd3_img | image_url: height: _gd3_sz }}" alt="" loading="lazy"></span>
+      {%- endif -%}
+      {%- if _gd4_img -%}
+        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd4_pos }}" style="--dec-top:{{ _gd4_top }}px;--dec-right:{{ _gd4_right }}px;--dec-bottom:{{ _gd4_bottom }}px;--dec-left:{{ _gd4_left }}px;--dec-h:{{ _gd4_sz }}px;"
+        ><img src="{{ _gd4_img | image_url: height: _gd4_sz }}" alt="" loading="lazy"></span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Main footer ──────────────────────────────────────────────── {%- endcomment -%}
+  <div
+    class="custom-footer__main custom-center-container color-{{ section.settings.color_scheme }}"
+    {% if bg_color != blank %}
+      style="background-color: {{ bg_color }};"
+    {% endif %}
+  >
+    <div class="custom-footer__main-inner custom-standar-max-width">
+      {%- comment -%} ── Grid: col 1 = brand info / cols 2-4 = nav ────────── {%- endcomment -%}
+      <div class="custom-footer__grid">
+        {%- comment -%} Columna 1: todos los bloques brand_info {%- endcomment -%}
+        <div class="custom-footer__brand-area">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'brand_info' -%}
+              <div
+                class="custom-footer__brand-block"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.logo != blank -%}
+                  <div class="custom-footer__logo">
+                    <img
+                      src="{{ block.settings.logo | image_url: width: 120 }}"
+                      alt=""
+                      width="88"
+                      height="88"
+                      loading="lazy"
+                    >
+                  </div>
+                {%- endif -%}
+
+                <ul class="custom-footer__contact-list">
+                  {%- if block.settings.whatsapp_url != blank -%}
+                    <li>
+                      <a
+                        href="{{ block.settings.whatsapp_url }}"
+                        class="custom-footer__contact-link"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <svg
+                          class="custom-footer__contact-icon"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          aria-hidden="true"
+                          width="16"
+                          height="16"
+                        >
+                          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.528 5.846L0 24l6.335-1.501A11.949 11.949 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.943 0-3.75-.522-5.3-1.432l-.38-.226-3.758.89.944-3.633-.248-.395A9.793 9.793 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818S21.818 6.582 21.818 12 17.418 21.818 12 21.818zm5.472-7.436c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                        </svg>
+                        {{ block.settings.whatsapp_label | default: 'Chat con un asesor de whatsapp' }}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if block.settings.phone != blank -%}
+                    <li>
+                      <a href="tel:{{ block.settings.phone | remove: ' ' }}" class="custom-footer__contact-link">
+                        <svg
+                          class="custom-footer__contact-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          width="16"
+                          height="16"
+                        >
+                          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7 2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 6.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 13.92z"/>
+                        </svg>
+                        Llamar {{ block.settings.phone }}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if block.settings.email != blank -%}
+                    <li>
+                      <a href="mailto:{{ block.settings.email }}" class="custom-footer__contact-link">
+                        <svg
+                          class="custom-footer__contact-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          width="16"
+                          height="16"
+                        >
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                          <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        Escribir un correo
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if block.settings.store_locator_url != blank -%}
+                    <li>
+                      <a href="{{ block.settings.store_locator_url }}" class="custom-footer__contact-link">
+                        <svg
+                          class="custom-footer__contact-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                          width="16"
+                          height="16"
+                        >
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                          <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Localizador de tiendas
+                      </a>
+                    </li>
+                  {%- endif -%}
+                </ul>
+
+                <div class="custom-footer__social">
+                  {%- if block.settings.instagram_url != blank -%}
+                    <a
+                      href="{{ block.settings.instagram_url }}"
+                      class="custom-footer__social-link"
+                      aria-label="Instagram"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      </svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.facebook_url != blank -%}
+                    <a
+                      href="{{ block.settings.facebook_url }}"
+                      class="custom-footer__social-link"
+                      aria-label="Facebook"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.tiktok_url != blank -%}
+                    <a
+                      href="{{ block.settings.tiktok_url }}"
+                      class="custom-footer__social-link"
+                      aria-label="TikTok"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+                        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z"/>
+                      </svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.youtube_url != blank -%}
+                    <a
+                      href="{{ block.settings.youtube_url }}"
+                      class="custom-footer__social-link"
+                      aria-label="YouTube"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+                        <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      </svg>
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Columnas de menú: bloques nav_column {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'nav_column' -%}
+            <div
+              class="custom-footer__nav-col"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.heading != blank -%}
+                <h3 class="custom-footer__nav-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- assign menu_handle = block.settings.menu -%}
+              {%- if menu_handle != blank and linklists[menu_handle].links.size > 0 -%}
+                <ul class="custom-footer__nav-list">
+                  {%- for link in linklists[menu_handle].links -%}
+                    <li>
+                      <a href="{{ link.url }}" class="custom-footer__nav-link">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── Tagline grande ────────────────────────────────────────────── {%- endcomment -%}
+  <div
+    class="custom-footer__tagline-wrap custom-center-container color-{{ section.settings.color_scheme }}"
+    {% if bg_color != blank %}
+      style="background-color: {{ bg_color }};"
+    {% endif %}
+  >
+    {%- comment -%} Decoradores {%- endcomment -%}
+    <div class="custom-footer_tagline_container custom-standar-max-width">
+      {%- if section.settings.tagline_deco_left_mic != blank -%}
+        <img
+          class="custom-footer__tagline-deco custom-footer__tagline-deco--left"
+          src="{{ section.settings.tagline_deco_left_mic | image_url: width: 220 }}"
+          width="160"
+          height="160"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+        >
+      {%- endif -%}
+      {%- comment -%} Tagline {%- endcomment -%}
+      <p
+        class="custom-footer__tagline"
+        style="{% if section.settings.tagline_color != blank %}color: {{ section.settings.tagline_color }};{% endif %}"
+      >
+        {{- section.settings.tagline | default: 'AMERICANINO' -}}
+      </p>
+
+      {%- if section.settings.tagline_deco_right_mic != blank -%}
+        <img
+          class="custom-footer__tagline-deco custom-footer__tagline-deco--right"
+          src="{{ section.settings.tagline_deco_right_mic | image_url: width: 220 }}"
+          width="160"
+          height="160"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+        >
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} ── Medios de pago ────────────────────────────────────────────── {%- endcomment -%}
+  {%- if section.settings.payments_image != blank -%}
+    <div
+      class="custom-footer__payments custom-center-container"
+      {% if bg_color != blank %}
+        style="background-color: {{ bg_color }};"
+      {% endif %}
+    >
+      <div class="custom-footer__payments-container custom-standar-max-width">
+        <img
+          src="{{ section.settings.payments_image | image_url: width: 900 }}"
+          alt="Medios de pago aceptados"
+          width="900"
+          height="40"
+          loading="lazy"
+          class="custom-footer__payments-img"
+        >
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+{{- '<!-- /moxie-brand-section -->' -}}
+
+{% schema %}
+{
+  "name": "Moxie Footer",
+  "tag": "section",
+  "class": "custom-footer-section",
+  "blocks": [
+    {
+      "type": "brand_info",
+      "name": "Info de marca",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Logo"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo de la marca"
+        },
+        {
+          "type": "header",
+          "content": "Contacto"
+        },
+        {
+          "type": "url",
+          "id": "whatsapp_url",
+          "label": "URL de WhatsApp"
+        },
+        {
+          "type": "text",
+          "id": "whatsapp_label",
+          "label": "Texto del enlace WhatsApp",
+          "default": "Chat con un asesor de whatsapp"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "label": "Número de teléfono (ej: +57 300 910 83 11)"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "label": "Correo electrónico"
+        },
+        {
+          "type": "url",
+          "id": "store_locator_url",
+          "label": "URL localizador de tiendas"
+        },
+        {
+          "type": "header",
+          "content": "Redes sociales"
+        },
+        {
+          "type": "url",
+          "id": "instagram_url",
+          "label": "Instagram"
+        },
+        {
+          "type": "url",
+          "id": "facebook_url",
+          "label": "Facebook"
+        },
+        {
+          "type": "url",
+          "id": "tiktok_url",
+          "label": "TikTok"
+        },
+        {
+          "type": "url",
+          "id": "youtube_url",
+          "label": "YouTube"
+        }
+      ]
+    },
+    {
+      "type": "nav_column",
+      "name": "Columna de menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Título de la columna"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Mostrar banda de newsletter",
+      "default": false
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_title",
+      "label": "Título (acepta negrita)",
+      "default": "<p>Suscríbete a nuestro newsletter y <strong>recibe 30% OFF en tu primera compra</strong></p>"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_sub",
+      "label": "Subtítulo",
+      "default": "Todas las novedades, lanzamientos, descuentos exclusivos y mucho más"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_btn_label",
+      "label": "Texto del botón",
+      "default": "Suscríbete"
+    },
+    {
+      "type": "url",
+      "id": "newsletter_url",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter — Fondo"
+    },
+    {
+      "type": "color",
+      "id": "newsletter_bg_color",
+      "label": "Color de fondo"
+    },
+    {
+      "type": "image_picker",
+      "id": "newsletter_bg_image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "header",
+      "content": "Tagline grande"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Texto del tagline",
+      "default": "AMERICANINO"
+    },
+    {
+      "type": "color",
+      "id": "tagline_color",
+      "label": "Color del tagline"
+    },
+
+    {
+      "type": "header",
+      "content": "Medios de pago"
+    },
+    {
+      "type": "image_picker",
+      "id": "payments_image",
+      "label": "Imagen medios de pago"
+    },
+    {
+      "type": "header",
+      "content": "Estilo"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo (main, tagline, pagos)",
+      "info": "Sobrescribe el fondo del esquema de color"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Footer",
+      "category": "Moxie",
+      "blocks": [
+        {
+          "type": "brand_info",
+          "settings": {
+            "whatsapp_label": "Chat con un asesor de whatsapp",
+            "phone": "+57 300 910 83 11"
+          }
+        },
+        {
+          "type": "brand_info",
+          "settings": {
+            "whatsapp_label": "Chat con un asesor de whatsapp"
+          }
+        },
+        {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Ayuda"
+          }
+        },
+        {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Empresa"
+          }
+        },
+        {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Legales"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "aside"]
+  }
+}
+{% endschema %}

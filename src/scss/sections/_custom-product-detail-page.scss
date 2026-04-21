@@ -1,0 +1,27 @@
+.product-information {
+    .variant-picker {
+        .variant-picker__form {
+            .variant-option__title {
+                font-size: 14px;
+                font-weight: 600;
+                color: #24272A;
+            }
+            .variant-option__button-label {
+                border: 0.8px solid #000000 !important;
+                padding: 0;
+                min-width: 60px;
+                max-width: 60px;
+                min-height: 24px;
+                max-height: 24px;
+
+                .variant-option__button-label__text {
+                    font-size: 14px;
+                }
+
+                .variant-option__button-label__pill {
+                    background-color: #EF8903;
+                }
+            }
+        }
+    }
+}

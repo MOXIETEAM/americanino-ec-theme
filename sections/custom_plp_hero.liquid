@@ -1,0 +1,426 @@
+{%- comment -%} MOXIE: PLP Hero - Layout split con breadcrumb, info de coleccion y slider de subcategorias {%- endcomment -%}
+
+{%- liquid
+  assign padding_v         = section.settings.padding_v | default: 32
+  assign spv_desktop       = section.settings.slides_desktop | default: 4
+  assign spv_mobile        = section.settings.slides_mobile | default: 2
+  assign card_ratio        = section.settings.card_ratio | default: '1 / 1'
+  assign info_col_width    = section.settings.info_col_width | default: 280
+
+  assign hero_title = section.settings.title_override
+  if hero_title == blank
+    assign hero_title = collection.title
+  endif
+
+  assign hero_desc = section.settings.description_override
+  if hero_desc == blank
+    assign hero_desc = collection.description
+  endif
+
+  assign breadcrumb       = section.settings.breadcrumb_brand | default: 'Mic'
+
+  assign card_blocks = section.blocks | where: 'type', 'card'
+
+  comment
+    Metafield de colección: lista de referencias a metaobjetos filtro_coleccion_plp_hero.
+    Tiene prioridad sobre los bloques manuales del editor.
+  endcomment
+  assign meta_cards    = collection.metafields.custom.mox_plp_filtro_coleccion_plp_hero.value
+  assign has_meta_cards = false
+  if meta_cards != blank and meta_cards.size > 0
+    assign has_meta_cards = true
+  endif
+
+-%}
+
+{%- comment -%} Swiper CDN (idempotente — no se duplica si ya existe) {%- endcomment -%}
+<script>
+  (function () {
+    if (!document.getElementById('cdn-swiper-css')) {
+      var l = document.createElement('link');
+      l.id = 'cdn-swiper-css'; l.rel = 'stylesheet';
+      l.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+      document.head.appendChild(l);
+    }
+    if (!document.getElementById('cdn-swiper-js')) {
+      var s = document.createElement('script');
+      s.id = 'cdn-swiper-js';
+      s.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+      document.head.appendChild(s);
+    }
+  })();
+</script>
+
+{%- if has_meta_cards -%}
+<div class="custom-center-container">
+<div
+  class="custom-plp-hero custom-standar-max-width"
+  id="plp-hero-{{ section.id }}"
+  data-slides-desktop="{{ spv_desktop }}"
+  data-slides-mobile="{{ spv_mobile }}"
+  style="
+    padding-block: {{ padding_v }}px;
+    --cat-card-ratio: {{ card_ratio }};
+    --plp-info-width: {{ info_col_width }}px;
+    --spv-mobile: {{ spv_mobile }};
+    --spv-desktop: {{ spv_desktop }};
+    --plp-border-color: {{ section.settings.border_color | default: '#d0e4ff' }};
+    --plp-col-sep-color: {{ section.settings.col_sep_color | default: '#e0e0e0' }};
+    {%- if section.settings.bg_color != blank %} background-color: {{ section.settings.bg_color }};{%- endif -%}
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="custom-plp-hero__inner page-width">
+
+    {%- comment -%} ── Panel izquierdo: info ─────────────────────────────────── {%- endcomment -%}
+    <div class="custom-plp-hero__info">
+
+      {%- if section.settings.show_breadcrumb -%}
+        <nav class="plp-hero__breadcrumb" aria-label="Breadcrumb">
+          <span class="plp-hero__bc-brand">{{ breadcrumb }}</span>
+          <span class="plp-hero__bc-sep" aria-hidden="true">/</span>
+          <span class="plp-hero__bc-collection">{{ collection.title }}</span>
+        </nav>
+      {%- endif -%}
+
+      <div class="plp-hero-container">
+        {%- if hero_title != blank -%}
+          <h1 class="plp-hero__title">{{ hero_title }}</h1>
+        {%- endif -%}
+
+        {%- if hero_desc != blank -%}
+          <div class="plp-hero__desc rte">{{ hero_desc }}</div>
+        {%- endif -%}
+      </div>
+
+    </div>
+
+    {%- comment -%} ── Panel derecho: slider de subcategorias ────────────────── {%- endcomment -%}
+    {%- if has_meta_cards or card_blocks.size > 0 -%}
+      <div class="custom-plp-hero__slider">
+        <div class="cat-swiper-wrap">
+          <div class="swiper cat-swiper" id="plp-swiper-{{ section.id }}">
+            <div class="swiper-wrapper">
+
+              {%- if has_meta_cards -%}
+
+                {%- comment -%} ── Cards desde metafield de colección ── {%- endcomment -%}
+                {%- for item in meta_cards -%}
+
+                  {%- comment -%} Saltar items inactivos {%- endcomment -%}
+                  {%- unless item.activo.value -%}{%- continue -%}{%- endunless -%}
+
+                  {%- assign card_brand = 'all' -%}
+
+                  {%- assign meta_img   = item.imagen.value -%}
+                  {%- assign meta_label = item.titulo_de_coleccion.value -%}
+                  {%- comment -%} url_de_coleccion es tipo link → {url:, text:} {%- endcomment -%}
+                  {%- assign meta_url   = item.url_de_coleccion.value.url | default: '#' -%}
+                  {%- assign meta_bg    = item.color_de_fondo.value | default: '#ffffff' -%}
+
+                  <div
+                    class="swiper-slide plp-hero-slide"
+                    data-card-brand="{{ card_brand }}"
+                  >
+                    <a class="cat-card" href="{{ meta_url }}" style="background-color: {{ meta_bg }};">
+                      <div class="cat-card__media">
+                        {%- if meta_img != blank -%}
+                          {{
+                            meta_img
+                            | image_url: width: 600
+                            | image_tag:
+                              loading: 'lazy',
+                              alt: meta_label,
+                              class: 'cat-card__img',
+                              widths: '300, 600',
+                              sizes: '(min-width: 990px) 20vw, 45vw'
+                          }}
+                        {%- else -%}
+                          {{ 'collection-1' | placeholder_svg_tag: 'cat-card__img cat-card__img--placeholder' }}
+                        {%- endif -%}
+                      </div>
+                      {%- if meta_label != blank -%}
+                        <p class="cat-card__label">{{ meta_label }}</p>
+                      {%- endif -%}
+                    </a>
+                  </div>
+
+                {%- endfor -%}
+
+              {%- else -%}
+
+                {%- comment -%} ── Fallback: bloques manuales del editor ── {%- endcomment -%}
+                {%- for card in card_blocks -%}
+                  {%- assign card_brand = card.settings.brand | default: 'all' -%}
+                  <div
+                    class="swiper-slide plp-hero-slide"
+                    data-card-brand="{{ card_brand }}"
+                  >
+                    <a
+                      class="cat-card"
+                      href="{{ card.settings.link | default: '#' }}"
+                      {{ card.shopify_attributes }}
+                    >
+                      <div class="cat-card__media">
+                        {%- if card.settings.image != blank -%}
+                          {{
+                            card.settings.image
+                            | image_url: width: 600
+                            | image_tag:
+                              loading: 'lazy',
+                              alt: card.settings.label,
+                              class: 'cat-card__img',
+                              widths: '300, 600',
+                              sizes: '(min-width: 990px) 20vw, 45vw'
+                          }}
+                        {%- else -%}
+                          {{ 'collection-1' | placeholder_svg_tag: 'cat-card__img cat-card__img--placeholder' }}
+                        {%- endif -%}
+                      </div>
+                      {%- if card.settings.label != blank -%}
+                        <p class="cat-card__label">{{ card.settings.label }}</p>
+                      {%- endif -%}
+                    </a>
+                  </div>
+                {%- endfor -%}
+
+              {%- endif -%}
+
+            </div>
+          </div>
+          <button class="cat-nav cat-nav--prev" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button class="cat-nav cat-nav--next" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+</div>
+{%- endif -%}
+
+<script>
+(function () {
+  var sectionEl = document.getElementById('plp-hero-{{ section.id }}');
+  if (!sectionEl) return;
+
+  var spvDesktop = parseFloat(sectionEl.dataset.slidesDesktop) || 4;
+  var spvMobile  = parseFloat(sectionEl.dataset.slidesMobile)  || 2;
+  var spvTablet  = Math.round((spvDesktop + spvMobile) / 2);
+  var swiperEl   = sectionEl.querySelector('.cat-swiper');
+  var swiper;
+
+  function filterSlides() {
+    if (swiper) swiper.update();
+  }
+
+  function initSwiper() {
+    if (!swiperEl || swiperEl._plpSwiper) return;
+    swiper = new Swiper(swiperEl, {
+      slidesPerView: spvMobile,
+      spaceBetween: 10,
+      navigation: {
+        prevEl: sectionEl.querySelector('.cat-nav--prev'),
+        nextEl: sectionEl.querySelector('.cat-nav--next')
+      },
+      breakpoints: {
+        750: { slidesPerView: spvTablet, spaceBetween: 14 },
+        990: { slidesPerView: spvDesktop, spaceBetween: 18 }
+      }
+    });
+    swiperEl._plpSwiper = swiper;
+    filterSlides();
+  }
+
+  function tryInit() {
+    if (typeof Swiper !== 'undefined') {
+      initSwiper();
+    } else {
+      var jsTag = document.getElementById('cdn-swiper-js');
+      if (jsTag) jsTag.addEventListener('load', initSwiper);
+    }
+  }
+
+  tryInit();
+
+  // Hooks del editor de Shopify
+  document.addEventListener('shopify:section:load', function (e) {
+    if (e.detail && e.detail.sectionId === '{{ section.id }}') {
+      if (swiperEl && swiperEl._plpSwiper) {
+        swiperEl._plpSwiper.destroy(true, true);
+        delete swiperEl._plpSwiper;
+        swiper = null;
+      }
+      tryInit();
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Moxie PLP Hero",
+  "tag": "section",
+  "class": "section-wrapper",
+  "max_blocks": 40,
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Tarjeta de subcategoria",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etiqueta",
+          "default": "Categoria"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Enlace"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Breadcrumb"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Mostrar breadcrumb",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_brand",
+      "label": "Nombre de la marca en breadcrumb",
+      "default": "Americanino"
+    },
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "text",
+      "id": "title_override",
+      "label": "Titulo personalizado",
+      "info": "Deja vacio para usar el titulo de la coleccion."
+    },
+    {
+      "type": "richtext",
+      "id": "description_override",
+      "label": "Descripcion personalizada",
+      "info": "Deja vacio para usar la descripcion de la coleccion."
+    },
+    {
+      "type": "header",
+      "content": "Slider de subcategorias"
+    },
+    {
+      "type": "select",
+      "id": "card_ratio",
+      "label": "Proporcion de imagen",
+      "options": [
+        { "value": "1 / 1", "label": "Cuadrado (1:1)" },
+        { "value": "3 / 4", "label": "Retrato (3:4)" },
+        { "value": "4 / 3", "label": "Paisaje (4:3)" }
+      ],
+      "default": "1 / 1"
+    },
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Tarjetas visibles en desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "label": "Tarjetas visibles en mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo"
+    },
+    {
+      "type": "color",
+      "id": "col_sep_color",
+      "label": "Color del separador vertical",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color del borde inferior",
+      "default": "transparent"
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "info_col_width",
+      "label": "Ancho del panel de info (px)",
+      "min": 180,
+      "max": 420,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie PLP Hero",
+      "category": "Moxie",
+      "settings": {
+        "show_breadcrumb": true,
+        "slides_desktop": 4,
+        "slides_mobile": 2,
+        "card_ratio": "1 / 1",
+        "border_color": "#d0e4ff",
+        "padding_v": 32
+      },
+      "blocks": [
+        { "type": "card", "settings": { "label": "Camisetas" } },
+        { "type": "card", "settings": { "label": "Buzos y Chaquetas" } },
+        { "type": "card", "settings": { "label": "Pijamas" } },
+        { "type": "card", "settings": { "label": "Inferiores" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,732 @@
+{% doc %}
+  Header Actions Component
+
+  Renders the header actions.
+
+  @param {object} [section] - The section object providing settings such as actions_font.
+  @param {block} [block] - The block object, used for Shopify editor attributes.
+  @param {string} [display_style] - Controls display mode for header actions: 'icon' or 'text'.
+  @param {string} [customer_account_menu] - The menu handle passed to the shopify-account component.
+
+  @example
+  {% render 'header-actions', section: section %}
+{% enddoc %}
+
+<script
+  type="module"
+  src="{{ 'cart-icon.js' | asset_url }}"
+  fetchpriority="low"
+></script>
+
+{% capture cart_icon %}
+  <cart-icon
+    class="header-actions__cart-icon{% if display_style == 'text' %} header-actions__cart-icon--text{% endif %}{% unless cart == empty %} header-actions__cart-icon--has-cart{% endunless %}"
+    data-testid="cart-icon"
+  >
+    <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
+      {{ 'content.cart_title' | t }}
+    </span>
+
+    <span
+      class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
+      aria-hidden="true"
+    >
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.42657 14.034C5.05327 10.9005 5.36661 9.33375 6.40199 8.32467C6.59335 8.13816 6.80039 7.96845 7.02079 7.81738C8.21334 7 9.81111 7 13.0066 7H14.9934C18.1889 7 19.7867 7 20.9793 7.81738C21.1996 7.96845 21.4067 8.13816 21.5981 8.32467C22.6335 9.33375 22.9468 10.9005 23.5735 14.034C24.4732 18.5326 24.9231 20.7819 23.8875 22.3758C23.6999 22.6645 23.4811 22.9314 23.2349 23.1719C21.875 24.5 19.5811 24.5 14.9934 24.5H13.0066C8.41888 24.5 6.125 24.5 4.76516 23.1719C4.51895 22.9314 4.30008 22.6645 4.11257 22.3758C3.07697 20.7819 3.52684 18.5326 4.42657 14.034Z" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M16.3334 10.5C16.3334 10.8094 16.4563 11.1062 16.6751 11.325C16.8939 11.5437 17.1906 11.6667 17.5 11.6667C17.8095 11.6667 18.1062 11.5437 18.325 11.325C18.5438 11.1062 18.6667 10.8094 18.6667 10.5C18.6667 10.1906 18.5438 9.89383 18.325 9.67504C18.1062 9.45624 17.8095 9.33333 17.5 9.33333C17.1906 9.33333 16.8939 9.45624 16.6751 9.67504C16.4563 9.89383 16.3334 10.1906 16.3334 10.5Z" fill="currentColor"/>
+        <path d="M9.33337 10.5C9.33337 10.8094 9.45629 11.1062 9.67508 11.325C9.89388 11.5437 10.1906 11.6667 10.5 11.6667C10.8095 11.6667 11.1062 11.5437 11.325 11.325C11.5438 11.1062 11.6667 10.8094 11.6667 10.5C11.6667 10.1906 11.5438 9.89383 11.325 9.67504C11.1062 9.45624 10.8095 9.33333 10.5 9.33333C10.1906 9.33333 9.89388 9.45624 9.67508 9.67504C9.45629 9.89383 9.33337 10.1906 9.33337 10.5Z" fill="currentColor"/>
+        <path d="M10.5 6.99999V5.83333C10.5 3.90034 12.0669 2.33333 14 2.33333C15.933 2.33333 17.5 3.90034 17.5 5.83333V6.99999" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </span>
+
+    {% render 'cart-bubble', limit: 100 %}
+  </cart-icon>
+{% endcapture %}
+
+{% capture account_icon %}
+  <svg width="28" height="28" viewBox="0 0 28 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10.5 10.125C10.5 11.0201 10.8687 11.8786 11.5251 12.5115C12.1815 13.1444 13.0717 13.5 14 13.5C14.9283 13.5 15.8185 13.1444 16.4749 12.5115C17.1313 11.8786 17.5 11.0201 17.5 10.125C17.5 9.22989 17.1313 8.37145 16.4749 7.73851C15.8185 7.10558 14.9283 6.75 14 6.75C13.0717 6.75 12.1815 7.10558 11.5251 7.73851C10.8687 8.37145 10.5 9.22989 10.5 10.125Z" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M2.33337 13.5C2.33337 16.4837 3.56254 19.3452 5.75046 21.455C7.93839 23.5647 10.9058 24.75 14 24.75C17.0942 24.75 20.0617 23.5647 22.2496 21.455C24.4375 19.3452 25.6667 16.4837 25.6667 13.5C25.6667 10.5163 24.4375 7.65483 22.2496 5.54505C20.0617 3.43526 17.0942 2.25 14 2.25C10.9058 2.25 7.93839 3.43526 5.75046 5.54505C3.56254 7.65483 2.33337 10.5163 2.33337 13.5Z" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M20.9641 22.5C20.7785 19.2471 19.7457 16.875 14.0001 16.875C8.25454 16.875 7.22169 19.2471 7.03601 22.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+{% endcapture %}
+
+{% capture wishlist_icon %}
+  <svg width="23" height="25" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.45 16.9546V11.2121C21.45 6.28025 21.45 3.81429 19.9343 2.28215C18.4186 0.75 15.979 0.75 11.1 0.75C6.22097 0.75 3.78145 0.75 2.26573 2.28215C0.75 3.81429 0.75 6.28025 0.75 11.2121V16.9546C0.75 20.5157 0.75 22.2962 1.59423 23.0742C1.99684 23.4453 2.50508 23.6784 3.04646 23.7403C4.18163 23.8702 5.50725 22.6977 8.15849 20.3527C9.33039 19.3162 9.91643 18.7979 10.5944 18.6614C10.9282 18.5941 11.2718 18.5941 11.6057 18.6614C12.2836 18.7979 12.8696 19.3162 14.0415 20.3527C16.6928 22.6977 18.0184 23.8702 19.1536 23.7403C19.695 23.6784 20.2032 23.4453 20.6058 23.0742C21.45 22.2962 21.45 20.5157 21.45 16.9546Z" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M14.5495 5.35001H7.64954" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+{% endcapture %}
+
+<header-actions
+  {% if display_style == 'text' %}
+    class="header-actions--text"
+  {% endif %}
+  {{- block.shopify_attributes -}}
+>
+  
+  <a
+    href="/pages/wishlist"
+    class="header-actions__action header-actions__wishlist{% if display_style == 'text' %} header-actions__text-style{% endif %}"
+    aria-label="{{ 'Wishlist' | t }}"
+  >
+    <span class="{% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}">
+      {{ 'Wishlist' | t }}
+    </span>
+
+    <span
+      class="svg-wrapper {% if display_style != 'icon' %}desktop:hidden{% endif %}"
+      aria-hidden="true"
+    >
+      {{ wishlist_icon }}
+    </span>
+  </a>
+
+  {% if shop.customer_accounts_enabled %}
+    {% liquid
+      assign account_actions_style = ''
+      if display_style == 'text' and section
+        assign actions_font = section.settings.actions_font | default: 'body'
+        assign font_obj = settings.type_heading_font
+        case actions_font
+          when 'body'
+            assign font_obj = settings.type_body_font
+          when 'subheading'
+            assign font_obj = settings.type_subheading_font
+          when 'accent'
+            assign font_obj = settings.type_accent_font
+        endcase
+        assign font_family = font_obj.family | append: ', ' | append: font_obj.fallback_families
+        assign font_family_safe = font_family | replace: '"', "'"
+        assign account_actions_style = '--header-actions-font-family: ' | append: font_family_safe | append: '; --header-actions-font-weight: ' | append: font_obj.weight | append: ';'
+      endif
+    %}
+    <div
+      class="account-button header-actions__action{% if display_style == 'text' %} account-button--text{% endif %} color-{{ settings.popover_color_scheme }}"
+    >
+      <shopify-account
+        menu="{{ customer_account_menu }}"
+        {% if account_actions_style != blank %}
+          style="{{ account_actions_style }}"
+        {% endif %}
+      >
+        {% if customer %}
+          <div class="account-button__fallback"></div>
+        {% else %}
+          <span
+            slot="signed-out-avatar"
+            class="account-button__text header-actions__text-style {% if display_style == 'icon' %}hidden{% else %}mobile:hidden{% endif %}"
+          >
+            {{ 'content.account_title' | t }}
+          </span>
+
+          <span
+            slot="signed-out-avatar"
+            class="{% if display_style != 'icon' %}desktop:hidden{% endif %}"
+            aria-hidden="true"
+          >
+            {{ account_icon }}
+          </span>
+        {% endif %}
+      </shopify-account>
+    </div>
+  {% endif %}
+
+  {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+    <script
+      src="{{ 'cart-drawer.js' | asset_url }}"
+      type="module"
+      fetchpriority="low"
+    ></script>
+
+    {% capture empty_cart_drawer_content %}
+      <div class="cart-drawer__header">
+        <button
+          ref="closeButton"
+          on:click="cart-drawer-component/close"
+          class="button close-button cart-drawer__close-button button-unstyled"
+          aria-label="{{ 'actions.close_dialog' | t }}"
+        >
+          <span class="svg-wrapper">
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      </div>
+
+      <div
+        class="cart-drawer__content"
+        aria-label="{{ 'accessibility.cart' | t }}"
+      >
+        <h2
+          class="cart-drawer__heading h4 cart-drawer__heading--empty"
+          id="cart-drawer-heading-empty"
+        >
+          {{ 'content.your_cart_is_empty' | t }}
+        </h2>
+
+        <div class="cart-drawer__items">
+          {% render 'cart-products', force_empty: true %}
+        </div>
+      </div>
+    {% endcapture %}
+
+    <cart-drawer-component
+      class="cart-drawer{% if display_style == 'text' %} cart-drawer--text{% endif %}"
+      {{ block.shopify_attributes }}
+      {% if settings.auto_open_cart_drawer %}
+        auto-open
+      {% endif %}
+    >
+      <template id="empty-cart-template">
+        {{ empty_cart_drawer_content }}
+      </template>
+      <button
+        class="header-actions__action button-unstyled{% if display_style == 'text' %} header-actions__text-style{% endif %}"
+        on:click="/open"
+        aria-haspopup="dialog"
+        aria-label="{{ 'accessibility.cart' | t }}"
+        aria-describedby="cart-bubble-text"
+        data-testid="cart-drawer-trigger"
+      >
+        {{ cart_icon }}
+      </button>
+
+      <dialog
+        ref="dialog"
+        class="cart-drawer__dialog dialog-modal dialog-drawer color-{{ settings.drawer_color_scheme }}{% if cart.empty? %} cart-drawer--empty{%endif%}"
+        data-testid="cart-drawer-dialog"
+        aria-labelledby="{% if cart.empty? %}cart-drawer-heading-empty{% else %}cart-drawer-heading{% endif %}"
+        scroll-lock
+        cart-summary-sticky="true"
+      >
+        <span
+          ref="liveRegion"
+          class="visually-hidden"
+          role="status"
+        ></span>
+        <div
+          class="cart-drawer__inner"
+          data-hydration-key="cart-drawer-inner"
+        >
+          {% capture cart_items_children %}
+            {%- if cart.empty? -%}
+              {{ empty_cart_drawer_content }}
+            {%- else -%}
+              <div
+                class="cart-drawer__header"
+                id="cart-drawer-header"
+              >
+                <h2
+                  class="cart-drawer__heading h4"
+                  id="cart-drawer-heading"
+                >
+                  {{ 'content.cart_title' | t }}
+                  {% render 'cart-bubble' %}
+                </h2>
+
+                <button
+                  ref="closeButton"
+                  on:click="cart-drawer-component/close"
+                  class="button close-button cart-drawer__close-button button-unstyled"
+                  aria-label="{{ 'actions.close_dialog' | t }}"
+                >
+                  <span class="svg-wrapper">
+                    {{- 'icon-close.svg' | inline_asset_content -}}
+                  </span>
+                </button>
+              </div>
+
+              <scroll-hint
+                class="cart-drawer__content"
+                aria-label="{{ 'accessibility.cart' | t }}"
+                style="--header-height: 60px;"
+              >
+                <scroll-hint
+                  class="cart-drawer__items"
+                >
+                  {% render 'cart-products' %}
+                </scroll-hint>
+
+                <div
+                  class="cart-drawer__summary"
+                >
+                  {% render 'cart-summary', section_id: section.id %}
+                </div>
+              </scroll-hint>
+            {%- endif -%}
+          {% endcapture %}
+          {% render 'cart-items-component', children: cart_items_children, is_drawer: true, section_id: section.id %}
+        </div>
+      </dialog>
+    </cart-drawer-component>
+  {% else %}
+    <a
+      href="{{ routes.cart_url }}"
+      class="header-actions__action action__cart{% if display_style == 'text' %} header-actions__text-style{% endif %}"
+      aria-label="{{ 'accessibility.cart' | t }}"
+      aria-describedby="cart-bubble-text"
+    >
+      {{ cart_icon }}
+    </a>
+  {% endif %}
+
+  <span
+    ref="liveRegion"
+    class="visually-hidden"
+    role="status"
+    data-testid="cart-count-live-region"
+  ></span>
+</header-actions>
+
+<script
+  type="module"
+  src="{{ 'header-actions.js' | asset_url }}"
+  fetchpriority="low"
+></script>
+
+{% stylesheet %}
+  .header {
+    --account-offset-top: calc(
+      var(--header-group-height) + (var(--header-height) * var(--transparent-header-offset-boolean))
+    );
+
+    &[data-sticky-state='active'] {
+      --account-offset-top: calc(var(--header-height) - 1px);
+    }
+  }
+
+  .account-button {
+    /* Remove the background color from the color scheme, we want to inherit the color of the header */
+    background: transparent;
+  }
+
+  .account-button__icon,
+  .account-button__text {
+    color: var(--color-account-icon);
+    transition: color var(--header-content-transition-timing);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  shopify-account {
+    --shopify-account-font-heading: var(--font-heading--family);
+    --shopify-account-font-heading-weight: var(--font-heading--weight);
+    --shopify-account-font-body: var(--font-body--family);
+    --shopify-account-font-body-weight: var(--font-body--weight);
+    --shopify-account-radius-base: var(--style-border-radius-popover);
+    --shopify-account-radius-button: var(--style-border-radius-buttons-primary);
+    --shopify-account-radius-button-small: var(--style-border-radius-buttons-primary);
+    --shopify-account-radius-input: var(--style-border-radius-buttons-primary);
+    --shopify-account-color-background: var(--color-background);
+    --shopify-account-color-text: var(--color-foreground);
+    --shopify-account-color-accent: var(--color-primary-button-background);
+    --shopify-account-color-accent-text: var(--color-primary-button-text);
+    --shopify-account-dialog-position-top: var(--account-offset-top);
+
+    &:not(:defined) {
+      min-width: 44px;
+      height: 44px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Match the line height of the other buttons */
+      line-height: normal;
+    }
+  }
+
+  .account-button__fallback {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--shopify-account-color-accent, #0a142f);
+  }
+
+  .account-button--text shopify-account {
+    color: inherit;
+  }
+
+  .cart-drawer {
+    --cart-drawer-padding: var(--padding-xl) var(--padding-xl);
+    --cart-drawer-padding-desktop: var(--padding-xl) var(--padding-2xl);
+
+    @media screen and (min-width: 750px) {
+      margin-inline-end: calc(var(--gap-xs) * -1);
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .cart-drawer--text {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .cart-drawer__dialog {
+    position: fixed;
+    overflow: hidden;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border-left: var(--style-border-drawer);
+    box-shadow: var(--shadow-drawer);
+    background-color: var(--color-background);
+
+    @media screen and (min-width: 750px) {
+      width: var(--sidebar-width);
+      max-width: 95vw;
+    }
+  }
+
+  /* Needed to ensure the drawer is full height */
+  .cart-drawer__dialog:modal {
+    max-height: 100dvh;
+    overflow-y: hidden;
+  }
+
+  .cart-drawer__inner {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .cart-drawer__content {
+    height: calc(100% - var(--header-height));
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: var(--color-background);
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .cart-drawer__heading {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    margin-bottom: 0;
+  }
+
+  .cart-drawer__close-button {
+    margin-right: calc(var(--padding-sm) * -1);
+    top: var(--margin-sm);
+
+    @media screen and (max-width: 749px) {
+      top: var(--margin-2xs);
+    }
+  }
+
+  .cart-drawer--empty .cart-drawer__content {
+    text-align: center;
+    min-height: auto;
+  }
+
+  .cart-drawer--empty .cart-drawer__heading {
+    margin-bottom: var(--margin-md);
+  }
+
+  .cart-drawer__items .cart-items__table-row {
+    padding-bottom: var(--gap-xl);
+    border-bottom: var(--style-border-width) solid var(--color-border);
+    margin-bottom: var(--gap-xl);
+  }
+
+  .cart-drawer__items .cart-items__table-row:has(+ .cart-items__nested-line) {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  .cart-drawer__items .cart-items__table-row:last-child {
+    border-bottom: none;
+  }
+
+  .cart-drawer__summary {
+    --cart-drawer-summary-padding: var(--padding-lg);
+
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-xl);
+    padding: var(--cart-drawer-summary-padding);
+    margin-top: auto;
+    background-color: var(--color-background);
+    /* stylelint-disable-next-line color-named */
+    mask-image: linear-gradient(to bottom, transparent, black var(--cart-drawer-summary-padding));
+
+    @media screen and (min-width: 750px) {
+      --cart-drawer-summary-padding: var(--padding-2xl);
+    }
+  }
+
+  .cart-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__summary {
+    position: static;
+    mask-image: none;
+  }
+
+  .cart-drawer__dialog[cart-summary-sticky='false'] .cart-drawer__items {
+    overflow: unset;
+  }
+
+  .cart-actions summary {
+    padding-inline: 0;
+    padding-block: var(--padding-sm);
+    line-height: 1.2;
+    min-height: var(--minimum-touch-target);
+  }
+
+  .cart-drawer__summary .cart__summary-totals:not(:has(.cart__subtotal-container:empty)) {
+    border-block-start: var(--style-border-width) solid var(--color-border);
+    padding-block-start: var(--padding-2xl);
+  }
+
+  .cart-drawer__summary .cart-note {
+    @media screen and (min-width: 750px) {
+      margin-block-start: var(--margin-3xs);
+    }
+  }
+
+  .cart-drawer__heading--empty {
+    display: flex;
+    justify-content: center;
+  }
+
+  .cart-drawer__items {
+    display: flex;
+    flex-direction: column;
+    padding-inline: var(--cart-drawer-padding);
+    overflow-y: auto;
+
+    @media screen and (min-width: 750px) {
+      padding-inline: var(--cart-drawer-padding-desktop);
+    }
+  }
+
+  .cart-drawer__items .cart-items__table-row {
+    padding-bottom: var(--gap-xl);
+    border-bottom: var(--style-border-width) solid var(--color-border);
+    margin-bottom: var(--gap-xl);
+  }
+
+  .cart-drawer__items .cart-items__table-row:last-child {
+    border-bottom: none;
+    padding-block-end: 0;
+    margin-block-end: 0;
+  }
+
+  .cart-drawer--empty .cart-drawer__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    margin-top: 0;
+  }
+
+  .cart-drawer:not(:has(.cart-form)) .cart-drawer__content {
+    justify-content: center;
+  }
+
+  .cart-drawer__header {
+    background-color: var(--color-background);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--cart-drawer-padding);
+    border-bottom: var(--style-border-width) solid none;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    @media screen and (min-width: 750px) {
+      padding-inline: var(--cart-drawer-padding-desktop);
+    }
+  }
+
+  .cart-drawer--empty .cart-drawer__header {
+    justify-content: right;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .cart-drawer--empty .cart-drawer__heading {
+    text-align: center;
+  }
+
+  header-actions {
+    display: flex;
+
+    @media screen and (max-width: 749px) {
+      justify-self: flex-end;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-actions--text {
+      gap: var(--gap-xl);
+    }
+
+    .header-actions__text-style {
+      font-size: var(--header-actions-font-size);
+      font-family: var(--header-actions-font-family);
+      font-weight: var(--header-actions-font-weight);
+      text-transform: var(--header-actions-text-case);
+    }
+  }
+
+  #header-component[data-menu-style='drawer'] header-actions {
+    justify-self: flex-end;
+  }
+
+  .header__column--right header-actions {
+    margin-inline-start: calc(var(--gap-md) * -1);
+  }
+
+  .header-actions__cart-icon {
+    --cart-bubble-size: 20px;
+    --cart-bubble-top: 4.5px;
+    --cart-bubble-right: 2.5px;
+
+    position: relative;
+  }
+
+  .header-actions__cart-icon .cart-bubble {
+    position: absolute;
+    width: var(--cart-bubble-size, 20px);
+    top: var(--cart-bubble-top);
+    right: var(--cart-bubble-right);
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-actions__cart-icon--text.header-actions__cart-icon .cart-bubble {
+      position: relative;
+      top: 0;
+    }
+  }
+
+  .cart-drawer__heading .cart-bubble {
+    width: fit-content;
+    border-radius: var(--style-border-radius-buttons-primary);
+    aspect-ratio: auto;
+    padding: var(--cart-padding);
+  }
+
+  .cart-drawer__heading .cart-bubble[data-maintain-ratio] {
+    width: min(1lh, 22px);
+    height: min(1lh, 22px);
+  }
+
+  .header-actions__cart-icon .cart-bubble__text,
+  .cart-drawer__heading .cart-bubble__text {
+    font-family: var(--font-paragraph--family);
+    font-weight: var(--font-paragraph--weight);
+  }
+
+  .header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
+    /* Create donut mask where the cart bubble sits */
+    mask: radial-gradient(
+      calc(var(--cart-bubble-size) + 2px) at calc(100% - var(--cart-bubble-right)) var(--cart-bubble-top),
+      transparent 45.45%,
+      #fff 45.45%,
+      #fff 100%
+    );
+  }
+
+  .cart-drawer__heading .cart-bubble .cart-bubble__background {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10-25));
+  }
+
+  .cart-drawer__heading .cart-bubble__text {
+    color: var(--color-foreground);
+    font-size: clamp(var(--font-size--3xs), 0.75em, var(--font-size--xs));
+  }
+
+  .cart-bubble.cart-bubble--animating .cart-bubble__background {
+    animation: grow var(--animation-speed) var(--animation-easing);
+  }
+
+  .cart-bubble--animating .cart-bubble__text {
+    --start-y: -1em;
+    --start-opacity: 1;
+    /* Set initial transform state before animation starts */
+    transform: translate(0, var(--start-y, -1em));
+    opacity: var(--start-opacity, 1);
+    animation: move-and-fade var(--animation-speed) var(--animation-easing);
+  }
+
+  cart-icon:has(.cart-bubble__text-count:empty) {
+    --cart-bubble-size: 10px;
+    --cart-bubble-top: 9px;
+    --cart-bubble-right: 9px;
+
+    .svg-wrapper {
+      --cart-bubble-top: 4px;
+      --cart-bubble-right: 4px;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    cart-icon.header-actions__cart-icon--text:has(.cart-bubble__text-count:empty) {
+      --cart-bubble-right: 2.5px;
+    }
+  }
+
+  @media screen and (prefers-reduced-motion: no-preference) {
+    html:active-view-transition-type(empty-cart-drawer) {
+      .cart-drawer__close-button {
+        view-transition-name: cart-drawer-close-button;
+      }
+    }
+  }
+
+  :active-view-transition {
+    .cart-drawer__header,
+    .cart-drawer__content {
+      background: transparent;
+    }
+  }
+
+  ::view-transition-old(cart-drawer-content) {
+    transform-origin: 50% 33%;
+    animation: cart-contents-old var(--spring-d280-b0-duration) var(--spring-d280-b0-easing) forwards;
+  }
+
+  ::view-transition-new(cart-drawer-content) {
+    transform-origin: top center;
+    animation: cart-contents-new var(--spring-d280-b0-duration) var(--spring-d280-b0-easing) forwards;
+  }
+
+  @keyframes cart-contents-old {
+    to {
+      scale: 0.92;
+      opacity: 0;
+    }
+  }
+
+  @keyframes cart-contents-new {
+    from {
+      scale: 1.05;
+      translate: 0 128px;
+      filter: blur(1px);
+      opacity: 0;
+    }
+  }
+  .header-actions__text {
+    display: flex;
+    align-items: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .header-actions__cart-icon--text {
+      display: flex;
+      align-items: center;
+      gap: var(--gap-xs);
+    }
+
+    .header__column--right .header-actions--text {
+      margin-inline-start: 0;
+    }
+  }
+{% endstylesheet %}

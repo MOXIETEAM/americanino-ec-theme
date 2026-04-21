@@ -1,0 +1,136 @@
+{%- comment -%}
+  mega-menu-standard.liquid
+  Panel estándar de categorías para un ítem del navbar.
+
+  Parámetros:
+    link       {link}    Ítem de 1er nivel del menú (ej: "Niña")
+    brand      {string}  'mic' | 'little-mic'
+    categorias {array}   shop.metaobjects['megamenu_*_category'].values para la marca
+{%- endcomment -%}
+
+{%- assign panel_key = link.title | handleize -%}
+
+<div
+  class="moxie-mega__panel moxie-mega__panel--standard"
+  data-panel="{{ panel_key }}"
+  data-brand="{{ brand }}"
+  role="region"
+  aria-label="{{ link.title }}"
+>
+  <div class="moxie-mega__panel-inner custom-standar-max-width">
+
+    {%- comment -%} ── COLUMNA IZQUIERDA: grupos de categorías ── {%- endcomment -%}
+    <div class="moxie-mega__categories">
+      {%- if link.links.size > 0 -%}
+        {%- for cat_link in link.links -%}
+          {%- assign cat_key = cat_link.title | handleize -%}
+          <div
+            class="moxie-mega__catgroup"
+            data-cat="{{ cat_key }}"
+            role="group"
+          >
+            <a href="{{ cat_link.url }}" class="moxie-mega__cat-title">{{ cat_link.title }}</a>
+            {%- if cat_link.links.size > 0 -%}
+              <ul class="moxie-mega__sublinks list-unstyled">
+                {%- for sub in cat_link.links -%}
+                  <li>
+                    <a href="{{ sub.url }}" class="moxie-mega__sublink">{{ sub.title }}</a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Sin sub-ítems configurados: mostrar enlace directo como fallback {%- endcomment -%}
+        <div class="moxie-mega__catgroup" data-cat="{{ panel_key }}" role="group">
+          <a href="{{ link.url }}" class="moxie-mega__cat-title">{{ link.title }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+      ── COLUMNA DERECHA: banners por categoría ──
+      Para cada categoría del nav, buscamos el metaobjeto correspondiente
+      por coincidencia de título (handleizado). Si existe y tiene banners,
+      renderizamos un banner-set oculto que el JS muestra al hacer hover.
+    {%- endcomment -%}
+    {%- if link.links.size > 0 -%}
+      <div class="moxie-mega__banners-col">
+        {%- for cat_link in link.links -%}
+          {%- liquid
+            assign cat_key  = cat_link.title | handleize
+
+            assign cat_meta = blank
+            for m in categorias
+              assign m_key = m.titulo.value | handleize
+              if m_key == cat_key
+                assign cat_meta = m
+                break
+              endif
+            endfor
+
+            assign has_b1 = false
+            assign has_b2 = false
+            if cat_meta != blank
+              if cat_meta.banner_principal.value != blank
+                assign has_b1 = true
+              endif
+              if cat_meta.banner_secundario.value != blank
+                assign has_b2 = true
+              endif
+            endif
+          -%}
+
+          {%- if has_b1 or has_b2 -%}
+            <div
+              class="moxie-mega__banner-set"
+              data-banner-cat="{{ cat_key }}"
+            >
+              {%- if has_b1 -%}
+                {%- assign b1_img  = cat_meta.banner_principal.value -%}
+                {%- assign b1_href = cat_meta.banner_principal_link.value.url | default: '' -%}
+                <a
+                  href="{{ b1_href | default: '#' }}"
+                  class="moxie-mega__banner-link"
+                  {% if b1_href == blank %}aria-hidden="true" tabindex="-1"{% endif %}
+                >
+                  {{- b1_img
+                    | image_url: width: 354
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'moxie-mega__banner-img',
+                      alt: cat_link.title,
+                      widths: '354',
+                      sizes: '354px'
+                  -}}
+                </a>
+              {%- endif -%}
+
+              {%- if has_b2 -%}
+                {%- assign b2_img  = cat_meta.banner_secundario.value -%}
+                {%- assign b2_href = cat_meta.banner_secundario_link.value.url | default: '' -%}
+                <a
+                  href="{{ b2_href | default: '#' }}"
+                  class="moxie-mega__banner-link"
+                  {% if b2_href == blank %}aria-hidden="true" tabindex="-1"{% endif %}
+                >
+                  {{- b2_img
+                    | image_url: width: 354
+                    | image_tag:
+                      loading: 'lazy',
+                      class: 'moxie-mega__banner-img',
+                      alt: cat_link.title,
+                      widths: '354',
+                      sizes: '354px'
+                  -}}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>

@@ -1,0 +1,83 @@
+
+{%- comment -%} MOXIE: bloque de vendor para product card {%- endcomment -%}
+{%- assign product = closest.product -%}
+
+{%- unless product == blank or product.vendor == blank -%}
+  <div
+    class="mox-product-vendor spacing-style"
+    style="{% render 'spacing-style', settings: block.settings %}"
+    {{ block.shopify_attributes }}
+  >
+    {{- product.vendor -}}
+  </div>
+{%- endunless -%}
+
+{% stylesheet %}
+  .mox-product-vendor {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-foreground);
+    opacity: 0.5;
+    line-height: 1.2;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie Vendor",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Vendor",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}

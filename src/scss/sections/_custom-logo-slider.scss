@@ -1,0 +1,124 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Logo Slider ───────────────────────────────────────────────────────
+
+.custom-logo-slider {
+  width: 100%;
+}
+
+// ── Swiper wrapper ────────────────────────────────────────────────────────────
+
+.logo-slider-wrap {
+  position: relative;
+  padding-inline: 36px;
+
+  @include tablet-up {
+    padding-inline: 44px;
+  }
+}
+
+// ── Slide ─────────────────────────────────────────────────────────────────────
+
+.logo-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-slide__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  &:hover { opacity: 0.7; }
+  &:focus-visible { @include focus-ring; }
+
+  @include reduced-motion { transition: none; }
+}
+
+.logo-slide__img {
+  display: block;
+  height: var(--logo-height, 48px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  .logo-slide:not(:has(.logo-slide__link)):hover & {
+    opacity: 0.7;
+  }
+
+  @include reduced-motion { transition: none; }
+}
+
+.logo-slide__placeholder {
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0.4;
+  white-space: nowrap;
+}
+
+// ── Nav arrows ────────────────────────────────────────────────────────────────
+
+.logo-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgb(var(--color-background-rgb, 255 255 255));
+  box-shadow: 0 2px 8px rgb(0 0 0 / 14%);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: rgb(var(--color-foreground-rgb, 0 0 0));
+  transition: opacity var(--animation-speed) var(--animation-easing);
+
+  &::after { display: none; }
+
+  svg {
+    width: 13px;
+    height: 13px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &--prev { left: 0; }
+  &--next { right: 0; }
+
+  &.swiper-button-disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  &:hover:not(.swiper-button-disabled) { opacity: 0.7; }
+  &:focus-visible { @include focus-ring; }
+
+  @include reduced-motion { transition: none; }
+}
+
+// ── Brand visibility ──────────────────────────────────────────────────────────
+
+.custom-logo-slider[data-brand-show='little-mic'] { display: none; }
+
+.custom-logo-slider[data-brand-show='mic'],
+.custom-logo-slider[data-brand-show='all'] {
+  display: block;
+}
+
+// ── Reduced motion ────────────────────────────────────────────────────────────
+
+@include reduced-motion {
+  .logo-swiper .swiper-wrapper {
+    transition-duration: 0ms !important;
+  }
+}
