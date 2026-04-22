@@ -44,7 +44,19 @@
       "block_order": [
         "announcement_X6yfep",
         "announcement_XkirFb"
-      ]
+      ],
+      "settings": {
+        "font_weight": "400",
+        "font_style": "normal",
+        "bar_bg_color": "",
+        "bar_text_color": "",
+        "speed": 5,
+        "section_width": "page-width",
+        "color_scheme": "",
+        "divider_width": 0,
+        "padding-block-start": 15,
+        "padding-block-end": 15
+      }
     },
     "header_section": {
       "type": "header",
@@ -128,9 +140,7 @@
           "settings": {
             "hide_logo_on_home_page": false,
             "padding-block-start": 0,
-            "padding-block-end": 0,
-            "logo_mic": "shopify://shop_images/logo-mic.png",
-            "logo_little_mic": "shopify://shop_images/little-mic.svg"
+            "padding-block-end": 0
           },
           "blocks": {}
         },
@@ -138,8 +148,7 @@
           "type": "_custom-header-menu",
           "static": true,
           "settings": {
-            "menu": "menu-mic",
-            "menu_little_mic": "menu-little-mic",
+            "menu": "",
             "color_scheme": "",
             "type_font_primary_size": "1rem",
             "menu_font_style": "inverse",
@@ -161,32 +170,26 @@
             "mobile_util_2_label": "Mi cuenta",
             "mobile_util_2_icon": "account",
             "decorator_1_item": "Personajes",
-            "decorator_1_image": "shopify://shop_images/decorator-orange-personajes.svg",
             "decorator_1_size": 20,
             "decorator_1_position": "above",
             "decorator_1_brand": "mic",
             "decorator_2_item": "Personajes",
-            "decorator_2_image": "shopify://shop_images/decorator-white-personajes.svg",
             "decorator_2_size": 10,
             "decorator_2_position": "above",
             "decorator_2_brand": "little-mic",
             "decorator_3_item": "Nuevos",
-            "decorator_3_image": "shopify://shop_images/decorator-new-orange.svg",
             "decorator_3_size": 10,
             "decorator_3_position": "below",
             "decorator_3_brand": "mic",
             "decorator_4_item": "Nuevos",
-            "decorator_4_image": "shopify://shop_images/decorator-new-white.svg",
             "decorator_4_size": 10,
             "decorator_4_position": "below",
             "decorator_4_brand": "little-mic",
             "decorator_5_item": "Ofertas",
-            "decorator_5_image": "shopify://shop_images/decorator-ofertas-orange.svg",
             "decorator_5_size": 10,
             "decorator_5_position": "right",
             "decorator_5_brand": "mic",
             "decorator_6_item": "Ofertas",
-            "decorator_6_image": "shopify://shop_images/decorator-ofertas-white.svg",
             "decorator_6_size": 10,
             "decorator_6_position": "right",
             "decorator_6_brand": "little-mic",
@@ -212,12 +215,14 @@
       },
       "name": "Moxie Header",
       "settings": {
-        "logo_position": "center",
+        "logo_position": "left",
         "menu_position": "center",
         "menu_row": "bottom",
         "highlight_items": "",
-        "highlight_color": "",
         "highlight_font_weight": "bold",
+        "highlight_items_little_mic": "",
+        "highlight_color_little_mic": "#ffffff",
+        "highlight_font_weight_little_mic": "bold",
         "show_search": true,
         "search_display": "bar",
         "search_position": "right",
