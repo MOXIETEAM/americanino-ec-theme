@@ -1,0 +1,345 @@
+{% style %}
+.lookbook {
+  padding: 60px 20px;
+}
+
+.lookbook-grid {
+  display: grid;
+  grid-template-columns: 100px 1fr 420px;
+  gap: 30px;
+  align-items: start;
+}
+
+/* THUMBS */
+.lb-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lb-thumbs img {
+  width: 100%;
+  cursor: pointer;
+  opacity: .6;
+  border-radius: 8px;
+  transition: .3s;
+}
+
+.lb-thumbs img.active {
+  opacity: 1;
+}
+
+/* MAIN */
+.lb-main {
+  position: relative;
+}
+
+.lb-main img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* HOTSPOT */
+.lb-hotspot {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.lb-hotspot::after {
+  content: "+";
+}
+
+/* RIGHT PANEL */
+.lb-info small {
+  color: #666;
+}
+
+.lb-info h3 {
+  font-size: 28px;
+  margin: 10px 0 20px;
+}
+
+/* PRODUCT */
+.lb-product img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.lb-title {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.lb-price del {
+  color: #aaa;
+  margin-right: 6px;
+}
+
+/* MOBILE */
+@media(max-width: 900px){
+  .lookbook-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lb-thumbs {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+}
+{% endstyle %}
+
+<div class="lookbook">
+
+  <!-- HEADER -->
+  <div class="lookbook-header">
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.subtitle }}</p>
+  </div>
+
+  <div class="lookbook-grid">
+
+    <!-- THUMBNAILS -->
+    <div class="lb-thumbs">
+      {% for block in section.blocks %}
+        {% if block.type == 'look' %}
+          <img 
+            src="{{ block.settings.image | image_url: width: 200 }}"
+            data-look="{{ block.settings.look_id }}"
+            class="{% if forloop.first %}active{% endif %}"
+          >
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <!-- MAIN IMAGE -->
+    <div class="lb-main" id="lb-main">
+      {% assign first_look = section.blocks | where: "type", "look" | first %}
+
+      {% if first_look %}
+        <img 
+          id="lb-main-img"
+          src="{{ first_look.settings.image | image_url: width: 900 }}"
+          data-look="{{ first_look.settings.look_id }}"
+        >
+      {% endif %}
+    </div>
+
+    <!-- RIGHT INFO -->
+    <div class="lb-info">
+
+      <small>{{ section.settings.small }}</small>
+      <h3>{{ section.settings.heading }}</h3>
+
+      <div id="lb-product-box"></div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const mainImg = document.getElementById("lb-main-img");
+  const mainContainer = document.getElementById("lb-main");
+  const productBox = document.getElementById("lb-product-box");
+
+  // 🔥 DATA DE LOOKS (IMPORTANTE)
+  const looks = {
+    {% for block in section.blocks %}
+      {% if block.type == 'look' %}
+      "{{ block.settings.look_id }}": {
+        image: "{{ block.settings.image | image_url: width: 900 }}"
+      },
+      {% endif %}
+    {% endfor %}
+  };
+
+  // 🔥 DATA DE PINS
+  const allPins = [
+    {% for block in section.blocks %}
+      {% if block.type == 'pin' %}
+      {
+        look: "{{ block.settings.look_id }}",
+        top: {{ block.settings.top }},
+        left: {{ block.settings.left }},
+        html: `
+          <div class="lb-product">
+            <a href="{{ all_products[block.settings.product].url }}">
+              <img src="{{ all_products[block.settings.product].featured_image | image_url: width: 500 }}">
+            </a>
+            <div class="lb-title">
+              {{ all_products[block.settings.product].title | escape }}
+            </div>
+            <div class="lb-price">
+              {% if all_products[block.settings.product].compare_at_price > all_products[block.settings.product].price %}
+                <del>{{ all_products[block.settings.product].compare_at_price | money }}</del>
+              {% endif %}
+              <span>{{ all_products[block.settings.product].price | money }}</span>
+            </div>
+          </div>
+        `
+      },
+      {% endif %}
+    {% endfor %}
+  ];
+
+ function renderPins(lookId){
+  document.querySelectorAll(".lb-hotspot").forEach(e => e.remove());
+
+  const pins = allPins.filter(p => p.look === lookId);
+
+  let first = true;
+
+  pins.forEach(pin => {
+    const el = document.createElement("div");
+    el.className = "lb-hotspot";
+    el.style.top = pin.top + "%";
+    el.style.left = pin.left + "%";
+
+    // 👉 CLICK
+    el.onclick = () => {
+      document.querySelectorAll(".lb-hotspot").forEach(h => h.classList.remove("active"));
+      el.classList.add("active");
+      productBox.innerHTML = pin.html;
+    };
+
+    // 👉 DEFAULT (primer pin)
+    if(first){
+      el.classList.add("active");
+      productBox.innerHTML = pin.html;
+      first = false;
+    }
+
+    mainContainer.appendChild(el);
+  });
+}
+
+  // INIT
+  if(mainImg){
+    renderPins(mainImg.dataset.look);
+  }
+
+  // 🔥 FIX REAL AQUÍ
+  document.querySelectorAll(".lb-thumbs img").forEach(thumb => {
+    thumb.addEventListener("click", () => {
+
+      document.querySelectorAll(".lb-thumbs img").forEach(t => t.classList.remove("active"));
+      thumb.classList.add("active");
+
+      const lookId = thumb.dataset.look;
+
+      // ✅ CAMBIO REAL DE IMAGEN
+      mainImg.src = looks[lookId].image;
+      mainImg.dataset.look = lookId;
+
+      renderPins(lookId);
+      productBox.innerHTML = "";
+    });
+  });
+
+});
+</script>
+
+{% schema %}
+{
+  "name": "Lookbook Advanced PRO",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Lorem ipsum es simplemente texto"
+    },
+    {
+      "type": "text",
+      "id": "small",
+      "label": "Texto pequeño",
+      "default": "Lorem ipsum is a text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lorem ipsum"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "look",
+      "name": "Look (Imagen)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "look_id",
+          "label": "ID del look (ej: look-1)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        }
+      ]
+    },
+    {
+      "type": "pin",
+      "name": "Pin (Producto)",
+      "settings": [
+        {
+          "type": "select",
+          "id": "look_id",
+          "label": "Asignar a look",
+          "options": [
+            { "value": "look-1", "label": "Look 1" },
+            { "value": "look-2", "label": "Look 2" },
+            { "value": "look-3", "label": "Look 3" },
+            { "value": "look-4", "label": "Look 4" }
+          ]
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Producto"
+        },
+        {
+          "type": "range",
+          "id": "top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50,
+          "label": "Posición vertical (%)"
+        },
+        {
+          "type": "range",
+          "id": "left",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50,
+          "label": "Posición horizontal (%)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook Advanced PRO"
+    }
+  ]
+}
+{% endschema %}
