@@ -936,14 +936,16 @@ shop-the-look-item {
 
 .stl-track-wrapper {
   overflow: hidden;
+  background: var(--color-background);
 }
 
 .stl-track {
   display: flex;
-  gap: var(--stl-gap, 16px);
+  gap: var(--stl-gap, 0px);
   width: max-content;
   will-change: transform;
   animation: stl-scroll var(--stl-duration, 40s) linear infinite;
+  background: var(--color-background);
 }
 .stl-track.stl-track--paused {
   animation-play-state: paused;
@@ -958,7 +960,7 @@ shop-the-look-item {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(var(--stl-scroll-to, -50%));
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -976,17 +978,19 @@ shop-the-look-item {
   position: relative;
   flex-shrink: 0;
   width: var(--stl-item-width, 280px);
-  border-radius: var(--style-border-radius-media, 0px);
+  border-radius: 0;
   overflow: visible;
+  background: transparent;
 }
 
 .stl-item__media {
   display: block;
   width: 100%;
-  aspect-ratio: 3/4;
   object-fit: cover;
-  object-position: top center;
-  border-radius: inherit;
+  object-position: center;
+  border-radius: 0;
+  border: none;
+  outline: none;
 }
 
 .stl-item__media.placeholder {

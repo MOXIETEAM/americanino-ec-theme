@@ -192,37 +192,42 @@ document.addEventListener("DOMContentLoaded", () => {
     {% endfor %}
   ];
 
- function renderPins(lookId){
+function renderPins(lookId){
   document.querySelectorAll(".lb-hotspot").forEach(e => e.remove());
 
   const pins = allPins.filter(p => p.look === lookId);
 
-  let first = true;
+  let firstPinElement = null;
 
-  pins.forEach(pin => {
+  pins.forEach((pin, index) => {
     const el = document.createElement("div");
     el.className = "lb-hotspot";
     el.style.top = pin.top + "%";
     el.style.left = pin.left + "%";
 
-    // 👉 CLICK
     el.onclick = () => {
       document.querySelectorAll(".lb-hotspot").forEach(h => h.classList.remove("active"));
       el.classList.add("active");
       productBox.innerHTML = pin.html;
     };
 
-    // 👉 DEFAULT (primer pin)
-    if(first){
-      el.classList.add("active");
-      productBox.innerHTML = pin.html;
-      first = false;
+    // guardamos el primero SIEMPRE
+    if(index === 0){
+      firstPinElement = el;
     }
 
     mainContainer.appendChild(el);
   });
-}
 
+  // 🔥 FORZAR SIEMPRE UN PIN ACTIVO
+  if(firstPinElement){
+    firstPinElement.classList.add("active");
+    productBox.innerHTML = pins[0].html;
+  } else {
+    // opcional: limpiar si no hay pins
+    productBox.innerHTML = "";
+  }
+}
   // INIT
   if(mainImg){
     renderPins(mainImg.dataset.look);

@@ -15,7 +15,8 @@ class ShopTheLookCarouselComponent extends Component {
 
   connectedCallback() {
     super.connectedCallback();
-    this.#cloneItems();
+    // Defer to next frame so offsetWidth is available after layout
+    requestAnimationFrame(() => this.#cloneItems());
   }
 
   #cloneItems() {
@@ -23,14 +24,26 @@ class ShopTheLookCarouselComponent extends Component {
     const originals = Array.from(track.children);
     if (!originals.length) return;
 
-    originals.forEach((item) => {
-      const clone = /** @type {HTMLElement} */ (item.cloneNode(true));
-      // Hide from screen readers (duplicates for visual loop only)
-      // but keep pointer events active so hover and click work normally.
-      clone.setAttribute('aria-hidden', 'true');
-      clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
-      track.appendChild(clone);
-    });
+    // Measure the original set width in pixels
+    const originalWidth = originals.reduce((sum, el) => sum + (/** @type {HTMLElement} */ (el)).offsetWidth, 0);
+    if (originalWidth === 0) return;
+
+    // Clone enough sets so the total track fills at least 2× the viewport —
+    // this guarantees no empty gap is ever visible during the loop.
+    const setsNeeded = Math.max(1, Math.ceil((window.innerWidth * 2) / originalWidth));
+
+    for (let i = 0; i < setsNeeded; i++) {
+      originals.forEach((item) => {
+        const clone = /** @type {HTMLElement} */ (item.cloneNode(true));
+        clone.setAttribute('aria-hidden', 'true');
+        clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+        track.appendChild(clone);
+      });
+    }
+
+    // Tell the keyframe the exact distance to scroll: one original set in px.
+    // This makes the loop seamless regardless of how many clone sets were added.
+    track.style.setProperty('--stl-scroll-to', `-${originalWidth}px`);
   }
 
   pauseScroll() {

@@ -44,7 +44,7 @@ shop-the-look-item {
 
 .stl-track {
   display: flex;
-  gap: var(--stl-gap, 16px);
+  gap: var(--stl-gap, 0px);
   width: max-content;
   will-change: transform;
   animation: stl-scroll var(--stl-duration, 40s) linear infinite;
@@ -62,7 +62,7 @@ shop-the-look-item {
 
 @keyframes stl-scroll {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(var(--stl-scroll-to, -50%)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -84,7 +84,8 @@ shop-the-look-item {
   position: relative;
   flex-shrink: 0;
   width: var(--stl-item-width, 280px);
-  border-radius: var(--style-border-radius-media, 0px);
+  border-radius: 0;
+  background: transparent;
 
   // overflow: visible so the popup (position: fixed) isn't clipped
   overflow: visible;
@@ -93,10 +94,11 @@ shop-the-look-item {
 .stl-item__media {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
   object-fit: cover;
-  object-position: top center;
-  border-radius: inherit;
+  object-position: center;
+  border-radius: 0;
+  border: none;
+  outline: none;
 }
 
 .stl-item__media.placeholder {
