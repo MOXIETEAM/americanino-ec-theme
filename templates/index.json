@@ -74,77 +74,67 @@
         "padding-block-end": 40
       }
     },
-    "custom_category_tabs_iW3kin": {
-      "type": "custom_category_tabs",
+    "custom_shop_the_look_carousel_8dUNYQ": {
+      "type": "custom_shop_the_look_carousel",
       "blocks": {
-        "card_rQmWqC": {
-          "type": "card",
+        "custom_shop_the_look_item_h3W7He": {
+          "type": "_custom_shop_the_look_item",
           "settings": {
-            "label": "Camisetas",
-            "link": "",
-            "tab_id": "bebe-nina"
-          }
+            "image": "shopify://shop_images/modelo-1.gif",
+            "product_1": "bermuda-cargo-en-algodon-tiro-medio",
+            "product_2": "buzo-regular-en-algodon-estampado-localizado",
+            "product_3": "",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
         },
-        "card_7T3TPz": {
-          "type": "card",
+        "custom_shop_the_look_item_t9JaEz": {
+          "type": "_custom_shop_the_look_item",
           "settings": {
-            "label": "Buzos y Chaquetas",
-            "link": "",
-            "tab_id": "bebe-nina"
-          }
+            "image": "shopify://shop_images/modelo-2.gif",
+            "product_1": "camiseta-estampado-localizado-manga-corta-cuello-redondo-para-mujer",
+            "product_2": "camisa-textura-manga-larga-cuello-en-v-para-mujer",
+            "product_3": "jeans-regular-en-algodon-tiro-bajo",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
         },
-        "card_izbLyd": {
-          "type": "card",
+        "custom_shop_the_look_item_adekrC": {
+          "type": "_custom_shop_the_look_item",
           "settings": {
-            "label": "Camisetas",
-            "link": "",
-            "tab_id": "bebe-nina"
-          }
-        },
-        "card_ymc7UL": {
-          "type": "card",
-          "settings": {
-            "label": "Conjuntos",
-            "link": "",
-            "tab_id": "bebe-nina"
-          }
-        },
-        "card_iQk8jV": {
-          "type": "card",
-          "settings": {
-            "label": "Pijamas",
-            "link": "",
-            "tab_id": "bebe-nina"
-          }
+            "image": "shopify://shop_images/modelo-3.gif",
+            "product_1": "falda-corta-en-rayon-tiro-medio-lineas-verticales",
+            "product_2": "camisa-textura-manga-larga-cuello-en-v-para-mujer",
+            "product_3": "camiseta-oversize-algodon-con-bordado-grafico",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "card_rQmWqC",
-        "card_7T3TPz",
-        "card_izbLyd",
-        "card_ymc7UL",
-        "card_iQk8jV"
+        "custom_shop_the_look_item_h3W7He",
+        "custom_shop_the_look_item_t9JaEz",
+        "custom_shop_the_look_item_adekrC"
       ],
-      "name": "Moxie Category Tabs",
+      "name": "Moxie Shop the Look",
       "settings": {
-        "title": "<p>Compra por categoria</p>",
-        "title_align": "center",
-        "title_color": "",
-        "title_font_weight": "700",
-        "title_font_style": "normal",
-        "tab_color": "#1a1a1a",
-        "tab_active_bg": "#1a1a1a",
-        "tab_active_text": "#ffffff",
-        "card_ratio": "3 / 4",
-        "slides_desktop": 3,
-        "slides_mobile": 2,
-        "bg_color": "",
-        "padding_v": 48
+        "title": "Compra tu look",
+        "subtitle": "Descubre los productos de cada look",
+        "scroll_speed": 40,
+        "item_width": 280,
+        "item_gap": 16,
+        "section_width": "full-width",
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     }
   },
   "order": [
     "custom_hero_yVxjyj",
-    "custom_category_tabs_iW3kin"
+    "custom_shop_the_look_carousel_8dUNYQ"
   ]
 }
