@@ -1,0 +1,159 @@
+<script
+  src="{{ 'custom-shop-the-look.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<shop-the-look-carousel
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    section-shop-the-look
+    color-{{ section.settings.color_scheme }}
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --stl-duration: {{ section.settings.scroll_speed }}s;
+    --stl-item-width: {{ section.settings.item_width }}px;
+    --stl-gap: {{ section.settings.item_gap }}px;
+  "
+>
+  {%- if section.settings.title != blank or section.settings.subtitle != blank -%}
+    <div class="stl-header">
+      {%- if section.settings.title != blank -%}
+        <h2 class="stl-header__title h2">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="stl-header__subtitle paragraph">{{ section.settings.subtitle | escape }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="stl-track-wrapper">
+    <div class="stl-track" ref="track">
+      {%- comment -%} Each block renders a shop-the-look-item element {%- endcomment -%}
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</shop-the-look-carousel>
+
+{% schema %}
+{
+  "name": "Moxie Shop the Look",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "_custom_shop_the_look_item"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Compra tu look"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Descubre los productos de cada look"
+    },
+    {
+      "type": "header",
+      "content": "Carrusel"
+    },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "Velocidad (segundos por ciclo)",
+      "min": 10,
+      "max": 120,
+      "step": 5,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "item_width",
+      "label": "Ancho del ítem (px)",
+      "min": 160,
+      "max": 480,
+      "step": 8,
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "item_gap",
+      "label": "Espacio entre ítems (px)",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Ancho de sección",
+      "options": [
+        { "value": "full-width", "label": "Completo" },
+        { "value": "page-width", "label": "Contenido" }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Shop the Look",
+      "category": "Moxie",
+      "blocks": {
+        "item-1": { "type": "_custom_shop_the_look_item" },
+        "item-2": { "type": "_custom_shop_the_look_item" },
+        "item-3": { "type": "_custom_shop_the_look_item" },
+        "item-4": { "type": "_custom_shop_the_look_item" },
+        "item-5": { "type": "_custom_shop_the_look_item" }
+      },
+      "block_order": ["item-1", "item-2", "item-3", "item-4", "item-5"]
+    }
+  ]
+}
+{% endschema %}

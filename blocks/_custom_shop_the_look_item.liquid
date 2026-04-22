@@ -1,0 +1,194 @@
+{% liquid
+  assign has_products = false
+  for i in (1..5)
+    assign product_key = 'product_' | append: i
+    assign p = block.settings[product_key]
+    if p != blank
+      assign has_products = true
+      break
+    endif
+  endfor
+%}
+
+<shop-the-look-item
+  class="stl-item"
+  {{ block.shopify_attributes }}
+>
+  {%- comment -%} ── Media (GIF / image) ── {%- endcomment -%}
+  {%- if block.settings.image != blank -%}
+    <img
+      class="stl-item__media"
+      src="{{ block.settings.image | image_url: width: 600 }}"
+      alt="{{ block.settings.image.alt | default: '' | escape }}"
+      width="{{ block.settings.image.width }}"
+      height="{{ block.settings.image.height }}"
+      loading="eager"
+      fetchpriority="high"
+    >
+  {%- else -%}
+    {{ 'hero-apparel-1' | placeholder_svg_tag: 'stl-item__media placeholder' }}
+  {%- endif -%}
+
+  {%- if has_products -%}
+    {%- comment -%} ── "+" button — shown on hover via CSS ── {%- endcomment -%}
+    <button
+      class="stl-plus-btn"
+      ref="plusBtn"
+      on:click="/handlePlusBtnClick"
+      aria-label="Ver productos del look"
+      aria-expanded="false"
+      aria-haspopup="true"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+    </button>
+
+    {%- comment -%} ── Product popup (fixed, opened by JS) ── {%- endcomment -%}
+    <div
+      class="stl-popup"
+      ref="popup"
+      role="dialog"
+      aria-label="Productos del look"
+      aria-modal="true"
+    >
+      <button
+        class="stl-popup__close"
+        ref="closeBtn"
+        on:click="/handleClosePopup"
+        aria-label="Cerrar"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="stl-popup__products">
+        {%- for i in (1..5) -%}
+          {%- assign product_key = 'product_' | append: i -%}
+          {%- assign p = block.settings[product_key] -%}
+          {%- if p != blank -%}
+            {%- assign selected_variant = p.selected_or_first_available_variant -%}
+
+            <div class="stl-product" data-product-id="{{ p.id }}">
+
+              {%- if p.featured_image != blank -%}
+                <img
+                  class="stl-product__image"
+                  src="{{ p.featured_image | image_url: width: 176 }}"
+                  alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                  width="88"
+                  height="88"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <div class="stl-product__image-placeholder" aria-hidden="true"></div>
+              {%- endif -%}
+
+              <div class="stl-product__info">
+
+                <p class="stl-product__title">
+                  <a href="{{ p.url }}" tabindex="-1" aria-label="{{ p.title | escape }}">{{ p.title | escape }}</a>
+                </p>
+
+                <div class="stl-product__price">
+                  {%- if selected_variant.compare_at_price > selected_variant.price -%}
+                    <span class="stl-price--compare">{{ selected_variant.compare_at_price | money }}</span>
+                  {%- endif -%}
+                  <span class="stl-price--current">{{ selected_variant.price | money }}</span>
+                </div>
+
+                {%- if p.variants.size > 1 -%}
+                  <label
+                    class="stl-product__option-label"
+                    for="stl-select-{{ p.id }}-{{ block.id }}-{{ i }}"
+                  >
+                    {{- p.options.first -}}
+                  </label>
+                  <select
+                    id="stl-select-{{ p.id }}-{{ block.id }}-{{ i }}"
+                    class="stl-variant-select"
+                    on:change="/handleVariantChange"
+                    aria-label="{{ p.options.first | escape }}"
+                  >
+                    {%- for variant in p.variants -%}
+                      <option
+                        value="{{ variant.id }}"
+                        {%- unless variant.available %} disabled{%- endunless %}
+                        {%- if variant == selected_variant %} selected{%- endif %}
+                      >
+                        {{- variant.title -}}
+                      </option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
+
+                <button
+                  class="stl-add-btn"
+                  on:click="/handleAddToCart"
+                  data-variant-id="{{ selected_variant.id }}"
+                  {%- unless selected_variant.available %} disabled{%- endunless %}
+                  aria-label="Añadir {{ p.title | escape }} a la bolsa"
+                >
+                  {%- if selected_variant.available -%}
+                    Añadir a la bolsa
+                  {%- else -%}
+                    Agotado
+                  {%- endif -%}
+                </button>
+
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+</shop-the-look-item>
+
+{% schema %}
+{
+  "name": "Moxie Item",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "GIF / Imagen del modelo",
+      "info": "Sube un GIF animado para reproducción continua."
+    },
+    {
+      "type": "header",
+      "content": "Productos del look (máx. 5)"
+    },
+    {
+      "type": "product",
+      "id": "product_1",
+      "label": "Producto 1"
+    },
+    {
+      "type": "product",
+      "id": "product_2",
+      "label": "Producto 2"
+    },
+    {
+      "type": "product",
+      "id": "product_3",
+      "label": "Producto 3"
+    },
+    {
+      "type": "product",
+      "id": "product_4",
+      "label": "Producto 4"
+    },
+    {
+      "type": "product",
+      "id": "product_5",
+      "label": "Producto 5"
+    }
+  ]
+}
+{% endschema %}
