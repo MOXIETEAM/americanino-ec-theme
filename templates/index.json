@@ -125,7 +125,7 @@
         "subtitle": "Descubre los productos de cada look",
         "scroll_speed": 40,
         "item_width": 280,
-        "item_gap": 16,
+        "item_gap": 0,
         "section_width": "full-width",
         "color_scheme": "",
         "padding-block-start": 40,

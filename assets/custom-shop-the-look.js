@@ -17,6 +17,30 @@ class ShopTheLookCarouselComponent extends Component {
     super.connectedCallback();
     // Defer to next frame so offsetWidth is available after layout
     requestAnimationFrame(() => this.#cloneItems());
+
+    // In the Shopify editor, re-apply the animation when settings change so
+    // the speed slider takes effect immediately without waiting for the current
+    // animation cycle to finish.
+    document.addEventListener('shopify:section:load', /** @type {EventListener} */ (this.#onEditorLoad));
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener('shopify:section:load', /** @type {EventListener} */ (this.#onEditorLoad));
+  }
+
+  #onEditorLoad = (/** @type {Event} */ e) => {
+    const sectionId = /** @type {CustomEvent} */ (e).detail?.sectionId;
+    if (!this.closest(`#shopify-section-${sectionId}`)) return;
+    this.#restartAnimation();
+  };
+
+  #restartAnimation() {
+    const { track } = this.refs;
+    track.style.animationName = 'none';
+    // Force reflow so the browser registers the name removal
+    void track.offsetWidth;
+    track.style.animationName = '';
   }
 
   #cloneItems() {

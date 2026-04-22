@@ -40,6 +40,7 @@ shop-the-look-item {
 
 .stl-track-wrapper {
   overflow: hidden;
+  background: var(--color-background);
 }
 
 .stl-track {
@@ -48,6 +49,7 @@ shop-the-look-item {
   width: max-content;
   will-change: transform;
   animation: stl-scroll var(--stl-duration, 40s) linear infinite;
+  background: var(--color-background);
 
   // Paused via JS when popup is open
   &.stl-track--paused {
@@ -85,7 +87,10 @@ shop-the-look-item {
   flex-shrink: 0;
   width: var(--stl-item-width, 280px);
   border-radius: 0;
-  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: var(--color-background);
 
   // overflow: visible so the popup (position: fixed) isn't clipped
   overflow: visible;
@@ -99,6 +104,7 @@ shop-the-look-item {
   border-radius: 0;
   border: none;
   outline: none;
+  box-shadow: none;
 }
 
 .stl-item__media.placeholder {
