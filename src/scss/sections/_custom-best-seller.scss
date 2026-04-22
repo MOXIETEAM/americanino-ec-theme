@@ -1,0 +1,104 @@
+.section-best-sellers {
+  padding: 60px 20px;
+}
+
+.bs-header {
+  margin-bottom: 30px;
+}
+
+.bs-header h2 {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.bs-header p {
+  color: #666;
+  margin-top: 5px;
+}
+
+.bs-header a {
+  display: inline-block;
+  margin-top: 10px;
+  border: 1px solid #000;
+  padding: 6px 14px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.bs-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr;
+  gap: 20px;
+}
+
+.bs-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.bs-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bs-hero-content {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  color: #fff;
+}
+
+.bs-products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.bs-card img {
+  width: 100%;
+}
+
+.bs-card-title {
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.bs-price {
+  font-size: 14px;
+}
+
+.bs-price del {
+  color: #999;
+  margin-right: 5px;
+}
+
+.bs-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bs-badge {
+  background: #1f2937;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 6px;
+}
+
+.bs-card-wrapper {
+  position: relative;
+}
+
+@media(max-width: 768px){
+  .bs-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bs-products {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,127 @@
+<div class="section-best-sellers">
+
+  <div class="bs-header">
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.subtitle }}</p>
+    {% if section.settings.button_link %}
+      <a href="{{ section.settings.button_link }}">
+        {{ section.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="bs-grid">
+
+    <!-- HERO -->
+    <div class="bs-hero">
+      {% if section.settings.hero_image %}
+        <img src="{{ section.settings.hero_image | image_url: width: 800 }}" alt="">
+      {% endif %}
+      <div class="bs-hero-content">
+        <h3>{{ section.settings.hero_title }}</h3>
+        <p>{{ section.settings.hero_text }}</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="bs-products">
+      {% assign collection = collections[section.settings.collection] %}
+
+      {% for product in collection.products limit: 4 %}
+        <div class="bs-card">
+
+          <div class="bs-card-wrapper">
+
+            <!-- BADGES -->
+            <div class="bs-badges">
+              {% if product.compare_at_price > product.price %}
+                <span class="bs-badge">
+                  {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% OFF
+                </span>
+              {% endif %}
+              {% if product.tags contains 'new' %}
+                <span class="bs-badge">NEW</span>
+              {% endif %}
+            </div>
+
+            <a href="{{ product.url }}">
+              <img src="{{ product.featured_image | image_url: width: 500 }}">
+            </a>
+
+          </div>
+
+          <div class="bs-card-title">
+            {{ product.title }}
+          </div>
+
+          <div class="bs-price">
+            {% if product.compare_at_price > product.price %}
+              <del>{{ product.compare_at_price | money }}</del>
+            {% endif %}
+            <span>{{ product.price | money }}</span>
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Best Sellers Custom",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Lorem ipsum es simplemente el texto de relleno"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Texto botón",
+      "default": "Ver todo"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Link botón"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagen Hero"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Título Hero",
+      "default": "Lorem ipsum"
+    },
+    {
+      "type": "text",
+      "id": "hero_text",
+      "label": "Texto Hero",
+      "default": "Lorem ipsum"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Sellers Custom"
+    }
+  ]
+}
+{% endschema %}
