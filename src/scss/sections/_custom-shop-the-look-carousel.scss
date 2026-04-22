@@ -153,6 +153,12 @@ shop-the-look-item {
   }
 }
 
+// Hide + button while popup is open (× inside popup takes its place)
+.stl-item.stl-popup-open .stl-plus-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
 // ── Popup ───────────────────────────────────────────────────
 
 .stl-popup {

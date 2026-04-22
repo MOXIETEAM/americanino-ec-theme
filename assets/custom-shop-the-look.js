@@ -99,22 +99,26 @@ class ShopTheLookItemComponent extends Component {
     const { popup, plusBtn } = this.refs;
     if (!popup || !plusBtn) return;
 
-    // Position the popup BEFORE teleporting so getBoundingClientRect is accurate
+    // Anchor the popup to the item's top-left corner so the × button inside
+    // lands at the exact same position as the + button (both are offset 12px
+    // from the item's top-left edge).
     const rect = this.getBoundingClientRect();
-    const popupWidth = 320;
-    const margin = 16;
-    const estimatedHeight = 520;
+    const margin = 8;
 
-    const spaceRight = window.innerWidth - rect.right;
-    const left =
-      spaceRight >= popupWidth + margin
-        ? rect.right + margin
-        : Math.max(margin, rect.left - popupWidth - margin);
-
-    const top = Math.max(margin, Math.min(rect.top, window.innerHeight - estimatedHeight - margin));
+    // Clamp horizontally so popup never escapes the viewport
+    const left = Math.min(rect.left, window.innerWidth - popup.offsetWidth - margin);
+    // Clamp vertically — allow popup to fill as much of the viewport as needed
+    const top = Math.max(margin, rect.top);
+    const maxHeight = window.innerHeight - top - margin;
 
     popup.style.top = `${top}px`;
-    popup.style.left = `${left}px`;
+    popup.style.left = `${Math.max(margin, left)}px`;
+    popup.style.maxHeight = `${maxHeight}px`;
+    // Match popup width to the item so it overlays the card neatly
+    popup.style.width = `${Math.min(320, rect.width)}px`;
+
+    // Hide the + button while popup is open (× inside popup takes its place)
+    this.classList.add('stl-popup-open');
 
     // ── Portal: move popup to <body> ──────────────────────────────────────
     // The .stl-track animation applies transform:translateX(), which makes it
@@ -210,6 +214,7 @@ class ShopTheLookItemComponent extends Component {
 
     popup.removeAttribute('open');
     plusBtn?.setAttribute('aria-expanded', 'false');
+    this.classList.remove('stl-popup-open');
 
     // Tear down portal event listeners
     this.#portalAC?.abort();
