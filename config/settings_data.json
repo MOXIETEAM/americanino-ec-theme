@@ -14,10 +14,10 @@
     "logo_height": 100,
     "logo_height_mobile": 72,
     "favicon": "shopify://shop_images/logo-mic.png",
-    "type_body_font": "montserrat_n4",
-    "type_subheading_font": "montserrat_n4",
-    "type_heading_font": "montserrat_n4",
-    "type_accent_font": "montserrat_n4",
+    "type_body_font": "archivo_n4",
+    "type_subheading_font": "archivo_n4",
+    "type_heading_font": "archivo_n4",
+    "type_accent_font": "archivo_n4",
     "type_size_paragraph": "14",
     "type_line_height_paragraph": "body-loose",
     "type_font_h1": "heading",
@@ -83,8 +83,8 @@
       "mega-menu": {
         "type": "mega-menu",
         "settings": {
-          "menu_mic": "menu-mic",
-          "menu_little_mic": "menu-little-mic",
+          "menu_mic": "",
+          "menu_little_mic": "",
           "personajes_trigger": "Personajes",
           "color_scheme": "",
           "border_radius": 0

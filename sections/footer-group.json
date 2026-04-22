@@ -59,6 +59,7 @@
       ],
       "name": "Moxie SEO Text",
       "settings": {
+        "brand_visibility": "all",
         "text_align": "center",
         "collapse_enabled": true,
         "collapse_height": 210,
@@ -75,7 +76,6 @@
         "brand_info_TE9bp4": {
           "type": "brand_info",
           "settings": {
-            "logo": "shopify://shop_images/logo-mic.png",
             "whatsapp_url": "/",
             "whatsapp_label": "Chat con un asesor de whatsapp",
             "phone": "+57 300 910 83 11",
@@ -91,7 +91,7 @@
           "type": "nav_column",
           "settings": {
             "heading": "Ayuda",
-            "menu": "ayuda"
+            "menu": ""
           }
         },
         "nav_column_LfMpQY": {
@@ -105,7 +105,7 @@
           "type": "nav_column",
           "settings": {
             "heading": "Legales",
-            "menu": "footer-info-legal"
+            "menu": ""
           }
         }
       },
@@ -123,10 +123,8 @@
         "newsletter_btn_label": "Suscríbete",
         "newsletter_url": "/",
         "newsletter_bg_color": "#f7f6f1",
-        "newsletter_bg_imagec": "shopify://shop_images/Vector_7_1.svg",
-        "tagline_mic": "AMERICANINO",
+        "tagline": "AMERICANINO",
         "tagline_color": "",
-        "payments_image": "shopify://shop_images/payments.png",
         "color_scheme": "scheme-1",
         "bg_color": "#eeeeee"
       }
