@@ -190,9 +190,9 @@
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
-            "link_male": "",
+            "link_male": "shopify://collections/test-collection",
             "label_female": "Mujer",
-            "link_female": ""
+            "link_female": "shopify://collections/test-collection"
           }
         },
         "category_WVi379": {
