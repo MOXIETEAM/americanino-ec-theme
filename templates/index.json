@@ -165,11 +165,120 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "custom_best_seller_3gRU3k": {
+      "type": "custom-best-seller",
+      "name": "Best Sellers Custom",
+      "settings": {
+        "title": "Best Sellers",
+        "subtitle": "Lorem ipsum es simplemente el texto de relleno",
+        "button_text": "Ver todo",
+        "button_link": "",
+        "collection": "",
+        "hero_title": "Lorem ipsum",
+        "hero_text": "Lorem ipsum"
+      }
+    },
+    "custom_category_grid_JpKEyr": {
+      "type": "custom_category-grid",
+      "blocks": {
+        "category_7grgpf": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/271110ef913d2ab05625cc8fb13ed475ed900b4a.jpg",
+            "label": "Jeans",
+            "link": "",
+            "show_gender_links": true,
+            "label_male": "Hombre",
+            "link_male": "",
+            "label_female": "Mujer",
+            "link_female": ""
+          }
+        },
+        "category_WVi379": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/1b51959e499351d972c71872d8220c00c6c00fee.jpg",
+            "label": "Buzos",
+            "link": "",
+            "show_gender_links": false,
+            "label_male": "Hombre",
+            "link_male": "",
+            "label_female": "Mujer",
+            "link_female": ""
+          }
+        },
+        "category_fK9bT3": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/428dfe54874fcbe29d1f6948b647a818033d784a.jpg",
+            "label": "Chaquetas",
+            "link": "",
+            "show_gender_links": false,
+            "label_male": "Hombre",
+            "link_male": "",
+            "label_female": "Mujer",
+            "link_female": ""
+          }
+        },
+        "category_6d4DGD": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/c4131c1f8021cc794e4bafd58424872c5c195988.jpg",
+            "label": "Camisetas",
+            "link": "",
+            "show_gender_links": false,
+            "label_male": "Hombre",
+            "link_male": "",
+            "label_female": "Mujer",
+            "link_female": ""
+          }
+        },
+        "category_wjdHAb": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/1945604705aff8c0b0b537ee634a78c6a6a8be25.jpg",
+            "label": "Accesorios",
+            "link": "",
+            "show_gender_links": false,
+            "label_male": "Hombre",
+            "link_male": "",
+            "label_female": "Mujer",
+            "link_female": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_7grgpf",
+        "category_WVi379",
+        "category_fK9bT3",
+        "category_6d4DGD",
+        "category_wjdHAb"
+      ],
+      "name": "Moxie Category Grid",
+      "settings": {
+        "title": "Compra por categoría",
+        "title_size": 32,
+        "subtitle": "Lorem Ipsum es simplemente el texto de relleno de",
+        "header_gap": 20,
+        "slides_desktop": "4.5",
+        "slides_mobile": "1.5",
+        "show_arrows": false,
+        "show_dots": false,
+        "card_gap": 3,
+        "label_size": 26,
+        "color_scheme": "",
+        "bg_color": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
     "custom_hero_yVxjyj",
     "custom_promo_countdown_LkkQWh",
-    "custom_shop_the_look_carousel_8dUNYQ"
+    "custom_shop_the_look_carousel_8dUNYQ",
+    "custom_best_seller_3gRU3k",
+    "custom_category_grid_JpKEyr"
   ]
 }
