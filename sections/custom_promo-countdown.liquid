@@ -8,11 +8,7 @@
   assign s = section.settings
   assign target = s.target_date | append: 'T' | append: s.target_time | append: ':00'
 
-  comment
-    Separador: mostrar antes de cada unidad excepto la primera visible.
-    Trackeamos si ya se renderizó alguna unidad.
-  endcomment
-  assign any_before_hours  = s.show_days
+  assign any_before_hours   = s.show_days
   assign any_before_minutes = s.show_days | default: false
   if s.show_hours
     assign any_before_minutes = true
@@ -21,11 +17,29 @@
   if s.show_minutes
     assign any_before_seconds = true
   endif
+
+  assign bg_style = ''
+  case s.background_type
+    when 'solid'
+      assign bg_style = 'background-color:' | append: s.bg_color | append: ';'
+
+    when 'gradient'
+      assign bg_style = 'background:linear-gradient(' | append: s.bg_gradient_angle | append: 'deg,' | append: s.bg_gradient_from | append: ',' | append: s.bg_gradient_to | append: ');'
+
+    when 'image'
+      if s.bg_image != blank
+        assign img_url = s.bg_image | image_url: width: 1920
+        assign ov_a    = s.bg_overlay_opacity | divided_by: 100.0
+        assign ov_rgba = 'rgba(' | append: s.bg_overlay_color.red | append: ',' | append: s.bg_overlay_color.green | append: ',' | append: s.bg_overlay_color.blue | append: ',' | append: ov_a | append: ')'
+        assign bg_style = 'background:linear-gradient(' | append: ov_rgba | append: ',' | append: ov_rgba | append: '),url(' | append: img_url | append: ');background-size:cover;background-position:center;background-repeat:no-repeat;'
+      endif
+  endcase
 -%}
 
+<div class="custom-center-container custom-mox-countdown">
 <promo-countdown
   id="section-{{ section.id }}"
-  class="color-{{ s.color_scheme }}{% if s.layout == 'centered' %} mox-cd--centered{% endif %}"
+  class="color-{{ s.color_scheme }}{% if s.layout == 'centered' %} mox-cd--centered{% endif %} custom-standar-max-width"
   data-target="{{ target }}"
   data-hide-on-expire="{{ s.hide_on_expire }}"
   style="
@@ -35,6 +49,7 @@
     --mox-cd-label-size: {{ s.label_size }}px;
     --mox-cd-text-size: {{ s.text_size }}px;
     --mox-cd-gap: {{ s.unit_gap }}px;
+    {{ bg_style }}
   "
   {{ section.shopify_attributes }}
 >
@@ -94,6 +109,7 @@
     </div>
   </div>
 </promo-countdown>
+</div>
 
 {% schema %}
 {
@@ -191,6 +207,71 @@
       "id": "label_seconds",
       "label": "Etiqueta segundos",
       "default": "SEGUNDOS"
+    },
+    {
+      "type": "header",
+      "content": "Fondo"
+    },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Tipo de fondo",
+      "options": [
+        { "value": "scheme", "label": "Color scheme (predeterminado)" },
+        { "value": "solid", "label": "Color sólido" },
+        { "value": "gradient", "label": "Degradado" },
+        { "value": "image", "label": "Imagen" }
+      ],
+      "default": "scheme"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color sólido",
+      "default": "#1E2B51"
+    },
+    {
+      "type": "color",
+      "id": "bg_gradient_from",
+      "label": "Degradado — color inicial",
+      "default": "#1E2B51"
+    },
+    {
+      "type": "color",
+      "id": "bg_gradient_to",
+      "label": "Degradado — color final",
+      "default": "#3a4f8e"
+    },
+    {
+      "type": "range",
+      "id": "bg_gradient_angle",
+      "label": "Ángulo del degradado",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "default": 90
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Imagen de fondo"
+    },
+    {
+      "type": "color",
+      "id": "bg_overlay_color",
+      "label": "Color de superposición",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "bg_overlay_opacity",
+      "label": "Opacidad de superposición",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 40
     },
     {
       "type": "header",
