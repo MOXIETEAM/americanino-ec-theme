@@ -49,6 +49,9 @@
     --mox-cd-label-size: {{ s.label_size }}px;
     --mox-cd-text-size: {{ s.text_size }}px;
     --mox-cd-gap: {{ s.unit_gap }}px;
+    {% unless s.text_color == blank %}--mox-cd-text-color: {{ s.text_color }};{% endunless %}
+    {% unless s.digit_color == blank %}--mox-cd-digit-color: {{ s.digit_color }};{% endunless %}
+    {% unless s.label_color == blank %}--mox-cd-label-color: {{ s.label_color }};{% endunless %}
     {{ bg_style }}
   "
   {{ section.shopify_attributes }}
@@ -332,6 +335,29 @@
       "step": 2,
       "unit": "px",
       "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Colores de texto"
+    },
+    {
+      "type": "paragraph",
+      "content": "Deja en blanco para heredar el color del color scheme."
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color texto promo"
+    },
+    {
+      "type": "color",
+      "id": "digit_color",
+      "label": "Color dígitos y separadores"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color etiquetas (días, horas…)"
     },
     {
       "type": "header",
