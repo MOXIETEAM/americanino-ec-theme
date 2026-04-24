@@ -1,0 +1,243 @@
+// ─── Moxie Category Grid Slider ───────────────────────────────────────────────
+
+@use '../mixins' as *;
+
+.mox-cg {
+  padding-block: var(--mox-cg-pt, 40px) var(--mox-cg-pb, 40px);
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+.mox-cg__header {
+  padding-inline: var(--page-margin, 20px);
+  padding-block-end: var(--mox-cg-header-gap, 24px);
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.mox-cg__title {
+  margin: 0;
+  font-size: var(--mox-cg-title-size, 2rem);
+  font-weight: 700;
+  color: var(--color-foreground);
+  line-height: 1.15;
+}
+
+.mox-cg__subtitle {
+  margin: 6px 0 0;
+  font-size: 0.875rem;
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  line-height: 1.4;
+}
+
+// ── Slider wrapper (positions arrows absolutely) ───────────────────────────────
+
+category-grid-slider {
+  display: block;
+  position: relative;
+}
+
+// ── Scroll track ──────────────────────────────────────────────────────────────
+
+.mox-cg__track {
+  display: flex;
+  gap: var(--mox-cg-gap, 3px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ── Card ─────────────────────────────────────────────────────────────────────
+
+.mox-cg__card {
+  // Width = (100% minus total gap space) divided by number of visible slides
+  flex: 0 0 calc(
+    (100% - (var(--mox-cg-visible, 4) - 1) * var(--mox-cg-gap, 3px)) /
+    var(--mox-cg-visible, 4)
+  );
+  aspect-ratio: var(--mox-cg-ratio, 3 / 4.2);
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: block;
+  text-decoration: none;
+  background: rgb(var(--color-background-2-rgb, 220 220 220));
+
+  @include mobile-only {
+    flex: 0 0 calc(
+      (100% - (var(--mox-cg-visible-mobile, 1.5) - 1) * var(--mox-cg-gap, 3px)) /
+      var(--mox-cg-visible-mobile, 1.5)
+    );
+  }
+}
+
+.mox-cg__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 500ms ease;
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.mox-cg__card:hover .mox-cg__img {
+  transform: scale(1.04);
+}
+
+// ── Overlay ────────────────────────────────────────────────────────────────────
+
+.mox-cg__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px 18px 20px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(0, 0, 0, 0.12) 45%,
+    transparent 68%
+  );
+}
+
+.mox-cg__label {
+  display: block;
+  font-size: var(--mox-cg-label-size, 1.625rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.15;
+  margin-block-end: 10px;
+}
+
+// ── Gender pill buttons ────────────────────────────────────────────────────────
+
+.mox-cg__genders {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mox-cg__gender-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: #fff;
+  color: #111;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  transition: background 200ms ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.82);
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// ── Dots ──────────────────────────────────────────────────────────────────────
+
+.mox-cg__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding-block-start: 16px;
+}
+
+.mox-cg__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgb(var(--color-foreground-rgb) / 0.25);
+  transition: background 200ms ease, transform 200ms ease;
+
+  &--active {
+    background: var(--color-foreground);
+    transform: scale(1.35);
+  }
+
+  &:hover:not(&--active) {
+    background: rgb(var(--color-foreground-rgb) / 0.5);
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+// Full-card invisible link (used when no gender buttons)
+.mox-cg__card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+// ── Navigation arrows ─────────────────────────────────────────────────────────
+
+.mox-cg__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  transition: opacity 200ms ease, background 200ms ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    stroke: #111;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    display: block;
+  }
+
+  &:hover {
+    background: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  &--prev {
+    left: 14px;
+  }
+
+  &--next {
+    right: 14px;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
