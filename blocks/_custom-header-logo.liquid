@@ -92,6 +92,28 @@
       {%- render 'image', image: block.settings.logo_mic, class: 'header-logo__image', height: settings.logo_height, alt_text_fallback: alt_text_fallback, text_fallback: shop.name, style: mic_style -%}
     </span>
   {%- endif -%}
+
+  {%- comment -%} MOXIE: Video logo — highest priority, overrides all image logos {%- endcomment -%}
+  {%- if block.settings.logo_video != blank -%}
+    {%- liquid
+      assign video_logo_style = '--header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+    -%}
+    <span class="header-logo__image-container header-logo__image-container--video" data-video-logo>
+      <video
+        class="header-logo__image header-logo__image--video"
+        autoplay
+        muted
+        playsinline
+        {% if block.settings.logo_video_loop %}loop{% endif %}
+        style="{{ video_logo_style }}"
+        aria-label="{{ alt_text_fallback }}"
+      >
+        {%- for source in block.settings.logo_video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    </span>
+  {%- endif -%}
 </a>
 
 {% stylesheet %}
@@ -156,7 +178,50 @@
   .header-logo:has([data-brand-show='mic']) .header-logo__image-container--original {
     display: none;
   }
+
+  /* MOXIE: Video logo — hides all image logos when video is active */
+  .header-logo:has([data-video-logo]) .header-logo__image-container--original,
+  .header-logo:has([data-video-logo]) .header-logo__image-container--inverse,
+  .header-logo:has([data-video-logo]) .header-logo__image-container--brand {
+    display: none;
+  }
+
+  .header-logo__image--video {
+    width: auto;
+    height: var(--header-logo-image-height-mobile);
+    max-height: var(--header-logo-image-height-mobile);
+    object-fit: contain;
+
+    @media screen and (min-width: 750px) {
+      height: var(--header-logo-image-height);
+      max-height: var(--header-logo-image-height);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
 {% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    function playVideoLogos() {
+      document.querySelectorAll('.header-logo__image--video').forEach(function (video) {
+        if (video.paused) video.play().catch(function () {});
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', playVideoLogos);
+    } else {
+      playVideoLogos();
+    }
+
+    // Re-trigger cuando el theme editor re-renderiza la sección o el bloque
+    document.addEventListener('shopify:section:load', playVideoLogos);
+    document.addEventListener('shopify:block:select', playVideoLogos);
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
@@ -214,6 +279,25 @@
       "type": "image_picker",
       "id": "logo_mic",
       "label": "Logo Americanino"
+    },
+    {
+      "type": "header",
+      "content": "Logo en video"
+    },
+    {
+      "type": "paragraph",
+      "content": "Si se configura, tiene prioridad sobre cualquier logo de imagen. El video se reproduce automáticamente, sin sonido y en bucle."
+    },
+    {
+      "type": "video",
+      "id": "logo_video",
+      "label": "Archivo de video"
+    },
+    {
+      "type": "checkbox",
+      "id": "logo_video_loop",
+      "label": "Repetir en bucle",
+      "default": false
     }
   ]
 }

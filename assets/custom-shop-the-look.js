@@ -105,6 +105,15 @@ class ShopTheLookItemComponent extends Component {
   /** @type {Comment | null} placeholder node that marks the popup's original DOM position */
   #placeholder = null;
 
+  /**
+   * Stable reference to the popup element held while it is open.
+   * this.refs.popup is cleared by the Component MutationObserver the moment
+   * the popup is teleported to <body>, so we must save the reference before
+   * the move and use this variable inside all close paths.
+   * @type {HTMLElement | null}
+   */
+  #openPopup = null;
+
   connectedCallback() {
     super.connectedCallback();
     if (!this.refs.popup) return;
@@ -133,8 +142,11 @@ class ShopTheLookItemComponent extends Component {
   // ─── Public handlers (wired via on:* in Liquid for the + button only) ─────
 
   handlePlusBtnClick = () => {
-    const { popup, plusBtn } = this.refs;
+    const { plusBtn } = this.refs;
+    // Read popup from refs before the MutationObserver clears it when we move it to <body>
+    const popup = /** @type {HTMLElement | null} */ (this.refs.popup);
     if (!popup || !plusBtn) return;
+    this.#openPopup = popup;
 
     // Anchor the popup to the item's top-left corner so the × button inside
     // lands at the exact same position as the + button (both are offset 12px
@@ -246,7 +258,8 @@ class ShopTheLookItemComponent extends Component {
   #closeHandler = () => this.#close();
 
   #close() {
-    const { popup, plusBtn } = this.refs;
+    const popup = this.#openPopup;
+    const { plusBtn } = this.refs;
     if (!popup?.hasAttribute('open')) return;
 
     popup.removeAttribute('open');
@@ -264,15 +277,17 @@ class ShopTheLookItemComponent extends Component {
   }
 
   #restorePopup() {
-    const { popup } = this.refs;
+    const popup = this.#openPopup;
     if (!popup || !this.#placeholder) return;
     this.#placeholder.parentNode?.insertBefore(popup, this.#placeholder);
     this.#placeholder.remove();
     this.#placeholder = null;
+    this.#openPopup = null;
   }
 
   #onDocClick = (/** @type {MouseEvent} */ e) => {
-    const { popup, plusBtn } = this.refs;
+    const popup = this.#openPopup;
+    const { plusBtn } = this.refs;
     if (!popup?.hasAttribute('open')) return;
     const target = /** @type {Node} */ (e.target);
     if (!popup.contains(target) && !plusBtn?.contains(target)) {
