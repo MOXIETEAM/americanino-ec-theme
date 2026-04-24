@@ -34,10 +34,11 @@
 
 .custom-navbar__link {
   font-weight: 500;
-  font-size: 15px;
-  line-height: 1.5;
-  text-transform: var(--menu-top-level-font-case);
-  color: var(--mox-navbar-font-color, var(--color-foreground));
+  font-style: Medium;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0%;
+  color: #1E2B51;
   text-decoration: none;
   white-space: nowrap;
   transition: opacity var(--animation-speed) var(--animation-easing);

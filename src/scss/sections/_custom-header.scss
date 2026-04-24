@@ -1,17 +1,10 @@
 @use '../mixins' as *;
 
-// ─── Custom Header section overrides ─────────────────────────────────────────
-// Add custom-header specific styles here.
-// The base structural styles live in the section's {% stylesheet %} tag.
 .custom-announcement-bar-moxie-container {
     min-height: 46px;
 }
 
-// .custom-header-moxie {
-//   background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
-//   backdrop-filter: blur(10px);
-//   -webkit-backdrop-filter: blur(10px);
-// }
+
 
 .mox-custom-header-component {
     .header__row--top {
@@ -84,21 +77,27 @@ custom-search-drawer {
   align-items: center;
   gap: 8px;
   padding: 7px 14px 7px 10px;
-  // border: 1px solid #ADADAD;
+  border: 1px solid #1E2B51E8;
   border-radius: 58px;
-  background-color: #FFFFFFD1;
+  background-color: #FFFFFF26;
   cursor: pointer;
 
 }
 
 .mox-spill__icon {
-  color: black;
+  color: #ffffff;
+  background-color: #1E2B51;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   pointer-events: none;
-  width: 24px;
-  height: 24px;
+  width: 34px;
+  height: 25px;
+  border-radius: 12px;
+
+  svg {
+    color: #ffffff;
+  }
 }
 
 // Input dentro de la píldora — inactivo por defecto
@@ -264,12 +263,12 @@ custom-search-drawer[data-open] .mox-spill__input {
 
 /* MOXIE: Iconos blancos sin scroll, negros con scroll */
 #header-component:not([data-sticky-state=active]) header-actions .header-actions__action {
-  color: #ffffff;
+  color: #1E2B51;
   transition: color var(--animation-speed) var(--animation-easing);
 }
 
 #header-component:not([data-sticky-state=active]) header-actions svg {
-  color: #ffffff;
+  color: #1E2B51;
   transition: color var(--animation-speed) var(--animation-easing);
 }
 
@@ -279,37 +278,37 @@ custom-search-drawer[data-open] .mox-spill__input {
 }
 
 #header-component[data-sticky-state=active] header-actions svg {
-  color: #000000;
+  color: #1E2B51;
   transition: color var(--animation-speed) var(--animation-easing);
 }
 
 /* MOXIE: Color del icono de cuenta */
 #header-component:not([data-sticky-state=active]) .account-button__icon,
 #header-component:not([data-sticky-state=active]) .account-button__text {
-  color: #ffffff;
+  color: #1E2B51;
 }
 
 #header-component[data-sticky-state=active] .account-button__icon,
 #header-component[data-sticky-state=active] .account-button__text {
-  color: #000000;
+  color: #1E2B51;
 }
 
 #header-component:not([data-sticky-state=active]) shopify-account {
-  --color-account-icon: #ffffff;
+  --color-account-icon: #1E2B51;
 }
 
 #header-component[data-sticky-state=active] shopify-account {
-  --color-account-icon: #000000;
+  --color-account-icon: #1E2B51;
 }
 
 /* MOXIE: Color de la burbuja del carrito */
 #header-component:not([data-sticky-state=active]) .cart-bubble {
-  background-color: #ffffff;
+  background-color: #1E2B51;
   color: #000000;
 }
 
 #header-component[data-sticky-state=active] .cart-bubble {
-  background-color: #000000;
+  background-color: #1E2B51;
   color: #ffffff;
 }
 
