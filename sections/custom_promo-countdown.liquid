@@ -36,10 +36,10 @@
   endcase
 -%}
 
-<div class="custom-center-container custom-mox-countdown">
+<div class="custom-mox-countdown">
 <promo-countdown
   id="section-{{ section.id }}"
-  class="color-{{ s.color_scheme }}{% if s.layout == 'centered' %} mox-cd--centered{% endif %} custom-standar-max-width"
+  class="color-{{ s.color_scheme }}{% if s.layout == 'centered' %} mox-cd--centered{% endif %} custom-center-container "
   data-target="{{ target }}"
   data-hide-on-expire="{{ s.hide_on_expire }}"
   style="
@@ -56,7 +56,7 @@
   "
   {{ section.shopify_attributes }}
 >
-  <div class="mox-cd__inner page-width">
+  <div class="mox-cd__inner page-width custom-standar-max-width">
 
     {%- if s.promo_text != blank -%}
       <p class="mox-cd__text">{{ s.promo_text }}</p>
@@ -335,29 +335,6 @@
       "step": 2,
       "unit": "px",
       "default": 8
-    },
-    {
-      "type": "header",
-      "content": "Colores de texto"
-    },
-    {
-      "type": "paragraph",
-      "content": "Deja en blanco para heredar el color del color scheme."
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Color texto promo"
-    },
-    {
-      "type": "color",
-      "id": "digit_color",
-      "label": "Color dígitos y separadores"
-    },
-    {
-      "type": "color",
-      "id": "label_color",
-      "label": "Color etiquetas (días, horas…)"
     },
     {
       "type": "header",
