@@ -3,6 +3,10 @@
 promo-countdown {
   display: block;
   padding-block: var(--mox-cd-pt, 14px) var(--mox-cd-pb, 14px);
+
+  &.custom-standar-max-width {
+    padding-block: var(--mox-cd-pt, 14px) var(--mox-cd-pb, 14px);
+  }
 }
 
 .mox-cd__inner {

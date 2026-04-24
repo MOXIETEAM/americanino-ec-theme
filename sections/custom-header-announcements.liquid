@@ -1,46 +1,57 @@
 
+{%- liquid
+  assign s = section.settings
+  assign layout = s.layout | default: 'carousel'
+  assign is_static = false
+  if layout == 'static'
+    assign is_static = true
+  endif
+  assign autoplay = false
+  assign show_arrows = false
+  if section.blocks.size > 1 and is_static == false
+    assign autoplay = true
+    assign show_arrows = true
+  endif
+-%}
 
-{% if section.blocks.size > 1 %}
-  <script
-    src="{{ 'announcement-bar.js' | asset_url }}"
-    type="module"
-    fetchpriority="low"
-  ></script>
-{% endif %}
-
+{% unless is_static %}
+  {% if section.blocks.size > 1 %}
+    <script
+      src="{{ 'announcement-bar.js' | asset_url }}"
+      type="module"
+      fetchpriority="low"
+    ></script>
+  {% endif %}
+{% endunless %}
 
 <div
-  class="section-background color-{{ section.settings.color_scheme }} custom-announcement-bar-moxie-container"
-  {% unless section.settings.bar_bg_color == blank %}style="background-color: {{ section.settings.bar_bg_color }};"{% endunless %}
+  class="section-background color-{{ s.color_scheme }} custom-announcement-bar-moxie-container"
+  {% unless s.bar_bg_color == blank %}style="background-color: {{ s.bar_bg_color }};"{% endunless %}
 ></div>
+
 <aside
-  class="custom-announcement-bar-moxie announcement-bar spacing-style section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
+  class="custom-announcement-bar-moxie announcement-bar spacing-style section section--{{ s.section_width }} color-{{ s.color_scheme }}{% if is_static %} announcement-bar--static{% endif %}"
   style="
-    {% render 'spacing-padding', settings: section.settings %};
-    --border-bottom-width: {{ section.settings.divider_width }}px;
-    font-weight: {{ section.settings.font_weight }};
-    font-style: {{ section.settings.font_style }};
-    {% unless section.settings.bar_text_color == blank %}color: {{ section.settings.bar_text_color }};{% endunless %}
+    {% render 'spacing-padding', settings: s %};
+    --border-bottom-width: {{ s.divider_width }}px;
+    font-weight: {{ s.font_weight }};
+    font-style: {{ s.font_style }};
+    {% unless s.bar_text_color == blank %}color: {{ s.bar_text_color }};{% endunless %}
+    {% unless s.font_size == blank %}font-size: {{ s.font_size }};{% endunless %}
+    {% unless s.letter_spacing == blank %}letter-spacing: {{ s.letter_spacing }};{% endunless %}
   "
 >
-  {% liquid
-    assign autoplay = false
-    assign show_arrows = false
-    if section.blocks.size > 1
-      assign autoplay = true
-      assign show_arrows = true
-    endif
-  %}
-
   <announcement-bar-component
     class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
+    {% if autoplay %}
+      autoplay="{{ s.speed }}" aria-live="polite"
     {% endif %}
   >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
-    {% endif %}
+    {% unless is_static %}
+      {% if show_arrows %}
+        {% render 'slideshow-arrows', icon_style: 'chevron' %}
+      {% endif %}
+    {% endunless %}
 
     <div class="announcement-bar__slides">
       {% content_for 'blocks' %}
@@ -64,11 +75,12 @@
     }
   }
 
+  /* ── Carousel mode (default) ─────────────────────────────────────────────── */
   .announcement-bar__slides {
     display: grid;
     grid: [stack] auto / [stack] auto;
     width: calc(100% - var(--button-size) * 2);
-    max-width: 680px;
+    /* max-width: 680px; */
     margin-inline: auto;
   }
 
@@ -131,6 +143,30 @@
     position: absolute;
     inset: 0;
   }
+
+  /* ── Static mode: todos los items visibles en fila ───────────────────────── */
+  .announcement-bar--static .announcement-bar__slides {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
+  }
+
+  .announcement-bar--static .announcement-bar__slides > * {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    grid-area: unset;
+  }
+
+  /* Anula el ocultar por aria-hidden — en modo estático no hay carrusel */
+  .announcement-bar--static .announcement-bar__slide[aria-hidden='true'] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: none;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -147,14 +183,30 @@
   "settings": [
     {
       "type": "header",
-      "content": "Tipografia"
+      "content": "Modo de visualización"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Tipo de layout",
+      "options": [
+        { "value": "carousel", "label": "Carrusel (rotar mensajes)" },
+        { "value": "static", "label": "Estático (todos visibles en fila)" }
+      ],
+      "default": "static"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
     },
     {
       "type": "select",
       "id": "font_weight",
       "label": "Peso",
       "options": [
+        { "value": "300", "label": "Light" },
         { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
         { "value": "600", "label": "Seminegrita" },
         { "value": "700", "label": "Negrita" }
       ],
@@ -166,63 +218,93 @@
       "label": "Estilo",
       "options": [
         { "value": "normal", "label": "Normal" },
-        { "value": "italic", "label": "Italica" }
+        { "value": "italic", "label": "Itálica" }
       ],
       "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "Tamaño de fuente",
+      "options": [
+        { "value": "", "label": "Predeterminado" },
+        { "value": "0.625rem", "label": "10px" },
+        { "value": "0.75rem", "label": "12px" },
+        { "value": "0.8125rem", "label": "13px" },
+        { "value": "0.875rem", "label": "14px" },
+        { "value": "1rem", "label": "16px" },
+        { "value": "1.125rem", "label": "18px" }
+      ],
+      "default": "0.8125rem"
+    },
+    {
+      "type": "select",
+      "id": "letter_spacing",
+      "label": "Espaciado entre letras",
+      "options": [
+        { "value": "", "label": "Predeterminado" },
+        { "value": "0", "label": "Ninguno" },
+        { "value": "0.04em", "label": "Poco" },
+        { "value": "0.08em", "label": "Medio" },
+        { "value": "0.12em", "label": "Mucho" }
+      ],
+      "default": "0.04em"
     },
     {
       "type": "header",
       "content": "Colores"
     },
     {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme-4",
+      "label": "Color scheme"
+    },
+    {
       "type": "color",
       "id": "bar_bg_color",
-      "label": "Fondo (anula esquema de color)"
+      "label": "Fondo (sobreescribe el color scheme)",
     },
     {
       "type": "color",
       "id": "bar_text_color",
-      "label": "Texto (anula esquema de color)"
+      "label": "Texto (sobreescribe el color scheme)"
+    },
+    {
+      "type": "header",
+      "content": "Carrusel"
+    },
+    {
+      "type": "paragraph",
+      "content": "Solo aplica cuando el modo es Carrusel."
     },
     {
       "type": "range",
       "id": "speed",
-      "label": "t:settings.scroll_speed",
+      "label": "Velocidad de rotación",
       "min": 2,
       "max": 10,
       "default": 5,
-      "unit": "sec"
+      "unit": "seg"
     },
     {
       "type": "header",
-      "content": "t:content.appearance"
+      "content": "Apariencia"
     },
     {
       "type": "select",
       "id": "section_width",
-      "label": "t:settings.section_width",
+      "label": "Ancho de sección",
       "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
+        { "value": "page-width", "label": "Ancho de página" },
+        { "value": "full-width", "label": "Ancho completo" }
       ],
-      "default": "page-width"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "default": "scheme-4",
-      "label": "t:settings.color_scheme"
+      "default": "full-width"
     },
     {
       "type": "range",
       "id": "divider_width",
-      "label": "t:settings.divider_thickness",
+      "label": "Grosor del divisor inferior",
       "min": 0,
       "max": 5,
       "step": 0.5,
@@ -231,27 +313,27 @@
     },
     {
       "type": "header",
-      "content": "t:content.padding"
+      "content": "Espaciado"
     },
     {
       "type": "range",
       "id": "padding-block-start",
-      "label": "t:settings.top",
+      "label": "Padding superior",
       "min": 0,
-      "max": 100,
+      "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 15
+      "default": 10
     },
     {
       "type": "range",
       "id": "padding-block-end",
-      "label": "t:settings.bottom",
+      "label": "Padding inferior",
       "min": 0,
-      "max": 100,
+      "max": 40,
       "step": 1,
       "unit": "px",
-      "default": 15
+      "default": 10
     }
   ],
   "presets": [
