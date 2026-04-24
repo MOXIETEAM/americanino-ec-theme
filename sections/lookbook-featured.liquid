@@ -3,10 +3,26 @@
   padding: 60px 20px;
 }
 
+.lookbook-header {
+  margin-bottom: 32px;
+}
+
+.lookbook-header h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  margin: 0 0 4px;
+}
+
+.lookbook-header p {
+  color: #666;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
 .lookbook-grid {
   display: grid;
-  grid-template-columns: 100px 1fr 420px;
-  gap: 30px;
+  grid-template-columns: 100px 1fr 380px;
+  gap: 24px;
   align-items: start;
 }
 
@@ -14,19 +30,24 @@
 .lb-thumbs {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-.lb-thumbs img {
+.lb-thumb {
   width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
   cursor: pointer;
-  opacity: .6;
+  opacity: .5;
   border-radius: 8px;
-  transition: .3s;
+  transition: opacity .3s;
+  display: block;
 }
 
-.lb-thumbs img.active {
+.lb-thumb.active {
   opacity: 1;
+  outline: 2px solid #1E2B51;
+  outline-offset: 2px;
 }
 
 /* MAIN */
@@ -34,53 +55,125 @@
   position: relative;
 }
 
-.lb-main img {
+.lb-main-img {
   width: 100%;
   border-radius: 12px;
+  display: block;
 }
 
 /* HOTSPOT */
 .lb-hotspot {
   position: absolute;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   background: white;
   border-radius: 50%;
   cursor: pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+  transform: translate(-50%, -50%);
+  transition: background .2s, color .2s;
+  z-index: 2;
 }
 
 .lb-hotspot::after {
   content: "+";
+  line-height: 1;
+}
+
+.lb-hotspot.active {
+  background: #1E2B51;
+  color: white;
 }
 
 /* RIGHT PANEL */
 .lb-info small {
-  color: #666;
+  color: #888;
+  font-size: 0.8125rem;
 }
 
 .lb-info h3 {
-  font-size: 28px;
-  margin: 10px 0 20px;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-weight: 700;
+  margin: 6px 0 20px;
+  color: #1a1a2e;
 }
 
-/* PRODUCT */
-.lb-product img {
-  width: 100%;
+/* PRODUCT CARD */
+.lb-product {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lb-product-img-wrap {
   border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #f3f3f3;
+}
+
+.lb-product-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.lb-installments {
+  font-size: 0.6875rem;
+  color: #888;
+  margin: 0;
 }
 
 .lb-title {
-  margin-top: 10px;
-  font-size: 14px;
+  font-size: 0.875rem;
+  color: #1a1a2e;
+  line-height: 1.35;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.lb-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.9375rem;
 }
 
 .lb-price del {
   color: #aaa;
-  margin-right: 6px;
+  font-size: 0.8125rem;
+  font-style: normal;
+}
+
+.lb-price span {
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.lb-swatches {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.lb-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,.15);
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 /* MOBILE */
@@ -93,53 +186,64 @@
     flex-direction: row;
     overflow-x: auto;
   }
+
+  .lb-thumb {
+    width: 72px;
+    aspect-ratio: 2 / 3;
+    flex-shrink: 0;
+  }
 }
 {% endstyle %}
 
-<div class="lookbook">
+{%- liquid
+  assign s = section.settings
+  assign inst = s.installments_text
+-%}
+
+<div class="lookbook" {{ section.shopify_attributes }}>
 
   <!-- HEADER -->
   <div class="lookbook-header">
-    <h2>{{ section.settings.title }}</h2>
-    <p>{{ section.settings.subtitle }}</p>
+    {%- if s.title != blank -%}<h2>{{ s.title }}</h2>{%- endif -%}
+    {%- if s.subtitle != blank -%}<p>{{ s.subtitle }}</p>{%- endif -%}
   </div>
 
   <div class="lookbook-grid">
 
     <!-- THUMBNAILS -->
     <div class="lb-thumbs">
-      {% for block in section.blocks %}
-        {% if block.type == 'look' %}
-          <img 
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'look' -%}
+          <img
+            class="lb-thumb{% if forloop.first %} active{% endif %}"
             src="{{ block.settings.image | image_url: width: 200 }}"
             data-look="{{ block.settings.look_id }}"
-            class="{% if forloop.first %}active{% endif %}"
+            alt="{{ block.settings.look_id }}"
+            {{ block.shopify_attributes }}
           >
-        {% endif %}
-      {% endfor %}
+        {%- endif -%}
+      {%- endfor -%}
     </div>
 
     <!-- MAIN IMAGE -->
+    {%- assign first_look = section.blocks | where: "type", "look" | first -%}
     <div class="lb-main" id="lb-main">
-      {% assign first_look = section.blocks | where: "type", "look" | first %}
-
-      {% if first_look %}
-        <img 
+      {%- if first_look -%}
+        <img
           id="lb-main-img"
+          class="lb-main-img"
           src="{{ first_look.settings.image | image_url: width: 900 }}"
           data-look="{{ first_look.settings.look_id }}"
+          alt=""
         >
-      {% endif %}
+      {%- endif -%}
     </div>
 
     <!-- RIGHT INFO -->
     <div class="lb-info">
-
-      <small>{{ section.settings.small }}</small>
-      <h3>{{ section.settings.heading }}</h3>
-
+      {%- if s.small != blank -%}<small>{{ s.small }}</small>{%- endif -%}
+      {%- if s.heading != blank -%}<h3>{{ s.heading }}</h3>{%- endif -%}
       <div id="lb-product-box"></div>
-
     </div>
 
   </div>
@@ -148,108 +252,129 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-  const mainImg = document.getElementById("lb-main-img");
-  const mainContainer = document.getElementById("lb-main");
+  const mainImg    = document.getElementById("lb-main-img");
+  const mainWrap   = document.getElementById("lb-main");
   const productBox = document.getElementById("lb-product-box");
 
-  // 🔥 DATA DE LOOKS (IMPORTANTE)
+  if (!mainImg) return;
+
+  // ── Look images ───────────────────────────────────────────────────────────
   const looks = {
     {% for block in section.blocks %}
       {% if block.type == 'look' %}
-      "{{ block.settings.look_id }}": {
-        image: "{{ block.settings.image | image_url: width: 900 }}"
-      },
+      "{{ block.settings.look_id }}": "{{ block.settings.image | image_url: width: 900 }}",
       {% endif %}
     {% endfor %}
   };
 
-  // 🔥 DATA DE PINS
+  // ── Pin data (HTML pre-rendered in Liquid) ────────────────────────────────
   const allPins = [
     {% for block in section.blocks %}
       {% if block.type == 'pin' %}
-      {
-        look: "{{ block.settings.look_id }}",
-        top: {{ block.settings.top }},
-        left: {{ block.settings.left }},
-        html: `
-          <div class="lb-product">
-            <a href="{{ all_products[block.settings.product].url }}">
-              <img src="{{ all_products[block.settings.product].featured_image | image_url: width: 500 }}">
-            </a>
-            <div class="lb-title">
-              {{ all_products[block.settings.product].title | escape }}
-            </div>
-            <div class="lb-price">
-              {% if all_products[block.settings.product].compare_at_price > all_products[block.settings.product].price %}
-                <del>{{ all_products[block.settings.product].compare_at_price | money }}</del>
-              {% endif %}
-              <span>{{ all_products[block.settings.product].price | money }}</span>
-            </div>
-          </div>
-        `
-      },
+        {%- assign pin_prod = all_products[block.settings.product] -%}
+        {%- liquid
+          assign pin_has_disc = false
+          if pin_prod.compare_at_price > pin_prod.price
+            assign pin_has_disc = true
+          endif
+
+          assign pin_color_idx = nil
+          for opt in pin_prod.options
+            assign opt_lower = opt | downcase
+            if opt_lower == 'color' or opt_lower == 'colour'
+              assign pin_color_idx = forloop.index0
+              break
+            endif
+          endfor
+
+          assign pin_colors = ''
+          if pin_color_idx != nil
+            for variant in pin_prod.variants
+              assign cval = variant.options[pin_color_idx]
+              unless pin_colors contains cval
+                assign pin_colors = pin_colors | append: cval | append: '||'
+              endunless
+            endfor
+          endif
+          assign pin_color_list = pin_colors | split: '||'
+        -%}
+    {
+      look: "{{ block.settings.look_id }}",
+      top:  {{ block.settings.top }},
+      left: {{ block.settings.left }},
+      isDefault: {{ block.settings.is_default }},
+      html: `<div class="lb-product">
+        <div class="lb-product-img-wrap">
+          <a href="{{ pin_prod.url }}">
+            <img src="{{ pin_prod.featured_image | image_url: width: 500 }}" alt="{{ pin_prod.title | escape }}">
+          </a>
+        </div>
+        {% if inst != blank %}<p class="lb-installments">{{ inst | escape }}</p>{% endif %}
+        <p class="lb-title">{{ pin_prod.title | escape }}</p>
+        <div class="lb-price">
+          {% if pin_has_disc %}<del>{{ pin_prod.compare_at_price | money }}</del>{% endif %}
+          <span>{{ pin_prod.price | money }}</span>
+        </div>
+        {% if pin_color_list.size > 0 %}
+        <div class="lb-swatches">
+          {% for cval in pin_color_list %}{% if cval != blank %}<span class="lb-swatch" title="{{ cval | escape }}" style="background-color:{{ cval | downcase | replace: ' ', '' }};"></span>{% endif %}{% endfor %}
+        </div>
+        {% endif %}
+      </div>`
+    },
       {% endif %}
     {% endfor %}
   ];
 
-function renderPins(lookId){
-  document.querySelectorAll(".lb-hotspot").forEach(e => e.remove());
+  // ── Render pins for a look, always activating the default/first ───────────
+  function renderPins(lookId) {
+    mainWrap.querySelectorAll(".lb-hotspot").forEach(el => el.remove());
 
-  const pins = allPins.filter(p => p.look === lookId);
+    const pins = allPins.filter(p => p.look === lookId);
+    if (!pins.length) { productBox.innerHTML = ""; return; }
 
-  let firstPinElement = null;
+    let defaultPin = pins.find(p => p.isDefault) || pins[0];
+    let defaultEl  = null;
 
-  pins.forEach((pin, index) => {
-    const el = document.createElement("div");
-    el.className = "lb-hotspot";
-    el.style.top = pin.top + "%";
-    el.style.left = pin.left + "%";
+    pins.forEach(pin => {
+      const el = document.createElement("div");
+      el.className = "lb-hotspot";
+      el.style.top  = pin.top  + "%";
+      el.style.left = pin.left + "%";
 
-    el.onclick = () => {
-      document.querySelectorAll(".lb-hotspot").forEach(h => h.classList.remove("active"));
-      el.classList.add("active");
-      productBox.innerHTML = pin.html;
-    };
+      el.addEventListener("click", () => {
+        mainWrap.querySelectorAll(".lb-hotspot").forEach(h => h.classList.remove("active"));
+        el.classList.add("active");
+        productBox.innerHTML = pin.html;
+      });
 
-    // guardamos el primero SIEMPRE
-    if(index === 0){
-      firstPinElement = el;
+      mainWrap.appendChild(el);
+      if (pin === defaultPin) defaultEl = el;
+    });
+
+    // Activate default pin immediately
+    if (defaultEl) {
+      defaultEl.classList.add("active");
+      productBox.innerHTML = defaultPin.html;
     }
-
-    mainContainer.appendChild(el);
-  });
-
-  // 🔥 FORZAR SIEMPRE UN PIN ACTIVO
-  if(firstPinElement){
-    firstPinElement.classList.add("active");
-    productBox.innerHTML = pins[0].html;
-  } else {
-    // opcional: limpiar si no hay pins
-    productBox.innerHTML = "";
-  }
-}
-  // INIT
-  if(mainImg){
-    renderPins(mainImg.dataset.look);
   }
 
-  // 🔥 FIX REAL AQUÍ
-  document.querySelectorAll(".lb-thumbs img").forEach(thumb => {
+  // ── Thumbnail click ───────────────────────────────────────────────────────
+  document.querySelectorAll(".lb-thumb").forEach(thumb => {
     thumb.addEventListener("click", () => {
-
-      document.querySelectorAll(".lb-thumbs img").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".lb-thumb").forEach(t => t.classList.remove("active"));
       thumb.classList.add("active");
 
       const lookId = thumb.dataset.look;
+      mainImg.src            = looks[lookId];
+      mainImg.dataset.look   = lookId;
 
-      // ✅ CAMBIO REAL DE IMAGEN
-      mainImg.src = looks[lookId].image;
-      mainImg.dataset.look = lookId;
-
-      renderPins(lookId);
-      productBox.innerHTML = "";
+      renderPins(lookId); // ← shows default product automatically, no clear after
     });
   });
+
+  // ── Init ──────────────────────────────────────────────────────────────────
+  renderPins(mainImg.dataset.look);
 
 });
 </script>
@@ -273,14 +398,21 @@ function renderPins(lookId){
     {
       "type": "text",
       "id": "small",
-      "label": "Texto pequeño",
+      "label": "Texto pequeño (panel derecho)",
       "default": "Lorem ipsum is a text"
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
+      "label": "Heading (panel derecho)",
       "default": "Lorem ipsum"
+    },
+    {
+      "type": "text",
+      "id": "installments_text",
+      "label": "Texto de cuotas",
+      "default": "0% de interés hasta 3 cuotas ver bancos",
+      "info": "Se muestra bajo la imagen del producto. Deja vacío para ocultar."
     }
   ],
   "blocks": [
@@ -291,7 +423,8 @@ function renderPins(lookId){
         {
           "type": "text",
           "id": "look_id",
-          "label": "ID del look (ej: look-1)"
+          "label": "ID del look (ej: look-1)",
+          "info": "Debe coincidir con el ID usado en los pins de este look."
         },
         {
           "type": "image_picker",
@@ -312,8 +445,17 @@ function renderPins(lookId){
             { "value": "look-1", "label": "Look 1" },
             { "value": "look-2", "label": "Look 2" },
             { "value": "look-3", "label": "Look 3" },
-            { "value": "look-4", "label": "Look 4" }
+            { "value": "look-4", "label": "Look 4" },
+            { "value": "look-5", "label": "Look 5" },
+            { "value": "look-6", "label": "Look 6" }
           ]
+        },
+        {
+          "type": "checkbox",
+          "id": "is_default",
+          "label": "Mostrar por defecto al cambiar a este look",
+          "default": false,
+          "info": "Activa esto en un pin por look para que ese producto aparezca automáticamente."
         },
         {
           "type": "product",
