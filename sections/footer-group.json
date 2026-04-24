@@ -117,7 +117,7 @@
       ],
       "name": "Moxie Footer",
       "settings": {
-        "show_newsletter": true,
+        "show_newsletter": false,
         "newsletter_title": "<p>Suscríbete a nuestro newsletter y <strong>recibe 30% OFF en tu primera compra</strong></p>",
         "newsletter_sub": "Todas las novedades, lanzamientos, descuentos exclusivos y mucho más",
         "newsletter_btn_label": "Suscríbete",
