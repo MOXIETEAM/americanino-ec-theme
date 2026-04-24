@@ -7,24 +7,48 @@
     min-height: 46px;
 }
 
+// .custom-header-moxie {
+//   background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
+//   backdrop-filter: blur(10px);
+//   -webkit-backdrop-filter: blur(10px);
+// }
+
 .mox-custom-header-component {
     .header__row--top {
         margin-top: 46px;
+         background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
     }
 }
 
-// Cuando el header es sticky (data-sticky-state="active"), el fondo pasa a blanco →
-// el texto del navbar debe ser oscuro (foreground del color scheme activo).
-#header-component[data-sticky-state='active'] .custom-navbar__link {
-    color: var(--mox-navbar-font-color, var(--color-foreground));
-    transition: color var(--animation-speed) var(--animation-easing);
+/* MOXIE: Glass header background */
+#header-component .header__underlay-closed,
+#header-component .header__underlay-open {
+  // background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
+  // backdrop-filter: blur(10px);
+  // -webkit-backdrop-filter: blur(10px);
 }
+
+// // Cuando el header es sticky (data-sticky-state="active"), el fondo pasa a blanco →
+// // el texto del navbar debe ser oscuro (foreground del color scheme activo).
+// #header-component[data-sticky-state='active'] .custom-navbar__link {
+//     color: var(--mox-navbar-font-color, var(--color-foreground));
+//     transition: color var(--animation-speed) var(--animation-easing);
+// }
 
 // Cuando el drawer de búsqueda está abierto, forzar fondo blanco y texto negro
 // en todas las filas del header para que el contenido no se pierda.
 #header-component:has(custom-search-drawer[data-open]) {
   .header__row {
-    background-color: #fff;
+    // background-color: #fff;
+  //   background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
+  // backdrop-filter: blur(10px);
+  // -webkit-backdrop-filter: blur(10px);
+
+  // background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
+  // backdrop-filter: blur(10px);
+  // -webkit-backdrop-filter: blur(10px);
     transition: background-color var(--animation-speed) var(--animation-easing);
   }
 

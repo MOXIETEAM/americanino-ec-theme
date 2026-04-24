@@ -1,0 +1,287 @@
+<script
+  src="{{ 'custom-promo-countdown.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{%- liquid
+  assign s = section.settings
+  assign target = s.target_date | append: 'T' | append: s.target_time | append: ':00'
+
+  comment
+    Separador: mostrar antes de cada unidad excepto la primera visible.
+    Trackeamos si ya se renderizó alguna unidad.
+  endcomment
+  assign any_before_hours  = s.show_days
+  assign any_before_minutes = s.show_days | default: false
+  if s.show_hours
+    assign any_before_minutes = true
+  endif
+  assign any_before_seconds = any_before_minutes | default: false
+  if s.show_minutes
+    assign any_before_seconds = true
+  endif
+-%}
+
+<promo-countdown
+  id="section-{{ section.id }}"
+  class="color-{{ s.color_scheme }}{% if s.layout == 'centered' %} mox-cd--centered{% endif %}"
+  data-target="{{ target }}"
+  data-hide-on-expire="{{ s.hide_on_expire }}"
+  style="
+    --mox-cd-pt: {{ s.padding_top }}px;
+    --mox-cd-pb: {{ s.padding_bottom }}px;
+    --mox-cd-digit-size: {{ s.digit_size }}px;
+    --mox-cd-label-size: {{ s.label_size }}px;
+    --mox-cd-text-size: {{ s.text_size }}px;
+    --mox-cd-gap: {{ s.unit_gap }}px;
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="mox-cd__inner page-width">
+
+    {%- if s.promo_text != blank -%}
+      <p class="mox-cd__text">{{ s.promo_text }}</p>
+    {%- endif -%}
+
+    <div class="mox-cd__timer" aria-live="polite" aria-atomic="true">
+
+      {%- if s.show_days -%}
+        <div class="mox-cd__unit">
+          <span class="mox-cd__digit" ref="days">00</span>
+          {%- if s.label_days != blank -%}
+            <span class="mox-cd__label">{{ s.label_days }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if s.show_hours -%}
+        {%- if any_before_hours -%}
+          <span class="mox-cd__sep" aria-hidden="true">{{ s.separator }}</span>
+        {%- endif -%}
+        <div class="mox-cd__unit">
+          <span class="mox-cd__digit" ref="hours">00</span>
+          {%- if s.label_hours != blank -%}
+            <span class="mox-cd__label">{{ s.label_hours }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if s.show_minutes -%}
+        {%- if any_before_minutes -%}
+          <span class="mox-cd__sep" aria-hidden="true">{{ s.separator }}</span>
+        {%- endif -%}
+        <div class="mox-cd__unit">
+          <span class="mox-cd__digit" ref="minutes">00</span>
+          {%- if s.label_minutes != blank -%}
+            <span class="mox-cd__label">{{ s.label_minutes }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if s.show_seconds -%}
+        {%- if any_before_seconds -%}
+          <span class="mox-cd__sep" aria-hidden="true">{{ s.separator }}</span>
+        {%- endif -%}
+        <div class="mox-cd__unit">
+          <span class="mox-cd__digit" ref="seconds">00</span>
+          {%- if s.label_seconds != blank -%}
+            <span class="mox-cd__label">{{ s.label_seconds }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+</promo-countdown>
+
+{% schema %}
+{
+  "name": "Moxie Promo Countdown",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "promo_text",
+      "label": "Texto promocional",
+      "default": "<strong>30% OFF</strong> EN TODA LA TIENDA"
+    },
+    {
+      "type": "header",
+      "content": "Fecha límite"
+    },
+    {
+      "type": "text",
+      "id": "target_date",
+      "label": "Fecha",
+      "info": "Formato YYYY-MM-DD — ej. 2025-12-31",
+      "default": "2025-12-31"
+    },
+    {
+      "type": "text",
+      "id": "target_time",
+      "label": "Hora (24 h)",
+      "info": "Formato HH:MM — ej. 23:59",
+      "default": "23:59"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_expire",
+      "label": "Ocultar sección al vencer",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Unidades del contador"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separador",
+      "default": ":"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_days",
+      "label": "Mostrar días",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_days",
+      "label": "Etiqueta días",
+      "default": "DÍAS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hours",
+      "label": "Mostrar horas",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_hours",
+      "label": "Etiqueta horas",
+      "default": "HORAS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_minutes",
+      "label": "Mostrar minutos",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_minutes",
+      "label": "Etiqueta minutos",
+      "default": "MINUTOS"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_seconds",
+      "label": "Mostrar segundos",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "label_seconds",
+      "label": "Etiqueta segundos",
+      "default": "SEGUNDOS"
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Disposición",
+      "options": [
+        { "value": "split", "label": "Texto izquierda / Timer derecha" },
+        { "value": "centered", "label": "Centrado" }
+      ],
+      "default": "split"
+    },
+    {
+      "type": "range",
+      "id": "digit_size",
+      "label": "Tamaño dígitos",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Tamaño etiquetas",
+      "min": 6,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "label": "Tamaño texto promo",
+      "min": 10,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "unit_gap",
+      "label": "Espacio entre unidades",
+      "min": 2,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Promo Countdown",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}

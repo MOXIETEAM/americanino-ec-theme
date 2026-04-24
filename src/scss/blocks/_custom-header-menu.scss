@@ -37,7 +37,7 @@
   font-size: 15px;
   line-height: 1.5;
   text-transform: var(--menu-top-level-font-case);
-  color: #ffffff;
+  color: var(--mox-navbar-font-color, var(--color-foreground));
   text-decoration: none;
   white-space: nowrap;
   transition: opacity var(--animation-speed) var(--animation-easing);
