@@ -17,7 +17,21 @@
         "announcement_X6yfep": {
           "type": "_announcement",
           "settings": {
-            "text": "¡Comparte la fantasía!",
+            "text": "Los esenciales evolucionan",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_nkdrBn": {
+          "type": "_announcement",
+          "name": "t:names.announcement",
+          "settings": {
+            "text": "We are the denim brand",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
@@ -30,7 +44,7 @@
         "announcement_XkirFb": {
           "type": "_announcement",
           "settings": {
-            "text": "¡Los esenciales evolucionan!",
+            "text": "We are the denim brand",
             "link": "",
             "font": "var(--font-subheading--family)",
             "font_size": "0.75rem",
@@ -43,16 +57,20 @@
       },
       "block_order": [
         "announcement_X6yfep",
+        "announcement_nkdrBn",
         "announcement_XkirFb"
       ],
       "settings": {
+        "layout": "static",
         "font_weight": "400",
         "font_style": "normal",
-        "bar_bg_color": "",
-        "bar_text_color": "",
+        "font_size": "0.8125rem",
+        "letter_spacing": "0.04em",
+        "color_scheme": "",
+        "bar_bg_color": "#1e2b51",
+        "bar_text_color": "#ffffff",
         "speed": 5,
         "section_width": "full-width",
-        "color_scheme": "",
         "divider_width": 0,
         "padding-block-start": 15,
         "padding-block-end": 15
@@ -141,6 +159,8 @@
             "hide_logo_on_home_page": false,
             "padding-block-start": 0,
             "padding-block-end": 0,
+            "logo_height_override": 0,
+            "logo_height_mobile_override": 0,
             "logo_video": "shopify://files/videos/americanino-amcno.mp4",
             "logo_video_loop": false
           },
