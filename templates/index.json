@@ -339,6 +339,74 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "lookbook_featured_tQHMhT": {
+      "type": "lookbook-featured",
+      "blocks": {
+        "pin_DC9etq": {
+          "type": "pin",
+          "settings": {
+            "look_id": "look-3",
+            "product": "falda-corta-en-rayon-tiro-medio-lineas-verticales",
+            "top": 50,
+            "left": 50
+          }
+        },
+        "pin_cFzhmh": {
+          "type": "pin",
+          "settings": {
+            "look_id": "look-2",
+            "product": "camiseta-oversize-algodon-con-bordado-grafico",
+            "top": 50,
+            "left": 50
+          }
+        },
+        "pin_fcrkrz": {
+          "type": "pin",
+          "settings": {
+            "look_id": "look-1",
+            "product": "bermuda-cargo-en-algodon-tiro-medio",
+            "top": 50,
+            "left": 50
+          }
+        },
+        "look_HTUmex": {
+          "type": "look",
+          "settings": {
+            "look_id": "look-1",
+            "image": "shopify://shop_images/38b9e2a7aee711cbf6c0f182205cca2076c3640c.png"
+          }
+        },
+        "look_QiWRWJ": {
+          "type": "look",
+          "settings": {
+            "look_id": "look-2",
+            "image": "shopify://shop_images/37701ce05efb2ebe5ebff99d5265992e940885eb.png"
+          }
+        },
+        "look_EWfyqJ": {
+          "type": "look",
+          "settings": {
+            "look_id": "look-3",
+            "image": "shopify://shop_images/17103421e04042490964987fdf154c9b93c5077a.png"
+          }
+        }
+      },
+      "block_order": [
+        "pin_DC9etq",
+        "pin_cFzhmh",
+        "pin_fcrkrz",
+        "look_HTUmex",
+        "look_QiWRWJ",
+        "look_EWfyqJ"
+      ],
+      "name": "Lookbook Advanced PRO",
+      "settings": {
+        "title": "Best Sellers",
+        "subtitle": "Lorem ipsum es simplemente texto",
+        "small": "Lorem ipsum is a text",
+        "heading": "Lorem ipsum"
+      }
     }
   },
   "order": [
@@ -347,6 +415,7 @@
     "custom_shop_the_look_carousel_8dUNYQ",
     "custom_category_grid_JpKEyr",
     "custom_best_seller_3gRU3k",
-    "custom_category_grid_fBUh4r"
+    "custom_category_grid_fBUh4r",
+    "lookbook_featured_tQHMhT"
   ]
 }
