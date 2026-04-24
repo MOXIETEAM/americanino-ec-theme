@@ -1,7 +1,7 @@
 @use '../mixins' as *;
 
 .custom-announcement-bar-moxie-container {
-    min-height: 46px;
+    min-height: 37px;
 }
 
 
@@ -14,6 +14,7 @@
 
   .header__row--top .header__columns {
     height: 76px;
+    padding: 0;
   }
 
   .header-logo__image {
@@ -23,7 +24,7 @@
 
 .mox-custom-header-component {
     .header__row--top {
-        margin-top: 46px;
+        margin-top: 37px;
          background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
