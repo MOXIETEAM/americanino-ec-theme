@@ -1,77 +1,196 @@
-<div class="section-best-sellers">
+{%- liquid
+  assign s = section.settings
+  assign collection = collections[s.collection]
+-%}
 
-  <div class="bs-header">
-    <h2>{{ section.settings.title }}</h2>
-    <p>{{ section.settings.subtitle }}</p>
-    {% if section.settings.button_link %}
-      <a href="{{ section.settings.button_link }}">
-        {{ section.settings.button_text }}
-      </a>
-    {% endif %}
-  </div>
+<div
+  class="mox-bs color-{{ s.color_scheme }}"
+  style="
+    --mox-bs-pt: {{ s.padding_top }}px;
+    --mox-bs-pb: {{ s.padding_bottom }}px;
+    {% unless s.bg_color == blank %}background-color: {{ s.bg_color }};{% endunless %}
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="mox-bs__inner page-width">
 
-  <div class="bs-grid">
-
-    <!-- HERO -->
-    <div class="bs-hero">
-      {% if section.settings.hero_image %}
-        <img src="{{ section.settings.hero_image | image_url: width: 800 }}" alt="">
-      {% endif %}
-      <div class="bs-hero-content">
-        <h3>{{ section.settings.hero_title }}</h3>
-        <p>{{ section.settings.hero_text }}</p>
+    {{- '<!-- ── Header ──────────────────────────────────────────────────────────── -->' -}}
+    <div class="mox-bs__header">
+      <div class="mox-bs__header-text">
+        {%- if s.title != blank -%}
+          <h2 class="mox-bs__title">{{ s.title }}</h2>
+        {%- endif -%}
+        {%- if s.subtitle != blank -%}
+          <p class="mox-bs__subtitle">{{ s.subtitle }}</p>
+        {%- endif -%}
       </div>
+      {%- if s.button_link != blank and s.button_text != blank -%}
+        <a class="mox-bs__btn" href="{{ s.button_link }}">{{ s.button_text }}</a>
+      {%- endif -%}
     </div>
 
-    <!-- PRODUCTS -->
-    <div class="bs-products">
-      {% assign collection = collections[section.settings.collection] %}
+    {{- '<!-- ── Grid ─────────────────────────────────────────────────────────────── -->' -}}
+    <div class="mox-bs__grid">
 
-      {% for product in collection.products limit: 4 %}
-        <div class="bs-card">
+      {{- '<!-- Hero -->' -}}
+      <div class="mox-bs__hero">
+        {%- if s.hero_image != blank -%}
+          {{
+            s.hero_image
+            | image_url: width: 900
+            | image_tag:
+              class: 'mox-bs__hero-img',
+              loading: 'lazy',
+              widths: '400, 600, 800, 900',
+              alt: s.hero_title
+          }}
+        {%- endif -%}
+        {%- if s.hero_title != blank or s.hero_text != blank -%}
+          <div class="mox-bs__hero-overlay">
+            {%- if s.hero_title != blank -%}
+              <span class="mox-bs__hero-title">{{ s.hero_title }}</span>
+            {%- endif -%}
+            {%- if s.hero_text != blank -%}
+              <span class="mox-bs__hero-text">{{ s.hero_text }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
 
-          <div class="bs-card-wrapper">
+      {{- '<!-- Products 2×2 -->' -}}
+      <div class="mox-bs__products">
+        {%- if collection != blank -%}
+          {%- for product in collection.products limit: 4 -%}
 
-            <!-- BADGES -->
-            <div class="bs-badges">
-              {% if product.compare_at_price > product.price %}
-                <span class="bs-badge">
-                  {{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% OFF
-                </span>
-              {% endif %}
-              {% if product.tags contains 'new' %}
-                <span class="bs-badge">NEW</span>
-              {% endif %}
-            </div>
+            {%- liquid
+              assign has_discount = false
+              if product.compare_at_price > product.price
+                assign has_discount = true
+                assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+              endif
+              assign is_new = false
+              if product.tags contains 'new' or product.tags contains 'NEW' or product.tags contains 'New'
+                assign is_new = true
+              endif
 
-            <a href="{{ product.url }}">
-              <img src="{{ product.featured_image | image_url: width: 500 }}">
+              assign color_opt_idx = nil
+              for opt in product.options
+                assign opt_lower = opt | downcase
+                if opt_lower == 'color' or opt_lower == 'colour' or opt_lower == 'color' or opt == 'Color'
+                  assign color_opt_idx = forloop.index0
+                  break
+                endif
+              endfor
+            -%}
+
+            <a class="mox-bs__card" href="{{ product.url }}">
+
+              <div class="mox-bs__card-media">
+                {{- '<!-- Badges -->' -}}
+                {%- if has_discount or is_new -%}
+                  <div class="mox-bs__badges">
+                    {%- if has_discount -%}
+                      <span class="mox-bs__badge mox-bs__badge--discount">{{ discount_pct }}% OFF</span>
+                    {%- endif -%}
+                    {%- if is_new -%}
+                      <span class="mox-bs__badge mox-bs__badge--new">NEW</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                {{
+                  product.featured_image
+                  | image_url: width: 500
+                  | image_tag:
+                    class: 'mox-bs__card-img',
+                    loading: 'lazy',
+                    widths: '250, 350, 500',
+                    alt: product.title
+                }}
+              </div>
+
+              <div class="mox-bs__card-info">
+                {%- if s.installments_text != blank -%}
+                  <p class="mox-bs__installments">{{ s.installments_text }}</p>
+                {%- endif -%}
+
+                <p class="mox-bs__card-title">{{ product.title | truncate: 55 }}</p>
+
+                <div class="mox-bs__pricing">
+                  {%- if has_discount -%}
+                    <s class="mox-bs__compare">{{ product.compare_at_price | money }}</s>
+                  {%- endif -%}
+                  <span class="mox-bs__price{% if has_discount %} mox-bs__price--sale{% endif %}">
+                    {{ product.price | money }}
+                  </span>
+                </div>
+
+                {%- if color_opt_idx != nil and s.show_swatches -%}
+                  {%- liquid
+                    assign shown_colors = ''
+                    assign swatch_count = 0
+                    for variant in product.variants
+                      assign cval = variant.options[color_opt_idx]
+                      unless shown_colors contains cval
+                        assign shown_colors = shown_colors | append: cval | append: '||'
+                        assign swatch_count = swatch_count | plus: 1
+                      endunless
+                    endfor
+                    assign unique_colors = shown_colors | split: '||'
+                    assign extra = swatch_count | minus: s.max_swatches
+                  -%}
+                  <div class="mox-bs__swatches">
+                    {%- assign sw_shown = 0 -%}
+                    {%- for cval in unique_colors limit: s.max_swatches -%}
+                      {%- if cval != blank -%}
+                        <span
+                          class="mox-bs__swatch"
+                          title="{{ cval }}"
+                          style="background-color: {{ cval | downcase | replace: ' ', '' }};"
+                        ></span>
+                        {%- assign sw_shown = sw_shown | plus: 1 -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if extra > 0 -%}
+                      <span class="mox-bs__swatch mox-bs__swatch--more">+{{ extra }}</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+              </div>
             </a>
 
-          </div>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            <div class="mox-bs__card">
+              <div class="mox-bs__card-media">
+                {{ 'product-apparel-2' | placeholder_svg_tag: 'mox-bs__card-img' }}
+              </div>
+              <div class="mox-bs__card-info">
+                <p class="mox-bs__card-title">Nombre del producto de ejemplo</p>
+                <div class="mox-bs__pricing">
+                  <span class="mox-bs__price">$000.000</span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
 
-          <div class="bs-card-title">
-            {{ product.title }}
-          </div>
-
-          <div class="bs-price">
-            {% if product.compare_at_price > product.price %}
-              <del>{{ product.compare_at_price | money }}</del>
-            {% endif %}
-            <span>{{ product.price | money }}</span>
-          </div>
-
-        </div>
-      {% endfor %}
     </div>
-
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "Best Sellers Custom",
+  "name": "Moxie Best Sellers",
+  "tag": "section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Encabezado"
+    },
     {
       "type": "text",
       "id": "title",
@@ -82,18 +201,43 @@
       "type": "text",
       "id": "subtitle",
       "label": "Subtítulo",
-      "default": "Lorem ipsum es simplemente el texto de relleno"
+      "default": "Lorem Ipsum es simplemente el texto de relleno de"
     },
     {
       "type": "text",
       "id": "button_text",
-      "label": "Texto botón",
+      "label": "Texto del botón",
       "default": "Ver todo"
     },
     {
       "type": "url",
       "id": "button_link",
-      "label": "Link botón"
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Imagen hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagen"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Título sobre la imagen",
+      "default": "Lorem ipsusom"
+    },
+    {
+      "type": "text",
+      "id": "hero_text",
+      "label": "Texto sobre la imagen",
+      "default": "Lorem ipsusom"
+    },
+    {
+      "type": "header",
+      "content": "Productos"
     },
     {
       "type": "collection",
@@ -101,26 +245,71 @@
       "label": "Colección"
     },
     {
-      "type": "image_picker",
-      "id": "hero_image",
-      "label": "Imagen Hero"
+      "type": "text",
+      "id": "installments_text",
+      "label": "Texto de cuotas",
+      "default": "0% de interés hasta 3 cuotas",
+      "info": "Deja vacío para ocultar. Ej: 0% de interés hasta 3 cuotas"
     },
     {
-      "type": "text",
-      "id": "hero_title",
-      "label": "Título Hero",
-      "default": "Lorem ipsum"
+      "type": "checkbox",
+      "id": "show_swatches",
+      "label": "Mostrar swatches de color",
+      "default": true
     },
     {
-      "type": "text",
-      "id": "hero_text",
-      "label": "Texto Hero",
-      "default": "Lorem ipsum"
+      "type": "range",
+      "id": "max_swatches",
+      "label": "Máximo de swatches visibles",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo (sobreescribe el scheme)"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 60
     }
   ],
   "presets": [
     {
-      "name": "Best Sellers Custom"
+      "name": "Moxie Best Sellers",
+      "category": "Moxie"
     }
   ]
 }
