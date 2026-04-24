@@ -268,10 +268,10 @@
         "subtitle": "Lorem ipsum es simplemente el texto de relleno",
         "button_text": "Ver todo",
         "button_link": "",
-        "collection": "test-collection",
         "hero_image": "shopify://shop_images/df5893fd7e7e1026cbd5ec23bd5ff458de148b9f.jpg",
         "hero_title": "Lorem ipsum",
-        "hero_text": "Lorem ipsum"
+        "hero_text": "Lorem ipsum",
+        "collection": "test-collection"
       }
     },
     "custom_category_grid_fBUh4r": {
@@ -343,6 +343,15 @@
     "lookbook_featured_tQHMhT": {
       "type": "lookbook-featured",
       "blocks": {
+        "pin_8pjdN9": {
+          "type": "pin",
+          "settings": {
+            "look_id": "look-1",
+            "product": "chaqueta-regular-en-algodon-con-cuello-alto-y-efecto-deslavado",
+            "top": 38,
+            "left": 50
+          }
+        },
         "pin_DC9etq": {
           "type": "pin",
           "settings": {
@@ -393,6 +402,7 @@
         }
       },
       "block_order": [
+        "pin_8pjdN9",
         "pin_DC9etq",
         "pin_cFzhmh",
         "pin_fcrkrz",
