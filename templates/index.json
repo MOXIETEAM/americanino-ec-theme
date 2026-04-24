@@ -98,7 +98,7 @@
         "bg_gradient_angle": 90,
         "bg_overlay_color": "#000000",
         "bg_overlay_opacity": 40,
-        "color_scheme": "",
+        "color_scheme": "scheme-1",
         "layout": "split",
         "digit_size": 28,
         "label_size": 8,
