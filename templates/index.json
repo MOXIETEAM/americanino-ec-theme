@@ -166,19 +166,6 @@
         "padding-block-end": 40
       }
     },
-    "custom_best_seller_3gRU3k": {
-      "type": "custom-best-seller",
-      "name": "Best Sellers Custom",
-      "settings": {
-        "title": "Best Sellers",
-        "subtitle": "Lorem ipsum es simplemente el texto de relleno",
-        "button_text": "Ver todo",
-        "button_link": "",
-        "collection": "",
-        "hero_title": "Lorem ipsum",
-        "hero_text": "Lorem ipsum"
-      }
-    },
     "custom_category_grid_JpKEyr": {
       "type": "custom_category-grid",
       "blocks": {
@@ -272,13 +259,27 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "custom_best_seller_3gRU3k": {
+      "type": "custom-best-seller",
+      "name": "Best Sellers Custom",
+      "settings": {
+        "title": "Best Sellers",
+        "subtitle": "Lorem ipsum es simplemente el texto de relleno",
+        "button_text": "Ver todo",
+        "button_link": "",
+        "collection": "test-collection",
+        "hero_image": "shopify://shop_images/df5893fd7e7e1026cbd5ec23bd5ff458de148b9f.jpg",
+        "hero_title": "Lorem ipsum",
+        "hero_text": "Lorem ipsum"
+      }
     }
   },
   "order": [
     "custom_hero_yVxjyj",
     "custom_promo_countdown_LkkQWh",
     "custom_shop_the_look_carousel_8dUNYQ",
-    "custom_best_seller_3gRU3k",
-    "custom_category_grid_JpKEyr"
+    "custom_category_grid_JpKEyr",
+    "custom_best_seller_3gRU3k"
   ]
 }
