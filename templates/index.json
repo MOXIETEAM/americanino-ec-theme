@@ -273,6 +273,72 @@
         "hero_title": "Lorem ipsum",
         "hero_text": "Lorem ipsum"
       }
+    },
+    "custom_category_grid_fBUh4r": {
+      "type": "custom_category-grid",
+      "blocks": {
+        "category_VhkyHX": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/10e27c979f4155e9912663d382f1159b4ff29093.jpg",
+            "label": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection"
+          }
+        },
+        "category_T7dChK": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/5f1e724e57e2a79dda8117f4fc06e0d58ded4f50.jpg",
+            "label": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection"
+          }
+        },
+        "category_q7RbTL": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/730d5b2cd3dfe0e2ca5ec79feac886362be48b51.jpg",
+            "label": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection"
+          }
+        }
+      },
+      "block_order": [
+        "category_VhkyHX",
+        "category_T7dChK",
+        "category_q7RbTL"
+      ],
+      "name": "Moxie Category Grid",
+      "settings": {
+        "title": "Compra por categoría",
+        "title_size": 32,
+        "subtitle": "Lorem Ipsum es simplemente el texto de relleno de",
+        "header_gap": 20,
+        "slides_desktop": "2.5",
+        "slides_mobile": "1.5",
+        "show_arrows": false,
+        "show_dots": false,
+        "card_gap": 3,
+        "label_size": 26,
+        "color_scheme": "",
+        "bg_color": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -280,6 +346,7 @@
     "custom_promo_countdown_LkkQWh",
     "custom_shop_the_look_carousel_8dUNYQ",
     "custom_category_grid_JpKEyr",
-    "custom_best_seller_3gRU3k"
+    "custom_best_seller_3gRU3k",
+    "custom_category_grid_fBUh4r"
   ]
 }
