@@ -3,8 +3,9 @@
   assign collection = collections[s.collection]
 -%}
 
+<div class="custom-center-container">
 <div
-  class="mox-bs color-{{ s.color_scheme }}"
+  class="mox-bs color-{{ s.color_scheme }} custom-standar-max-width"
   style="
     --mox-bs-pt: {{ s.padding_top }}px;
     --mox-bs-pb: {{ s.padding_bottom }}px;
@@ -180,6 +181,7 @@
 
     </div>
   </div>
+</div>
 </div>
 
 {% schema %}
