@@ -21,6 +21,15 @@
   endif
 
   assign alt_text_fallback = shop.name | escape | append: ' ' | append: 'accessibility.home' | t
+
+  assign logo_h        = settings.logo_height
+  assign logo_h_mobile = settings.logo_height_mobile
+  if block.settings.logo_height_override > 0
+    assign logo_h = block.settings.logo_height_override
+  endif
+  if block.settings.logo_height_mobile_override > 0
+    assign logo_h_mobile = block.settings.logo_height_mobile_override
+  endif
 %}
 
 {% comment %}
@@ -43,12 +52,12 @@
   {{ block.shopify_attributes }}
 >
   {% liquid
-    assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
-    assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
-    assign inverse_logo_width = settings.logo_height | times: inverse_logo.aspect_ratio | ceil
-    assign inverse_logo_width_mobile = settings.logo_height_mobile | times: inverse_logo.aspect_ratio | ceil
-    assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
-    assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+    assign logo_width = logo_h | times: settings.logo.aspect_ratio | ceil
+    assign logo_width_mobile = logo_h_mobile | times: settings.logo.aspect_ratio | ceil
+    assign inverse_logo_width = logo_h | times: inverse_logo.aspect_ratio | ceil
+    assign inverse_logo_width_mobile = logo_h_mobile | times: inverse_logo.aspect_ratio | ceil
+    assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: logo_h | append: 'px; --header-logo-image-height-mobile: ' | append: logo_h_mobile | append: 'px;'
+    assign inverse_logo_style = '--header-logo-image-width: ' | append: inverse_logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: inverse_logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: logo_h | append: 'px; --header-logo-image-height-mobile: ' | append: logo_h_mobile | append: 'px;'
   %}
 
   <span
@@ -58,7 +67,7 @@
     {% render 'image',
       image: settings.logo,
       class: 'header-logo__image',
-      height: settings.logo_height,
+      height: logo_h,
       alt_text_fallback: alt_text_fallback,
       text_fallback: shop.name,
       style: logo_style
@@ -73,7 +82,7 @@
       {% render 'image',
         image: inverse_logo,
         class: 'header-logo__image',
-        height: settings.logo_height,
+        height: logo_h,
         alt_text_fallback: alt_text_fallback,
         text_fallback: shop.name,
         style: inverse_logo_style
@@ -84,9 +93,9 @@
   {%- comment -%} MOXIE: Brand logo (Americanino) {%- endcomment -%}
   {%- if block.settings.logo_mic != blank -%}
     {%- liquid
-      assign mic_w  = settings.logo_height | times: block.settings.logo_mic.aspect_ratio | ceil
-      assign mic_wm = settings.logo_height_mobile | times: block.settings.logo_mic.aspect_ratio | ceil
-      assign mic_style = '--header-logo-image-width: ' | append: mic_w | append: 'px; --header-logo-image-width-mobile: ' | append: mic_wm | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+      assign mic_w  = logo_h | times: block.settings.logo_mic.aspect_ratio | ceil
+      assign mic_wm = logo_h_mobile | times: block.settings.logo_mic.aspect_ratio | ceil
+      assign mic_style = '--header-logo-image-width: ' | append: mic_w | append: 'px; --header-logo-image-width-mobile: ' | append: mic_wm | append: 'px; --header-logo-image-height: ' | append: logo_h | append: 'px; --header-logo-image-height-mobile: ' | append: logo_h_mobile | append: 'px;'
     -%}
     <span class="header-logo__image-container header-logo__image-container--brand" data-brand-show="mic">
       {%- render 'image', image: block.settings.logo_mic, class: 'header-logo__image', height: settings.logo_height, alt_text_fallback: alt_text_fallback, text_fallback: shop.name, style: mic_style -%}
@@ -96,7 +105,7 @@
   {%- comment -%} MOXIE: Video logo — highest priority, overrides all image logos {%- endcomment -%}
   {%- if block.settings.logo_video != blank -%}
     {%- liquid
-      assign video_logo_style = '--header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+      assign video_logo_style = '--header-logo-image-height: ' | append: logo_h | append: 'px; --header-logo-image-height-mobile: ' | append: logo_h_mobile | append: 'px;'
     -%}
     <span class="header-logo__image-container header-logo__image-container--video" data-video-logo>
       <video
@@ -162,7 +171,6 @@
     @media screen and (min-width: 750px) {
       height: var(--header-logo-image-height);
       width: var(--header-logo-image-width);
-      max-width: 105px;
     }
   }
 
@@ -264,6 +272,34 @@
       "min": 0,
       "max": 100,
       "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Tamaño del logo"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sobreescribe el tamaño definido en Ajustes del tema. Deja en 0 para usar el valor global."
+    },
+    {
+      "type": "range",
+      "id": "logo_height_override",
+      "label": "Alto desktop",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile_override",
+      "label": "Alto móvil",
+      "min": 0,
+      "max": 100,
+      "step": 2,
       "unit": "px",
       "default": 0
     },
