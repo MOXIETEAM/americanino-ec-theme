@@ -74,6 +74,33 @@
         "padding-block-end": 40
       }
     },
+    "custom_promo_countdown_LkkQWh": {
+      "type": "custom_promo-countdown",
+      "name": "Moxie Promo Countdown",
+      "settings": {
+        "promo_text": "<strong>30% OFF</strong> EN TODA LA TIENDA",
+        "target_date": "2026-12-31",
+        "target_time": "23:59",
+        "hide_on_expire": true,
+        "separator": ":",
+        "show_days": true,
+        "label_days": "DÍAS",
+        "show_hours": true,
+        "label_hours": "HORAS",
+        "show_minutes": true,
+        "label_minutes": "MINUTOS",
+        "show_seconds": true,
+        "label_seconds": "SEGUNDOS",
+        "color_scheme": "",
+        "layout": "split",
+        "digit_size": 28,
+        "label_size": 8,
+        "text_size": 15,
+        "unit_gap": 8,
+        "padding_top": 14,
+        "padding_bottom": 14
+      }
+    },
     "custom_shop_the_look_carousel_8dUNYQ": {
       "type": "custom_shop_the_look_carousel",
       "blocks": {
@@ -135,6 +162,7 @@
   },
   "order": [
     "custom_hero_yVxjyj",
+    "custom_promo_countdown_LkkQWh",
     "custom_shop_the_look_carousel_8dUNYQ"
   ]
 }
