@@ -140,7 +140,9 @@
           "settings": {
             "hide_logo_on_home_page": false,
             "padding-block-start": 0,
-            "padding-block-end": 0
+            "padding-block-end": 0,
+            "logo_video": "shopify://files/videos/americanino-amcno.mp4",
+            "logo_video_loop": false
           },
           "blocks": {}
         },
@@ -148,7 +150,7 @@
           "type": "_custom-header-menu",
           "static": true,
           "settings": {
-            "menu": "",
+            "menu": "main-menu",
             "color_scheme": "",
             "type_font_primary_size": "1rem",
             "menu_font_style": "inverse",
@@ -217,12 +219,9 @@
       "settings": {
         "logo_position": "left",
         "menu_position": "center",
-        "menu_row": "bottom",
+        "menu_row": "top",
         "highlight_items": "",
         "highlight_font_weight": "bold",
-        "highlight_items_little_mic": "",
-        "highlight_color_little_mic": "#ffffff",
-        "highlight_font_weight_little_mic": "bold",
         "show_search": true,
         "search_display": "bar",
         "search_position": "right",
