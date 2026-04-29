@@ -1,7 +1,7 @@
 {%- comment -%}
   MOXIE: PLP Rompe-Grid
   Metaobjeto: banner_rompegrids_plp
-  Metacampo en coleccion: moxie.plp_banners (lista de referencias a banner_rompegrids_plp)
+  Metacampo en coleccion: custom.mox_plp_banners_rompegrids (lista de referencias a banner_rompegrids_plp)
 
   Claves de campo del metaobjeto:
     donde_mostrar           → texto (se filtra si vale "little-mic")
@@ -14,6 +14,15 @@
     color_de_texto          → color
     posicion                → entero (despues de cual producto insertar, 1-based)
     columnas_a_ocupar       → lista de opciones: "1" | "2"
+
+    — Pines de producto (hasta 5) —
+    pin_1_producto          → referencia a producto
+    pin_1_pos_x             → entero 0-100 (% desde la izquierda)
+    pin_1_pos_y             → entero 0-100 (% desde arriba)
+    pin_2_producto / pin_2_pos_x / pin_2_pos_y
+    pin_3_producto / pin_3_pos_x / pin_3_pos_y
+    pin_4_producto / pin_4_pos_x / pin_4_pos_y
+    pin_5_producto / pin_5_pos_x / pin_5_pos_y
 {%- endcomment -%}
 
 {%- liquid
@@ -47,6 +56,11 @@
   url_boton         = {{ banner.url_boton.value | json }}
   bg_color          = {{ banner.color_de_fondo_cuando_no_hay_imagen.value | json }}
   text_color        = {{ banner.color_de_texto.value | json }}
+  pin_1_producto    = {{ banner.pin_1_producto.value.title | json }}
+  pin_2_producto    = {{ banner.pin_2_producto.value.title | json }}
+  pin_3_producto    = {{ banner.pin_3_producto.value.title | json }}
+  pin_4_producto    = {{ banner.pin_4_producto.value.title | json }}
+  pin_5_producto    = {{ banner.pin_5_producto.value.title | json }}
   {%- endfor -%}
 {%- endif -%}
 </div>
@@ -56,7 +70,7 @@
 {%- if request.design_mode -%}
   <div class="plp-rompe-grid__editor-placeholder">
     <strong>Moxie PLP Rompe-Grid</strong><br>
-    Los banners se configuran desde el metacampo <code>moxie.plp_banners</code> de cada coleccion (metaobjeto <code>banner_rompegrids_plp</code>).
+    Los banners se configuran desde el metacampo <code>custom.mox_plp_banners_rompegrids</code> de cada coleccion (metaobjeto <code>banner_rompegrids_plp</code>).
     {%- if plp_banners != blank -%}
       <br>✓ {{ plp_banners.size }} banner(s) configurado(s) para esta coleccion.
     {%- else -%}
@@ -81,7 +95,39 @@
     "texto_boton":   {{ banner.texto_boton.value | json }},
     "url_boton":     {{ banner.url_boton.value | json }},
     "bg_color":      {{ banner.color_de_fondo_cuando_no_hay_imagen.value | json }},
-    "text_color":    {{ banner.color_de_texto.value | json }}
+    "text_color":    {{ banner.color_de_texto.value | json }},
+    "pins": [
+      {%- assign pin_sep = '' -%}
+
+      {%- assign p = banner.pin_1_producto.value -%}
+      {%- if p != blank -%}
+      {{ pin_sep }}{"x":{{ banner.pin_1_pos_x.value | default: 25 }},"y":{{ banner.pin_1_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {%- assign pin_sep = ',' -%}
+      {%- endif -%}
+
+      {%- assign p = banner.pin_2_producto.value -%}
+      {%- if p != blank -%}
+      {{ pin_sep }}{"x":{{ banner.pin_2_pos_x.value | default: 50 }},"y":{{ banner.pin_2_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {%- assign pin_sep = ',' -%}
+      {%- endif -%}
+
+      {%- assign p = banner.pin_3_producto.value -%}
+      {%- if p != blank -%}
+      {{ pin_sep }}{"x":{{ banner.pin_3_pos_x.value | default: 75 }},"y":{{ banner.pin_3_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {%- assign pin_sep = ',' -%}
+      {%- endif -%}
+
+      {%- assign p = banner.pin_4_producto.value -%}
+      {%- if p != blank -%}
+      {{ pin_sep }}{"x":{{ banner.pin_4_pos_x.value | default: 35 }},"y":{{ banner.pin_4_pos_y.value | default: 70 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {%- assign pin_sep = ',' -%}
+      {%- endif -%}
+
+      {%- assign p = banner.pin_5_producto.value -%}
+      {%- if p != blank -%}
+      {{ pin_sep }}{"x":{{ banner.pin_5_pos_x.value | default: 65 }},"y":{{ banner.pin_5_pos_y.value | default: 70 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {%- endif -%}
+    ]
   }{% unless forloop.last %},{% endunless %}
   {%- endfor -%}
 ]
@@ -98,8 +144,6 @@
     var t;
     return function () { clearTimeout(t); t = setTimeout(fn, ms); };
   }
-
-  /* ── Debug (siempre activo — quitar tras resolver el problema) ────────────── */
 
   function log(msg, data) {
     if (data !== undefined) { console.log('[RompeGrid] ' + msg, data); }
@@ -125,10 +169,120 @@
     }
   }
 
+  /* ── Crear elemento de pin ───────────────────────────────────────────────── */
+
+  function createPinEl(pin, index) {
+    var btn = document.createElement('button');
+    btn.className = 'plp-rompe-grid__pin';
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('aria-label', 'Ver producto: ' + (pin.title || ''));
+    btn.setAttribute('data-pin', String(index));
+    btn.style.left = pin.x + '%';
+    btn.style.top  = pin.y + '%';
+
+    if (pin.y < 40) btn.classList.add('plp-rompe-grid__pin--popup-below');
+
+    /* Dot */
+    var dot = document.createElement('span');
+    dot.className = 'plp-rompe-grid__pin-dot';
+    dot.setAttribute('aria-hidden', 'true');
+    dot.textContent = '+';
+    btn.appendChild(dot);
+
+    /* Popup */
+    var popup = document.createElement('div');
+    popup.className = 'plp-rompe-grid__pin-popup';
+
+    var card = document.createElement('a');
+    card.href = pin.url || '#';
+    card.className = 'plp-rompe-grid__pin-card';
+
+    if (pin.image) {
+      var imgWrap = document.createElement('div');
+      imgWrap.className = 'plp-rompe-grid__pin-img-wrap';
+      var img = document.createElement('img');
+      img.src = pin.image;
+      img.alt = pin.alt || pin.title || '';
+      img.loading = 'lazy';
+      img.className = 'plp-rompe-grid__pin-img';
+      imgWrap.appendChild(img);
+      card.appendChild(imgWrap);
+    }
+
+    var info = document.createElement('div');
+    info.className = 'plp-rompe-grid__pin-info';
+
+    var name = document.createElement('p');
+    name.className = 'plp-rompe-grid__pin-name';
+    name.textContent = pin.title || '';
+    info.appendChild(name);
+
+    var prices = document.createElement('div');
+    prices.className = 'plp-rompe-grid__pin-prices';
+
+    if (pin.compare_price) {
+      var cmp = document.createElement('span');
+      cmp.className = 'plp-rompe-grid__pin-compare';
+      cmp.textContent = pin.compare_price;
+      prices.appendChild(cmp);
+    }
+
+    var price = document.createElement('span');
+    price.className = 'plp-rompe-grid__pin-price';
+    price.textContent = pin.price || '';
+    prices.appendChild(price);
+
+    info.appendChild(prices);
+    card.appendChild(info);
+    popup.appendChild(card);
+    btn.appendChild(popup);
+
+    return btn;
+  }
+
+  /* ── Gestión global de pines abiertos ────────────────────────────────────── */
+
+  if (!window._rompeGridPinInit) {
+    window._rompeGridPinInit = true;
+
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.plp-rompe-grid__pin')) {
+        document.querySelectorAll('.plp-rompe-grid__pin.is-open')
+          .forEach(function (p) { p.classList.remove('is-open'); });
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.plp-rompe-grid__pin.is-open')
+          .forEach(function (p) { p.classList.remove('is-open'); });
+      }
+    });
+  }
+
+  function setupPinToggle(bannerEl) {
+    bannerEl.querySelectorAll('.plp-rompe-grid__pin').forEach(function (pin) {
+      pin.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = pin.classList.contains('is-open');
+        /* Cerrar todos los pines del banner antes de abrir */
+        bannerEl.querySelectorAll('.plp-rompe-grid__pin.is-open')
+          .forEach(function (p) { p.classList.remove('is-open'); });
+        if (!isOpen) pin.classList.add('is-open');
+      });
+    });
+
+    /* Evitar que clicks en el popup cierren el pin */
+    bannerEl.querySelectorAll('.plp-rompe-grid__pin-popup').forEach(function (popup) {
+      popup.addEventListener('click', function (e) { e.stopPropagation(); });
+    });
+  }
+
   /* ── Crear elemento de banner ────────────────────────────────────────────── */
 
   function createBannerEl(banner) {
-    var colSpan = parseInt(banner.columnas, 10) || 2;
+    var colSpan  = parseInt(banner.columnas, 10) || 2;
+    var hasPins  = Array.isArray(banner.pins) && banner.pins.length > 0;
 
     var li = document.createElement('li');
     li.className = 'product-grid__item plp-rompe-grid plp-rompe-grid--span-' + colSpan;
@@ -137,11 +291,15 @@
     if (banner.bg_color)   li.style.backgroundColor = banner.bg_color;
     if (banner.text_color) li.style.color = banner.text_color;
 
-    /* Wrapper: <a> si tiene URL de boton, <div> si no */
-    var hasLink = banner.url_boton && banner.url_boton.length > 0;
-    var inner = document.createElement(hasLink ? 'a' : 'div');
+    /*
+     * Si el banner tiene pines el wrapper es siempre <div> para evitar
+     * anidar <a> dentro de <a> (popup card vs banner link).
+     * Sin pines, se usa <a> si hay url_boton.
+     */
+    var hasWrapperLink = !hasPins && banner.url_boton && banner.url_boton.length > 0;
+    var inner = document.createElement(hasWrapperLink ? 'a' : 'div');
     inner.className = 'plp-rompe-grid__inner';
-    if (hasLink) inner.href = banner.url_boton;
+    if (hasWrapperLink) inner.href = banner.url_boton;
 
     /* Imagen de fondo */
     if (banner.imagen) {
@@ -176,16 +334,35 @@
       }
 
       if (banner.texto_boton) {
-        var btn = document.createElement('span');
-        btn.className = 'plp-rompe-grid__btn';
-        btn.textContent = banner.texto_boton;
-        content.appendChild(btn);
+        if (hasPins && banner.url_boton) {
+          /* Con pines: botón es <a> real porque el wrapper no es <a> */
+          var btnA = document.createElement('a');
+          btnA.className = 'plp-rompe-grid__btn';
+          btnA.href = banner.url_boton;
+          btnA.textContent = banner.texto_boton;
+          content.appendChild(btnA);
+        } else {
+          var btnSpan = document.createElement('span');
+          btnSpan.className = 'plp-rompe-grid__btn';
+          btnSpan.textContent = banner.texto_boton;
+          content.appendChild(btnSpan);
+        }
       }
 
       inner.appendChild(content);
     }
 
+    /* Pines */
+    if (hasPins) {
+      banner.pins.forEach(function (pin, index) {
+        inner.appendChild(createPinEl(pin, index));
+      });
+    }
+
     li.appendChild(inner);
+
+    if (hasPins) setupPinToggle(li);
+
     return li;
   }
 
@@ -201,7 +378,6 @@
     }
     log('Grid encontrado:', grid);
 
-    /* Eliminar banners previos para re-inyectar limpios */
     grid.querySelectorAll('.plp-rompe-grid').forEach(function (el) { el.remove(); });
 
     if (!banners.length) {
@@ -209,7 +385,6 @@
       return;
     }
 
-    /* Filtrar banners desactivados y ordenar por posicion DESC */
     var visible = banners
       .filter(function (b) {
         var dm = (b.donde_mostrar || '').trim().toLowerCase();
@@ -223,7 +398,6 @@
     }
     log('Banners visibles:', visible);
 
-    /* Solo los items reales (excluir banners ya existentes) */
     var items = Array.from(
       grid.querySelectorAll('.product-grid__item:not(.plp-rompe-grid)')
     );
@@ -234,16 +408,14 @@
     }
 
     visible.forEach(function (banner) {
-      var pos = Math.max(parseInt(banner.posicion, 10) || 1, 1);
+      var pos      = Math.max(parseInt(banner.posicion, 10) || 1, 1);
       var bannerEl = createBannerEl(banner);
 
       if (pos <= 1) {
-        // Posicion 1: antes del primer producto
         log('Insertando banner "' + banner.titulo + '" ANTES del item 0 (posicion 1)');
         if (items[0]) items[0].before(bannerEl);
       } else {
-        // Posicion N: el banner ocupa el Nvo lugar → insertar despues del producto N-1
-        var idx = Math.min(pos - 2, items.length - 1);
+        var idx   = Math.min(pos - 2, items.length - 1);
         var refEl = items[idx];
         log('Insertando banner "' + banner.titulo + '" en posicion=' + pos + ' (despues de item idx=' + idx + ')', refEl);
         if (refEl) refEl.after(bannerEl);
@@ -288,7 +460,6 @@
     init();
   }
 
-  /* Recarga desde el editor de Shopify */
   document.addEventListener('shopify:section:load', function (e) {
     if (e.detail && e.detail.sectionId === '{{ section.id }}') {
       injectBanners();

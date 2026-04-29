@@ -127,3 +127,166 @@
   text-align: center;
   margin: 0;
 }
+
+// ── Pines de producto ─────────────────────────────────────────────────────────
+
+.plp-rompe-grid__pin {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  // Amplía el área táctil sin agrandar visualmente el dot
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+  }
+}
+
+.plp-rompe-grid__pin-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #111;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.plp-rompe-grid__pin:hover .plp-rompe-grid__pin-dot {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+.plp-rompe-grid__pin.is-open .plp-rompe-grid__pin-dot {
+  background: #fff;
+  transform: scale(1.1) rotate(45deg);
+}
+
+// ── Popup del pin ─────────────────────────────────────────────────────────────
+
+.plp-rompe-grid__pin-popup {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 14px);
+  transform: translateX(-50%) translateY(6px);
+  width: 180px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 10;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+  }
+
+  @include reduced-motion {
+    transition: opacity 0.15s ease, visibility 0.15s ease;
+  }
+}
+
+.plp-rompe-grid__pin.is-open .plp-rompe-grid__pin-popup {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+// Cuando el pin está en la mitad superior el popup abre hacia abajo
+.plp-rompe-grid__pin--popup-below .plp-rompe-grid__pin-popup {
+  bottom: auto;
+  top: calc(100% + 14px);
+  transform: translateX(-50%) translateY(-6px);
+}
+
+.plp-rompe-grid__pin--popup-below.is-open .plp-rompe-grid__pin-popup {
+  transform: translateX(-50%) translateY(0);
+}
+
+// ── Tarjeta de producto dentro del popup ──────────────────────────────────────
+
+.plp-rompe-grid__pin-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover .plp-rompe-grid__pin-img {
+    transform: scale(1.04);
+  }
+}
+
+.plp-rompe-grid__pin-img-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.plp-rompe-grid__pin-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform 0.3s ease;
+  }
+
+  @include reduced-motion {
+    transition: none;
+  }
+}
+
+.plp-rompe-grid__pin-info {
+  padding: 10px 12px 12px;
+}
+
+.plp-rompe-grid__pin-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0 0 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.plp-rompe-grid__pin-prices {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.plp-rompe-grid__pin-price {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.plp-rompe-grid__pin-compare {
+  font-size: 0.75rem;
+  color: #999;
+  text-decoration: line-through;
+}
