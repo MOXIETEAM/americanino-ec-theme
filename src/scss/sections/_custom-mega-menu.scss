@@ -27,10 +27,6 @@
   display: contents;
 }
 
-/* ── Paneles de marca ────────────────────────────────────────────────────── */
-.moxie-mega__panel[data-brand=little-mic] {
-  display: none !important;
-}
 
 /* ── Backdrop ────────────────────────────────────────────────────────────── */
 .moxie-mega__backdrop {
@@ -53,7 +49,8 @@
   top: var(--moxie-mega-top, 80px);
   left: 0;
   width: 100%;
-  max-height: 450px;
+  min-height: 395px;
+  max-height: 395px;
   overflow-y: auto;
   background-color: var(--color-background);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -75,24 +72,24 @@
   transition: opacity 0.22s ease, transform 0.22s ease, visibility 0s linear 0s;
 }
 
-/* ── Panel inner — centrado con el mismo sistema que las secciones del tema ── */
-.moxie-mega__panel-inner {
-  display: grid;
-  gap: 3rem;
-  padding-block: 2rem 2.5rem;
-  /* Centrado manual equivalente a .page-width-normal */
-//   max-width: calc(var(--normal-page-width, 120rem) + 80px);
-  margin-inline: auto;
-  padding-inline: 40px;
-  box-sizing: border-box;
-}
+// /* ── Panel inner — centrado con el mismo sistema que las secciones del tema ── */
+// .moxie-mega__panel-inner {
+//   display: grid;
+//   gap: 3rem;
+//   // padding-block: 2rem 2.5rem;
+//   /* Centrado manual equivalente a .page-width-normal */
+// //   max-width: calc(var(--normal-page-width, 120rem) + 80px);
+//   margin-inline: auto;
+//   // padding-inline: 40px;
+//   box-sizing: border-box;
+// }
 
-/* ── PANEL ESTÁNDAR: [categorías] [banners] ──────────────────────────────── */
-.moxie-mega__panel--standard .moxie-mega__panel-inner {
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  gap: 2rem;
-}
+// /* ── PANEL ESTÁNDAR: [categorías] [banners] ──────────────────────────────── */
+// .moxie-mega__panel--standard .moxie-mega__panel-inner {
+//   grid-template-columns: 1fr auto;
+//   align-items: start;
+//   gap: 2rem;
+// }
 
 /* Columna de categorías */
 .moxie-mega__categories {
@@ -205,173 +202,7 @@
   max-width: 350px;
 }
 
-/* ── PANEL LICENCIAS: 4 columnas ─────────────────────────────────────────── */
-.moxie-mega__panel--licenses .moxie-mega__panel-inner {
-  grid-template-columns: 1fr;
-  padding-block: 1.25rem 1.75rem;
-}
 
-.moxie-mega__lic-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr auto;
-  gap: 0 2rem;
-  align-items: start;
-}
-
-/* Cols 1 y 2: botones de licencia — sin borde entre ellas */
-.moxie-mega__lic-col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-/* El separador va solo después de la segunda columna de licencias */
-.moxie-mega__lic-col:last-of-type {
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  padding-right: 1.5rem;
-}
-
-.moxie-mega__lic-item {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.35rem 0.5rem;
-  border: none;
-  background: none;
-  cursor: pointer;
-  text-align: left;
-  border-radius: 8px;
-  width: 100%;
-  color: var(--color-foreground);
-  font-size: 0.8125rem;
-  font-family: inherit;
-  transition: background 0.15s;
-}
-
-.moxie-mega__lic-item:hover,
-.moxie-mega__lic-item--active {
-  background: rgba(0, 0, 0, 0.06);
-}
-
-.moxie-mega__lic-item--active .moxie-mega__lic-name {
-  font-weight: 600;
-}
-
-.moxie-mega__lic-logo {
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.moxie-mega__lic-logo-img {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  border-radius: 4px;
-}
-
-.moxie-mega__lic-name {
-  flex: 1;
-  line-height: 1.2;
-}
-
-.moxie-mega__lic-arrow {
-  font-size: 1rem;
-  opacity: 0.3;
-  margin-left: auto;
-  transition: opacity 0.15s, transform 0.15s;
-}
-
-.moxie-mega__lic-item--active .moxie-mega__lic-arrow {
-  opacity: 0.7;
-  transform: translateX(2px);
-}
-
-/* Col 3: sub-ítems */
-.moxie-mega__lic-subitems {
-  position: relative;
-  min-height: 80px;
-}
-
-.moxie-mega__lic-subgroup {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  pointer-events: none;
-}
-
-.moxie-mega__lic-subgroup--active {
-  position: relative;
-  opacity: 1;
-  transform: translateX(0);
-  pointer-events: auto;
-}
-
-.moxie-mega__lic-sublist {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-bottom: 0.75rem;
-}
-
-.moxie-mega__lic-viewall {
-  font-size: 0.75rem;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  color: var(--color-foreground);
-  opacity: 0.6;
-  display: block;
-  transition: opacity 0.15s;
-}
-
-.moxie-mega__lic-viewall:hover {
-  opacity: 1;
-}
-
-/* Col 4: banner por licencia */
-.moxie-mega__lic-banners {
-  // width: 340px;
-  position: relative;
-  // min-height: 160px;
-}
-
-.moxie-mega__banner-lic-img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  border-radius: 8px;
-  max-height: 260px;
-  max-width:3900px;
-}
-.moxie-mega__lic-banner {
-  display: block;
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.18s ease, transform 0.18s ease;
-  border-radius: var(--mega-border-radius, 8px);
-  overflow: hidden;
-  line-height: 0;
-  pointer-events: none;
-}
-
-.moxie-mega__lic-banner--active {
-  position: relative;
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.moxie-mega__lic-banner--active:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
-}
 
 /* ── Estado activo del trigger en el navbar ──────────────────────────────── */
 .custom-navbar__link[data-mega-trigger] {
@@ -396,3 +227,129 @@
   }
 }
 
+
+
+// --------------------------------------------------
+
+
+/* =============================================================================
+   PANEL AMERICANINO — 3 zonas: featured | columnas | promo
+   ============================================================================= */
+
+/* ── Contenedor inner: flex row ─────────────────────────────────────────── */
+.moxie-mega__panel--americanino .moxie-mega__panel-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  max-width: 1280px;
+  max-height: 395px;
+  margin-inline: auto;
+  // padding-block: 2rem 2.5rem;
+  // padding-inline: 40px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ── ZONA IZQUIERDA: featured links (sin hijos) ──────────────────────────── */
+.moxie-mega__featured {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex-shrink: 0;
+  min-width: 155px;
+  padding-right: 2.5rem;
+}
+
+.moxie-mega__featured-link {
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-foreground);
+  text-decoration: none;
+  padding-block: 0.3rem;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.moxie-mega__featured-link:hover,
+.moxie-mega__featured-link--active {
+  opacity: 0.6;
+}
+
+/* ── SEPARADOR VERTICAL ──────────────────────────────────────────────────── */
+.moxie-mega__v-divider {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+/* ── ZONA CENTRAL: grilla de columnas de categoría ──────────────────────── */
+.moxie-mega__columns {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 1.5rem 3rem;
+  flex: 1;
+  padding-inline: 2.5rem;
+}
+
+/* Sobreescribir sublinks a 1 columna en el panel americanino */
+.moxie-mega__panel--americanino .moxie-mega__sublinks {
+  grid-template-columns: 1fr;
+}
+
+/* ── ZONA DERECHA: imagen promo ──────────────────────────────────────────── */
+.moxie-mega__promo {
+  flex-shrink: 0;
+  min-width: 546px;
+  position: relative;
+  overflow: hidden;
+  align-self: stretch;
+  min-height: 395px;
+}
+
+.moxie-mega__promo-img-wrap {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.moxie-mega__promo-img {
+  width: 100%;
+  height: 100%;
+  min-height: 395px;
+  object-fit: cover;
+  display: block;
+}
+
+.moxie-mega__promo-cta {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #000;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 0.45rem 1.25rem;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.moxie-mega__promo-cta:hover {
+  background: #000;
+  color: #fff;
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .moxie-mega__featured-link,
+  .moxie-mega__promo-cta {
+    transition: none;
+  }
+}
