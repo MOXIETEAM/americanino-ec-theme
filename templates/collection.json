@@ -16,32 +16,28 @@
           "type": "card",
           "settings": {
             "label": "Camisetas",
-            "link": "",
-            "brand": "all"
+            "link": ""
           }
         },
         "card_buzos": {
           "type": "card",
           "settings": {
             "label": "Buzos y Chaquetas",
-            "link": "",
-            "brand": "all"
+            "link": ""
           }
         },
         "card_pijamas": {
           "type": "card",
           "settings": {
             "label": "Pijamas",
-            "link": "",
-            "brand": "all"
+            "link": ""
           }
         },
         "card_inferiores": {
           "type": "card",
           "settings": {
             "label": "Inferiores",
-            "link": "",
-            "brand": "all"
+            "link": ""
           }
         }
       },
@@ -52,10 +48,8 @@
         "card_inferiores"
       ],
       "settings": {
-        "brand_visibility": "all",
         "show_breadcrumb": true,
-        "breadcrumb_brand_mic": "Mic",
-        "breadcrumb_brand_little_mic": "Little Mic",
+        "breadcrumb_brand": "Americanino",
         "title_override": "",
         "description_override": "",
         "card_ratio": "1 / 1",
@@ -67,6 +61,11 @@
         "padding_v": 32,
         "info_col_width": 280
       }
+    },
+    "custom_plp_rompe_grid_De7LFz": {
+      "type": "custom_plp_rompe_grid",
+      "name": "Moxie PLP Rompe-Grid",
+      "settings": {}
     },
     "plp_filtros": {
       "type": "custom_plp_filtros",
@@ -211,6 +210,7 @@
     }
   },
   "order": [
+    "custom_plp_rompe_grid_De7LFz",
     "plp_hero",
     "plp_filtros",
     "main"
