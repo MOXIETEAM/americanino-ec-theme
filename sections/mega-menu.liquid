@@ -1,0 +1,64 @@
+{%- comment -%}
+  mega-menu.liquid — MOXIE
+  Contenedor global del megamenu. Se mueve a <body> por mega-menu.js
+  (position: fixed, debajo del header sticky).
+
+  Itera el menú principal y genera un panel por cada ítem de 1er nivel
+  que tenga sub-ítems. La imagen promo de cada panel se toma del metaobject
+  "menu_image" (ver instrucciones abajo).
+
+  ── Metaobject requerido ──────────────────────────────────────────────────
+  Tipo:   menu_image
+  Campos:
+    menu_item       single_line_text   Handle del ítem (ej: "hombre", "mujer")
+    imagen_promo    file_reference     Imagen vertical que aparece a la derecha
+    ver_todo_enlace url                URL del botón "Ver todo"
+    ver_todo_texto  single_line_text   Texto del botón (default: "Ver todo")
+  ─────────────────────────────────────────────────────────────────────────
+{%- endcomment -%}
+
+{%- assign mega_menu     = section.settings.menu -%}
+{%- assign paneles_promo = shop.metaobjects.menu_image.values -%}
+
+
+
+<div id="moxie-megamenu" class="moxie-mega" aria-hidden="true">
+  <div class="moxie-mega__backdrop" role="presentation"></div>
+
+  {%- for link in mega_menu.links -%}
+    {%- if link.links.size > 0 -%}
+      {%- assign panel_key = link.title | strip | handleize -%}
+
+      {%- assign panel_promo = blank -%}
+      {%- for promo in paneles_promo -%}
+        {%- assign promo_key = promo.menu_item.value | strip | handleize -%}
+        {%- if promo_key == panel_key -%}
+          {%- assign panel_promo = promo -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if panel_promo != blank -%}{%- assign _dbg_matched = 'true' -%}{%- else -%}{%- assign _dbg_matched = 'false' -%}{%- endif -%}
+      <!-- MOXIE-DEBUG panel="{{ panel_key }}" promo_matched="{{ _dbg_matched }}" imagen="{{ panel_promo.imagen_promo.value }}" -->
+
+      {%- render 'mega-menu-standard',
+        link: link,
+        panel_promo: panel_promo
+      -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Moxie Megamenu",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú principal",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,134 +1,114 @@
 {%- comment -%}
-  mega-menu-standard.liquid
-  Panel estándar de categorías para un ítem del navbar.
+  mega-menu-standard.liquid — Layout Americanino
+  3 zonas: LEFT (featured links) | CENTER (category columns) | RIGHT (promo image)
 
-  Parámetros:
-    link       {link}    Ítem de 1er nivel del menú (ej: "Niña")
-    brand      {string}  'mic' | 'little-mic'
-    categorias {array}   shop.metaobjects['megamenu_*_category'].values para la marca
+  Regla para separar zonas a partir del menú de navegación:
+    • 2do nivel SIN hijos  → featured (columna izquierda, texto grande)
+    • 2do nivel CON hijos  → columna de categoría (centro)
+
+  @param link         {link}        Ítem de 1er nivel del menú
+  @param panel_promo  {metaobject}  Metaobject megamenu_panel (puede ser blank)
 {%- endcomment -%}
 
 {%- assign panel_key = link.title | handleize -%}
 
+{%- comment -%} Detectar si existen featured links (sin hijos) {%- endcomment -%}
+{%- assign has_featured = false -%}
+{%- for fl in link.links -%}
+  {%- if fl.links.size == 0 -%}
+    {%- assign has_featured = true -%}
+    {%- break -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment -%} Detectar si existe una imagen promo válida {%- endcomment -%}
+{%- assign has_promo = false -%}
+{%- if panel_promo != blank -%}
+  {%- if panel_promo.imagen_promo.value != blank -%}
+    {%- assign has_promo = true -%}
+  {%- endif -%}
+{%- endif -%}
+
 <div
-  class="moxie-mega__panel moxie-mega__panel--standard"
+  class="moxie-mega__panel moxie-mega__panel--americanino"
   data-panel="{{ panel_key }}"
-  data-brand="{{ brand }}"
   role="region"
   aria-label="{{ link.title }}"
 >
-  <div class="moxie-mega__panel-inner custom-standar-max-width">
+  <div class="moxie-mega__panel-inner{% if has_promo %} moxie-mega__panel-inner--with-promo{% endif %}">
 
-    {%- comment -%} ── COLUMNA IZQUIERDA: grupos de categorías ── {%- endcomment -%}
-    <div class="moxie-mega__categories">
-      {%- if link.links.size > 0 -%}
-        {%- for cat_link in link.links -%}
-          {%- assign cat_key = cat_link.title | handleize -%}
-          <div
-            class="moxie-mega__catgroup"
-            data-cat="{{ cat_key }}"
-            role="group"
-          >
-            <a href="{{ cat_link.url }}" class="moxie-mega__cat-title">{{ cat_link.title }}</a>
-            {%- if cat_link.links.size > 0 -%}
-              <ul class="moxie-mega__sublinks list-unstyled">
-                {%- for sub in cat_link.links -%}
-                  <li>
-                    <a href="{{ sub.url }}" class="moxie-mega__sublink">{{ sub.title }}</a>
-                  </li>
-                {%- endfor -%}
-              </ul>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        {%- comment -%} Sin sub-ítems configurados: mostrar enlace directo como fallback {%- endcomment -%}
-        <div class="moxie-mega__catgroup" data-cat="{{ panel_key }}" role="group">
-          <a href="{{ link.url }}" class="moxie-mega__cat-title">{{ link.title }}</a>
-        </div>
-      {%- endif -%}
-    </div>
-
-    {%- comment -%}
-      ── COLUMNA DERECHA: banners por categoría ──
-      Para cada categoría del nav, buscamos el metaobjeto correspondiente
-      por coincidencia de título (handleizado). Si existe y tiene banners,
-      renderizamos un banner-set oculto que el JS muestra al hacer hover.
-    {%- endcomment -%}
-    {%- if link.links.size > 0 -%}
-      <div class="moxie-mega__banners-col">
-        {%- for cat_link in link.links -%}
-          {%- liquid
-            assign cat_key  = cat_link.title | handleize
-
-            assign cat_meta = blank
-            for m in categorias
-              assign m_key = m.titulo.value | handleize
-              if m_key == cat_key
-                assign cat_meta = m
-                break
-              endif
-            endfor
-
-            assign has_b1 = false
-            assign has_b2 = false
-            if cat_meta != blank
-              if cat_meta.banner_principal.value != blank
-                assign has_b1 = true
-              endif
-              if cat_meta.banner_secundario.value != blank
-                assign has_b2 = true
-              endif
-            endif
-          -%}
-
-          {%- if has_b1 or has_b2 -%}
-            <div
-              class="moxie-mega__banner-set"
-              data-banner-cat="{{ cat_key }}"
+    {%- comment -%} ── ZONA IZQUIERDA: links sin hijos (featured) ── {%- endcomment -%}
+    {%- if has_featured -%}
+      <div class="moxie-mega__featured">
+        {%- for fl in link.links -%}
+          {%- if fl.links.size == 0 -%}
+            <a
+              href="{{ fl.url }}"
+              class="moxie-mega__featured-link{% if fl.current %} moxie-mega__featured-link--active{% endif %}"
+              {% if fl.current %}aria-current="page"{% endif %}
             >
-              {%- if has_b1 -%}
-                {%- assign b1_img  = cat_meta.banner_principal.value -%}
-                {%- assign b1_href = cat_meta.banner_principal_link.value.url | default: '' -%}
-                <a
-                  href="{{ b1_href | default: '#' }}"
-                  class="moxie-mega__banner-link"
-                  {% if b1_href == blank %}aria-hidden="true" tabindex="-1"{% endif %}
-                >
-                  {{- b1_img
-                    | image_url: width: 354
-                    | image_tag:
-                      loading: 'lazy',
-                      class: 'moxie-mega__banner-img',
-                      alt: cat_link.title,
-                      widths: '354',
-                      sizes: '354px'
-                  -}}
-                </a>
-              {%- endif -%}
-
-              {%- if has_b2 -%}
-                {%- assign b2_img  = cat_meta.banner_secundario.value -%}
-                {%- assign b2_href = cat_meta.banner_secundario_link.value.url | default: '' -%}
-                <a
-                  href="{{ b2_href | default: '#' }}"
-                  class="moxie-mega__banner-link"
-                  {% if b2_href == blank %}aria-hidden="true" tabindex="-1"{% endif %}
-                >
-                  {{- b2_img
-                    | image_url: width: 354
-                    | image_tag:
-                      loading: 'lazy',
-                      class: 'moxie-mega__banner-img',
-                      alt: cat_link.title,
-                      widths: '354',
-                      sizes: '354px'
-                  -}}
-                </a>
-              {%- endif -%}
-            </div>
+              {{- fl.title -}}
+            </a>
           {%- endif -%}
         {%- endfor -%}
+      </div>
+      <div class="moxie-mega__v-divider" aria-hidden="true"></div>
+    {%- endif -%}
+
+    {%- comment -%} ── ZONA CENTRAL: columnas de categorías (con hijos) ── {%- endcomment -%}
+    <div class="moxie-mega__columns">
+      {%- for cat in link.links -%}
+        {%- if cat.links.size > 0 -%}
+          <div
+            class="moxie-mega__catgroup"
+            data-cat="{{ cat.title | handleize }}"
+            role="group"
+          >
+            <a href="{{ cat.url }}" class="moxie-mega__cat-title">{{ cat.title }}</a>
+            <ul class="moxie-mega__sublinks list-unstyled">
+              {%- for sub in cat.links -%}
+                <li>
+                  <a
+                    href="{{ sub.url }}"
+                    class="moxie-mega__sublink{% if sub.current %} moxie-mega__sublink--active{% endif %}"
+                    {% if sub.current %}aria-current="page"{% endif %}
+                  >
+                    {{- sub.title -}}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} ── ZONA DERECHA: imagen promo + CTA ── {%- endcomment -%}
+    {%- if has_promo -%}
+      {%- assign promo_img   = panel_promo.imagen_promo.value -%}
+      {%- assign promo_href  = panel_promo.ver_todo_enlace.value | default: link.url -%}
+      {%- assign promo_texto = panel_promo.ver_todo_texto.value | default: 'Ver todo' -%}
+
+      <div class="moxie-mega__promo">
+        <a
+          href="{{ promo_href }}"
+          class="moxie-mega__promo-img-wrap"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          {{- promo_img
+            | image_url: width: 480
+            | image_tag:
+              loading: 'eager',
+              class: 'moxie-mega__promo-img',
+              alt: link.title,
+              widths: '320, 480',
+              sizes: '(min-width: 1200px) 480px, 320px'
+          -}}
+        </a>
+        <a href="{{ promo_href }}" class="moxie-mega__promo-cta">
+          {{- promo_texto -}}
+        </a>
       </div>
     {%- endif -%}
 
