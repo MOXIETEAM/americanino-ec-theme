@@ -178,11 +178,7 @@
                         {{- item.product.title -}}
                       </a>
                     </p>
-                    {%- comment -%} MOXIE: Descuento extra — línea de precio por item en cart {%- endcomment -%}
-                    {%- comment -%} Usamos original_price (precio de venta antes de descuentos aplicados) para que
-                        el cálculo sea siempre sobre la base correcta, independientemente de si
-                        el descuento extra ya fue aplicado como line-item discount por Shopify. {%- endcomment -%}
-                    {%- render 'custom_descuento_extra', product: item.product, base_price: item.original_price -%}
+                   
                     {% if item.product.vendor and block_settings.vendor %}
                       <p>
                         {{ item.product.vendor }}
@@ -384,8 +380,6 @@
           </tbody>
         </table>
       </div>
-      {%- comment -%} MOXIE: inyecta el código de descuento extra en el form del carrito {%- endcomment -%}
-      {%- render 'custom_descuento_extra_checkout' -%}
     </form>
   {%- endif -%}
 </div>

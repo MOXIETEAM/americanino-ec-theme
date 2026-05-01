@@ -1,10 +1,4 @@
 
-{%- comment -%} MOXIE: Filtrado automático por vendor/marca {%- endcomment -%}
-{% render 'custom_brand_vendor_filter' %}
-
-{%- comment -%} MOXIE: Panel de debug (solo con ?moxie_debug=1) {%- endcomment -%}
-{% render 'custom_brand_debug' %}
-
 <script
   src="{{ 'results-list.js' | asset_url }}"
   type="module"
