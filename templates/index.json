@@ -78,19 +78,19 @@
       "type": "custom_promo-countdown",
       "name": "Moxie Promo Countdown",
       "settings": {
-        "promo_text": "<strong>30% OFF</strong> EN TODA LA TIENDA",
+        "promo_text": "<h3><strong>30% OFF EN</strong> TODA LA TIENDA</h3>",
         "target_date": "2026-12-31",
         "target_time": "23:59",
         "hide_on_expire": true,
-        "separator": ":",
+        "separator": "<p>:</p>",
         "show_days": true,
-        "label_days": "DÍAS",
+        "label_days": "<p>DÍAS</p>",
         "show_hours": true,
-        "label_hours": "HORAS",
+        "label_hours": "<p>HORAS</p>",
         "show_minutes": true,
-        "label_minutes": "MINUTOS",
+        "label_minutes": "<p>MINUTOS</p>",
         "show_seconds": true,
-        "label_seconds": "SEGUNDOS",
+        "label_seconds": "<p>SEGUNDOS</p>",
         "background_type": "gradient",
         "bg_color": "#1e2b51",
         "bg_gradient_from": "#000000",
@@ -99,10 +99,15 @@
         "bg_overlay_color": "#000000",
         "bg_overlay_opacity": 40,
         "color_scheme": "scheme-1",
+        "text_color": "#ffffff",
+        "digit_color": "#ffffff",
+        "label_color": "#ffffff",
+        "text_weight": "400",
+        "digit_weight": "800",
         "layout": "split",
-        "digit_size": 28,
-        "label_size": 8,
-        "text_size": 15,
+        "digit_size": 36,
+        "label_size": 12,
+        "text_size": 22,
         "unit_gap": 8,
         "padding_top": 14,
         "padding_bottom": 14
@@ -271,7 +276,14 @@
         "hero_image": "shopify://shop_images/df5893fd7e7e1026cbd5ec23bd5ff458de148b9f.jpg",
         "hero_title": "Lorem ipsum",
         "hero_text": "Lorem ipsum",
-        "collection": "test-collection"
+        "collection": "test-collection",
+        "installments_text": "0% de interés hasta 3 cuotas",
+        "show_swatches": true,
+        "max_swatches": 4,
+        "color_scheme": "",
+        "bg_color": "",
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     },
     "custom_category_grid_fBUh4r": {
@@ -347,6 +359,7 @@
           "type": "pin",
           "settings": {
             "look_id": "look-1",
+            "is_default": false,
             "product": "chaqueta-regular-en-algodon-con-cuello-alto-y-efecto-deslavado",
             "top": 38,
             "left": 50
@@ -356,6 +369,7 @@
           "type": "pin",
           "settings": {
             "look_id": "look-3",
+            "is_default": false,
             "product": "falda-corta-en-rayon-tiro-medio-lineas-verticales",
             "top": 50,
             "left": 50
@@ -365,6 +379,7 @@
           "type": "pin",
           "settings": {
             "look_id": "look-2",
+            "is_default": false,
             "product": "camiseta-oversize-algodon-con-bordado-grafico",
             "top": 50,
             "left": 50
@@ -374,6 +389,7 @@
           "type": "pin",
           "settings": {
             "look_id": "look-1",
+            "is_default": false,
             "product": "bermuda-cargo-en-algodon-tiro-medio",
             "top": 50,
             "left": 50
@@ -415,7 +431,8 @@
         "title": "Best Sellers",
         "subtitle": "Lorem ipsum es simplemente texto",
         "small": "Lorem ipsum is a text",
-        "heading": "Lorem ipsum"
+        "heading": "Lorem ipsum",
+        "installments_text": "0% de interés hasta 3 cuotas ver bancos"
       }
     },
     "product_list_XzeenX": {
