@@ -4372,7 +4372,7 @@ promo-countdown.custom-standar-max-width {
 .mox-cd__text {
   margin: 0;
   font-size: var(--mox-cd-text-size, clamp(0.875rem, 2vw, 1rem));
-  font-weight: 400;
+  font-weight: var(--mox-cd-text-weight, 400);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--mox-cd-text-color, var(--color-foreground));
@@ -4400,7 +4400,7 @@ promo-countdown.custom-standar-max-width {
 
 .mox-cd__digit {
   font-size: var(--mox-cd-digit-size, clamp(1.25rem, 3vw, 1.75rem));
-  font-weight: 700;
+  font-weight: var(--mox-cd-digit-weight, 700);
   line-height: 1;
   color: var(--mox-cd-digit-color, var(--color-foreground));
   font-variant-numeric: tabular-nums;
@@ -4419,7 +4419,7 @@ promo-countdown.custom-standar-max-width {
 
 .mox-cd__sep {
   font-size: var(--mox-cd-digit-size, clamp(1.25rem, 3vw, 1.75rem));
-  font-weight: 700;
+  font-weight: var(--mox-cd-digit-weight, 700);
   line-height: 1;
   color: var(--mox-cd-digit-color, var(--color-foreground));
   align-self: flex-start;

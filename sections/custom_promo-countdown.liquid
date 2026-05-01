@@ -52,6 +52,8 @@
     {% unless s.text_color == blank %}--mox-cd-text-color: {{ s.text_color }};{% endunless %}
     {% unless s.digit_color == blank %}--mox-cd-digit-color: {{ s.digit_color }};{% endunless %}
     {% unless s.label_color == blank %}--mox-cd-label-color: {{ s.label_color }};{% endunless %}
+    {% if s.text_weight != blank %}--mox-cd-text-weight: {{ s.text_weight }};{% endif %}
+    {% if s.digit_weight != blank %}--mox-cd-digit-weight: {{ s.digit_weight }};{% endif %}
     {{ bg_style }}
   "
   {{ section.shopify_attributes }}
@@ -285,6 +287,49 @@
       "id": "color_scheme",
       "label": "Color scheme",
       "default": "scheme-1"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color texto promo"
+    },
+    {
+      "type": "color",
+      "id": "digit_color",
+      "label": "Color dígitos"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color etiquetas (días, horas…)"
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Grosor texto promo",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extrabold (800)" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "digit_weight",
+      "label": "Grosor dígitos",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Normal (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "Semibold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "Extrabold (800)" }
+      ],
+      "default": "700"
     },
     {
       "type": "select",
