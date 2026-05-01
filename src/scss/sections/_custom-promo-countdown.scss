@@ -23,7 +23,9 @@ promo-countdown {
 
 // ── Texto promocional ─────────────────────────────────────────────────────────
 
-.mox-cd__text {
+// Prefijo promo-countdown para superar la especificidad del color scheme del tema
+.mox-cd__text
+ p, h1, h2, h3, h4, h5 {
   margin: 0;
   font-size: var(--mox-cd-text-size, clamp(0.875rem, 2vw, 1rem));
   font-weight: var(--mox-cd-text-weight, 400);
@@ -31,21 +33,11 @@ promo-countdown {
   text-transform: uppercase;
   color: var(--mox-cd-text-color, var(--color-foreground));
   line-height: 1.3;
+}
 
-  // Richtext genera p, h1…h5 — forzar herencia de color y tamaño
-  p, h1, h2, h3, h4, h5 {
-    margin: 0;
-    font-size: inherit;
-    font-weight: inherit;
-    letter-spacing: inherit;
-    text-transform: inherit;
-    color: var(--mox-cd-text-color, var(--color-foreground));
-    line-height: inherit;
-  }
-
-  strong, b {
-    font-weight: 700;
-  }
+.mox-cd__text strong,
+.mox-cd__text b {
+  font-weight: 700;
 }
 
 // ── Timer ─────────────────────────────────────────────────────────────────────
