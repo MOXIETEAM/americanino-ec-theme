@@ -40,22 +40,23 @@ shop-the-look-item {
 
 .stl-track-wrapper {
   overflow: hidden;
-  background: var(--color-background);
+  // background: var(--color-background);
 }
 
 .stl-track {
   display: flex;
-  gap: var(--stl-gap, 0px);
+  // gap: var(--stl-gap, 0px);
   width: max-content;
   will-change: transform;
   animation: stl-scroll var(--stl-duration, 40s) linear infinite;
-  background: var(--color-background);
+  // background: var(--color-background);
 
   // Paused via JS when popup is open
   &.stl-track--paused {
     animation-play-state: paused;
   }
 }
+
 
 // Pause on hover — user interacts over any item
 .stl-track-wrapper:hover .stl-track {
@@ -99,16 +100,20 @@ shop-the-look-item {
 .stl-item__media {
   display: block;
   width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   border-radius: 0;
   border: none;
   outline: none;
   box-shadow: none;
+  max-width: 193px;
+  max-height: 413px;
+  min-height: 413px;
 }
 
 .stl-item__media.placeholder {
-  background: rgb(var(--color-foreground-rgb, 0 0 0) / 0.06);
+  // background: rgb(var(--color-foreground-rgb, 0 0 0) / 0.06);
 }
 
 // ── Plus button ─────────────────────────────────────────────
