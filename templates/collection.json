@@ -9,6 +9,11 @@
  */
 {
   "sections": {
+    "custom_plp_rompe_grid_De7LFz": {
+      "type": "custom_plp_rompe_grid",
+      "name": "Moxie PLP Rompe-Grid",
+      "settings": {}
+    },
     "plp_hero": {
       "type": "custom_plp_hero",
       "blocks": {
@@ -56,16 +61,11 @@
         "slides_desktop": 4,
         "slides_mobile": 2,
         "bg_color": "",
-        "col_sep_color": "#e0e0e0",
+        "col_sep_color": "rgba(0,0,0,0)",
         "border_color": "rgba(0,0,0,0)",
         "padding_v": 32,
         "info_col_width": 280
       }
-    },
-    "custom_plp_rompe_grid_De7LFz": {
-      "type": "custom_plp_rompe_grid",
-      "name": "Moxie PLP Rompe-Grid",
-      "settings": {}
     },
     "plp_filtros": {
       "type": "custom_plp_filtros",
