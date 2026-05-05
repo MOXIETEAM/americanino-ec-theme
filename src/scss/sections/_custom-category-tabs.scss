@@ -151,6 +151,11 @@
 
 // ── Category card ─────────────────────────────────────────────────────────────
 
+.swiper-wrapper 
+.plp-hero-slide {
+  margin-right: 4px !important;
+}
+
 .cat-card {
   display: flex;
   flex-direction: column;
@@ -166,15 +171,15 @@
 .cat-card__media {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
-  aspect-ratio: var(--cat-card-ratio, 3 / 4);
-  background: rgb(var(--color-background-2-rgb));
+  // border-radius: 10px;
+  aspect-ratio: 246 / 281;
+  // background: rgb(var(--color-background-2-rgb));
 }
 
 .cat-card__img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: inherit;
   display: block;
   transition: transform var(--animation-speed) var(--animation-easing);
 

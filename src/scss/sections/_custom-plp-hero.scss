@@ -31,7 +31,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
 
   @include mobile-only {
     padding-inline-end: 0;
@@ -69,6 +69,7 @@
   line-height: 1.2;
   margin: 0 0 12px;
   color: rgb(var(--color-foreground-rgb));
+  text-transform: none;
 }
 
 // ── Descripcion ───────────────────────────────────────────────────────────────

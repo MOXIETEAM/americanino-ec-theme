@@ -2,12 +2,14 @@
     .variant-picker {
         .variant-picker__form {
             .variant-option__title {
-                font-size: 14px;
+                font-size: 12px;
+                line-height: 16px;
                 font-weight: 600;
-                color: #24272A;
+                color: #1E2B51;
             }
             .variant-option__button-label {
-                border: 0.8px solid #000000 !important;
+                border: 1px solid #1E2B51 !important;
+                border-radius: 4px;
                 padding: 0;
                 min-width: 60px;
                 max-width: 60px;
@@ -15,11 +17,13 @@
                 max-height: 24px;
 
                 .variant-option__button-label__text {
-                    font-size: 14px;
+                    font-size: 12px;
+                    line-height: 16px;
+                    font-weight: 300;
                 }
 
                 .variant-option__button-label__pill {
-                    background-color: #EF8903;
+                    background-color: #1E2B51;
                 }
             }
         }
