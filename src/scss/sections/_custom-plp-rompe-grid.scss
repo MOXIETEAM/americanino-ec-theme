@@ -8,7 +8,7 @@
 
 .plp-rompe-grid {
   // border-radius: 8px;
-  overflow: hidden;
+  overflow: visible; // La imagen se recorta en __media; visible permite que el popup del pin sobresalga
   min-height: 220px;
   position: relative;
 
@@ -184,11 +184,12 @@
 
 .plp-rompe-grid__pin-popup {
   position: absolute;
+  top: calc(100% + 14px); // siempre debajo del pin dot
   left: 50%;
   padding: 12px;
-  transform: translateX(-50%) translateY(6px);
-  min-width: 353px;
-  max-height: 603px;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 240px;
+  max-width: 353px;
   background: #fff;
   border-radius: 0px;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
@@ -196,7 +197,7 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  z-index: 10;
+  z-index: 100;
 
   @media (prefers-reduced-motion: no-preference) {
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
@@ -211,17 +212,6 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
-}
-
-// Cuando el pin está en la mitad superior el popup abre hacia abajo
-.plp-rompe-grid__pin--popup-below .plp-rompe-grid__pin-popup {
-  bottom: auto;
-  top: calc(100% + 14px);
-  transform: translateX(-50%) translateY(-6px);
-}
-
-.plp-rompe-grid__pin--popup-below.is-open .plp-rompe-grid__pin-popup {
   transform: translateX(-50%) translateY(0);
 }
 
