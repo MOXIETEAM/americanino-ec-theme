@@ -49,7 +49,7 @@
   endif
 
   # Build product grid class
-  assign product_grid_class = 'product-information__grid'
+  assign product_grid_class = 'product-information__grid custom-standar-max-width'
 
   if product_has_media == false
     assign product_grid_class = product_grid_class | append: ' product-information--media-none'
@@ -180,7 +180,7 @@
         }
 
         &:has(.media-gallery--extend) {
-          grid-column: 1 / 3;
+          /* grid-column: 1 / 3; */
         }
       }
 

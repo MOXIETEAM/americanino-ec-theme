@@ -1576,6 +1576,12 @@ media-gallery {
   }
 }
 
+.product-information {
+  :not(.dialog-zoomed-gallery) > .product-media-container {
+    aspect-ratio: 9 / 12;
+  }
+}
+
 :not(.dialog-zoomed-gallery) > .product-media-container {
   --slide-width: 100%;
 
