@@ -1,0 +1,414 @@
+{%- comment -%} MOXIE: Completa el look — productos desde metacampo de lista de productos {%- endcomment -%}
+
+{%- liquid
+  assign _product    = closest.product
+  assign look_products = _product.metafields.custom.completa_el_look.value
+-%}
+
+{%- if look_products.size > 0 -%}
+
+<div
+  class="pdp-complete-look"
+  id="pdp-complete-look-{{ block.id }}"
+  {{ block.shopify_attributes }}
+>
+  <h2 class="pdp-complete-look__title">{{ block.settings.title }}</h2>
+
+  <div class="pdp-complete-look__list">
+    {%- for look_product in look_products limit: 5 -%}
+      {%- assign lp_variant = look_product.selected_or_first_available_variant -%}
+
+      <div class="pdp-complete-look__item" data-look-item>
+
+        {%- comment -%} Imagen {%- endcomment -%}
+        <a
+          class="pdp-complete-look__image-wrap"
+          href="{{ look_product.url }}"
+          tabindex="-1"
+          aria-hidden="true"
+        >
+          {%- if look_product.featured_image -%}
+            <img
+              class="pdp-complete-look__image"
+              src="{{ look_product.featured_image | image_url: width: 300, height: 390, crop: 'top' }}"
+              alt="{{ look_product.featured_image.alt | escape }}"
+              width="130"
+              height="170"
+              loading="lazy"
+            >
+          {%- endif -%}
+        </a>
+
+        {%- comment -%} Info + formulario {%- endcomment -%}
+        <div class="pdp-complete-look__body">
+
+          <a class="pdp-complete-look__name" href="{{ look_product.url }}">
+            {{ look_product.title }}
+          </a>
+
+          <div class="pdp-complete-look__price">
+            {%- if look_product.compare_at_price > look_product.price -%}
+              <s class="pdp-complete-look__price-compare">
+                {{- look_product.compare_at_price | money -}}
+              </s>
+              <span class="pdp-complete-look__price-sale">
+                {{- look_product.price | money -}}
+              </span>
+            {%- else -%}
+              <span class="pdp-complete-look__price-regular">
+                {{- look_product.price | money -}}
+              </span>
+            {%- endif -%}
+          </div>
+
+          <form
+            class="pdp-complete-look__form"
+            data-look-form
+            novalidate
+          >
+            <input type="hidden" name="quantity" value="1">
+
+            {%- unless look_product.has_only_default_variant -%}
+              <div class="pdp-complete-look__select-wrap" data-look-select-wrap>
+                <select
+                  class="pdp-complete-look__select"
+                  name="id"
+                  aria-label="{{ look_product.options[0] | escape }}"
+                  data-look-select
+                >
+                  <option value="" disabled selected>{{ look_product.options[0] }}</option>
+                  {%- for variant in look_product.variants -%}
+                    <option
+                      value="{{ variant.id }}"
+                      {% unless variant.available %}disabled{% endunless %}
+                    >
+                      {{- variant.title -}}
+                      {%- unless variant.available %} — Agotado{%- endunless -%}
+                    </option>
+                  {%- endfor -%}
+                </select>
+                <span class="pdp-complete-look__caret" aria-hidden="true">
+                  {{- 'icon-caret.svg' | inline_asset_content -}}
+                </span>
+              </div>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ lp_variant.id }}">
+            {%- endunless -%}
+
+            <button
+              type="submit"
+              class="pdp-complete-look__btn"
+              data-look-btn
+              data-label-default="{{ block.settings.btn_label }}"
+              data-label-success="{{ block.settings.btn_success_label }}"
+            >
+              {{ block.settings.btn_label }}
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+      {%- unless forloop.last -%}
+        <hr class="pdp-complete-look__divider">
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- endif -%}
+
+<script type="module">
+  import { CartAddEvent } from '@theme/events';
+
+  const root = document.getElementById('pdp-complete-look-{{ block.id }}');
+  if (!root) return;
+
+  root.querySelectorAll('[data-look-form]').forEach(function (form) {
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const select  = form.querySelector('[data-look-select]');
+      const hidden  = form.querySelector('[name="id"]:not([data-look-select])');
+      const variantId = select ? select.value : hidden?.value;
+      const btn     = form.querySelector('[data-look-btn]');
+
+      if (!variantId) {
+        const wrap = form.querySelector('[data-look-select-wrap]');
+        wrap?.classList.add('pdp-complete-look__select-wrap--invalid');
+        select?.focus();
+        select?.addEventListener('change', function () {
+          wrap?.classList.remove('pdp-complete-look__select-wrap--invalid');
+        }, { once: true });
+        return;
+      }
+
+      btn.disabled  = true;
+      btn.textContent = '…';
+
+      try {
+        const addRes = await fetch('/cart/add.js', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ id: Number(variantId), quantity: 1 })
+        });
+
+        if (!addRes.ok) {
+          const err = await addRes.json().catch(() => ({}));
+          throw new Error(err.description || 'Error al agregar');
+        }
+
+        const cartRes  = await fetch('/cart.js');
+        const cart     = await cartRes.json();
+
+        btn.textContent = btn.dataset.labelSuccess;
+
+        form.dispatchEvent(
+          new CartAddEvent(cart, form.id, {
+            source:    'complete-look',
+            itemCount: 1
+          })
+        );
+
+        setTimeout(function () {
+          btn.textContent = btn.dataset.labelDefault;
+          btn.disabled    = false;
+        }, 2200);
+
+      } catch (err) {
+        btn.textContent = btn.dataset.labelDefault;
+        btn.disabled    = false;
+        console.error('[Complete Look] cart add error:', err.message);
+      }
+    });
+  });
+</script>
+
+{% stylesheet %}
+  .pdp-complete-look {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+
+  .pdp-complete-look__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: rgb(var(--color-foreground-rgb));
+    margin: 0;
+  }
+
+  .pdp-complete-look__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pdp-complete-look__item {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding-block: 20px;
+    align-items: flex-start;
+  }
+
+  .pdp-complete-look__divider {
+    border: none;
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    margin: 0;
+  }
+
+  /* ── Imagen ─────────────────────────────────────────────────── */
+
+  .pdp-complete-look__image-wrap {
+    flex-shrink: 0;
+    width: 130px;
+    height: 170px;
+    overflow: hidden;
+    border-radius: 4px;
+    display: block;
+    background-color: rgb(var(--color-foreground-rgb) / 0.05);
+  }
+
+  .pdp-complete-look__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .pdp-complete-look__image-wrap:hover .pdp-complete-look__image {
+    transform: scale(1.03);
+  }
+
+  /* ── Cuerpo ─────────────────────────────────────────────────── */
+
+  .pdp-complete-look__body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .pdp-complete-look__name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: rgb(var(--color-foreground-rgb));
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pdp-complete-look__name:hover {
+    text-decoration: underline;
+  }
+
+  .pdp-complete-look__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  .pdp-complete-look__price-compare {
+    color: rgb(var(--color-foreground-rgb) / 0.45);
+    font-weight: 400;
+    text-decoration: line-through;
+  }
+
+  .pdp-complete-look__price-sale {
+    color: rgb(var(--color-foreground-rgb));
+    font-weight: 700;
+  }
+
+  .pdp-complete-look__price-regular {
+    color: rgb(var(--color-foreground-rgb));
+    font-weight: 700;
+  }
+
+  /* ── Formulario ─────────────────────────────────────────────── */
+
+  .pdp-complete-look__form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Select */
+
+  .pdp-complete-look__select-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .pdp-complete-look__select {
+    appearance: none;
+    width: 100%;
+    height: 40px;
+    padding-inline: 16px 40px;
+    border: 1.5px solid rgb(var(--color-foreground-rgb) / 0.3);
+    border-radius: 40px;
+    background: transparent;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: rgb(var(--color-foreground-rgb));
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+
+  .pdp-complete-look__select:focus-visible {
+    outline: none;
+    border-color: rgb(var(--color-foreground-rgb));
+  }
+
+  .pdp-complete-look__select-wrap--invalid .pdp-complete-look__select {
+    border-color: #c0392b;
+  }
+
+  .pdp-complete-look__caret {
+    position: absolute;
+    right: 14px;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+  }
+
+  .pdp-complete-look__caret svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Botón */
+
+  .pdp-complete-look__btn {
+    width: 100%;
+    height: 44px;
+    padding-inline: 16px;
+    border: none;
+    border-radius: 40px;
+    background-color: #1E2B51;
+    color: #ffffff;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .pdp-complete-look__btn:hover:not(:disabled) {
+    background-color: #162040;
+  }
+
+  .pdp-complete-look__btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie — Completa el Look",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Completa Tu Compra"
+    },
+    {
+      "type": "text",
+      "id": "btn_label",
+      "label": "Texto del botón",
+      "default": "Agregar a la bolsa"
+    },
+    {
+      "type": "text",
+      "id": "btn_success_label",
+      "label": "Texto del botón — confirmación",
+      "default": "¡Añadido!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Completa el Look",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}
