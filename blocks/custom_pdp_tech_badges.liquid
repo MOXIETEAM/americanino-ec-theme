@@ -1,0 +1,238 @@
+{%- comment -%} MOXIE: Insignias de tecnología — por producto (metafield) o globales (editor) {%- endcomment -%}
+
+{%- liquid
+  assign _product = closest.product
+  assign show_global = block.settings.show_global
+  assign tech_list   = _product.metafields.custom.tecnologias.value
+  assign has_product_tech = false
+  if tech_list.size > 0
+    assign has_product_tech = true
+  endif
+-%}
+
+{%- if has_product_tech -%}
+
+  <div class="pdp-tech-badges" {{ block.shopify_attributes }}>
+    {%- for badge in tech_list -%}
+      {%- assign b_icon = badge.icon.value -%}
+      {%- assign b_name = badge.name.value -%}
+      {%- if b_icon != blank or b_name != blank -%}
+        <div class="pdp-tech-badge">
+          {%- if b_icon != blank -%}
+            <img
+              class="pdp-tech-badge__icon"
+              src="{{ b_icon | image_url: width: 120 }}"
+              alt="{{ b_name }}"
+              width="60"
+              height="60"
+              loading="lazy"
+            >
+          {%- endif -%}
+          {%- if b_name != blank -%}
+            <span class="pdp-tech-badge__label">{{ b_name }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+{%- elsif show_global -%}
+
+  {%- capture _global_html -%}
+    {%- if block.settings.tech_1_icon != blank or block.settings.tech_1_label != blank -%}
+      <div class="pdp-tech-badge">
+        {%- if block.settings.tech_1_icon != blank -%}
+          <img class="pdp-tech-badge__icon" src="{{ block.settings.tech_1_icon | image_url: width: 120 }}" alt="{{ block.settings.tech_1_label }}" width="60" height="60" loading="lazy">
+        {%- endif -%}
+        {%- if block.settings.tech_1_label != blank -%}
+          <span class="pdp-tech-badge__label">{{ block.settings.tech_1_label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if block.settings.tech_2_icon != blank or block.settings.tech_2_label != blank -%}
+      <div class="pdp-tech-badge">
+        {%- if block.settings.tech_2_icon != blank -%}
+          <img class="pdp-tech-badge__icon" src="{{ block.settings.tech_2_icon | image_url: width: 120 }}" alt="{{ block.settings.tech_2_label }}" width="60" height="60" loading="lazy">
+        {%- endif -%}
+        {%- if block.settings.tech_2_label != blank -%}
+          <span class="pdp-tech-badge__label">{{ block.settings.tech_2_label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if block.settings.tech_3_icon != blank or block.settings.tech_3_label != blank -%}
+      <div class="pdp-tech-badge">
+        {%- if block.settings.tech_3_icon != blank -%}
+          <img class="pdp-tech-badge__icon" src="{{ block.settings.tech_3_icon | image_url: width: 120 }}" alt="{{ block.settings.tech_3_label }}" width="60" height="60" loading="lazy">
+        {%- endif -%}
+        {%- if block.settings.tech_3_label != blank -%}
+          <span class="pdp-tech-badge__label">{{ block.settings.tech_3_label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if block.settings.tech_4_icon != blank or block.settings.tech_4_label != blank -%}
+      <div class="pdp-tech-badge">
+        {%- if block.settings.tech_4_icon != blank -%}
+          <img class="pdp-tech-badge__icon" src="{{ block.settings.tech_4_icon | image_url: width: 120 }}" alt="{{ block.settings.tech_4_label }}" width="60" height="60" loading="lazy">
+        {%- endif -%}
+        {%- if block.settings.tech_4_label != blank -%}
+          <span class="pdp-tech-badge__label">{{ block.settings.tech_4_label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+    {%- if block.settings.tech_5_icon != blank or block.settings.tech_5_label != blank -%}
+      <div class="pdp-tech-badge">
+        {%- if block.settings.tech_5_icon != blank -%}
+          <img class="pdp-tech-badge__icon" src="{{ block.settings.tech_5_icon | image_url: width: 120 }}" alt="{{ block.settings.tech_5_label }}" width="60" height="60" loading="lazy">
+        {%- endif -%}
+        {%- if block.settings.tech_5_label != blank -%}
+          <span class="pdp-tech-badge__label">{{ block.settings.tech_5_label }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- unless _global_html == blank -%}
+    <div class="pdp-tech-badges" {{ block.shopify_attributes }}>
+      {{ _global_html }}
+    </div>
+  {%- endunless -%}
+
+{%- endif -%}
+
+{% stylesheet %}
+  .pdp-tech-badges {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 20px 32px;
+    padding-block: 8px;
+    width: 100%;
+  }
+
+  .pdp-tech-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .pdp-tech-badge__icon {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.6;
+    display: block;
+  }
+
+  .pdp-tech-badge__label {
+    font-size: 0.625rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+    white-space: nowrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie — Tech Badges",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Configuración general"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_global",
+      "label": "Mostrar tecnologías del editor cuando el producto no tiene las suyas",
+      "default": true,
+      "info": "Si está desactivado y el producto no tiene el metacampo 'custom.tecnologias', no se muestra nada."
+    },
+    {
+      "type": "header",
+      "content": "Tecnología 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "tech_1_icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "tech_1_label",
+      "label": "Nombre",
+      "default": "AirFlow™"
+    },
+    {
+      "type": "header",
+      "content": "Tecnología 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "tech_2_icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "tech_2_label",
+      "label": "Nombre",
+      "default": "DrySoft™"
+    },
+    {
+      "type": "header",
+      "content": "Tecnología 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "tech_3_icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "tech_3_label",
+      "label": "Nombre",
+      "default": "EcoWave™"
+    },
+    {
+      "type": "header",
+      "content": "Tecnología 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "tech_4_icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "tech_4_label",
+      "label": "Nombre"
+    },
+    {
+      "type": "header",
+      "content": "Tecnología 5"
+    },
+    {
+      "type": "image_picker",
+      "id": "tech_5_icon",
+      "label": "Ícono"
+    },
+    {
+      "type": "text",
+      "id": "tech_5_label",
+      "label": "Nombre"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Tech Badges PDP",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}
