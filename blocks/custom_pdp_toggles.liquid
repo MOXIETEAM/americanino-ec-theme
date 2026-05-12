@@ -1,0 +1,353 @@
+{%- comment -%} MOXIE: Toggles de producto — Descripción + metacampos configurables {%- endcomment -%}
+
+{%- liquid
+  assign _product = closest.product
+
+  assign desc_title = block.settings.desc_title
+  assign desc_open  = block.settings.desc_open
+  assign desc_lines = block.settings.desc_lines
+
+  assign s2_show  = block.settings.s2_show
+  assign s2_title = block.settings.s2_title
+  assign s2_mf    = block.settings.s2_metafield
+  assign s2_value = nil
+
+  assign s3_show  = block.settings.s3_show
+  assign s3_title = block.settings.s3_title
+  assign s3_mf    = block.settings.s3_metafield
+  assign s3_value = nil
+
+  if s2_mf contains '.'
+    assign s2_parts = s2_mf | split: '.'
+    assign s2_ns    = s2_parts[0]
+    assign s2_key   = s2_parts[1]
+    assign s2_value = _product.metafields[s2_ns][s2_key].value
+  endif
+
+  if s3_mf contains '.'
+    assign s3_parts = s3_mf | split: '.'
+    assign s3_ns    = s3_parts[0]
+    assign s3_key   = s3_parts[1]
+    assign s3_value = _product.metafields[s3_ns][s3_key].value
+  endif
+-%}
+
+<div class="pdp-toggles" id="pdp-toggles-{{ block.id }}" {{ block.shopify_attributes }}>
+
+  {%- comment -%} ── Descripción ──────────────────────────────────────────────── {%- endcomment -%}
+  {%- if _product.description != blank -%}
+    {%- capture _desc_content -%}
+      <details
+        class="pdp-toggle"
+        data-pdp-toggle
+        {% if desc_open %}open{% endif %}
+      >
+        <summary class="pdp-toggle__header">
+          <span class="pdp-toggle__title">{{ desc_title }}</span>
+          <span class="pdp-toggle__icon" aria-hidden="true">
+            {{- 'icon-plus.svg' | inline_asset_content -}}
+          </span>
+        </summary>
+        <div class="details-content pdp-toggle__body">
+          <div
+            class="pdp-toggle__text pdp-toggle__text--clamp rte"
+            style="--clamp-lines: {{ desc_lines }};"
+            data-readmore-text
+          >
+            {{ _product.description }}
+          </div>
+          <button
+            type="button"
+            class="pdp-toggle__readmore"
+            aria-expanded="false"
+            data-readmore-btn
+          >
+            <span data-readmore-label-more>{{ block.settings.readmore_label }}</span>
+            <span data-readmore-label-less>{{ block.settings.readless_label }}</span>
+          </button>
+        </div>
+      </details>
+    {%- endcapture -%}
+    {%- render 'accordion-custom-component',
+      children:                  _desc_content,
+      open_by_default_on_desktop: desc_open,
+      open_by_default_on_mobile:  desc_open
+    -%}
+  {%- endif -%}
+
+  {%- comment -%} ── Sección 2 ────────────────────────────────────────────────── {%- endcomment -%}
+  {%- if s2_show and s2_value != blank -%}
+    {%- capture _s2_content -%}
+      <details class="pdp-toggle" data-pdp-toggle>
+        <summary class="pdp-toggle__header">
+          <span class="pdp-toggle__title">{{ s2_title }}</span>
+          <span class="pdp-toggle__icon" aria-hidden="true">
+            {{- 'icon-plus.svg' | inline_asset_content -}}
+          </span>
+        </summary>
+        <div class="details-content pdp-toggle__body">
+          <div class="pdp-toggle__text rte">{{ s2_value }}</div>
+        </div>
+      </details>
+    {%- endcapture -%}
+    {%- render 'accordion-custom-component', children: _s2_content -%}
+  {%- endif -%}
+
+  {%- comment -%} ── Sección 3 ────────────────────────────────────────────────── {%- endcomment -%}
+  {%- if s3_show and s3_value != blank -%}
+    {%- capture _s3_content -%}
+      <details class="pdp-toggle" data-pdp-toggle>
+        <summary class="pdp-toggle__header">
+          <span class="pdp-toggle__title">{{ s3_title }}</span>
+          <span class="pdp-toggle__icon" aria-hidden="true">
+            {{- 'icon-plus.svg' | inline_asset_content -}}
+          </span>
+        </summary>
+        <div class="details-content pdp-toggle__body">
+          <div class="pdp-toggle__text rte">{{ s3_value }}</div>
+        </div>
+      </details>
+    {%- endcapture -%}
+    {%- render 'accordion-custom-component', children: _s3_content -%}
+  {%- endif -%}
+
+</div>
+
+<script type="module">
+  (function initReadMore() {
+    var root = document.getElementById('pdp-toggles-{{ block.id }}');
+    if (!root) return;
+    root.querySelectorAll('[data-readmore-btn]').forEach(function (btn) {
+      var textEl = btn.previousElementSibling;
+      if (!textEl || !textEl.hasAttribute('data-readmore-text')) return;
+
+      function checkOverflow() {
+        var overflows = textEl.scrollHeight > textEl.clientHeight + 2;
+        btn.style.display = overflows ? '' : 'none';
+      }
+
+      checkOverflow();
+
+      btn.addEventListener('click', function () {
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        textEl.classList.toggle('pdp-toggle__text--expanded', !expanded);
+        checkOverflow();
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .pdp-toggles {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .pdp-toggles accordion-custom {
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
+  }
+
+  .pdp-toggles accordion-custom:last-child {
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
+  }
+
+  .pdp-toggle {
+    width: 100%;
+  }
+
+  .pdp-toggle__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-block: 16px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .pdp-toggle__header::-webkit-details-marker,
+  .pdp-toggle__header::marker {
+    display: none;
+  }
+
+  .pdp-toggle__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: rgb(var(--color-foreground-rgb));
+    flex: 1;
+  }
+
+  .pdp-toggle__icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .pdp-toggle__icon svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+  }
+
+  .pdp-toggle[open] > .pdp-toggle__header .pdp-toggle__icon {
+    transform: rotate(45deg);
+  }
+
+  .pdp-toggle__body {
+    padding-block-end: 16px;
+  }
+
+  .pdp-toggle__text {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(var(--color-foreground-rgb) / 0.8);
+  }
+
+  .pdp-toggle__text--clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: var(--clamp-lines, 4);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .pdp-toggle__text--expanded {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+  }
+
+  .pdp-toggle__readmore {
+    display: inline-block;
+    margin-block-start: 8px;
+    padding: 0;
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: rgb(var(--color-foreground-rgb) / 0.7);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .pdp-toggle__readmore:hover {
+    color: rgb(var(--color-foreground-rgb));
+  }
+
+  [data-readmore-label-less] {
+    display: none;
+  }
+
+  .pdp-toggle__readmore[aria-expanded='true'] [data-readmore-label-more] {
+    display: none;
+  }
+
+  .pdp-toggle__readmore[aria-expanded='true'] [data-readmore-label-less] {
+    display: inline;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie — Toggles PDP",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Descripción"
+    },
+    {
+      "type": "text",
+      "id": "desc_title",
+      "label": "Título",
+      "default": "Descripción"
+    },
+    {
+      "type": "checkbox",
+      "id": "desc_open",
+      "label": "Abierta por defecto",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "desc_lines",
+      "label": "Líneas visibles antes de 'Ver más'",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "readmore_label",
+      "label": "Texto 'Ver más'",
+      "default": "Ver más..."
+    },
+    {
+      "type": "text",
+      "id": "readless_label",
+      "label": "Texto 'Ver menos'",
+      "default": "Ver menos"
+    },
+    {
+      "type": "header",
+      "content": "Sección 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "s2_show",
+      "label": "Mostrar sección",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "s2_title",
+      "label": "Título",
+      "default": "Composición y cuidados"
+    },
+    {
+      "type": "text",
+      "id": "s2_metafield",
+      "label": "Metacampo (namespace.key)",
+      "default": "custom.composicion_cuidados",
+      "info": "Formato: namespace.key — ej: custom.composicion_cuidados"
+    },
+    {
+      "type": "header",
+      "content": "Sección 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "s3_show",
+      "label": "Mostrar sección",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "s3_title",
+      "label": "Título",
+      "default": "Lavado y especificaciones"
+    },
+    {
+      "type": "text",
+      "id": "s3_metafield",
+      "label": "Metacampo (namespace.key)",
+      "default": "custom.lavado_especificaciones",
+      "info": "Formato: namespace.key — ej: custom.lavado_especificaciones"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Toggles PDP",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}
