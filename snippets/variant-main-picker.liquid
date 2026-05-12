@@ -125,9 +125,11 @@
                     endif
                   %}
 
+                  {%- comment -%} MOXIE: PDP muestra imagen asignada a la variante {%- endcomment -%}
                   {% render 'swatch',
                     swatch: product_option_value.swatch,
                     variant_image: featured_media,
+                    force_image: true,
                     mode: 'unscaled'
                   %}
                 {% else %}

@@ -1,31 +1,84 @@
 .product-information {
-    .variant-picker {
-        .variant-picker__form {
-            .variant-option__title {
-                font-size: 12px;
-                line-height: 16px;
-                font-weight: 600;
-                color: #1E2B51;
-            }
-            .variant-option__button-label {
-                border: 1px solid #1E2B51 !important;
-                border-radius: 4px;
-                padding: 0;
-                min-width: 60px;
-                max-width: 60px;
-                min-height: 24px;
-                max-height: 24px;
+  .variant-picker {
+    .variant-picker__form {
 
-                .variant-option__button-label__text {
-                    font-size: 12px;
-                    line-height: 16px;
-                    font-weight: 300;
-                }
+      .variant-option__title {
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 600;
+        color: #1E2B51;
+      }
 
-                .variant-option__button-label__pill {
-                    background-color: #1E2B51;
-                }
-            }
+      // ── Botones de texto (talla, etc.) — no-swatch ────────────────────────
+      .variant-option__button-label:not(.variant-option__button-label--has-swatch) {
+        border: 1px solid #1E2B51 !important;
+        border-radius: 4px;
+        padding: 0;
+        min-width: 60px;
+        max-width: 60px;
+        min-height: 24px;
+        max-height: 24px;
+
+        .variant-option__button-label__text {
+          font-size: 12px;
+          line-height: 16px;
+          font-weight: 300;
         }
+
+        .variant-option__button-label__pill {
+          background-color: #1E2B51;
+        }
+      }
+
+      // ── Swatches de color con imagen de variante (PDP) ────────────────────
+      .variant-option--swatches {
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .variant-option__button-label--has-swatch {
+        border: 2px solid transparent;
+        border-radius: 5px;
+        padding: 0;
+        min-width: unset;
+        max-width: unset;
+        min-height: unset;
+        max-height: unset;
+        overflow: hidden;
+        transition: border-color 0.15s ease;
+        cursor: pointer;
+
+        // Estado seleccionado
+        &:has(input:checked) {
+          border-color: #1E2B51;
+        }
+
+        // Hover en no-seleccionados
+        &:not(:has(input:checked)):hover {
+          border-color: rgb(30 43 81 / 0.4);
+        }
+
+        // Variante sin stock: opacidad reducida
+        &:has(input[data-option-available='false']) {
+          opacity: 0.45;
+        }
+
+        // La imagen de la variante dentro del swatch
+        .swatch--variant-image {
+          --swatch-width: 52px;
+          --swatch-height: 68px;
+          border-radius: 3px;
+          background-position: center top;
+          background-size: cover;
+          display: block;
+        }
+
+        // Swatch de color (sin imagen): mantiene forma circular del tema
+        .swatch:not(.swatch--variant-image) {
+          --swatch-width: var(--variant-picker-swatch-width);
+          --swatch-height: var(--variant-picker-swatch-height);
+        }
+      }
     }
+  }
 }

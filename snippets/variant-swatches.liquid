@@ -162,9 +162,9 @@
                   data-variant-id="{{ first_available_variant.id | default: product_option_value.variant.id }}"
                   data-first-available-or-first-variant-id="{{ first_available_variant.id | default: product_option_value.variant.id }}"
                 >
+                {%- comment -%} MOXIE: PLP muestra swatch de color, no imagen de variante {%- endcomment -%}
                 {% render 'swatch',
                   swatch: product_option_value.swatch,
-                  variant_image: featured_media,
                 %}
                 {% render 'strikethrough-variant', product_option: product_option_value %}
               </label>
