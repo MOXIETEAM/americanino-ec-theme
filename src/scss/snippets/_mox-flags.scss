@@ -1,0 +1,109 @@
+@use '../mixins' as *;
+
+// ─── MOXIE: Mox Flags — etiquetas de producto ─────────────────────────────────
+
+.mox-flags {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  pointer-events: none;
+
+  &--align-left   { align-items: flex-start; }
+  &--align-center { align-items: center; }
+  &--align-right  { align-items: flex-end; }
+}
+
+.mox-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+
+  &--envio-gratis {
+    background-color: var(--flag-envio-gratis-bg, #fff);
+    color: var(--flag-envio-gratis-color, #ea0029);
+    border-color: var(--flag-envio-gratis-border, #ea0029);
+  }
+
+  &--nuevo {
+    background-color: var(--flag-nuevo-bg, #f5f5f5);
+    color: var(--flag-nuevo-color, #222);
+    border-color: var(--flag-nuevo-border, #222);
+  }
+
+  &--armado-gratis {
+    background-color: var(--flag-armado-gratis-bg, #1a1a1a);
+    color: var(--flag-armado-gratis-color, #fff);
+    border-color: var(--flag-armado-gratis-border, #1a1a1a);
+  }
+
+  &--outlet {
+    background-color: var(--flag-outlet-bg, #ff6b00);
+    color: var(--flag-outlet-color, #fff);
+    border-color: var(--flag-outlet-border, #ff6b00);
+  }
+
+  &--exclusivo {
+    background-color: var(--flag-exclusivo-bg, #5b2d8e);
+    color: var(--flag-exclusivo-color, #fff);
+    border-color: var(--flag-exclusivo-border, #5b2d8e);
+  }
+
+  &--reacondicionado {
+    background-color: var(--flag-reacondicionado-bg, #1a6f8a);
+    color: var(--flag-reacondicionado-color, #fff);
+    border-color: var(--flag-reacondicionado-border, #1a6f8a);
+  }
+
+  // Shape modifiers
+  &--pill   { border-radius: 999px; }
+  &--square { border-radius: 0; }
+  &--outline {
+    background-color: transparent;
+    border-width: 1.5px;
+  }
+}
+
+.mox-flag__img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+}
+
+// ── Posicionamiento en PLP (product card) ─────────────────────────────────────
+
+product-card {
+  position: relative;
+}
+
+.mox-flags--card {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+}
+
+// ── Posicionamiento en PDP (media gallery) ────────────────────────────────────
+
+media-gallery {
+  position: relative;
+}
+
+.mox-flags--pdp {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+}

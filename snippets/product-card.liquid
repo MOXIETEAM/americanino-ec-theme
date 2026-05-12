@@ -84,6 +84,10 @@
       {{ product.title }}
     </span>
   </a>
+  {%- comment -%} MOXIE: Flags de producto por metafield — posición absoluta top-left {%- endcomment -%}
+  {%- unless onboarding -%}
+    {%- render 'mox-flags', product: product, align: 'left', modifier: 'mox-flags--card' -%}
+  {%- endunless -%}
   <div
     class="
       product-card__content

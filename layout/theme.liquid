@@ -30,6 +30,7 @@
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
+    {%- render 'mox-flags-styles' -%}
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
     {% endif %}
@@ -133,5 +134,7 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    {%- comment -%} MOXIE: Sección global de etiquetas — editable en el customizer {%- endcomment -%}
+    {% section 'mox-flags-settings' %}
   </body>
 </html>

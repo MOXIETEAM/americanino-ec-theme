@@ -354,6 +354,8 @@
     data-presentation="{{ media_presentation }}"
     {{ block_shopify_attributes }}
   >
+    {%- comment -%} MOXIE: Flags de producto sobre la galería — top-left {%- endcomment -%}
+    {%- render 'mox-flags', product: selected_product, align: 'left', modifier: 'mox-flags--pdp' -%}
     {% capture slides %}
       {% for media in sorted_media %}
         {% capture children %}

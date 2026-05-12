@@ -1,4 +1,4 @@
-{%- comment -%} MOXIE: Custom footer — newsletter · bloques · tagline · medios de pago {%- endcomment -%}
+{%- comment -%} MOXIE: Custom footer — newsletter · bloques · tagline · medios de pago · barra inferior {%- endcomment -%}
 
 {%- assign bg_color = section.settings.bg_color -%}
 
@@ -127,132 +127,43 @@
     {% endif %}
   >
     <div class="custom-footer__main-inner custom-standar-max-width">
-      {%- comment -%} ── Grid: col 1 = brand info / cols 2-4 = nav ────────── {%- endcomment -%}
       <div class="custom-footer__grid">
+
         {%- comment -%} Columna 1: todos los bloques brand_info {%- endcomment -%}
         <div class="custom-footer__brand-area">
           {%- for block in section.blocks -%}
             {%- if block.type == 'brand_info' -%}
-              <div
-                class="custom-footer__brand-block"
-                {{ block.shopify_attributes }}
-              >
+              <div class="custom-footer__brand-block" {{ block.shopify_attributes }}>
+
+                {%- comment -%} Logo {%- endcomment -%}
                 {%- if block.settings.logo != blank -%}
                   <div class="custom-footer__logo">
                     <img
-                      src="{{ block.settings.logo | image_url: width: 120 }}"
+                      src="{{ block.settings.logo | image_url: width: 220 }}"
                       alt=""
-                      width="88"
-                      height="88"
+                      width="160"
                       loading="lazy"
                     >
                   </div>
                 {%- endif -%}
 
-                <ul class="custom-footer__contact-list">
-                  {%- if block.settings.whatsapp_url != blank -%}
-                    <li>
-                      <a
-                        href="{{ block.settings.whatsapp_url }}"
-                        class="custom-footer__contact-link"
-                        target="_blank"
-                        rel="noopener"
-                      >
-                        <svg
-                          class="custom-footer__contact-icon"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden="true"
-                          width="16"
-                          height="16"
-                        >
-                          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.528 5.846L0 24l6.335-1.501A11.949 11.949 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.943 0-3.75-.522-5.3-1.432l-.38-.226-3.758.89.944-3.633-.248-.395A9.793 9.793 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818S21.818 6.582 21.818 12 17.418 21.818 12 21.818zm5.472-7.436c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                        </svg>
-                        {{ block.settings.whatsapp_label | default: 'Chat con un asesor de whatsapp' }}
-                      </a>
-                    </li>
-                  {%- endif -%}
-                  {%- if block.settings.phone != blank -%}
-                    <li>
-                      <a href="tel:{{ block.settings.phone | remove: ' ' }}" class="custom-footer__contact-link">
-                        <svg
-                          class="custom-footer__contact-icon"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                          width="16"
-                          height="16"
-                        >
-                          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7 2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 6.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 13.92z"/>
-                        </svg>
-                        Llamar {{ block.settings.phone }}
-                      </a>
-                    </li>
-                  {%- endif -%}
-                  {%- if block.settings.email != blank -%}
-                    <li>
-                      <a href="mailto:{{ block.settings.email }}" class="custom-footer__contact-link">
-                        <svg
-                          class="custom-footer__contact-icon"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                          width="16"
-                          height="16"
-                        >
-                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                          <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                        Escribir un correo
-                      </a>
-                    </li>
-                  {%- endif -%}
-                  {%- if block.settings.store_locator_url != blank -%}
-                    <li>
-                      <a href="{{ block.settings.store_locator_url }}" class="custom-footer__contact-link">
-                        <svg
-                          class="custom-footer__contact-icon"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          aria-hidden="true"
-                          width="16"
-                          height="16"
-                        >
-                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                          <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                        Localizador de tiendas
-                      </a>
-                    </li>
-                  {%- endif -%}
-                </ul>
+                {%- comment -%} Tagline / texto newsletter {%- endcomment -%}
+                {%- if block.settings.brand_tagline != blank -%}
+                  <p class="custom-footer__brand-tagline">{{ block.settings.brand_tagline }}</p>
+                {%- endif -%}
 
+                {%- comment -%} Botón CTA {%- endcomment -%}
+                {%- if block.settings.brand_cta_url != blank -%}
+                  <a
+                    class="custom-footer__brand-cta"
+                    href="{{ block.settings.brand_cta_url }}"
+                  >
+                    {{- block.settings.brand_cta_label | default: 'Suscríbete ahora' -}}
+                  </a>
+                {%- endif -%}
+
+                {%- comment -%} Redes sociales {%- endcomment -%}
                 <div class="custom-footer__social">
-                  {%- if block.settings.instagram_url != blank -%}
-                    <a
-                      href="{{ block.settings.instagram_url }}"
-                      class="custom-footer__social-link"
-                      aria-label="Instagram"
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                      </svg>
-                    </a>
-                  {%- endif -%}
                   {%- if block.settings.facebook_url != blank -%}
                     <a
                       href="{{ block.settings.facebook_url }}"
@@ -261,8 +172,21 @@
                       target="_blank"
                       rel="noopener"
                     >
-                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
                         <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.instagram_url != blank -%}
+                    <a
+                      href="{{ block.settings.instagram_url }}"
+                      class="custom-footer__social-link"
+                      aria-label="Instagram"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                       </svg>
                     </a>
                   {%- endif -%}
@@ -274,7 +198,7 @@
                       target="_blank"
                       rel="noopener"
                     >
-                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
                         <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.27 8.27 0 004.84 1.55V6.79a4.85 4.85 0 01-1.07-.1z"/>
                       </svg>
                     </a>
@@ -287,12 +211,64 @@
                       target="_blank"
                       rel="noopener"
                     >
-                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="18" height="18">
+                      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="20" height="20">
                         <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                       </svg>
                     </a>
                   {%- endif -%}
                 </div>
+
+                {%- comment -%} Contacto y localizador {%- endcomment -%}
+                <ul class="custom-footer__contact-list">
+                  {%- if block.settings.whatsapp_url != blank -%}
+                    <li>
+                      <a
+                        href="{{ block.settings.whatsapp_url }}"
+                        class="custom-footer__contact-link"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        <svg class="custom-footer__contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" width="16" height="16">
+                          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.528 5.846L0 24l6.335-1.501A11.949 11.949 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.943 0-3.75-.522-5.3-1.432l-.38-.226-3.758.89.944-3.633-.248-.395A9.793 9.793 0 012.182 12c0-5.418 4.4-9.818 9.818-9.818S21.818 6.582 21.818 12 17.418 21.818 12 21.818zm5.472-7.436c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                        </svg>
+                        {{ block.settings.whatsapp_label | default: 'Chat con un asesor de whatsapp' }}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if block.settings.phone != blank -%}
+                    <li>
+                      <a href="tel:{{ block.settings.phone | remove: ' ' }}" class="custom-footer__contact-link">
+                        <svg class="custom-footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16">
+                          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7 2 2 0 012-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 6.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 13.92z"/>
+                        </svg>
+                        Llamar {{ block.settings.phone }}
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if block.settings.email != blank -%}
+                    <li>
+                      <a href="mailto:{{ block.settings.email }}" class="custom-footer__contact-link">
+                        <svg class="custom-footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16">
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                          <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        Escribir un correo
+                      </a>
+                    </li>
+                  {%- endif -%}
+                  {%- if block.settings.store_locator_url != blank -%}
+                    <li>
+                      <a href="{{ block.settings.store_locator_url }}" class="custom-footer__contact-link">
+                        <svg class="custom-footer__contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" width="16" height="16">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                          <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        Localizador de tiendas
+                      </a>
+                    </li>
+                  {%- endif -%}
+                </ul>
+
               </div>
             {%- endif -%}
           {%- endfor -%}
@@ -321,6 +297,7 @@
             </div>
           {%- endif -%}
         {%- endfor -%}
+
       </div>
     </div>
   </div>
@@ -332,7 +309,6 @@
       style="background-color: {{ bg_color }};"
     {% endif %}
   >
-    {%- comment -%} Decoradores {%- endcomment -%}
     <div class="custom-footer_tagline_container custom-standar-max-width">
       {%- if section.settings.tagline_deco_left_mic != blank -%}
         <img
@@ -345,14 +321,12 @@
           loading="lazy"
         >
       {%- endif -%}
-      {%- comment -%} Tagline {%- endcomment -%}
       <p
         class="custom-footer__tagline"
         style="{% if section.settings.tagline_color != blank %}color: {{ section.settings.tagline_color }};{% endif %}"
       >
         {{- section.settings.tagline | default: 'AMERICANINO' -}}
       </p>
-
       {%- if section.settings.tagline_deco_right_mic != blank -%}
         <img
           class="custom-footer__tagline-deco custom-footer__tagline-deco--right"
@@ -387,6 +361,70 @@
       </div>
     </div>
   {%- endif -%}
+
+  {%- comment -%} ── Barra inferior: sellos + texto legal ──────────────────────── {%- endcomment -%}
+  {%- assign _has_bottom = false -%}
+  {%- if section.settings.legal_text != blank or section.settings.trust_badge_1 != blank or section.settings.trust_badge_2 != blank -%}
+    {%- assign _has_bottom = true -%}
+  {%- endif -%}
+  {%- if _has_bottom -%}
+    <div
+      class="custom-footer__bottom-bar custom-center-container color-{{ section.settings.color_scheme }}"
+      style="{% if section.settings.bottom_bar_bg != blank %}background-color: {{ section.settings.bottom_bar_bg }};{% elsif bg_color != blank %}background-color: {{ bg_color }};{% endif %}"
+    >
+      <div class="custom-footer__bottom-inner custom-standar-max-width">
+
+        {%- if section.settings.trust_badge_1 != blank or section.settings.trust_badge_2 != blank -%}
+          <div class="custom-footer__trust-badges">
+            {%- if section.settings.trust_badge_1 != blank -%}
+              {%- if section.settings.trust_badge_1_url != blank -%}
+                <a href="{{ section.settings.trust_badge_1_url }}" class="custom-footer__trust-link" target="_blank" rel="noopener">
+                  <img
+                    src="{{ section.settings.trust_badge_1 | image_url: height: 48 }}"
+                    alt="{{ section.settings.trust_badge_1_alt | default: 'Sello de confianza' }}"
+                    height="48"
+                    loading="lazy"
+                  >
+                </a>
+              {%- else -%}
+                <img
+                  src="{{ section.settings.trust_badge_1 | image_url: height: 48 }}"
+                  alt="{{ section.settings.trust_badge_1_alt | default: 'Sello de confianza' }}"
+                  height="48"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.trust_badge_2 != blank -%}
+              {%- if section.settings.trust_badge_2_url != blank -%}
+                <a href="{{ section.settings.trust_badge_2_url }}" class="custom-footer__trust-link" target="_blank" rel="noopener">
+                  <img
+                    src="{{ section.settings.trust_badge_2 | image_url: height: 48 }}"
+                    alt="{{ section.settings.trust_badge_2_alt | default: 'Sello de confianza' }}"
+                    height="48"
+                    loading="lazy"
+                  >
+                </a>
+              {%- else -%}
+                <img
+                  src="{{ section.settings.trust_badge_2 | image_url: height: 48 }}"
+                  alt="{{ section.settings.trust_badge_2_alt | default: 'Sello de confianza' }}"
+                  height="48"
+                  loading="lazy"
+                >
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.legal_text != blank -%}
+          <div class="custom-footer__legal">{{ section.settings.legal_text }}</div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  {%- endif -%}
+
 </div>
 {{- '<!-- /moxie-brand-section -->' -}}
 
@@ -408,6 +446,27 @@
           "type": "image_picker",
           "id": "logo",
           "label": "Logo de la marca"
+        },
+        {
+          "type": "header",
+          "content": "Newsletter / CTA"
+        },
+        {
+          "type": "textarea",
+          "id": "brand_tagline",
+          "label": "Texto de suscripción",
+          "default": "Suscríbete ahora nuestro Newsletter y recibe las ofertas exclusivas y lo último en moda"
+        },
+        {
+          "type": "text",
+          "id": "brand_cta_label",
+          "label": "Texto del botón",
+          "default": "Suscríbete ahora"
+        },
+        {
+          "type": "url",
+          "id": "brand_cta_url",
+          "label": "URL del botón"
         },
         {
           "type": "header",
@@ -445,13 +504,13 @@
         },
         {
           "type": "url",
-          "id": "instagram_url",
-          "label": "Instagram"
+          "id": "facebook_url",
+          "label": "Facebook"
         },
         {
           "type": "url",
-          "id": "facebook_url",
-          "label": "Facebook"
+          "id": "instagram_url",
+          "label": "Instagram"
         },
         {
           "type": "url",
@@ -485,7 +544,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Newsletter"
+      "content": "Newsletter (banda superior)"
     },
     {
       "type": "checkbox",
@@ -545,7 +604,6 @@
       "id": "tagline_color",
       "label": "Color del tagline"
     },
-
     {
       "type": "header",
       "content": "Medios de pago"
@@ -554,6 +612,52 @@
       "type": "image_picker",
       "id": "payments_image",
       "label": "Imagen medios de pago"
+    },
+    {
+      "type": "header",
+      "content": "Barra inferior — Sellos de confianza"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_badge_1",
+      "label": "Sello 1"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_1_alt",
+      "label": "Texto alternativo sello 1"
+    },
+    {
+      "type": "url",
+      "id": "trust_badge_1_url",
+      "label": "Enlace sello 1 (opcional)"
+    },
+    {
+      "type": "image_picker",
+      "id": "trust_badge_2",
+      "label": "Sello 2"
+    },
+    {
+      "type": "text",
+      "id": "trust_badge_2_alt",
+      "label": "Texto alternativo sello 2"
+    },
+    {
+      "type": "url",
+      "id": "trust_badge_2_url",
+      "label": "Enlace sello 2 (opcional)"
+    },
+    {
+      "type": "richtext",
+      "id": "legal_text",
+      "label": "Texto legal / copyright",
+      "default": "<p>©2025 Americanino, todos los derechos reservados</p>"
+    },
+    {
+      "type": "color",
+      "id": "bottom_bar_bg",
+      "label": "Color de fondo barra inferior",
+      "info": "Si se deja vacío hereda el color del footer"
     },
     {
       "type": "header",
@@ -580,32 +684,32 @@
         {
           "type": "brand_info",
           "settings": {
-            "whatsapp_label": "Chat con un asesor de whatsapp",
-            "phone": "+57 300 910 83 11"
-          }
-        },
-        {
-          "type": "brand_info",
-          "settings": {
-            "whatsapp_label": "Chat con un asesor de whatsapp"
+            "brand_tagline": "Suscríbete ahora nuestro Newsletter y recibe las ofertas exclusivas y lo último en moda",
+            "brand_cta_label": "Suscríbete ahora"
           }
         },
         {
           "type": "nav_column",
           "settings": {
-            "heading": "Ayuda"
+            "heading": "Nuestra marca"
           }
         },
         {
           "type": "nav_column",
           "settings": {
-            "heading": "Empresa"
+            "heading": "Ayudas"
           }
         },
         {
           "type": "nav_column",
           "settings": {
-            "heading": "Legales"
+            "heading": "Políticas"
+          }
+        },
+        {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Información"
           }
         }
       ]

@@ -1,0 +1,125 @@
+{%- comment -%}
+  Renders product flags/badges from metafields (namespace: custom)
+
+  ── Etiquetas predefinidas (boolean) ─────────────────────────────────────
+  product.metafields.custom.flag_envio_gratis      → boolean
+  product.metafields.custom.flag_nuevo              → boolean
+  product.metafields.custom.flag_armado_gratis      → boolean
+  product.metafields.custom.flag_outlet             → boolean
+  product.metafields.custom.flag_exclusivo          → boolean
+  product.metafields.custom.flag_reacondicionado    → boolean
+
+  ── Etiquetas personalizadas (metaobjeto) ────────────────────────────────
+  product.metafields.custom.flag_personalizada → list.metaobject_reference
+  Metaobjeto tipo: product_custom_flag
+    campos: active (boolean), label (single_line_text), color_de_fondo (color),
+            color_de_texto (color), icon (file_reference), shape (single_line_text)
+
+  Accepts:
+  - product : {Object} (required)
+  - align   : {String} left | center | right  (optional, default: left)
+{%- endcomment -%}
+
+{%- liquid
+  assign mc           = product.metafields.custom
+  assign align        = align | default: 'left'
+  assign modifier     = modifier | default: ''
+  assign custom_flags = mc.flag_personalizada.value
+  assign any          = false
+
+  if mc.flag_envio_gratis.value == true
+    assign any = true
+  endif
+  if mc.flag_nuevo.value == true
+    assign any = true
+  endif
+  if mc.flag_armado_gratis.value == true
+    assign any = true
+  endif
+  if mc.flag_outlet.value == true
+    assign any = true
+  endif
+  if mc.flag_exclusivo.value == true
+    assign any = true
+  endif
+  if mc.flag_reacondicionado.value == true
+    assign any = true
+  endif
+  if custom_flags != blank
+    assign any = true
+  endif
+-%}
+
+
+{%- if any -%}
+<div class="mox-flags mox-flags--align-{{ align }}{% if modifier != blank %} {{ modifier }}{% endif %}">
+
+  {%- comment -%} ── Predefinidas ── {%- endcomment -%}
+
+  {%- if mc.flag_envio_gratis.value == true -%}
+    {%- assign f_label = settings.flag_envio_gratis_label | default: 'Envío Gratis' -%}
+    <span class="mox-flag mox-flag--envio-gratis">{{ f_label }}</span>
+  {%- endif -%}
+
+  {%- if mc.flag_nuevo.value == true -%}
+    {%- assign f_label = settings.flag_nuevo_label | default: 'Nuevo' -%}
+    <span class="mox-flag mox-flag--nuevo">{{ f_label }}</span>
+  {%- endif -%}
+
+  {%- if mc.flag_armado_gratis.value == true -%}
+    {%- assign f_label = settings.flag_armado_gratis_label | default: 'Armado Gratis' -%}
+    <span class="mox-flag mox-flag--armado-gratis">{{ f_label }}</span>
+  {%- endif -%}
+
+  {%- if mc.flag_outlet.value == true -%}
+    {%- assign f_label = settings.flag_outlet_label | default: 'Outlet' -%}
+    <span class="mox-flag mox-flag--outlet">{{ f_label }}</span>
+  {%- endif -%}
+
+  {%- if mc.flag_exclusivo.value == true -%}
+    {%- assign f_label = settings.flag_exclusivo_label | default: 'Exclusivo' -%}
+    <span class="mox-flag mox-flag--exclusivo">{{ f_label }}</span>
+  {%- endif -%}
+
+  {%- if mc.flag_reacondicionado.value == true -%}
+    {%- assign f_label = settings.flag_reacondicionado_label | default: 'Reacondicionado' -%}
+    <span class="mox-flag mox-flag--reacondicionado">{{ f_label }}</span>
+  {%- endif -%}
+
+  {%- comment -%} ── Personalizadas (metaobjeto) ── {%- endcomment -%}
+  {%- if custom_flags != blank -%}
+    {%- for flag in custom_flags -%}
+      {%- if flag.active == true -%}
+        {%- assign f_label = flag.label -%}
+        {%- assign f_bg    = flag.color_de_fondo -%}
+        {%- assign f_color = flag.color_de_texto -%}
+        {%- assign f_icon  = flag.icon -%}
+        {%- assign f_shape = flag.shape | default: 'rounded' -%}
+        {%- if f_label != blank or f_icon != blank -%}
+          {%- capture inline_style -%}
+            {%- if f_bg != blank %}background-color:{{ f_bg }};{% endif -%}
+            {%- if f_color != blank %}color:{{ f_color }};{% endif -%}
+            {%- if f_shape == 'outline' and f_color != blank %}border-color:{{ f_color }};{% endif -%}
+          {%- endcapture -%}
+          <span class="mox-flag mox-flag--custom mox-flag--{{ f_shape }}"
+            {%- if inline_style != blank %} style="{{ inline_style | strip }}"{% endif -%}
+          >
+            {%- if f_icon != blank -%}
+              <img
+                src="{{ f_icon | image_url: width: 40 }}"
+                alt=""
+                class="mox-flag__img"
+                width="20"
+                height="20"
+                loading="lazy"
+              >
+            {%- endif -%}
+            {%- if f_label != blank -%}{{ f_label }}{%- endif -%}
+          </span>
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+</div>
+{%- endif -%}

@@ -1,0 +1,125 @@
+{%- style -%}
+:root {
+  --flag-envio-gratis-bg:        {{ section.settings.flag_envio_gratis_bg }};
+  --flag-envio-gratis-color:     {{ section.settings.flag_envio_gratis_color }};
+  --flag-envio-gratis-border:    {{ section.settings.flag_envio_gratis_border }};
+  --flag-nuevo-bg:               {{ section.settings.flag_nuevo_bg }};
+  --flag-nuevo-color:            {{ section.settings.flag_nuevo_color }};
+  --flag-nuevo-border:           {{ section.settings.flag_nuevo_border }};
+  --flag-armado-gratis-bg:       {{ section.settings.flag_armado_gratis_bg }};
+  --flag-armado-gratis-color:    {{ section.settings.flag_armado_gratis_color }};
+  --flag-armado-gratis-border:   {{ section.settings.flag_armado_gratis_border }};
+  --flag-outlet-bg:              {{ section.settings.flag_outlet_bg }};
+  --flag-outlet-color:           {{ section.settings.flag_outlet_color }};
+  --flag-outlet-border:          {{ section.settings.flag_outlet_border }};
+  --flag-exclusivo-bg:           {{ section.settings.flag_exclusivo_bg }};
+  --flag-exclusivo-color:        {{ section.settings.flag_exclusivo_color }};
+  --flag-exclusivo-border:       {{ section.settings.flag_exclusivo_border }};
+  --flag-reacondicionado-bg:     {{ section.settings.flag_reacondicionado_bg }};
+  --flag-reacondicionado-color:  {{ section.settings.flag_reacondicionado_color }};
+  --flag-reacondicionado-border: {{ section.settings.flag_reacondicionado_border }};
+}
+{%- if section.settings.flag_envio_gratis_icon != blank -%}
+.mox-flag--envio-gratis::before {
+  content: '';
+  display: block;
+  width: 15px; height: 15px;
+  background-image: url('{{ section.settings.flag_envio_gratis_icon | image_url: width: 40 }}');
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  flex-shrink: 0;
+}
+{%- endif -%}
+{%- if section.settings.flag_nuevo_icon != blank -%}
+.mox-flag--nuevo::before {
+  content: '';
+  display: block;
+  width: 15px; height: 15px;
+  background-image: url('{{ section.settings.flag_nuevo_icon | image_url: width: 40 }}');
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  flex-shrink: 0;
+}
+{%- endif -%}
+{%- if section.settings.flag_armado_gratis_icon != blank -%}
+.mox-flag--armado-gratis::before {
+  content: '';
+  display: block;
+  width: 15px; height: 15px;
+  background-image: url('{{ section.settings.flag_armado_gratis_icon | image_url: width: 40 }}');
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  flex-shrink: 0;
+}
+{%- endif -%}
+{%- if section.settings.flag_outlet_icon != blank -%}
+.mox-flag--outlet::before {
+  content: '';
+  display: block;
+  width: 15px; height: 15px;
+  background-image: url('{{ section.settings.flag_outlet_icon | image_url: width: 40 }}');
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  flex-shrink: 0;
+}
+{%- endif -%}
+{%- if section.settings.flag_exclusivo_icon != blank -%}
+.mox-flag--exclusivo::before {
+  content: '';
+  display: block;
+  width: 15px; height: 15px;
+  background-image: url('{{ section.settings.flag_exclusivo_icon | image_url: width: 40 }}');
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  flex-shrink: 0;
+}
+{%- endif -%}
+{%- if section.settings.flag_reacondicionado_icon != blank -%}
+.mox-flag--reacondicionado::before {
+  content: '';
+  display: block;
+  width: 15px; height: 15px;
+  background-image: url('{{ section.settings.flag_reacondicionado_icon | image_url: width: 40 }}');
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  flex-shrink: 0;
+}
+{%- endif -%}
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Etiquetas de producto",
+  "settings": [
+    { "type": "header", "content": "Envío Gratis" },
+    { "type": "color",        "id": "flag_envio_gratis_bg",     "label": "Fondo",  "default": "#ffffff" },
+    { "type": "color",        "id": "flag_envio_gratis_color",  "label": "Texto",  "default": "#EA0029" },
+    { "type": "color",        "id": "flag_envio_gratis_border", "label": "Borde",  "default": "#EA0029" },
+    { "type": "image_picker", "id": "flag_envio_gratis_icon",   "label": "Ícono" },
+
+    { "type": "header", "content": "Nuevo" },
+    { "type": "color",        "id": "flag_nuevo_bg",            "label": "Fondo",  "default": "#f5f5f5" },
+    { "type": "color",        "id": "flag_nuevo_color",         "label": "Texto",  "default": "#888888" },
+    { "type": "color",        "id": "flag_nuevo_border",        "label": "Borde",  "default": "#888888" },
+    { "type": "image_picker", "id": "flag_nuevo_icon",          "label": "Ícono" },
+
+    { "type": "header", "content": "Armado Gratis" },
+    { "type": "color",        "id": "flag_armado_gratis_bg",     "label": "Fondo", "default": "#1a1a1a" },
+    { "type": "color",        "id": "flag_armado_gratis_color",  "label": "Texto", "default": "#ffffff" },
+    { "type": "color",        "id": "flag_armado_gratis_border", "label": "Borde", "default": "#1a1a1a" },
+    { "type": "image_picker", "id": "flag_armado_gratis_icon",   "label": "Ícono" },
+
+    { "type": "header", "content": "Outlet" },
+    { "type": "color",        "id": "flag_outlet_bg",            "label": "Fondo", "default": "#FF6B00" },
+    { "type": "color",        "id": "flag_outlet_color",         "label": "Texto", "default": "#ffffff" },
+    { "type": "color",        "id": "flag_outlet_border",        "label": "Borde", "default": "#FF6B00" },
+    { "type": "image_picker", "id": "flag_outlet_icon",          "label": "Ícono" },
+
+    { "type": "header", "content": "Exclusivo" },
+    { "type": "color",        "id": "flag_exclusivo_bg",         "label": "Fondo", "default": "#5B2D8E" },
+    { "type": "color",        "id": "flag_exclusivo_color",      "label": "Texto", "default": "#ffffff" },
+    { "type": "color",        "id": "flag_exclusivo_border",     "label": "Borde", "default": "#5B2D8E" },
+    { "type": "image_picker", "id": "flag_exclusivo_icon",       "label": "Ícono" },
+
+    { "type": "header", "content": "Reacondicionado" },
+    { "type": "color",        "id": "flag_reacondicionado_bg",     "label": "Fondo", "default": "#1a6f8a" },
+    { "type": "color",        "id": "flag_reacondicionado_color",  "label": "Texto", "default": "#ffffff" },
+    { "type": "color",        "id": "flag_reacondicionado_border", "label": "Borde", "default": "#1a6f8a" },
+    { "type": "image_picker", "id": "flag_reacondicionado_icon",   "label": "Ícono" }
+  ]
+}
+{% endschema %}
