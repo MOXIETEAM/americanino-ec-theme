@@ -1,0 +1,98 @@
+/**
+ * Moxie — Banner Scroll Reveal
+ * IntersectionObserver-driven expand + stagger animation.
+ * Re-triggers on scroll-out / scroll-back-in.
+ */
+(function () {
+  'use strict';
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function initSlider(banner) {
+    var slides = Array.from(banner.querySelectorAll('[data-slide]'));
+    var dots = Array.from(banner.querySelectorAll('[data-dot]'));
+    var prevBtn = banner.querySelector('[data-prev]');
+    var nextBtn = banner.querySelector('[data-next]');
+    var count = slides.length;
+    var current = 0;
+
+    if (count <= 1) return;
+
+    function activate(index) {
+      slides[current].classList.remove('is-active');
+      if (dots[current]) dots[current].classList.remove('is-active');
+      current = ((index % count) + count) % count;
+      slides[current].classList.add('is-active');
+      if (dots[current]) dots[current].classList.add('is-active');
+    }
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { activate(i); });
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { activate(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { activate(current + 1); });
+  }
+
+  function initObserver(banner) {
+    if (reducedMotion) {
+      banner.classList.add('is-visible');
+      return;
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            banner.classList.add('is-visible');
+          } else {
+            banner.classList.remove('is-visible');
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(banner);
+    banner._bannerObserver = observer;
+  }
+
+  function init(banner) {
+    if (banner._bannerInit) return;
+    banner._bannerInit = true;
+    initSlider(banner);
+    initObserver(banner);
+  }
+
+  function initAll() {
+    document.querySelectorAll('[data-banner-reveal]').forEach(init);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+
+  // Theme editor: re-init on section load, clean up observer on unload
+  document.addEventListener('shopify:section:load', function (e) {
+    var section = e.target || document.getElementById('shopify-section-' + e.detail.sectionId);
+    if (!section) return;
+    section.querySelectorAll('[data-banner-reveal]').forEach(function (banner) {
+      banner._bannerInit = false;
+      if (banner._bannerObserver) {
+        banner._bannerObserver.disconnect();
+        delete banner._bannerObserver;
+      }
+      init(banner);
+    });
+  });
+
+  document.addEventListener('shopify:section:unload', function (e) {
+    var section = e.target || document.getElementById('shopify-section-' + e.detail.sectionId);
+    if (!section) return;
+    section.querySelectorAll('[data-banner-reveal]').forEach(function (banner) {
+      if (banner._bannerObserver) banner._bannerObserver.disconnect();
+    });
+  });
+})();

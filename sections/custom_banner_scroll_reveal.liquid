@@ -1,0 +1,229 @@
+{%- comment -%} MOXIE: Banner with IntersectionObserver scroll-reveal animation {%- endcomment -%}
+
+{{ 'custom-banner-scroll-reveal.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'custom-banner-scroll-reveal.js' | asset_url }}" defer></script>
+
+<div
+  id="BannerReveal-{{ section.id }}"
+  class="banner-reveal color-{{ section.settings.color_scheme }}"
+  style="
+    --banner-reveal-collapsed-height: {{ section.settings.collapsed_height }}px;
+    --banner-reveal-full-height: {{ section.settings.full_height }}svh;
+    --banner-reveal-duration: {{ section.settings.animation_duration }}ms;
+    --banner-reveal-easing: cubic-bezier(0.16, 1, 0.3, 1);
+    --banner-reveal-stagger: {{ section.settings.stagger_delay }}ms;
+  "
+  data-banner-reveal
+>
+  <div class="banner-reveal__slides" data-slides>
+    {%- for block in section.blocks -%}
+      <div
+        class="banner-reveal__slide{% if forloop.first %} is-active{% endif %}"
+        data-slide="{{ forloop.index0 }}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="banner-reveal__media" data-reveal-media>
+          {%- if block.settings.image != blank -%}
+            {%- assign slide_alt = block.settings.image.alt | escape -%}
+            {{
+              block.settings.image
+              | image_url: width: 3840
+              | image_tag:
+                class: 'banner-reveal__img',
+                widths: '640, 1024, 1600, 1920, 2560',
+                sizes: '100vw',
+                alt: slide_alt,
+                loading: 'lazy'
+            }}
+          {%- else -%}
+            {{ 'hero-apparel-1' | placeholder_svg_tag: 'banner-reveal__img banner-reveal__img--placeholder' }}
+          {%- endif -%}
+        </div>
+
+        <div class="banner-reveal__content">
+          {%- if block.settings.title != blank -%}
+            <h2 class="banner-reveal__title" data-reveal-item style="--stagger-index: 0">
+              {{ block.settings.title | escape }}
+            </h2>
+          {%- endif -%}
+
+          {%- if block.settings.subtitle != blank -%}
+            <p class="banner-reveal__subtitle" data-reveal-item style="--stagger-index: 1">
+              {{ block.settings.subtitle | escape }}
+            </p>
+          {%- endif -%}
+
+          {%- if block.settings.cta_label != blank and block.settings.cta_link != blank -%}
+            <a
+              href="{{ block.settings.cta_link }}"
+              class="banner-reveal__cta button"
+              data-reveal-item
+              style="--stagger-index: 2"
+            >
+              {{ block.settings.cta_label | escape }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    {%- if section.blocks.size == 0 -%}
+      <div class="banner-reveal__slide is-active">
+        <div class="banner-reveal__media">
+          {{ 'hero-apparel-1' | placeholder_svg_tag: 'banner-reveal__img banner-reveal__img--placeholder' }}
+        </div>
+        <div class="banner-reveal__content">
+          <h2 class="banner-reveal__title" data-reveal-item style="--stagger-index: 0">Tu título aquí</h2>
+          <p class="banner-reveal__subtitle" data-reveal-item style="--stagger-index: 1">Agrega slides desde el editor para personalizar este banner.</p>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.blocks.size > 1 -%}
+    <div class="banner-reveal__nav" data-nav>
+      <button class="banner-reveal__arrow banner-reveal__arrow--prev" data-prev aria-label="Slide anterior">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15,18 9,12 15,6"></polyline>
+        </svg>
+      </button>
+      <div class="banner-reveal__dots" data-dots>
+        {%- for block in section.blocks -%}
+          <button
+            class="banner-reveal__dot{% if forloop.first %} is-active{% endif %}"
+            data-dot="{{ forloop.index0 }}"
+            aria-label="Ir al slide {{ forloop.index }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+      <button class="banner-reveal__arrow banner-reveal__arrow--next" data-next aria-label="Siguiente slide">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9,18 15,12 9,6"></polyline>
+        </svg>
+      </button>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Moxie Banner Reveal",
+  "tag": "section",
+  "class": "section-wrapper",
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Colección nueva"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle",
+          "label": "Subtítulo / descripción",
+          "default": "Descubre las últimas tendencias de la temporada."
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Texto del botón CTA",
+          "default": "Ver colección"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Enlace del botón CTA"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Alturas"
+    },
+    {
+      "type": "range",
+      "id": "collapsed_height",
+      "label": "Altura inicial (colapsada)",
+      "min": 80,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 200,
+      "info": "Altura del banner antes de entrar al viewport."
+    },
+    {
+      "type": "range",
+      "id": "full_height",
+      "label": "Altura completa (expandida)",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "svh",
+      "default": 80,
+      "info": "Altura del banner una vez visible en pantalla."
+    },
+    {
+      "type": "header",
+      "content": "Animación"
+    },
+    {
+      "type": "range",
+      "id": "animation_duration",
+      "label": "Duración de animación",
+      "min": 500,
+      "max": 1500,
+      "step": 100,
+      "unit": "ms",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "stagger_delay",
+      "label": "Retraso escalonado entre textos",
+      "min": 50,
+      "max": 300,
+      "step": 25,
+      "unit": "ms",
+      "default": 150
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Banner Reveal",
+      "category": "Moxie",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Nueva Colección",
+            "subtitle": "Descubre las últimas tendencias de la temporada.",
+            "cta_label": "Ver colección",
+            "cta_link": "shopify://collections/all"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

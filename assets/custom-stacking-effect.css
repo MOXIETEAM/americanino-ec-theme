@@ -25,14 +25,17 @@
    ----------------------------------------------------------------------- */
 #MainContent .moxie-stacking-wrapper > .shopify-section:has([data-stacking="hero"]) {
   position: sticky;
-  top: var(--header-height, 0px);
+  top: 0;
   z-index: 1;
 }
 
 /* -----------------------------------------------------------------------
-   3. Overlay — desliza por encima del Hero
+   3. Overlay y secciones intermedias (Countdown, etc.)
+   Todas las secciones del wrapper que NO son el Hero se apilan en z-index: 2.
+   Si el Countdown está activo/visible, sube encima del Hero junto con el
+   Shop the Look.  Si está oculto, la regla no tiene efecto visible.
    ----------------------------------------------------------------------- */
-#MainContent .moxie-stacking-wrapper > .shopify-section:has([data-stacking="overlay"]) {
+#MainContent .moxie-stacking-wrapper > .shopify-section:not(:has([data-stacking="hero"])) {
   position: relative;
   z-index: 2;
 }
@@ -43,7 +46,7 @@
    ----------------------------------------------------------------------- */
 #MainContent .moxie-stacking-wrapper > .moxie-stacking-hero {
   position: sticky;
-  top: var(--header-height, 0px);
+  top: 0;
   z-index: 1;
 }
 
