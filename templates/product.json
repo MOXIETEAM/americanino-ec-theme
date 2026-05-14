@@ -186,6 +186,7 @@
             "text_aEtTtq": {
               "type": "text",
               "name": "Product description",
+              "disabled": true,
               "settings": {
                 "text": "{{ closest.product.description }}",
                 "width": "100%",
@@ -289,6 +290,16 @@
                 "tech_5_label": ""
               },
               "blocks": {}
+            },
+            "custom_pdp_complete_look_iADB3z": {
+              "type": "custom_pdp_complete_look",
+              "name": "Moxie Completa el Look",
+              "settings": {
+                "title": "Completa Tu Compra",
+                "btn_label": "Agregar a la bolsa",
+                "btn_success_label": "¡Añadido!"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -297,7 +308,8 @@
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
             "custom_pdp_toggles_BkMYi3",
-            "custom_pdp_tech_badges_DGkRLn"
+            "custom_pdp_tech_badges_DGkRLn",
+            "custom_pdp_complete_look_iADB3z"
           ]
         }
       },
