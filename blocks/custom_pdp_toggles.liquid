@@ -10,25 +10,25 @@
   assign s2_show  = block.settings.s2_show
   assign s2_title = block.settings.s2_title
   assign s2_mf    = block.settings.s2_metafield
-  assign s2_value = nil
+  assign s2_obj   = nil
 
   assign s3_show  = block.settings.s3_show
   assign s3_title = block.settings.s3_title
   assign s3_mf    = block.settings.s3_metafield
-  assign s3_value = nil
+  assign s3_obj   = nil
 
   if s2_mf contains '.'
     assign s2_parts = s2_mf | split: '.'
     assign s2_ns    = s2_parts[0]
     assign s2_key   = s2_parts[1]
-    assign s2_value = _product.metafields[s2_ns][s2_key].value
+    assign s2_obj   = _product.metafields[s2_ns][s2_key]
   endif
 
   if s3_mf contains '.'
     assign s3_parts = s3_mf | split: '.'
     assign s3_ns    = s3_parts[0]
     assign s3_key   = s3_parts[1]
-    assign s3_value = _product.metafields[s3_ns][s3_key].value
+    assign s3_obj   = _product.metafields[s3_ns][s3_key]
   endif
 -%}
 
@@ -76,7 +76,7 @@
   {%- endif -%}
 
   {%- comment -%} ── Sección 2 ────────────────────────────────────────────────── {%- endcomment -%}
-  {%- if s2_show and s2_value != blank -%}
+  {%- if s2_show and s2_obj != blank -%}
     {%- capture _s2_content -%}
       <details class="pdp-toggle" data-pdp-toggle>
         <summary class="pdp-toggle__header">
@@ -86,7 +86,7 @@
           </span>
         </summary>
         <div class="details-content pdp-toggle__body">
-          <div class="pdp-toggle__text rte">{{ s2_value }}</div>
+          <div class="pdp-toggle__text rte">{{ s2_obj | metafield_tag }}</div>
         </div>
       </details>
     {%- endcapture -%}
@@ -94,7 +94,7 @@
   {%- endif -%}
 
   {%- comment -%} ── Sección 3 ────────────────────────────────────────────────── {%- endcomment -%}
-  {%- if s3_show and s3_value != blank -%}
+  {%- if s3_show and s3_obj != blank -%}
     {%- capture _s3_content -%}
       <details class="pdp-toggle" data-pdp-toggle>
         <summary class="pdp-toggle__header">
@@ -104,7 +104,7 @@
           </span>
         </summary>
         <div class="details-content pdp-toggle__body">
-          <div class="pdp-toggle__text rte">{{ s3_value }}</div>
+          <div class="pdp-toggle__text rte">{{ s3_obj | metafield_tag }}</div>
         </div>
       </details>
     {%- endcapture -%}
