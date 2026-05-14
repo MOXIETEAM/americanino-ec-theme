@@ -258,13 +258,32 @@
                 }
               },
               "block_order": []
+            },
+            "custom_pdp_toggles_BkMYi3": {
+              "type": "custom_pdp_toggles",
+              "name": "Moxie Toggles PDP",
+              "settings": {
+                "desc_title": "Descripción",
+                "desc_open": true,
+                "desc_lines": 4,
+                "readmore_label": "Ver más...",
+                "readless_label": "Ver menos",
+                "s2_show": true,
+                "s2_title": "Composición y cuidados",
+                "s2_metafield": "custom.composicion_cuidados",
+                "s3_show": true,
+                "s3_title": "Lavado y especificaciones",
+                "s3_metafield": "custom.lavado_especificaciones"
+              },
+              "blocks": {}
             }
           },
           "block_order": [
             "group_icgrde",
             "text_aEtTtq",
             "variant_picker_R3rGDr",
-            "buy_buttons_eYQEYi"
+            "buy_buttons_eYQEYi",
+            "custom_pdp_toggles_BkMYi3"
           ]
         }
       },
