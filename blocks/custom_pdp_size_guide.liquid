@@ -1,0 +1,368 @@
+{%- comment -%} MOXIE: Conocer mi talla + Guía de tallas con modal {%- endcomment -%}
+
+{%- liquid
+  assign _product = closest.product
+
+  assign show_link  = block.settings.show_size_link
+  assign link_label = block.settings.size_link_label
+  assign link_url   = block.settings.size_link_url
+
+  assign show_guide   = block.settings.show_size_guide
+  assign guide_label  = block.settings.size_guide_label
+  assign guide_source = block.settings.size_guide_source
+
+  assign guide_image = nil
+  assign guide_video = nil
+
+  if show_guide
+    if guide_source == 'metafield'
+      assign guide_mf = block.settings.size_guide_metafield
+      if guide_mf contains '.'
+        assign mf_parts  = guide_mf | split: '.'
+        assign mf_ns     = mf_parts[0]
+        assign mf_key    = mf_parts[1]
+        assign mf_val    = _product.metafields[mf_ns][mf_key].value
+        if mf_val != blank
+          assign _mf_sources = mf_val.sources
+          if _mf_sources != blank
+            assign guide_video = mf_val
+          else
+            assign guide_image = mf_val
+          endif
+        endif
+      endif
+    else
+      if block.settings.size_guide_image != blank
+        assign guide_image = block.settings.size_guide_image
+      elsif block.settings.size_guide_video != blank
+        assign guide_video = block.settings.size_guide_video
+      endif
+    endif
+  endif
+
+  assign has_guide = false
+  if guide_image != blank or guide_video != blank
+    assign has_guide = true
+  endif
+-%}
+
+{%- if show_link or has_guide -%}
+<div class="pdp-size-links" {{ block.shopify_attributes }}>
+
+  {%- if show_link and link_url != blank -%}
+    <a
+      class="pdp-size-link"
+      href="{{ link_url }}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {{ link_label }}
+    </a>
+  {%- endif -%}
+
+  {%- if has_guide -%}
+    <button
+      type="button"
+      class="pdp-size-link pdp-size-link--guide"
+      aria-haspopup="dialog"
+      data-open-size-guide="{{ block.id }}"
+    >
+      <span class="pdp-size-link__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="10" rx="2"/>
+          <line x1="6" y1="7" x2="6" y2="12"/>
+          <line x1="10" y1="7" x2="10" y2="10"/>
+          <line x1="14" y1="7" x2="14" y2="12"/>
+          <line x1="18" y1="7" x2="18" y2="10"/>
+        </svg>
+      </span>
+      {{ guide_label }}
+    </button>
+
+    <dialog
+      id="pdp-size-guide-{{ block.id }}"
+      class="pdp-size-guide-dialog"
+      aria-label="{{ guide_label }}"
+    >
+      <button
+        type="button"
+        class="pdp-size-guide-dialog__close"
+        aria-label="Cerrar"
+        data-close-size-guide
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="pdp-size-guide-dialog__media">
+        {%- if guide_image != blank -%}
+          <img
+            class="pdp-size-guide-dialog__img"
+            src="{{ guide_image | image_url: width: 1200 }}"
+            alt="{{ guide_label }}"
+            loading="lazy"
+          >
+        {%- elsif guide_video != blank -%}
+          <video
+            class="pdp-size-guide-dialog__video"
+            controls
+            playsinline
+            preload="metadata"
+          >
+            {%- for source in guide_video.sources -%}
+              <source src="{{ source.url }}" type="{{ source.mime_type }}">
+            {%- endfor -%}
+          </video>
+        {%- endif -%}
+      </div>
+    </dialog>
+  {%- endif -%}
+
+</div>
+{%- endif -%}
+
+<script>
+(function () {
+  var dialog = document.getElementById('pdp-size-guide-{{ block.id }}');
+  if (!dialog) return;
+
+  var openBtn = document.querySelector('[data-open-size-guide="{{ block.id }}"]');
+  if (openBtn) {
+    openBtn.addEventListener('click', function () {
+      dialog.showModal();
+    });
+  }
+
+  var closeBtn = dialog.querySelector('[data-close-size-guide]');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      dialog.close();
+    });
+  }
+
+  dialog.addEventListener('click', function (e) {
+    var rect = dialog.getBoundingClientRect();
+    if (
+      e.clientX < rect.left || e.clientX > rect.right ||
+      e.clientY < rect.top  || e.clientY > rect.bottom
+    ) {
+      dialog.close();
+    }
+  });
+})();
+</script>
+
+{% stylesheet %}
+  .pdp-size-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .pdp-size-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: rgb(var(--color-foreground-rgb) / 0.65);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .pdp-size-link:hover {
+    color: rgb(var(--color-foreground-rgb));
+  }
+
+  .pdp-size-link__icon {
+    display: flex;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .pdp-size-link__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* ── Dialog ─────────────────────────────────────────────── */
+
+  .pdp-size-guide-dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    padding: 0;
+    border: none;
+    border-radius: 12px;
+    background: rgb(var(--color-background-rgb, 255 255 255));
+    box-shadow: 0 20px 60px rgb(0 0 0 / 0.25);
+    max-width: min(92vw, 720px);
+    max-height: 90dvh;
+    overflow: hidden;
+  }
+
+  .pdp-size-guide-dialog::backdrop {
+    background: rgb(0 0 0 / 0.55);
+    backdrop-filter: blur(3px);
+  }
+
+  .pdp-size-guide-dialog[open] {
+    animation: sg-in 0.22s cubic-bezier(0.33, 1, 0.68, 1) both;
+  }
+
+  @keyframes sg-in {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pdp-size-guide-dialog[open] {
+      animation: none;
+    }
+  }
+
+  .pdp-size-guide-dialog__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background: rgb(var(--color-foreground-rgb) / 0.08);
+    color: rgb(var(--color-foreground-rgb));
+    transition: background 0.15s ease;
+  }
+
+  .pdp-size-guide-dialog__close:hover {
+    background: rgb(var(--color-foreground-rgb) / 0.16);
+  }
+
+  .pdp-size-guide-dialog__close svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+  }
+
+  .pdp-size-guide-dialog__media {
+    width: 100%;
+    max-height: 90dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .pdp-size-guide-dialog__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .pdp-size-guide-dialog__video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 80dvh;
+    background: #000;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie — Guía de tallas",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Conocer mi talla"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_size_link",
+      "label": "Mostrar enlace",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "size_link_label",
+      "label": "Texto",
+      "default": "Conocer mi talla"
+    },
+    {
+      "type": "url",
+      "id": "size_link_url",
+      "label": "URL (abre en nueva pestaña)"
+    },
+    {
+      "type": "header",
+      "content": "Guía de tallas"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_size_guide",
+      "label": "Mostrar guía de tallas",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "size_guide_label",
+      "label": "Texto del botón",
+      "default": "Guía de tallas"
+    },
+    {
+      "type": "select",
+      "id": "size_guide_source",
+      "label": "Fuente del archivo",
+      "options": [
+        { "value": "metafield", "label": "Metacampo del producto" },
+        { "value": "editor",    "label": "Archivo global (editor)" }
+      ],
+      "default": "metafield",
+      "info": "Metacampo: cada producto puede tener su propia guía. Editor: un archivo igual para todos los productos."
+    },
+    {
+      "type": "text",
+      "id": "size_guide_metafield",
+      "label": "Metacampo (namespace.key)",
+      "default": "custom.guia_de_tallas",
+      "info": "Tipo requerido: file_reference. Acepta imagen o video subido a Shopify Files."
+    },
+    {
+      "type": "image_picker",
+      "id": "size_guide_image",
+      "label": "Imagen global",
+      "info": "Solo aplica si la fuente es 'Archivo global'."
+    },
+    {
+      "type": "video",
+      "id": "size_guide_video",
+      "label": "Video global",
+      "info": "Solo aplica si la fuente es 'Archivo global' y no hay imagen configurada."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Guía de Tallas",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}
