@@ -229,11 +229,12 @@
               "settings": {
                 "show_size_link": true,
                 "size_link_label": "Conocer mi talla",
-                "size_link_url": "",
+                "size_link_url": "/",
                 "show_size_guide": true,
                 "size_guide_label": "Guía de tallas",
-                "size_guide_source": "metafield",
-                "size_guide_metafield": "custom.guia_de_tallas"
+                "size_guide_source": "editor",
+                "size_guide_metafield": "custom.guia_de_tallas",
+                "size_guide_image": "shopify://shop_images/70_601H002_VER195220_0.jpg"
               },
               "blocks": {}
             },
