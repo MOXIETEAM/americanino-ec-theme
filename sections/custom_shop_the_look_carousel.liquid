@@ -6,7 +6,7 @@
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
-<div class="custom-shop-the-look-mox custom-center-container">
+<div class="custom-shop-the-look-mox custom-center-container"{% if section.settings.enable_stacking %} data-stacking="overlay"{% endif %}>
 <shop-the-look-carousel
   class="
   custom-standar-max-width
@@ -142,6 +142,17 @@
       "step": 4,
       "unit": "px",
       "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Apilamiento sticky"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_stacking",
+      "label": "Activar apilamiento sobre sección anterior",
+      "info": "Desliza esta sección sobre el Hero sticky. Requiere que el apilamiento esté activo también en Moxie Hero.",
+      "default": false
     }
   ],
   "presets": [

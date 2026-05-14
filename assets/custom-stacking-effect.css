@@ -1,0 +1,63 @@
+/* =======================================================================
+   Moxie — Stacked Panels Effect
+
+   El Hero hace position: sticky DENTRO del wrapper (.moxie-stacking-wrapper)
+   que JS crea alrededor de Hero + Shop the Look.  Al terminar el wrapper,
+   el Hero se desprende y desaparece con él, sin tapar las secciones
+   siguientes.
+
+   Especificidad: #MainContent eleva a (1,x,0) para superar la regla de
+   base.css:  .shopify-section:not(.header-section):has(.section) → (0,3,0)
+   ======================================================================= */
+
+/* -----------------------------------------------------------------------
+   1. Wrapper — contenedor que delimita el sticky del Hero
+   No lleva overflow ni position que rompa el sticky de hijos.
+   ----------------------------------------------------------------------- */
+.moxie-stacking-wrapper {
+  display: block;
+}
+
+/* -----------------------------------------------------------------------
+   2. Hero — sticky confinado al wrapper
+   Se pega al viewport mientras el wrapper tenga espacio de scroll.
+   Cuando el wrapper termina, el Hero se desprende y sale de pantalla.
+   ----------------------------------------------------------------------- */
+#MainContent .moxie-stacking-wrapper > .shopify-section:has([data-stacking="hero"]) {
+  position: sticky;
+  top: var(--header-height, 0px);
+  z-index: 1;
+}
+
+/* -----------------------------------------------------------------------
+   3. Overlay — desliza por encima del Hero
+   ----------------------------------------------------------------------- */
+#MainContent .moxie-stacking-wrapper > .shopify-section:has([data-stacking="overlay"]) {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------------------
+   4. Clases de fallback para navegadores sin :has()
+   JS las añade directamente al .shopify-section wrapper.
+   ----------------------------------------------------------------------- */
+#MainContent .moxie-stacking-wrapper > .moxie-stacking-hero {
+  position: sticky;
+  top: var(--header-height, 0px);
+  z-index: 1;
+}
+
+#MainContent .moxie-stacking-wrapper > .moxie-stacking-overlay {
+  position: relative;
+  z-index: 2;
+}
+
+/* -----------------------------------------------------------------------
+   5. prefers-reduced-motion
+   ----------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #MainContent .moxie-stacking-wrapper > .shopify-section:has([data-stacking="hero"]),
+  #MainContent .moxie-stacking-wrapper > .moxie-stacking-hero {
+    position: relative;
+  }
+}

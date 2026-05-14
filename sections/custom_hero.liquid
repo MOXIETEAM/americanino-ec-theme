@@ -450,6 +450,11 @@
   {% endif %}
 {% endcapture %}
 
+{%- if section.settings.enable_stacking -%}
+  {{ 'custom-stacking-effect.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'custom-stacking-effect.js' | asset_url }}" defer></script>
+{%- endif -%}
+
 <div
   id="Hero-{{ section.id }}"
   class="hero color-{{ section.settings.color_scheme }}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %}"
@@ -471,6 +476,9 @@
   {% endif %}
   {% if section.settings.blurred_reflection and has_only_video == false or has_only_video_mobile == false %}
     data-blur-shadow="true"
+  {% endif %}
+  {% if section.settings.enable_stacking %}
+    data-stacking="hero"
   {% endif %}
 >
   {% if section.settings.blurred_reflection %}
@@ -1245,6 +1253,17 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Apilamiento sticky"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_stacking",
+      "label": "Activar apilamiento con sección siguiente",
+      "info": "Mantiene el Hero fijo mientras la sección siguiente desliza sobre él. Actívalo también en la sección Moxie Shop the Look.",
+      "default": false
     }
   ],
   "presets": [
