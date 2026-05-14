@@ -14,8 +14,8 @@
 
   <div class="pdp-tech-badges" {{ block.shopify_attributes }}>
     {%- for badge in tech_list -%}
-      {%- assign b_icon = badge.icon.value -%}
-      {%- assign b_name = badge.name.value -%}
+      {%- assign b_icon = badge.icono.value -%}
+      {%- assign b_name = badge.nombre.value -%}
       {%- if b_icon != blank or b_name != blank -%}
         <div class="pdp-tech-badge">
           {%- if b_icon != blank -%}
@@ -123,8 +123,6 @@
     width: 56px;
     height: 56px;
     object-fit: contain;
-    filter: grayscale(1);
-    opacity: 0.6;
     display: block;
   }
 
