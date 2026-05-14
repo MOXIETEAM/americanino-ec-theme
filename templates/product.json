@@ -223,6 +223,20 @@
               },
               "blocks": {}
             },
+            "custom_pdp_size_guide_EEqkPd": {
+              "type": "custom_pdp_size_guide",
+              "name": "Moxie Guía de Tallas",
+              "settings": {
+                "show_size_link": true,
+                "size_link_label": "Conocer mi talla",
+                "size_link_url": "",
+                "show_size_guide": true,
+                "size_guide_label": "Guía de tallas",
+                "size_guide_source": "metafield",
+                "size_guide_metafield": "custom.guia_de_tallas"
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -306,6 +320,7 @@
             "group_icgrde",
             "text_aEtTtq",
             "variant_picker_R3rGDr",
+            "custom_pdp_size_guide_EEqkPd",
             "buy_buttons_eYQEYi",
             "custom_pdp_toggles_BkMYi3",
             "custom_pdp_tech_badges_DGkRLn",
