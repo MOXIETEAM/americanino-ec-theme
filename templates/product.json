@@ -276,6 +276,19 @@
                 "s3_metafield": "custom.lavado_especificaciones"
               },
               "blocks": {}
+            },
+            "custom_pdp_tech_badges_DGkRLn": {
+              "type": "custom_pdp_tech_badges",
+              "name": "Moxie Tech Badges PDP",
+              "settings": {
+                "show_global": true,
+                "tech_1_label": "AirFlow™",
+                "tech_2_label": "DrySoft™",
+                "tech_3_label": "EcoWave™",
+                "tech_4_label": "",
+                "tech_5_label": ""
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -283,7 +296,8 @@
             "text_aEtTtq",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "custom_pdp_toggles_BkMYi3"
+            "custom_pdp_toggles_BkMYi3",
+            "custom_pdp_tech_badges_DGkRLn"
           ]
         }
       },
