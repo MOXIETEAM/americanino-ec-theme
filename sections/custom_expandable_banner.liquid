@@ -1,0 +1,719 @@
+{%- comment -%} MOXIE: Expandable Banner Slider — se expande al entrar al viewport {%- endcomment -%}
+
+{%- liquid
+  assign first_block = section.blocks | first
+-%}
+
+<section
+  class="expand-banner color-{{ section.settings.color_scheme }}"
+  id="expand-banner-{{ section.id }}"
+  data-expand-banner
+  style="
+    --eb-mini-h: {{ section.settings.mini_height }};
+    --eb-full-h: {{ section.settings.full_height }};
+    --eb-mini-margin: {{ section.settings.mini_margin }}px;
+    --eb-mini-margin-mobile: {{ section.settings.mini_margin_mobile }}px;
+    --eb-mini-radius: {{ section.settings.mini_radius }}px;
+    --eb-expand: 0;
+    --eb-section-pt: {{ section.settings.padding_top }}px;
+    --eb-section-pb: {{ section.settings.padding_bottom }}px;
+  "
+>
+
+  {%- comment -%} Cabecera mini — visible en estado colapsado {%- endcomment -%}
+  <div class="expand-banner__mini-header" data-mini-header>
+    <p class="expand-banner__mini-label" data-mini-label>
+      {{- first_block.settings.mini_label -}}
+    </p>
+    <h2 class="expand-banner__mini-title" data-mini-title>
+      {{- first_block.settings.mini_title -}}
+    </h2>
+  </div>
+
+  {%- comment -%} Media wrap — este es el elemento que crece {%- endcomment -%}
+  <div class="expand-banner__media-wrap" data-media-wrap>
+
+    {%- comment -%} Track del slider {%- endcomment -%}
+    <div class="expand-banner__track" data-track>
+      {%- for block in section.blocks -%}
+        <div
+          class="expand-banner__slide"
+          data-slide="{{ forloop.index0 }}"
+          data-mini-label="{{ block.settings.mini_label | escape }}"
+          data-mini-title="{{ block.settings.mini_title | escape }}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image -%}
+            <img
+              class="expand-banner__img"
+              src="{{ block.settings.image | image_url: width: 2400, crop: 'center' }}"
+              alt="{{ block.settings.image.alt | default: block.settings.mini_title | escape }}"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            >
+          {%- else -%}
+            <div class="expand-banner__img-placeholder"></div>
+          {%- endif -%}
+
+          {%- comment -%} Contenido superpuesto — visible en estado expandido {%- endcomment -%}
+          {%- if block.settings.overlay_title != blank or block.settings.cta_label != blank -%}
+            <div class="expand-banner__overlay-content expand-banner__overlay-content--{{ block.settings.overlay_position }}">
+              {%- if block.settings.overlay_label != blank -%}
+                <p class="expand-banner__overlay-label">{{ block.settings.overlay_label }}</p>
+              {%- endif -%}
+              {%- if block.settings.overlay_title != blank -%}
+                <h2 class="expand-banner__overlay-title">{{ block.settings.overlay_title }}</h2>
+              {%- endif -%}
+              {%- if block.settings.cta_label != blank -%}
+                <a
+                  href="{{ block.settings.cta_link }}"
+                  class="expand-banner__cta"
+                  {% if block.settings.cta_link == blank %}aria-hidden="true" tabindex="-1"{% endif %}
+                >
+                  {{ block.settings.cta_label }}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- comment -%} Flechas de navegación {%- endcomment -%}
+    {%- if section.blocks.size > 1 -%}
+      <button class="expand-banner__arrow expand-banner__arrow--prev" data-prev aria-label="Anterior">
+        {{- 'icon-chevron-left.svg' | inline_asset_content -}}
+      </button>
+      <button class="expand-banner__arrow expand-banner__arrow--next" data-next aria-label="Siguiente">
+        {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+      </button>
+    {%- endif -%}
+
+    {%- comment -%} Indicadores de posición {%- endcomment -%}
+    {%- if section.blocks.size > 1 -%}
+      <div class="expand-banner__dots" data-dots aria-hidden="true">
+        {%- for block in section.blocks -%}
+          <button
+            class="expand-banner__dot{% if forloop.first %} is-active{% endif %}"
+            data-dot="{{ forloop.index0 }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    var banner = document.getElementById('expand-banner-{{ section.id }}');
+    if (!banner) return;
+
+    var mediaWrap   = banner.querySelector('[data-media-wrap]');
+    var track       = banner.querySelector('[data-track]');
+    var miniHeader  = banner.querySelector('[data-mini-header]');
+    var miniLabel   = banner.querySelector('[data-mini-label]');
+    var miniTitle   = banner.querySelector('[data-mini-title]');
+    var slides      = banner.querySelectorAll('[data-slide]');
+    var dots        = banner.querySelectorAll('[data-dot]');
+    var prevBtn     = banner.querySelector('[data-prev]');
+    var nextBtn     = banner.querySelector('[data-next]');
+
+    if (slides.length === 0) return;
+
+    /* ── Slider ─────────────────────────────────────────────── */
+
+    var current     = 0;
+    var autoplay    = {{ section.settings.autoplay | json }};
+    var delay       = {{ section.settings.autoplay_delay | times: 1000 }};
+    var timer       = null;
+
+    function goTo(index) {
+      var len = slides.length;
+      current = ((index % len) + len) % len;
+
+      // Mover track
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+
+      // Dots
+      dots.forEach(function (d, i) {
+        d.classList.toggle('is-active', i === current);
+      });
+
+      // Actualizar cabecera mini con fade
+      var slide = slides[current];
+      miniHeader.classList.add('is-changing');
+      setTimeout(function () {
+        miniLabel.textContent = slide.dataset.miniLabel || '';
+        miniTitle.textContent = slide.dataset.miniTitle || '';
+        miniHeader.classList.remove('is-changing');
+      }, 180);
+    }
+
+    function startTimer() {
+      if (!autoplay || slides.length < 2) return;
+      timer = setInterval(function () { goTo(current + 1); }, delay);
+    }
+
+    function stopTimer() { clearInterval(timer); }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { stopTimer(); goTo(current - 1); startTimer(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { stopTimer(); goTo(current + 1); startTimer(); });
+
+    dots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { stopTimer(); goTo(i); startTimer(); });
+    });
+
+    banner.addEventListener('mouseenter', stopTimer);
+    banner.addEventListener('mouseleave', startTimer);
+
+    // Touch / swipe
+    var touchStartX = 0;
+    mediaWrap.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+    }, { passive: true });
+    mediaWrap.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) { stopTimer(); goTo(current + (dx < 0 ? 1 : -1)); startTimer(); }
+    }, { passive: true });
+
+    startTimer();
+
+    /* ── Expand ligado al scroll ─────────────────────────────── */
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      banner.style.setProperty('--eb-expand', '1');
+      return;
+    }
+
+    function getExpandRatio() {
+      var rect = banner.getBoundingClientRect();
+      var vh   = window.innerHeight;
+
+      // Completamente fuera del viewport
+      if (rect.top > vh || rect.bottom < 0) return 0;
+
+      // Fracción del elemento visible en el viewport
+      var visiblePx = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+      var fraction  = visiblePx / Math.min(rect.height || 1, vh);
+
+      // 0% visible → expand 0 | ≥55% visible → expand 1
+      return Math.min(1, fraction / 0.55);
+    }
+
+    var ticking = false;
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var ratio = getExpandRatio();
+        banner.style.setProperty('--eb-expand', ratio.toFixed(4));
+        // Habilitar flechas sólo cuando esté suficientemente expandido
+        if (ratio > 0.6) {
+          mediaWrap.setAttribute('data-arrows-active', '');
+        } else {
+          mediaWrap.removeAttribute('data-arrows-active');
+        }
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // Estado inicial
+  })();
+</script>
+
+{% stylesheet %}
+  /* ── Sección contenedora ──────────────────────────────────── */
+
+  .expand-banner {
+    position: relative;
+    width: 100%;
+    padding-block-start: var(--eb-section-pt, 40px);
+    padding-block-end: var(--eb-section-pb, 40px);
+  }
+
+  /* ── Cabecera mini ──────────────────────────────────────────── */
+
+  .expand-banner__mini-header {
+    padding-inline: var(--page-margin, 24px);
+    padding-block-end: 20px;
+    opacity: clamp(0, calc(1 - var(--eb-expand, 0) * 2.8), 1);
+    transform: translateY(calc(var(--eb-expand, 0) * -10px));
+  }
+
+  .expand-banner__mini-header.is-changing {
+    opacity: 0;
+  }
+
+  .expand-banner__mini-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+    margin: 0 0 8px;
+  }
+
+  .expand-banner__mini-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: rgb(var(--color-foreground-rgb));
+    margin: 0;
+  }
+
+  /* ── Media wrap — el elemento que crece ──────────────────── */
+
+  .expand-banner__media-wrap {
+    position: relative;
+    overflow: hidden;
+    margin-inline: calc(var(--eb-mini-margin, 40px) * (1 - var(--eb-expand, 0)));
+    height: calc(
+      (var(--eb-mini-h, 42) +
+      (var(--eb-full-h, 86) - var(--eb-mini-h, 42)) * var(--eb-expand, 0)) * 1vh
+    );
+    border-radius: calc(var(--eb-mini-radius, 16px) * (1 - var(--eb-expand, 0)));
+
+    /* Gradiente sobre la imagen para legibilidad del texto */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgb(0 0 0 / 0.65) 0%,
+        rgb(0 0 0 / 0.25) 35%,
+        transparent 65%
+      );
+      opacity: var(--eb-expand, 0);
+      pointer-events: none;
+      z-index: 1;
+    }
+  }
+
+  /* ── Track del slider ────────────────────────────────────── */
+
+  .expand-banner__track {
+    display: flex;
+    height: 100%;
+    will-change: transform;
+    transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .expand-banner__slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .expand-banner__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .expand-banner__img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: rgb(var(--color-foreground-rgb) / 0.08);
+  }
+
+  /* ── Contenido superpuesto ───────────────────────────────── */
+
+  .expand-banner__overlay-content {
+    position: absolute;
+    z-index: 2;
+    padding: 32px 40px;
+    color: #fff;
+    opacity: clamp(0, calc((var(--eb-expand, 0) - 0.45) * 3.5), 1);
+    transform: translateY(calc((1 - var(--eb-expand, 0)) * 20px));
+    pointer-events: none;
+  }
+
+  .expand-banner__media-wrap[data-arrows-active] .expand-banner__overlay-content {
+    pointer-events: auto;
+  }
+
+  .expand-banner__overlay-content--bottom-left {
+    bottom: 0;
+    left: 0;
+  }
+
+  .expand-banner__overlay-content--bottom-center {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc((1 - var(--eb-expand, 0)) * 20px));
+    text-align: center;
+  }
+
+  .expand-banner__overlay-content--bottom-right {
+    bottom: 0;
+    right: 0;
+    text-align: right;
+  }
+
+  .expand-banner__overlay-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin: 0 0 10px;
+  }
+
+  .expand-banner__overlay-title {
+    font-size: clamp(1.5rem, 3vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 20px;
+  }
+
+  .expand-banner__cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 26px;
+    border: 1.5px solid rgba(255, 255, 255, 0.75);
+    border-radius: 40px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .expand-banner__cta:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: #fff;
+  }
+
+  /* ── Flechas ─────────────────────────────────────────────── */
+
+  .expand-banner__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: clamp(0, calc((var(--eb-expand, 0) - 0.6) * 4), 1);
+    pointer-events: none;
+    transition: background 0.2s;
+  }
+
+  .expand-banner__media-wrap[data-arrows-active] .expand-banner__arrow {
+    pointer-events: auto;
+  }
+
+  .expand-banner__arrow--prev { left: 20px; }
+  .expand-banner__arrow--next { right: 20px; }
+
+  .expand-banner__arrow:hover { background: #fff; }
+
+  .expand-banner__arrow svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+
+  /* ── Dots ────────────────────────────────────────────────── */
+
+  .expand-banner__dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+    opacity: clamp(0, calc((var(--eb-expand, 0) - 0.5) * 4), 1);
+  }
+
+  .expand-banner__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s, width 0.3s, border-radius 0.3s;
+  }
+
+  .expand-banner__dot.is-active {
+    background: #fff;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  /* ── Mobile ──────────────────────────────────────────────── */
+
+  @media (max-width: 749px) {
+    .expand-banner__mini-title {
+      font-size: 1.25rem;
+    }
+
+    .expand-banner__media-wrap {
+      margin-inline: calc(var(--eb-mini-margin-mobile, 16px) * (1 - var(--eb-expand, 0)));
+    }
+
+    .expand-banner__overlay-content {
+      padding: 24px 20px;
+    }
+
+    .expand-banner__overlay-title {
+      font-size: clamp(1.25rem, 5vw, 2rem);
+      margin-block-end: 14px;
+    }
+
+    .expand-banner__arrow {
+      width: 36px;
+      height: 36px;
+    }
+
+    .expand-banner__arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  /* ── prefers-reduced-motion ──────────────────────────────── */
+
+  @media (prefers-reduced-motion: reduce) {
+    .expand-banner__media-wrap {
+      margin-inline: 0 !important;
+      height: calc(var(--eb-full-h, 86) * 1vh) !important;
+      border-radius: 0 !important;
+    }
+
+    .expand-banner__media-wrap::after,
+    .expand-banner__overlay-content,
+    .expand-banner__arrow,
+    .expand-banner__dots {
+      opacity: 1 !important;
+    }
+
+    .expand-banner__overlay-content {
+      pointer-events: auto !important;
+      transform: none !important;
+    }
+
+    .expand-banner__arrow,
+    .expand-banner__dots {
+      pointer-events: auto !important;
+    }
+
+    .expand-banner__mini-header {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie — Expandable Banner",
+  "tag": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "header",
+          "content": "Estado miniatura"
+        },
+        {
+          "type": "text",
+          "id": "mini_label",
+          "label": "Etiqueta pequeña",
+          "default": "Lorem ipsum"
+        },
+        {
+          "type": "text",
+          "id": "mini_title",
+          "label": "Título",
+          "default": "Lorem ipsum"
+        },
+        {
+          "type": "header",
+          "content": "Estado expandido (superpuesto)"
+        },
+        {
+          "type": "text",
+          "id": "overlay_label",
+          "label": "Etiqueta pequeña",
+          "default": "Lorem ipsusom"
+        },
+        {
+          "type": "text",
+          "id": "overlay_title",
+          "label": "Título grande",
+          "default": "Lorem ipsum"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "Texto del botón",
+          "default": "Ver colección"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "Enlace del botón"
+        },
+        {
+          "type": "select",
+          "id": "overlay_position",
+          "label": "Posición del texto",
+          "options": [
+            { "value": "bottom-left",   "label": "Abajo izquierda" },
+            { "value": "bottom-center", "label": "Abajo centro" },
+            { "value": "bottom-right",  "label": "Abajo derecha" }
+          ],
+          "default": "bottom-left"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Dimensiones"
+    },
+    {
+      "type": "range",
+      "id": "mini_height",
+      "label": "Altura miniatura (vh)",
+      "min": 4,
+      "max": 70,
+      "step": 2,
+      "default": 42,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "full_height",
+      "label": "Altura expandida (vh)",
+      "min": 50,
+      "max": 100,
+      "step": 2,
+      "default": 86,
+      "unit": "vh"
+    },
+    {
+      "type": "range",
+      "id": "mini_margin",
+      "label": "Margen lateral miniatura — desktop (px)",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "default": 48,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mini_margin_mobile",
+      "label": "Margen lateral miniatura — móvil (px)",
+      "min": 0,
+      "max": 60,
+      "step": 4,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "mini_radius",
+      "label": "Radio de borde miniatura (px)",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Tiempo por slide (s)",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 5,
+      "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "Diseño"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Esquema de color",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior (px)",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 40,
+      "unit": "px"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Expandable Banner",
+      "category": "Moxie",
+      "blocks": [
+        { "type": "slide" },
+        { "type": "slide" },
+        { "type": "slide" }
+      ]
+    }
+  ]
+}
+{% endschema %}

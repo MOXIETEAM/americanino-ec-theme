@@ -435,6 +435,49 @@
         "installments_text": "0% de interés hasta 3 cuotas ver bancos"
       }
     },
+    "custom_expandable_banner_moxEB": {
+      "type": "custom_expandable_banner",
+      "blocks": {
+        "slide_eb1": {
+          "type": "slide",
+          "settings": {
+            "mini_label": "Nueva temporada",
+            "mini_title": "Primavera – Verano",
+            "overlay_label": "Nueva temporada",
+            "overlay_title": "Primavera – Verano",
+            "cta_label": "Ver colección",
+            "cta_link": "",
+            "overlay_position": "bottom-left"
+          }
+        },
+        "slide_eb2": {
+          "type": "slide",
+          "settings": {
+            "mini_label": "Nueva temporada",
+            "mini_title": "Otoño – Invierno",
+            "overlay_label": "Nueva temporada",
+            "overlay_title": "Otoño – Invierno",
+            "cta_label": "Ver colección",
+            "cta_link": "",
+            "overlay_position": "bottom-left"
+          }
+        }
+      },
+      "block_order": ["slide_eb1", "slide_eb2"],
+      "name": "Moxie Expandable Banner",
+      "settings": {
+        "mini_height": 42,
+        "full_height": 86,
+        "mini_margin": 48,
+        "mini_margin_mobile": 16,
+        "mini_radius": 16,
+        "autoplay": true,
+        "autoplay_delay": 5,
+        "color_scheme": "scheme-1",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
     "product_list_XzeenX": {
       "type": "product-list",
       "blocks": {
@@ -638,6 +681,7 @@
     "custom_best_seller_3gRU3k",
     "custom_category_grid_fBUh4r",
     "lookbook_featured_tQHMhT",
+    "custom_expandable_banner_moxEB",
     "product_list_XzeenX"
   ]
 }
