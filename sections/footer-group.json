@@ -134,9 +134,9 @@
         "trust_badge_2_alt": "",
         "trust_badge_2_url": "",
         "legal_text": "<p>©2025 Americanino, todos los derechos reservados</p>",
-        "bottom_bar_bg": "",
+        "bottom_bar_bg": "#ffffff",
         "color_scheme": "scheme-1",
-        "bg_color": "#eeeeee"
+        "bg_color": "#1e2b51"
       }
     }
   },
