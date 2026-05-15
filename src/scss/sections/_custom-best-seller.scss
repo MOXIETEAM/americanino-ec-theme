@@ -28,19 +28,24 @@
   gap: 4px;
 }
 
+.mox-bs 
 .mox-bs__title {
   margin: 0;
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
-  font-weight: 700;
-  color: var(--color-foreground);
-  line-height: 1.1;
+  margin-block-end: 8px;
+  font-weight: 500 !important;
+  font-size: 32px !important;
+  line-height: 36px;
+  color: #1E2B51 !important;
+  text-transform: none;
 }
 
+.mox-bs 
 .mox-bs__subtitle {
   margin: 0;
-  font-size: 0.875rem;
-  color: rgb(var(--color-foreground-rgb) / 0.55);
-  line-height: 1.4;
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 100%;
+  color: #1E2B51 !important;
 }
 
 .mox-bs__btn {
