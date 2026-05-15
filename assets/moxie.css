@@ -4254,7 +4254,7 @@ shop-the-look-item {
 @media screen and (min-width: 750px) {
   .custom-footer__brand-area {
     grid-column: 1;
-    border-inline-end: 1px solid rgb(var(--color-foreground-rgb)/0.15);
+    border-inline-end: 1px solid #FFFFFF;
     padding-inline-end: 36px;
   }
 }
@@ -4279,7 +4279,7 @@ shop-the-look-item {
 .custom-footer__brand-tagline {
   font-size: 0.8125rem;
   line-height: 1.55;
-  color: rgb(var(--color-foreground-rgb)/0.75);
+  color: #FFFFFF;
   margin: 0 0 14px;
   max-width: 260px;
   text-align: center;
@@ -4344,7 +4344,7 @@ shop-the-look-item {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: rgb(var(--color-foreground-rgb));
+  color: #FFFFFF;
   text-decoration: none;
   opacity: 0.85;
   transition: opacity var(--animation-speed) var(--animation-easing);
@@ -4380,7 +4380,7 @@ shop-the-look-item {
   gap: 8px;
   font-size: 0.8125rem;
   line-height: 1.4;
-  color: rgb(var(--color-foreground-rgb));
+  color: #FFFFFF;
   text-decoration: none;
   opacity: 0.7;
   transition: opacity var(--animation-speed) var(--animation-easing);
@@ -4415,7 +4415,7 @@ shop-the-look-item {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 0;
-  color: rgb(var(--color-foreground-rgb));
+  color: #FFFFFF;
 }
 
 .custom-footer__nav-list {
@@ -4430,7 +4430,7 @@ shop-the-look-item {
 .custom-footer__nav-link {
   font-size: 0.8125rem;
   line-height: 1.45;
-  color: rgb(var(--color-foreground-rgb));
+  color: #FFFFFF;
   text-decoration: none;
   opacity: 0.65;
   transition: opacity var(--animation-speed) var(--animation-easing);
