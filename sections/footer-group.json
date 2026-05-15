@@ -76,13 +76,17 @@
         "brand_info_TE9bp4": {
           "type": "brand_info",
           "settings": {
+            "logo": "shopify://shop_images/image_31_Vectorized.svg",
+            "brand_tagline": "Suscríbete ahora nuestro Newsletter y recibe las ofertas exclusivas y lo último en moda",
+            "brand_cta_label": "Suscríbete ahora",
+            "brand_cta_url": "",
             "whatsapp_url": "/",
             "whatsapp_label": "Chat con un asesor de whatsapp",
             "phone": "+57 300 910 83 11",
             "email": "/",
             "store_locator_url": "/",
-            "instagram_url": "/",
             "facebook_url": "/",
+            "instagram_url": "/",
             "tiktok_url": "/",
             "youtube_url": "/"
           }
@@ -124,7 +128,13 @@
         "newsletter_url": "/",
         "newsletter_bg_color": "#f7f6f1",
         "tagline": "AMERICANINO",
-        "tagline_color": "",
+        "tagline_color": "#293762",
+        "trust_badge_1_alt": "",
+        "trust_badge_1_url": "",
+        "trust_badge_2_alt": "",
+        "trust_badge_2_url": "",
+        "legal_text": "<p>©2025 Americanino, todos los derechos reservados</p>",
+        "bottom_bar_bg": "",
         "color_scheme": "scheme-1",
         "bg_color": "#eeeeee"
       }
