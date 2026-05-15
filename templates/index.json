@@ -12,6 +12,20 @@
     "custom_hero_yVxjyj": {
       "type": "custom_hero",
       "blocks": {
+        "spacer_4keM9T": {
+          "type": "spacer",
+          "name": "t:names.spacer",
+          "settings": {
+            "size": "percent",
+            "percent_size": 40,
+            "pixel_size": 120,
+            "custom_mobile_size": false,
+            "size_mobile": "percent",
+            "percent_size_mobile": 100,
+            "pixel_size_mobile": 120
+          },
+          "blocks": {}
+        },
         "group_Ux93dA": {
           "type": "group",
           "name": "t:names.group",
@@ -115,6 +129,7 @@
         }
       },
       "block_order": [
+        "spacer_4keM9T",
         "group_Ux93dA",
         "text_PUQgip"
       ],
