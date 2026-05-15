@@ -40,21 +40,55 @@
       return;
     }
 
+    // Pre-compute collapsed height (always px from schema range setting)
+    var collapsedH = parseFloat(
+      getComputedStyle(banner).getPropertyValue('--banner-reveal-collapsed-height')
+    ) || 200;
+
+    // Convert svh → px so both endpoints are the same unit (px→px is smoother)
+    var svhVal = parseFloat(
+      getComputedStyle(banner).getPropertyValue('--banner-reveal-full-height')
+    ) || 80;
+    var fullH = Math.round(window.innerHeight * svhVal / 100);
+
+    // Lock both heights as px in CSS vars and set inline height as starting point
+    banner.style.setProperty('--banner-reveal-full-height', fullH + 'px');
+    banner.style.height = collapsedH + 'px';
+
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
+          if (entry.intersectionRatio >= 0.25) {
+            // Set the px target before adding the class so CSS transition gets px→px
+            banner.style.height = fullH + 'px';
             banner.classList.add('is-visible');
-          } else {
+          } else if (entry.intersectionRatio === 0) {
+            // Only reset when fully out of view — avoids flickering at the threshold boundary
+            banner.style.height = collapsedH + 'px';
             banner.classList.remove('is-visible');
           }
         });
       },
-      { threshold: 0.25 }
+      { threshold: [0, 0.25] }
     );
 
     observer.observe(banner);
     banner._bannerObserver = observer;
+
+    // Recalculate on resize (orientation change, window resize)
+    var resizeTimer;
+    function onResize() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        fullH = Math.round(window.innerHeight * svhVal / 100);
+        banner.style.setProperty('--banner-reveal-full-height', fullH + 'px');
+        if (banner.classList.contains('is-visible')) {
+          banner.style.height = fullH + 'px';
+        }
+      }, 150);
+    }
+    window.addEventListener('resize', onResize, { passive: true });
+    banner._bannerResizeHandler = onResize;
   }
 
   function init(banner) {
@@ -93,6 +127,7 @@
     if (!section) return;
     section.querySelectorAll('[data-banner-reveal]').forEach(function (banner) {
       if (banner._bannerObserver) banner._bannerObserver.disconnect();
+      if (banner._bannerResizeHandler) window.removeEventListener('resize', banner._bannerResizeHandler);
     });
   });
 })();

@@ -9,13 +9,16 @@
 
   position: relative;
   width: 100%;
+  /* JS sets an explicit px height so the transition is always px→px (no mixed units) */
   height: var(--banner-reveal-collapsed-height, 200px);
   overflow: hidden;
+  contain: layout style;
   transition: height var(--banner-dur) var(--banner-easing);
   will-change: height;
 }
 
 .banner-reveal.is-visible {
+  /* Height target is overridden to px by JS before the class is added */
   height: var(--banner-reveal-full-height, 80svh);
 }
 
@@ -42,19 +45,12 @@
 }
 
 /* -----------------------------------------------------------------------
-   Media — clip-path reveal + scale
+   Media — scale reveal (clip-path removed: height + clip-path simultaneous = jank)
    ----------------------------------------------------------------------- */
 .banner-reveal__media {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  clip-path: inset(8% round 6px);
-  transition: clip-path var(--banner-dur) var(--banner-easing);
-  will-change: clip-path;
-}
-
-.banner-reveal.is-visible .banner-reveal__media {
-  clip-path: inset(0% round 0px);
 }
 
 .banner-reveal__img {
@@ -213,12 +209,8 @@
    ----------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   .banner-reveal {
+    /* JS sets explicit px; fallback to svh if JS hasn't run yet */
     height: var(--banner-reveal-full-height, 80svh);
-    transition: none;
-  }
-
-  .banner-reveal__media {
-    clip-path: inset(0%);
     transition: none;
   }
 
