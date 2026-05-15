@@ -15,7 +15,7 @@
 <div class="moxie-brand-section custom-main-container-footer">
   {%- comment -%} ── Newsletter ───────────────────────────────────────────────── {%- endcomment -%}
   {%- if section.settings.show_newsletter -%}
-    <div class="custom-footer__newsletter custom-center-container">
+    <div class="custom-footer__newsletter custom-center-container color-{{ section.settings.color_scheme }}">
       <div class="custom-footer__newsletter_container custom-standar-max-width">
         {%- if section.settings.newsletter_deco_left_mic != blank -%}
           <img
@@ -380,18 +380,18 @@
               {%- if section.settings.trust_badge_1_url != blank -%}
                 <a href="{{ section.settings.trust_badge_1_url }}" class="custom-footer__trust-link" target="_blank" rel="noopener">
                   <img
-                    src="{{ section.settings.trust_badge_1 | image_url: height: 48 }}"
+                    src="{{ section.settings.trust_badge_1 | image_url: width: 120 }}"
                     alt="{{ section.settings.trust_badge_1_alt | default: 'Sello de confianza' }}"
-                    height="48"
-                    loading="lazy"
+                    height="40"
+                    loading="eager"
                   >
                 </a>
               {%- else -%}
                 <img
-                  src="{{ section.settings.trust_badge_1 | image_url: height: 48 }}"
+                  src="{{ section.settings.trust_badge_1 | image_url: width: 120 }}"
                   alt="{{ section.settings.trust_badge_1_alt | default: 'Sello de confianza' }}"
-                  height="48"
-                  loading="lazy"
+                  height="40"
+                  loading="eager"
                 >
               {%- endif -%}
             {%- endif -%}
@@ -399,18 +399,18 @@
               {%- if section.settings.trust_badge_2_url != blank -%}
                 <a href="{{ section.settings.trust_badge_2_url }}" class="custom-footer__trust-link" target="_blank" rel="noopener">
                   <img
-                    src="{{ section.settings.trust_badge_2 | image_url: height: 48 }}"
+                    src="{{ section.settings.trust_badge_2 | image_url: width: 120 }}"
                     alt="{{ section.settings.trust_badge_2_alt | default: 'Sello de confianza' }}"
-                    height="48"
-                    loading="lazy"
+                    height="40"
+                    loading="eager"
                   >
                 </a>
               {%- else -%}
                 <img
-                  src="{{ section.settings.trust_badge_2 | image_url: height: 48 }}"
+                  src="{{ section.settings.trust_badge_2 | image_url: width: 120 }}"
                   alt="{{ section.settings.trust_badge_2_alt | default: 'Sello de confianza' }}"
-                  height="48"
-                  loading="lazy"
+                  height="40"
+                  loading="eager"
                 >
               {%- endif -%}
             {%- endif -%}

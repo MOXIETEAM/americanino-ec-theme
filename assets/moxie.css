@@ -4169,7 +4169,7 @@ shop-the-look-item {
   line-height: 20px;
   font-weight: 300;
   max-width: 651px;
-  color: #000;
+  color: rgb(var(--color-foreground-rgb));
   margin: 0;
 }
 
@@ -4209,7 +4209,7 @@ shop-the-look-item {
   transform: translateX(-50%);
   position: absolute;
   top: 230px;
-  background-color: #F7F6F1;
+  background-color: var(--color-background);
   border-radius: 50%;
   z-index: 2;
   margin-block-start: -12px;
@@ -4502,7 +4502,7 @@ shop-the-look-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff !important;
+  background-color: var(--color-background);
 }
 .custom-footer__payments img.custom-footer__payments-img {
   display: block !important;
