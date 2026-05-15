@@ -7,16 +7,24 @@
   margin-bottom: 32px;
 }
 
-.lookbook-header h2 {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  font-weight: 700;
-  margin: 0 0 4px;
+.lookbook-mox-header-title {
+  h1, h2, h3, h4, h5, h6, p {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 100%;
+  color: #1E2B51;
+  text-transform: none;
+  }
 }
 
-.lookbook-header p {
-  color: #666;
-  font-size: 0.875rem;
-  margin: 0;
+.lookbook-mox-header-subtitle {
+  h1, h2, h3, h4, h5, h6, p {
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 18px;
+    color: #1E2B51;
+    text-transform: none;
+  }
 }
 
 .lookbook-grid {
@@ -97,16 +105,28 @@
   margin-top: 90px;
 }
 
-.lb-info small {
-  color: #888;
-  font-size: 0.8125rem;
+.lb-info
+.lb-info-small-product-card-mox {
+   font-weight: 300;
+    font-size: 16px;
+    line-height: 18px;
+    color: #1E2B51;
+    text-transform: none;
+    margin-bottom: 10px;
 }
 
-.lb-info h3 {
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
-  font-weight: 700;
-  margin: 6px 0 20px;
-  color: #1a1a2e;
+
+.lb-info 
+.lb-info-heading-product-card-mox {
+  h1, h2, h3, h4, h5, h6, p {
+font-weight: 500;
+font-size: 33px;
+line-height: 100%;
+letter-spacing: 0%;
+color: #1E2B51;
+text-transform: none;
+margin-bottom: 20px;
+  }
 }
 
 /* PRODUCT CARD */
@@ -131,15 +151,21 @@
 }
 
 .lb-installments {
-  font-size: 0.6875rem;
-  color: #888;
+font-weight: 400;
+font-size: 11.5px;
+line-height: 100%;
+letter-spacing: 0%;
+vertical-align: middle;
+
+  color: #737373;
   margin: 0;
 }
 
 .lb-title {
-  font-size: 0.875rem;
-  color: #1a1a2e;
-  line-height: 1.35;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1E2B51;
+  line-height: 18px;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -152,7 +178,14 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  font-size: 0.9375rem;
+font-weight: 600;
+font-size: 14px;
+line-height: 100%;
+letter-spacing: 0%;
+vertical-align: middle;
+text-transform: capitalize;
+
+  color: #24272A;
 }
 
 .lb-price del {
@@ -211,8 +244,12 @@
 
   <!-- HEADER -->
   <div class="lookbook-header">
-    {%- if s.title != blank -%}<h2>{{ s.title }}</h2>{%- endif -%}
-    {%- if s.subtitle != blank -%}<p>{{ s.subtitle }}</p>{%- endif -%}
+    <div class="lookbook-mox-header-title">
+      {%- if s.title != blank -%}<h2>{{ s.title }}</h2>{%- endif -%}
+    </div>
+    <div class="lookbook-mox-header-subtitle">
+      {%- if s.subtitle != blank -%}<p>{{ s.subtitle }}</p>{%- endif -%}
+    </div>
   </div>
 
   <div class="lookbook-grid">
@@ -248,8 +285,12 @@
 
     <!-- RIGHT INFO -->
     <div class="lb-info">
-      {%- if s.small != blank -%}<small>{{ s.small }}</small>{%- endif -%}
-      {%- if s.heading != blank -%}<h3>{{ s.heading }}</h3>{%- endif -%}
+      <div class="lb-info-small-product-card-mox"> 
+        {%- if s.small != blank -%}<p>{{ s.small }}</p>{%- endif -%}
+      </div>
+      <div class="lb-info-heading-product-card-mox"> 
+        {%- if s.heading != blank -%}<h3>{{ s.heading }}</h3>{%- endif -%}
+      </div>
       <div id="lb-product-box"></div>
     </div>
 
