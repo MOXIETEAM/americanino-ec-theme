@@ -349,7 +349,7 @@
         "header_gap": 20,
         "slides_desktop": "4.5",
         "slides_mobile": "1.5",
-        "show_arrows": false,
+        "show_arrows": true,
         "show_dots": false,
         "card_gap": 3,
         "label_size": 26,
