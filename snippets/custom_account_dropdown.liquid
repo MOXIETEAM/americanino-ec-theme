@@ -1,0 +1,28 @@
+{% assign dropdown_links = linklists[menu].links %}
+
+<custom-account-dropdown class="account-button header-actions__action">
+  <button
+    ref="trigger"
+    on:click="/onToggle"
+    class="custom-account-dropdown__trigger"
+    aria-expanded="false"
+    aria-haspopup="listbox"
+    aria-label="{{ 'content.account_title' | t }}"
+  >
+    {{ account_icon }}
+  </button>
+
+  {% if dropdown_links.size > 0 %}
+    <ul ref="menu" class="custom-account-dropdown__menu" hidden>
+      {% for link in dropdown_links %}
+        <li class="custom-account-dropdown__item">
+          <a href="{{ link.url }}" class="custom-account-dropdown__link">
+            {{- link.title -}}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</custom-account-dropdown>
+
+<script type="module" src="{{ 'custom-account-dropdown.js' | asset_url }}"></script>

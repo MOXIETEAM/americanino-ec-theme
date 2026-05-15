@@ -8,28 +8,43 @@
 
 // ── Header ────────────────────────────────────────────────────────────────────
 
+.mox-cg
 .mox-cg__header {
-  padding-inline: var(--page-margin, 20px);
-  padding-block-end: var(--mox-cg-header-gap, 24px);
-  max-width: 1440px;
-  margin-inline: auto;
+  margin: 50px 0;
 }
 
+.mox-cg
 .mox-cg__title {
-  margin: 0;
-  font-size: var(--mox-cg-title-size, 2rem);
-  font-weight: 700;
-  color: var(--color-foreground);
-  line-height: 1.15;
+  margin-block-end: 8px;
+  font-weight: 500 !important;
+  font-size: 32px !important;
+  line-height: 36px;
+  color: #1E2B51 !important;
+  text-transform: none;
 }
 
+.mox-cg
 .mox-cg__subtitle {
-  margin: 6px 0 0;
-  font-size: 0.875rem;
-  color: rgb(var(--color-foreground-rgb) / 0.6);
-  line-height: 1.4;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 15px;
+  line-height: 100%;
+  color: #1E2B51 !important;
 }
 
+@media (max-width: 768px) {
+  .mox-cg
+  .mox-cg__header {
+    margin: 10px 0;
+  }
+
+  .mox-cg
+  .mox-cg__title {
+    font-size: 24px !important;
+    line-height: 26px;
+    color: #1E2B51 !important;
+  }
+}
 // ── Slider wrapper (positions arrows absolutely) ───────────────────────────────
 
 category-grid-slider {
@@ -110,10 +125,15 @@ category-grid-slider {
 
 .mox-cg__label {
   display: block;
-  font-size: var(--mox-cg-label-size, 1.625rem);
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.15;
+  font-family: Archivo;
+font-weight: 500;
+font-style: Medium;
+font-size: 30px;
+leading-trim: NONE;
+line-height: 100%;
+letter-spacing: 0%;
+color: #ffffff;
+
   margin-block-end: 10px;
 }
 
