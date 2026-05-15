@@ -71,7 +71,8 @@
         "blurred_reflection": false,
         "reflection_opacity": 75,
         "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-end": 40,
+        "enable_stacking": true
       }
     },
     "custom_promo_countdown_LkkQWh": {
@@ -168,7 +169,8 @@
         "section_width": "full-width",
         "color_scheme": "",
         "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-end": 40,
+        "enable_stacking": true
       }
     },
     "custom_category_grid_JpKEyr": {
@@ -463,7 +465,11 @@
           }
         }
       },
-      "block_order": ["slide_eb1", "slide_eb2"],
+      "block_order": [
+        "slide_eb1",
+        "slide_eb2"
+      ],
+      "disabled": true,
       "name": "Moxie Expandable Banner",
       "settings": {
         "mini_height": 42,
@@ -476,6 +482,43 @@
         "color_scheme": "scheme-1",
         "padding_top": 40,
         "padding_bottom": 40
+      }
+    },
+    "custom_banner_scroll_reveal_Qxf3LJ": {
+      "type": "custom_banner_scroll_reveal",
+      "blocks": {
+        "slide_JrkHm9": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/a00f08b5352cc810aa2de2d5409049d381450e98.jpg",
+            "title": "Colección nueva",
+            "subtitle": "Descubre las últimas tendencias de la temporada.",
+            "cta_label": "Ver colección",
+            "cta_link": ""
+          }
+        },
+        "slide_qM3GYD": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/77eccef52fd8a37cdaf8dddc91bc69587ee32415.jpg",
+            "title": "Nueva Colección",
+            "subtitle": "Descubre las últimas tendencias de la temporada.",
+            "cta_label": "Ver colección",
+            "cta_link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "slide_JrkHm9",
+        "slide_qM3GYD"
+      ],
+      "name": "Moxie Banner Reveal",
+      "settings": {
+        "color_scheme": "",
+        "collapsed_height": 200,
+        "full_height": 80,
+        "animation_duration": 900,
+        "stagger_delay": 150
       }
     },
     "product_list_XzeenX": {
@@ -682,6 +725,7 @@
     "custom_category_grid_fBUh4r",
     "lookbook_featured_tQHMhT",
     "custom_expandable_banner_moxEB",
+    "custom_banner_scroll_reveal_Qxf3LJ",
     "product_list_XzeenX"
   ]
 }
