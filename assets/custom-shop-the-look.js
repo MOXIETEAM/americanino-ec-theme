@@ -114,6 +114,9 @@ class ShopTheLookItemComponent extends Component {
    */
   #openPopup = null;
 
+  /** @type {HTMLElement | null} shared overlay element for mobile bottom sheet */
+  #overlay = null;
+
   connectedCallback() {
     super.connectedCallback();
     if (!this.refs.popup) return;
@@ -148,23 +151,33 @@ class ShopTheLookItemComponent extends Component {
     if (!popup || !plusBtn) return;
     this.#openPopup = popup;
 
-    // Anchor the popup to the item's top-left corner so the × button inside
-    // lands at the exact same position as the + button (both are offset 12px
-    // from the item's top-left edge).
-    const rect = this.getBoundingClientRect();
-    const margin = 8;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-    // Clamp horizontally so popup never escapes the viewport
-    const left = Math.min(rect.left, window.innerWidth - popup.offsetWidth - margin);
-    // Clamp vertically — allow popup to fill as much of the viewport as needed
-    const top = Math.max(margin, rect.top);
-    const maxHeight = window.innerHeight - top - margin;
+    if (isMobile) {
+      // Bottom sheet: full-width, anchored to bottom of viewport
+      popup.style.top = 'auto';
+      popup.style.bottom = '0';
+      popup.style.left = '0';
+      popup.style.right = '0';
+      popup.style.width = '100%';
+      popup.style.maxWidth = '';
+      popup.style.maxHeight = '';
+      this.#showOverlay();
+    } else {
+      // Desktop: anchor popup to the item's top-left corner
+      const rect = this.getBoundingClientRect();
+      const margin = 8;
+      const left = Math.min(rect.left, window.innerWidth - popup.offsetWidth - margin);
+      const top = Math.max(margin, rect.top);
+      const maxHeight = window.innerHeight - top - margin;
 
-    popup.style.top = `${top}px`;
-    popup.style.left = `${Math.max(margin, left)}px`;
-    popup.style.maxHeight = `${maxHeight}px`;
-    // Match popup width to the item so it overlays the card neatly
-    popup.style.width = `${Math.min(320, rect.width)}px`;
+      popup.style.top = `${top}px`;
+      popup.style.left = `${Math.max(margin, left)}px`;
+      popup.style.maxHeight = `${maxHeight}px`;
+      popup.style.width = `${Math.min(320, rect.width)}px`;
+      popup.style.bottom = '';
+      popup.style.right = '';
+    }
 
     // Hide the + button while popup is open (× inside popup takes its place)
     this.classList.add('stl-popup-open');
@@ -270,10 +283,26 @@ class ShopTheLookItemComponent extends Component {
     this.#portalAC?.abort();
     this.#portalAC = null;
 
+    this.#hideOverlay();
+
     // Restore popup to its original position in the DOM
     this.#restorePopup();
 
     this.#carousel?.resumeScroll();
+  }
+
+  #showOverlay() {
+    if (!this.#overlay) {
+      this.#overlay = document.createElement('div');
+      this.#overlay.className = 'stl-overlay';
+      document.body.appendChild(this.#overlay);
+    }
+    void this.#overlay.offsetWidth;
+    this.#overlay.classList.add('stl-overlay--visible');
+  }
+
+  #hideOverlay() {
+    this.#overlay?.classList.remove('stl-overlay--visible');
   }
 
   #restorePopup() {

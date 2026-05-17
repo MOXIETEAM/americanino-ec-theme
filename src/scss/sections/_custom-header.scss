@@ -344,6 +344,37 @@ custom-search-drawer[data-open] .mox-spill__input {
 
 
 
-@media (max-width: 768px) {
+// MOXIE: mobile header — logo izquierda, iconos derecha
+// Especificidad: 1,3,0 para el contenedor y 1,4,0 para los hijos
+// → supera las reglas inline de custom-header.liquid {% stylesheet %} (máx 1,3,0)
+// que cargan DESPUÉS de moxie.css vía content_for_header.
+@media screen and (max-width: 749px) {
+  #header-component.mox-custom-header-component .header__columns,
+  #header-component.mox-custom-header-component[data-menu-style='drawer'] .header__columns {
+    grid-template-columns: 1fr auto auto var(--header-mobile-bookend);
+    grid-template-areas: 'logo search actions menu';
+    column-gap: 0;
+    padding-inline: var(--padding-xs) 0;
+  }
 
+  #header-component.mox-custom-header-component .header__columns .header-logo,
+  #header-component.mox-custom-header-component[data-menu-style='drawer'] .header__columns .header-logo {
+    grid-area: logo;
+    justify-self: start;
+  }
+
+  #header-component.mox-custom-header-component .header__columns .search-action,
+  #header-component.mox-custom-header-component[data-menu-style='drawer'] .header__columns .search-action {
+    grid-area: search;
+  }
+
+  #header-component.mox-custom-header-component .header__columns header-actions,
+  #header-component.mox-custom-header-component[data-menu-style='drawer'] .header__columns header-actions {
+    grid-area: actions;
+  }
+
+  #header-component.mox-custom-header-component .header__columns .header__drawer,
+  #header-component.mox-custom-header-component[data-menu-style='drawer'] .header__columns .header__drawer {
+    grid-area: menu;
+  }
 }

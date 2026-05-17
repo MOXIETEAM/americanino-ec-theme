@@ -301,6 +301,67 @@ color: #737373;
   }
 }
 
+// ── Card link + shop-the-look-item integration ────────────────────────────────
+
+shop-the-look-item.mox-bs__card-media {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  aspect-ratio: 3 / 4;
+  background: rgb(var(--color-background-2-rgb, 245 245 245));
+}
+
+// The card-info is now an <a> — preserve existing visual styles
+.mox-bs__card-info {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 10px 12px;
+  flex: 1;
+
+  &:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+// Remove text-decoration from the card itself (now a div)
+.mox-bs__card {
+  text-decoration: none;
+  color: inherit;
+}
+
+// ── Popup installments text ────────────────────────────────────────────────────
+
+.mox-bs__popup-installments {
+  margin: 0;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #737373;
+}
+
+// ── Add-to-cart button override: filled navy by default ───────────────────────
+
+.mox-bs__popup-add-btn.stl-add-btn {
+  background: #1E2B51;
+  color: #fff;
+  border-color: #1E2B51;
+
+  &:hover:not(:disabled) {
+    background: #162140;
+    color: #fff;
+  }
+
+  &.stl-add-btn--success {
+    background: #1E2B51;
+    color: #fff;
+  }
+}
+
 // ── Mobile ────────────────────────────────────────────────────────────────────
 
 @include mobile-only {

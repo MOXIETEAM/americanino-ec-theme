@@ -83,12 +83,6 @@
         </button>
       </div>
 
-      {%- comment -%} ── Etiqueta "Menú" ─────────────────────────────────── {%- endcomment -%}
-      <div class="custom-mobile-drawer__menu-label">
-        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-menu.svg' | inline_asset_content -}}</span>
-        <span>Menú</span>
-      </div>
-
       {%- comment -%} ── Navegación ─────────────────────────────────────── {%- endcomment -%}
       <nav
         class="custom-mobile-drawer__nav"
@@ -126,7 +120,7 @@
                       <span class="custom-mobile-drawer__link-text{% if link.active %} custom-mobile-drawer__link-text--active{% endif %}">{{ link.title | escape }}</span>
                       {%- if dec_image != blank and dec_position == 'right' -%}<span class="nav-decorator nav-decorator--right" data-brand-show="{{ dec_brand }}"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
                     </span>
-                    <span class="svg-wrapper icon-caret icon-caret--forward" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+                    <span class="svg-wrapper icon-plus" aria-hidden="true">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
                   </summary>
                   <div id="Mobile-drawer-submenu-{{ link.handle }}" class="menu-drawer__submenu has-submenu" tabindex="-1" style="--menu-drawer-animation-index: {{ forloop.index }};">
                     <div class="menu-drawer__inner-submenu">
@@ -167,65 +161,115 @@
 
       </nav>
 
-      {%- comment -%} ── Accesos directos al pie ─────────────────────────── {%- endcomment -%}
-      {%- liquid
-        assign has_util_1 = false
-        assign has_util_2 = false
-        if block_settings.mobile_util_1_url != blank
-          assign has_util_1 = true
-        endif
-        if block_settings.mobile_util_2_url != blank
-          assign has_util_2 = true
-        elsif shop.customer_accounts_enabled
-          assign has_util_2 = true
-        endif
-      -%}
-      {%- if has_util_1 or has_util_2 -%}
-        <div class="custom-mobile-drawer__utility">
-          {%- if has_util_1 -%}
-            <a href="{{ block_settings.mobile_util_1_url }}" class="custom-mobile-drawer__utility-link">
-              {%- if block_settings.mobile_util_1_icon == 'account' -%}
-                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
-              {%- elsif block_settings.mobile_util_1_icon == 'cart' -%}
-                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
-              {%- elsif block_settings.mobile_util_1_icon == 'search' -%}
-                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
-              {%- else -%}
-                <span class="svg-wrapper" aria-hidden="true">
-                  <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 2h12a1 1 0 0 1 1 1v15.382a.5.5 0 0 1-.724.447L9 16.236l-6.276 2.593A.5.5 0 0 1 2 18.382V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              {%- endif -%}
-              <span>{{ block_settings.mobile_util_1_label | default: 'Guardados' }}</span>
+      {%- comment -%} ── Imágenes destacadas ──────────────────────────────── {%- endcomment -%}
+      {%- if block_settings.drawer_img_1 != blank or block_settings.drawer_img_2 != blank -%}
+        <div class="custom-mobile-drawer__images">
+          {%- if block_settings.drawer_img_1 != blank -%}
+            {%- assign img1_w = 200 -%}
+            {%- assign img1_h = img1_w | divided_by: block_settings.drawer_img_1.aspect_ratio | ceil -%}
+            <a href="{{ block_settings.drawer_img_1_url | default: '#' }}" class="custom-mobile-drawer__image-link">
+              <img
+                src="{{ block_settings.drawer_img_1 | image_url: width: img1_w }}"
+                alt="{{ block_settings.drawer_img_1.alt | escape }}"
+                loading="lazy"
+                width="{{ img1_w }}"
+                height="{{ img1_h }}"
+                class="custom-mobile-drawer__img"
+              >
             </a>
           {%- endif -%}
-          {%- if has_util_2 -%}
-            {%- liquid
-              if block_settings.mobile_util_2_url != blank
-                assign util_2_href = block_settings.mobile_util_2_url
-              else
-                assign util_2_href = routes.account_url
-              endif
-            -%}
-            <a href="{{ util_2_href }}" class="custom-mobile-drawer__utility-link">
-              {%- if block_settings.mobile_util_2_icon == 'bookmark' -%}
-                <span class="svg-wrapper" aria-hidden="true">
-                  <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 2h12a1 1 0 0 1 1 1v15.382a.5.5 0 0 1-.724.447L9 16.236l-6.276 2.593A.5.5 0 0 1 2 18.382V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                  </svg>
-                </span>
-              {%- elsif block_settings.mobile_util_2_icon == 'cart' -%}
-                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
-              {%- elsif block_settings.mobile_util_2_icon == 'search' -%}
-                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
-              {%- else -%}
-                <span class="svg-wrapper" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
-              {%- endif -%}
-              <span>{{ block_settings.mobile_util_2_label | default: 'Mi cuenta' }}</span>
+          {%- if block_settings.drawer_img_2 != blank -%}
+            {%- assign img2_w = 200 -%}
+            {%- assign img2_h = img2_w | divided_by: block_settings.drawer_img_2.aspect_ratio | ceil -%}
+            <a href="{{ block_settings.drawer_img_2_url | default: '#' }}" class="custom-mobile-drawer__image-link">
+              <img
+                src="{{ block_settings.drawer_img_2 | image_url: width: img2_w }}"
+                alt="{{ block_settings.drawer_img_2.alt | escape }}"
+                loading="lazy"
+                width="{{ img2_w }}"
+                height="{{ img2_h }}"
+                class="custom-mobile-drawer__img"
+              >
             </a>
           {%- endif -%}
         </div>
+      {%- endif -%}
+
+      {%- comment -%} ── Footer: menú secundario o accesos directos ───────── {%- endcomment -%}
+      {%- if block_settings.mobile_secondary_menu != blank -%}
+        <nav class="custom-mobile-drawer__secondary-nav" aria-label="Menú secundario">
+          <ul class="custom-mobile-drawer__secondary-list list-unstyled" role="list">
+            {%- for link in block_settings.mobile_secondary_menu.links -%}
+              <li>
+                <a
+                  href="{{ link.url }}"
+                  class="custom-mobile-drawer__secondary-link{% if link.current %} custom-mobile-drawer__secondary-link--active{% endif %}"
+                  {%- if link.current %} aria-current="page"{% endif %}
+                >{{ link.title | escape }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- else -%}
+        {%- liquid
+          assign has_util_1 = false
+          assign has_util_2 = false
+          if block_settings.mobile_util_1_url != blank
+            assign has_util_1 = true
+          endif
+          if block_settings.mobile_util_2_url != blank
+            assign has_util_2 = true
+          elsif shop.customer_accounts_enabled
+            assign has_util_2 = true
+          endif
+        -%}
+        {%- if has_util_1 or has_util_2 -%}
+          <div class="custom-mobile-drawer__utility">
+            {%- if has_util_1 -%}
+              <a href="{{ block_settings.mobile_util_1_url }}" class="custom-mobile-drawer__utility-link">
+                {%- if block_settings.mobile_util_1_icon == 'account' -%}
+                  <span class="svg-wrapper" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
+                {%- elsif block_settings.mobile_util_1_icon == 'cart' -%}
+                  <span class="svg-wrapper" aria-hidden="true">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
+                {%- elsif block_settings.mobile_util_1_icon == 'search' -%}
+                  <span class="svg-wrapper" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
+                {%- else -%}
+                  <span class="svg-wrapper" aria-hidden="true">
+                    <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 2h12a1 1 0 0 1 1 1v15.382a.5.5 0 0 1-.724.447L9 16.236l-6.276 2.593A.5.5 0 0 1 2 18.382V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                {%- endif -%}
+                <span>{{ block_settings.mobile_util_1_label | default: 'Guardados' }}</span>
+              </a>
+            {%- endif -%}
+            {%- if has_util_2 -%}
+              {%- liquid
+                if block_settings.mobile_util_2_url != blank
+                  assign util_2_href = block_settings.mobile_util_2_url
+                else
+                  assign util_2_href = routes.account_url
+                endif
+              -%}
+              <a href="{{ util_2_href }}" class="custom-mobile-drawer__utility-link">
+                {%- if block_settings.mobile_util_2_icon == 'bookmark' -%}
+                  <span class="svg-wrapper" aria-hidden="true">
+                    <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M3 2h12a1 1 0 0 1 1 1v15.382a.5.5 0 0 1-.724.447L9 16.236l-6.276 2.593A.5.5 0 0 1 2 18.382V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                {%- elsif block_settings.mobile_util_2_icon == 'cart' -%}
+                  <span class="svg-wrapper" aria-hidden="true">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
+                {%- elsif block_settings.mobile_util_2_icon == 'search' -%}
+                  <span class="svg-wrapper" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
+                {%- else -%}
+                  <span class="svg-wrapper" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
+                {%- endif -%}
+                <span>{{ block_settings.mobile_util_2_label | default: 'Mi cuenta' }}</span>
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       {%- endif -%}
 
     </div>
@@ -289,25 +333,6 @@
   .custom-mobile-drawer__close-btn svg {
     width: 20px;
     height: 20px;
-  }
-
-  /* Etiqueta Menú */
-  .custom-mobile-drawer__menu-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 var(--padding-lg);
-    min-height: 52px;
-    font-weight: 600;
-    font-size: 1rem;
-    border-bottom: 1px solid var(--color-border);
-    flex-shrink: 0;
-  }
-
-  .custom-mobile-drawer__menu-label svg {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
   }
 
   /* Nav */
@@ -380,15 +405,67 @@
     color: var(--brand-color-primary, var(--color-foreground));
   }
 
-  .custom-mobile-drawer__link .icon-caret--forward {
+  .custom-mobile-drawer__link .icon-plus {
     flex-shrink: 0;
-    opacity: 0.45;
+    opacity: 0.6;
   }
 
-  .custom-mobile-drawer__link .icon-caret--forward svg {
-    width: 12px;
-    height: 12px;
-    transform: rotate(-90deg);
+  .custom-mobile-drawer__link .icon-plus svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Imágenes destacadas */
+  .custom-mobile-drawer__images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 16px var(--padding-lg);
+    flex-shrink: 0;
+  }
+
+  .custom-mobile-drawer__image-link {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--menu-image-border-radius, 0px);
+  }
+
+  .custom-mobile-drawer__img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+  }
+
+  /* Menú secundario */
+  .custom-mobile-drawer__secondary-nav {
+    border-top: 1px solid var(--color-border);
+    flex-shrink: 0;
+  }
+
+  .custom-mobile-drawer__secondary-list {
+    margin: 0;
+    padding: 4px 0;
+  }
+
+  .custom-mobile-drawer__secondary-link {
+    display: block;
+    padding: 12px var(--padding-lg);
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    transition: background-color 0.15s ease;
+  }
+
+  .custom-mobile-drawer__secondary-link:hover {
+    background-color: rgb(var(--color-foreground-rgb) / 0.04);
+    text-decoration: none;
+    color: var(--color-foreground);
+  }
+
+  .custom-mobile-drawer__secondary-link--active {
+    color: var(--brand-color-primary, var(--color-foreground));
   }
 
   /* Utilidades al pie */
