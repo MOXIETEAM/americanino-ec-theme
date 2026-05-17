@@ -273,6 +273,7 @@
           "settings": {
             "image": "shopify://shop_images/271110ef913d2ab05625cc8fb13ed475ed900b4a.jpg",
             "label": "Jeans",
+            "sublabel": "",
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
@@ -286,6 +287,7 @@
           "settings": {
             "image": "shopify://shop_images/1b51959e499351d972c71872d8220c00c6c00fee.jpg",
             "label": "Buzos",
+            "sublabel": "",
             "link": "",
             "show_gender_links": false,
             "label_male": "Hombre",
@@ -299,6 +301,7 @@
           "settings": {
             "image": "shopify://shop_images/428dfe54874fcbe29d1f6948b647a818033d784a.jpg",
             "label": "Chaquetas",
+            "sublabel": "",
             "link": "",
             "show_gender_links": false,
             "label_male": "Hombre",
@@ -312,6 +315,7 @@
           "settings": {
             "image": "shopify://shop_images/c4131c1f8021cc794e4bafd58424872c5c195988.jpg",
             "label": "Camisetas",
+            "sublabel": "",
             "link": "",
             "show_gender_links": false,
             "label_male": "Hombre",
@@ -325,6 +329,7 @@
           "settings": {
             "image": "shopify://shop_images/1945604705aff8c0b0b537ee634a78c6a6a8be25.jpg",
             "label": "Accesorios",
+            "sublabel": "",
             "link": "",
             "show_gender_links": false,
             "label_male": "Hombre",
@@ -390,6 +395,7 @@
           "settings": {
             "image": "shopify://shop_images/10e27c979f4155e9912663d382f1159b4ff29093.jpg",
             "label": "Lorem ipsusom",
+            "sublabel": "",
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
@@ -403,6 +409,7 @@
           "settings": {
             "image": "shopify://shop_images/5f1e724e57e2a79dda8117f4fc06e0d58ded4f50.jpg",
             "label": "Lorem ipsusom",
+            "sublabel": "",
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
@@ -416,6 +423,7 @@
           "settings": {
             "image": "shopify://shop_images/730d5b2cd3dfe0e2ca5ec79feac886362be48b51.jpg",
             "label": "Lorem ipsusom",
+            "sublabel": "",
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
@@ -782,6 +790,7 @@
           "settings": {
             "image": "shopify://shop_images/77eccef52fd8a37cdaf8dddc91bc69587ee32415.jpg",
             "label": "Lorem ipsusom",
+            "sublabel": "",
             "link": "",
             "show_gender_links": true,
             "label_male": "Ver colección",
@@ -795,6 +804,7 @@
           "settings": {
             "image": "shopify://shop_images/a00f08b5352cc810aa2de2d5409049d381450e98.jpg",
             "label": "Lorem ipsusom",
+            "sublabel": "",
             "link": "",
             "show_gender_links": true,
             "label_male": "Ver colección",
@@ -808,6 +818,7 @@
           "settings": {
             "image": "shopify://shop_images/77eccef52fd8a37cdaf8dddc91bc69587ee32415.jpg",
             "label": "Lorem ipsusom",
+            "sublabel": "",
             "link": "",
             "show_gender_links": true,
             "label_male": "Ver colección",
@@ -873,7 +884,7 @@
       "name": "Moxie Banner Reveal",
       "settings": {
         "show_on_desktop": true,
-        "show_on_mobile": true,
+        "show_on_mobile": false,
         "color_scheme": "",
         "collapsed_height": 200,
         "full_height": 80,
