@@ -8,7 +8,7 @@
   assign s = section.settings
 -%}
 
-<div class="custom-center-container">
+<div class="custom-center-container{% unless s.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_on_mobile %} mox-hidden-mobile{% endunless %}">
 <div
   class="mox-cg color-{{ s.color_scheme }} custom-standar-max-width"
   style="
@@ -244,6 +244,22 @@
       "type": "color",
       "id": "bg_color",
       "label": "Color de fondo (sobreescribe el scheme)"
+    },
+    {
+      "type": "header",
+      "content": "Visibilidad"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Mostrar en móvil",
+      "default": true
     },
     {
       "type": "header",

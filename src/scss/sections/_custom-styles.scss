@@ -16,7 +16,7 @@ body {
 
 .custom-hero-mox-container {
   .hero__content-wrapper {
-    .text-block 
+    .text-block
     p {
       font-size: 82px;
       line-height: 90px;
@@ -33,4 +33,12 @@ body {
     }
 
   }
+}
+
+// ── Visibilidad por dispositivo ────────────────────────────────────────────────
+@media screen and (min-width: 750px) {
+  .mox-hidden-desktop { display: none !important; }
+}
+@media screen and (max-width: 749px) {
+  .mox-hidden-mobile { display: none !important; }
 }

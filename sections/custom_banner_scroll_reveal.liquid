@@ -5,7 +5,7 @@
 
 <div
   id="BannerReveal-{{ section.id }}"
-  class="banner-reveal color-{{ section.settings.color_scheme }}"
+  class="banner-reveal color-{{ section.settings.color_scheme }}{% unless section.settings.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_on_mobile %} mox-hidden-mobile{% endunless %}"
   style="
     --banner-reveal-collapsed-height: {{ section.settings.collapsed_height }}px;
     --banner-reveal-full-height: {{ section.settings.full_height }}svh;
@@ -147,6 +147,22 @@
     }
   ],
   "settings": [
+    {
+      "type": "header",
+      "content": "Visibilidad"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Mostrar en móvil",
+      "default": true
+    },
     {
       "type": "header",
       "content": "Apariencia"
