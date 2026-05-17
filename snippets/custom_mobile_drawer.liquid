@@ -124,24 +124,114 @@
                   </summary>
                   <div id="Mobile-drawer-submenu-{{ link.handle }}" class="menu-drawer__submenu has-submenu" tabindex="-1" style="--menu-drawer-animation-index: {{ forloop.index }};">
                     <div class="menu-drawer__inner-submenu">
-                      <div class="menu-drawer__nav-buttons">
-                        <button class="button menu-drawer__back-button focus-inset" on:click="header-drawer/back" aria-label="{{ 'actions.back_to' | t: title: link.title }}">
-                          <span class="svg-wrapper icon-caret icon-caret--backward">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
-                          <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+
+                      {%- comment -%} Breadcrumb nivel 2: ← Volver | Título | X {%- endcomment -%}
+                      <div class="custom-mobile-drawer__breadcrumb-bar">
+                        <button
+                          class="button custom-mobile-drawer__breadcrumb-back focus-inset"
+                          on:click="header-drawer/back"
+                          aria-label="{{ 'actions.back_to' | t: title: link.title }}"
+                        >
+                          <span class="svg-wrapper icon-caret icon-caret--backward custom-mobile-drawer__breadcrumb-caret">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+                          <span class="custom-mobile-drawer__breadcrumb-back-label">Volver</span>
                         </button>
-                        <button class="button button-unstyled close-button menu-drawer__close-button" type="button" aria-label="{{ 'actions.close' | t }}" on:click="header-drawer/close">
-                          <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+                        <span class="custom-mobile-drawer__breadcrumb-title">{{ link.title | escape }}</span>
+                        <button
+                          class="button button-unstyled custom-mobile-drawer__close-btn"
+                          type="button"
+                          aria-label="{{ 'actions.close' | t }}"
+                          on:click="header-drawer/close"
+                        >
+                          <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
                         </button>
                       </div>
-                      <ul class="menu-drawer__menu menu-drawer__menu--childlist" role="list" tabindex="-1">
+
+                      {%- comment -%} Lista nivel 2: featured (sin hijos) + expandibles (con hijos → nivel 3) {%- endcomment -%}
+                      <ul class="custom-mobile-drawer__list custom-mobile-drawer__list--l2 list-unstyled" role="list" tabindex="-1">
+                        {%- assign l2_first_exp_shown = false -%}
                         {%- for childlink in link.links -%}
-                          <li class="menu-drawer__list-item" style="--menu-drawer-animation-index: {{ forloop.index }};">
-                            <a href="{{ childlink.url }}" class="menu-drawer__menu-item menu-drawer__menu-item--parent focus-inset{% if childlink.current %} menu-drawer__menu-item--active{% endif %}" {% if childlink.current %}aria-current="page"{% endif %}>
-                              <span class="menu-drawer__menu-item-text wrap-text">{{ childlink.title | escape }}</span>
-                            </a>
-                          </li>
+
+                          {%- if childlink.links.size > 0 -%}
+                            {%- comment -%} Item con hijos: expandible con nivel 3 {%- endcomment -%}
+                            {%- if l2_first_exp_shown == false -%}
+                              {%- assign l2_is_first_exp = true -%}
+                              {%- assign l2_first_exp_shown = true -%}
+                            {%- else -%}
+                              {%- assign l2_is_first_exp = false -%}
+                            {%- endif -%}
+                            <li class="custom-mobile-drawer__item{% if l2_is_first_exp %} custom-mobile-drawer__item--sep-top{% endif %}">
+                              <details id="Mobile-l2-{{ link.handle }}-{{ childlink.handle }}" class="custom-mobile-drawer__submenu-details">
+                                <summary class="custom-mobile-drawer__link focus-inset" on:click="header-drawer/open/submenu">
+                                  <span class="custom-mobile-drawer__link-inner">
+                                    <span class="custom-mobile-drawer__link-text">{{ childlink.title | escape }}</span>
+                                  </span>
+                                  <span class="svg-wrapper icon-plus" aria-hidden="true">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
+                                </summary>
+
+                                {%- comment -%} Submenú nivel 3 {%- endcomment -%}
+                                <div id="Mobile-l2-submenu-{{ link.handle }}-{{ childlink.handle }}" class="menu-drawer__submenu has-submenu menu-drawer__submenu--l3" tabindex="-1">
+                                  <div class="menu-drawer__inner-submenu">
+
+                                    {%- comment -%} Breadcrumb nivel 3: ← Volver | Título | X {%- endcomment -%}
+                                    <div class="custom-mobile-drawer__breadcrumb-bar">
+                                      <button
+                                        class="button custom-mobile-drawer__breadcrumb-back focus-inset"
+                                        on:click="header-drawer/back"
+                                        aria-label="{{ 'actions.back_to' | t: title: childlink.title }}"
+                                      >
+                                        <span class="svg-wrapper icon-caret icon-caret--backward custom-mobile-drawer__breadcrumb-caret">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+                                        <span class="custom-mobile-drawer__breadcrumb-back-label">Volver</span>
+                                      </button>
+                                      <span class="custom-mobile-drawer__breadcrumb-title">{{ childlink.title | escape }}</span>
+                                      <button
+                                        class="button button-unstyled custom-mobile-drawer__close-btn"
+                                        type="button"
+                                        aria-label="{{ 'actions.close' | t }}"
+                                        on:click="header-drawer/close"
+                                      >
+                                        <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+                                      </button>
+                                    </div>
+
+                                    {%- comment -%} Subcategorías nivel 3 {%- endcomment -%}
+                                    <ul class="custom-mobile-drawer__list custom-mobile-drawer__list--l3 list-unstyled" role="list" tabindex="-1">
+                                      {%- for grandlink in childlink.links -%}
+                                        <li class="custom-mobile-drawer__item" style="--menu-drawer-animation-index: {{ forloop.index }};">
+                                          <a
+                                            href="{{ grandlink.url }}"
+                                            class="custom-mobile-drawer__link focus-inset{% if grandlink.current %} custom-mobile-drawer__link--active{% endif %}"
+                                            {% if grandlink.current %}aria-current="page"{% endif %}
+                                          >
+                                            <span class="custom-mobile-drawer__link-inner">
+                                              <span class="custom-mobile-drawer__link-text{% if grandlink.active %} custom-mobile-drawer__link-text--active{% endif %}">{{ grandlink.title | escape }}</span>
+                                            </span>
+                                          </a>
+                                        </li>
+                                      {%- endfor -%}
+                                    </ul>
+
+                                  </div>
+                                </div>
+
+                              </details>
+                            </li>
+
+                          {%- else -%}
+                            {%- comment -%} Item sin hijos: enlace destacado (tipografía mayor) {%- endcomment -%}
+                            <li class="custom-mobile-drawer__item custom-mobile-drawer__item--featured">
+                              <a
+                                href="{{ childlink.url }}"
+                                class="custom-mobile-drawer__link custom-mobile-drawer__link--featured focus-inset{% if childlink.current %} custom-mobile-drawer__link--active{% endif %}"
+                                {% if childlink.current %}aria-current="page"{% endif %}
+                              >
+                                <span class="custom-mobile-drawer__link-text{% if childlink.active %} custom-mobile-drawer__link-text--active{% endif %}">{{ childlink.title | escape }}</span>
+                              </a>
+                            </li>
+
+                          {%- endif -%}
                         {%- endfor -%}
                       </ul>
+
                     </div>
                   </div>
                 </details>
@@ -502,6 +592,107 @@
   .custom-mobile-drawer__utility-link svg {
     width: 20px;
     height: 20px;
+  }
+
+  /* ── Breadcrumb bar (niveles 2 y 3) ─────────────────────────────────── */
+  .custom-mobile-drawer__breadcrumb-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--padding-lg);
+    min-height: 64px;
+    border-bottom: 1px solid var(--color-border);
+    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .custom-mobile-drawer__breadcrumb-back {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+    font-size: 0.875rem;
+    padding: 0;
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  .custom-mobile-drawer__breadcrumb-caret {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .custom-mobile-drawer__breadcrumb-caret svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .custom-mobile-drawer__breadcrumb-back-label {
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  .custom-mobile-drawer__breadcrumb-title {
+    flex: 1;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-foreground);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ── Items destacados nivel 2 (sin hijos) ────────────────────────────── */
+  .custom-mobile-drawer__item--featured {
+    border-bottom: none;
+  }
+
+  .custom-mobile-drawer__link--featured {
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 6px var(--padding-lg);
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .custom-mobile-drawer__link--featured:hover,
+  .custom-mobile-drawer__link--featured:focus-visible {
+    background-color: transparent;
+    text-decoration: none;
+    color: var(--color-foreground);
+    outline: none;
+  }
+
+  /* ── Separador antes del primer item expandible ──────────────────────── */
+  .custom-mobile-drawer__item--sep-top {
+    border-top: 1px solid var(--color-border);
+    margin-top: 8px;
+  }
+
+  /* ── Listas nivel 2 y 3 ──────────────────────────────────────────────── */
+  .custom-mobile-drawer__list--l2,
+  .custom-mobile-drawer__list--l3 {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ── Submenú nivel 3 ─────────────────────────────────────────────────── */
+  .menu-drawer__submenu--l3 {
+    z-index: 1;
+  }
+
+  /* Cuando hay un submenú nivel 3 abierto, liberar overflow del inner-submenu */
+  .menu-drawer__inner-submenu:has(.custom-mobile-drawer__submenu-details.menu-open) {
+    overflow: initial;
   }
 
   /* Animación de entrada */
