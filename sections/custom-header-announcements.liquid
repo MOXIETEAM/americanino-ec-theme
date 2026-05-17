@@ -8,21 +8,23 @@
   endif
   assign autoplay = false
   assign show_arrows = false
-  if section.blocks.size > 1 and is_static == false
+  if section.blocks.size > 1
     assign autoplay = true
-    assign show_arrows = true
+    if is_static == false
+      assign show_arrows = true
+    endif
   endif
 -%}
 
-{% unless is_static %}
-  {% if section.blocks.size > 1 %}
-    <script
-      src="{{ 'announcement-bar.js' | asset_url }}"
-      type="module"
-      fetchpriority="low"
-    ></script>
-  {% endif %}
-{% endunless %}
+{%- comment -%} MOXIE: siempre carga el JS cuando hay múltiples items — en móvil
+  el modo estático también necesita rotación automática. {%- endcomment -%}
+{% if section.blocks.size > 1 %}
+  <script
+    src="{{ 'announcement-bar.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
 
 <div
   class="section-background color-{{ s.color_scheme }} custom-announcement-bar-moxie-container"
@@ -171,6 +173,31 @@
     opacity: 1 !important;
     visibility: visible !important;
     transition: none;
+  }
+
+  /* ── MOXIE: En móvil, modo estático se comporta como carrusel ─────────────
+     El JS ya corre y maneja aria-hidden. Solo se necesita:
+     1. Layout de grid/stack (1 item visible a la vez)
+     2. Eliminar el override de aria-hidden para que el JS controle visibilidad */
+  @media screen and (max-width: 749px) {
+    .announcement-bar--static .announcement-bar__slides {
+      display: grid;
+      grid: [stack] auto / [stack] auto;
+      width: calc(100% - var(--button-size) * 2);
+      max-width: unset;
+      margin-inline: auto;
+    }
+
+    .announcement-bar--static .announcement-bar__slides > * {
+      grid-area: stack;
+      flex: unset;
+    }
+
+    .announcement-bar--static .announcement-bar__slide[aria-hidden='true'] {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out !important;
+    }
   }
 {% endstylesheet %}
 
