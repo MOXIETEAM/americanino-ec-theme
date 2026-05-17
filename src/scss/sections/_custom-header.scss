@@ -31,13 +31,6 @@
     }
 }
 
-/* MOXIE: Glass header background */
-#header-component .header__underlay-closed,
-#header-component .header__underlay-open {
-  // background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
-  // backdrop-filter: blur(10px);
-  // -webkit-backdrop-filter: blur(10px);
-}
 
 // // Cuando el header es sticky (data-sticky-state="active"), el fondo pasa a blanco →
 // // el texto del navbar debe ser oscuro (foreground del color scheme activo).
@@ -361,11 +354,15 @@ custom-search-drawer[data-open] .mox-spill__input {
 //   elemento padre no sea containing block de los hijos fixed.
 @media screen and (max-width: 989px) {
   // Fix 1: backdrop-filter → ::before (no crea containing block para position:fixed)
+  // z-index: 0 en el padre crea un stacking context que "atrapa" al ::before
+  // con z-index: -1, de modo que el ::before queda detrás del contenido (logo,
+  // iconos) que no necesita z-index explícito.
   .mox-custom-header-component .header__row--top {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: none;
     position: relative;
+    z-index: 0;
   }
 
   .mox-custom-header-component .header__row--top::before {
@@ -380,7 +377,7 @@ custom-search-drawer[data-open] .mox-spill__input {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
   }
 
   // Fix 2: cuando el drawer está abierto, el header-section debe superar al
