@@ -74,6 +74,9 @@
           {%- endif -%}
 
           <div class="mox-cg__overlay">
+            {%- if b.sublabel != blank -%}
+              <span class="mox-cg__sublabel">{{ b.sublabel }}</span>
+            {%- endif -%}
             {%- if b.label != blank -%}
               <span class="mox-cg__label">{{ b.label }}</span>
             {%- endif -%}
@@ -301,6 +304,11 @@
           "id": "label",
           "label": "Nombre de categoría",
           "default": "Jeans"
+        },
+        {
+          "type": "text",
+          "id": "sublabel",
+          "label": "Texto secundario (pequeño)"
         },
         {
           "type": "url",
