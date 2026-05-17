@@ -790,65 +790,23 @@
             "link_female": ""
           }
         },
-        "category_8TpQcK": {
+        "category_JwEezJ": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/1b51959e499351d972c71872d8220c00c6c00fee.jpg",
-            "label": "Buzos",
+            "image": "shopify://shop_images/a00f08b5352cc810aa2de2d5409049d381450e98.jpg",
+            "label": "Lorem ipsusom",
             "link": "",
-            "show_gender_links": false,
-            "label_male": "Hombre",
-            "link_male": "",
-            "label_female": "Mujer",
-            "link_female": ""
-          }
-        },
-        "category_B6ecfi": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/428dfe54874fcbe29d1f6948b647a818033d784a.jpg",
-            "label": "Chaquetas",
-            "link": "",
-            "show_gender_links": false,
-            "label_male": "Hombre",
-            "link_male": "",
-            "label_female": "Mujer",
-            "link_female": ""
-          }
-        },
-        "category_RG7kJD": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/c4131c1f8021cc794e4bafd58424872c5c195988.jpg",
-            "label": "Camisetas",
-            "link": "",
-            "show_gender_links": false,
-            "label_male": "Hombre",
-            "link_male": "",
-            "label_female": "Mujer",
-            "link_female": ""
-          }
-        },
-        "category_mpJffR": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/1945604705aff8c0b0b537ee634a78c6a6a8be25.jpg",
-            "label": "Accesorios",
-            "link": "",
-            "show_gender_links": false,
-            "label_male": "Hombre",
-            "link_male": "",
-            "label_female": "Mujer",
+            "show_gender_links": true,
+            "label_male": "Ver colección",
+            "link_male": "shopify://collections/test-collection",
+            "label_female": "",
             "link_female": ""
           }
         }
       },
       "block_order": [
         "category_fbRhFV",
-        "category_8TpQcK",
-        "category_B6ecfi",
-        "category_RG7kJD",
-        "category_mpJffR"
+        "category_JwEezJ"
       ],
       "name": "Moxie Category Grid",
       "settings": {
