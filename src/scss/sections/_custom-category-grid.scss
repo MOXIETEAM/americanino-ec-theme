@@ -257,3 +257,10 @@ category-grid-slider {
     transition: none;
   }
 }
+
+
+@media (max-width: 900px) {
+  .mox-cg {
+    padding: 0 20px;
+  }
+}

@@ -364,6 +364,12 @@ shop-the-look-item.mox-bs__card-media {
 
 // ── Mobile ────────────────────────────────────────────────────────────────────
 
+@media (max-width: 900px) {
+  .mox-bs {
+    padding: 0 20px;
+  }
+}
+
 @include mobile-only {
   .mox-bs__header {
     flex-direction: column;
