@@ -344,6 +344,52 @@ custom-search-drawer[data-open] .mox-spill__input {
 
 
 
+// MOXIE: Mobile megamenu drawer — fix stacking + position
+//
+// Problema 1 — drawer detrás del announcement bar:
+//   .menu-drawer (position:fixed, z-index:18) vive dentro del stacking context
+//   de .header-section (z-index:8 sticky). El announcement bar tiene z-index:1000
+//   en el contexto global, por lo que el drawer siempre queda por detrás.
+//   Fix: cuando el drawer está abierto, subimos el stacking context del
+//   header-section por encima del announcement bar.
+//
+// Problema 2 — hamburger inaccesible / drawer mal posicionado al hacer scroll:
+//   backdrop-filter en .header__row--top crea un nuevo stacking context y, en
+//   Chrome/Safari, puede crear un containing block para position:fixed, haciendo
+//   que .menu-drawer se posicione relativo al row y no al viewport.
+//   Fix: movemos backdrop-filter a un pseudo-elemento ::before para que el
+//   elemento padre no sea containing block de los hijos fixed.
+@media screen and (max-width: 989px) {
+  // Fix 1: backdrop-filter → ::before (no crea containing block para position:fixed)
+  .mox-custom-header-component .header__row--top {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: none;
+    position: relative;
+  }
+
+  .mox-custom-header-component .header__row--top::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90.04deg,
+      rgba(255, 255, 255, 0.8) 7.98%,
+      rgba(255, 255, 255, 0.15) 150.17%
+    );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Fix 2: cuando el drawer está abierto, el header-section debe superar al
+  // announcement bar (z-index:1000) para que el panel sea visible por encima.
+  .header-section:has(.menu-drawer-container.menu-open) {
+    z-index: 1002 !important;
+  }
+}
+
 // MOXIE: mobile header — logo izquierda, iconos derecha
 // Especificidad: 1,3,0 para el contenedor y 1,4,0 para los hijos
 // → supera las reglas inline de custom-header.liquid {% stylesheet %} (máx 1,3,0)
