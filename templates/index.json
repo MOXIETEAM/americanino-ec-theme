@@ -836,7 +836,7 @@
         "label_size": 26,
         "color_scheme": "",
         "bg_color": "",
-        "show_on_desktop": true,
+        "show_on_desktop": false,
         "show_on_mobile": true,
         "padding_top": 0,
         "padding_bottom": 40
