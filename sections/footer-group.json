@@ -94,21 +94,28 @@
         "nav_column_EPHYRQ": {
           "type": "nav_column",
           "settings": {
-            "heading": "Ayuda",
+            "heading": "Nuestra marca",
             "menu": ""
           }
         },
         "nav_column_LfMpQY": {
           "type": "nav_column",
           "settings": {
-            "heading": "Empresa",
+            "heading": "Ayudas",
             "menu": "customer-account-main-menu"
           }
         },
         "nav_column_YT4abe": {
           "type": "nav_column",
           "settings": {
-            "heading": "Legales",
+            "heading": "Políticas",
+            "menu": ""
+          }
+        },
+        "nav_column_nTAMdm": {
+          "type": "nav_column",
+          "settings": {
+            "heading": "Información",
             "menu": ""
           }
         }
@@ -117,7 +124,8 @@
         "brand_info_TE9bp4",
         "nav_column_EPHYRQ",
         "nav_column_LfMpQY",
-        "nav_column_YT4abe"
+        "nav_column_YT4abe",
+        "nav_column_nTAMdm"
       ],
       "name": "Moxie Footer",
       "settings": {
