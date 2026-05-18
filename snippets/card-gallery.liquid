@@ -200,6 +200,10 @@
     %}
   {%- endif -%}
   {{ children }}
+  {%- comment -%} MOXIE: Inline size picker — hover en desktop / tap en mobile {%- endcomment -%}
+  {%- unless product == blank -%}
+    {%- render 'custom_card_size_picker', product: product -%}
+  {%- endunless -%}
 </div>
 
 {% stylesheet %}

@@ -277,12 +277,16 @@
         {%- comment -%} Columnas de menú: bloques nav_column {%- endcomment -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'nav_column' -%}
-            <div
+            <details
               class="custom-footer__nav-col"
+              open
               {{ block.shopify_attributes }}
             >
               {%- if block.settings.heading != blank -%}
-                <h3 class="custom-footer__nav-heading">{{ block.settings.heading }}</h3>
+                <summary class="custom-footer__nav-heading">
+                  <span>{{- block.settings.heading -}}</span>
+                  <span class="custom-footer__nav-toggle" aria-hidden="true"></span>
+                </summary>
               {%- endif -%}
               {%- assign menu_handle = block.settings.menu -%}
               {%- if menu_handle != blank and linklists[menu_handle].links.size > 0 -%}
@@ -294,7 +298,7 @@
                   {%- endfor -%}
                 </ul>
               {%- endif -%}
-            </div>
+            </details>
           {%- endif -%}
         {%- endfor -%}
 
@@ -428,6 +432,30 @@
   {%- content_for 'blocks' -%}
 </div>
 {{- '<!-- /moxie-brand-section -->' -}}
+
+<script>
+(function () {
+  var MQ = window.matchMedia('(max-width: 749px)');
+
+  function initAccordions(isMobile) {
+    document.querySelectorAll('.custom-footer__nav-col').forEach(function (el) {
+      if (isMobile) {
+        el.removeAttribute('open');
+      } else {
+        el.setAttribute('open', '');
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { initAccordions(MQ.matches); });
+  } else {
+    initAccordions(MQ.matches);
+  }
+
+  MQ.addEventListener('change', function (e) { initAccordions(e.matches); });
+})();
+</script>
 
 {% schema %}
 {

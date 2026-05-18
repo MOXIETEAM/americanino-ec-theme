@@ -1,0 +1,79 @@
+{%- doc -%}
+  MOXIE: Inline size picker overlay para product cards.
+  - Desktop: se muestra al hacer hover sobre product-card (CSS puro).
+  - Mobile: se muestra al hacer clic en el botón + (JS toggle).
+
+  @param {object} product - El objeto product
+{%- enddoc -%}
+
+{%- liquid
+  assign size_option       = nil
+  assign size_option_index = 0
+
+  for option in product.options_with_values
+    assign option_lower = option.name | downcase
+    if option_lower == 'talla' or option_lower == 'size' or option_lower contains 'talle' or option_lower contains 'tamaño' or option_lower contains 'taille'
+      assign size_option       = option
+      assign size_option_index = forloop.index0
+      break
+    endif
+  endfor
+
+  if size_option == nil and product.options_with_values.size > 0
+    assign size_option       = product.options_with_values.last
+    assign size_option_index = product.options_with_values.size | minus: 1
+  endif
+-%}
+
+{%- if size_option != nil and product.variants.size > 1 -%}
+  <script src="{{ 'custom_card_size_picker.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+  <mox-size-picker-component
+    class="mox-sp"
+    data-product-id="{{ product.id }}"
+    aria-hidden="true"
+  >
+
+    {%- comment -%} ── Panel de tallas ──────────────────────────────────── {%- endcomment -%}
+    <div class="mox-sp__panel">
+      <p class="mox-sp__label">Selecciona tu talla</p>
+      <div class="mox-sp__options" role="list">
+        {%- for value in size_option.values -%}
+          {%- assign best_variant = nil -%}
+          {%- for variant in product.variants -%}
+            {%- assign v_size = variant.options[size_option_index] -%}
+            {%- if v_size == value -%}
+              {%- if best_variant == nil -%}
+                {%- assign best_variant = variant -%}
+              {%- endif -%}
+              {%- if variant.available -%}
+                {%- assign best_variant = variant -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <a
+            href="{{ best_variant.url | default: product.url }}"
+            class="mox-sp__option{% unless best_variant.available %} mox-sp__option--unavailable{% endunless %}"
+            role="listitem"
+            aria-label="{{ value }}"
+          >{{ value }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} ── Botón toggle (solo mobile) ──────────────────────── {%- endcomment -%}
+    <button
+      type="button"
+      class="mox-sp__toggle"
+      aria-label="Ver tallas"
+      aria-expanded="false"
+      on:click="/toggle"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+  </mox-size-picker-component>
+{%- endif -%}

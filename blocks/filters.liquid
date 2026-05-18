@@ -137,7 +137,7 @@
 
         {% liquid
           assign child_count = 0
-          if block_settings.enable_filtering == false and block_settings.enable_sorting
+          if block_settings.enable_sorting
             assign child_count = child_count | plus: 1
           endif
           if block_settings.enable_grid_density
@@ -146,28 +146,6 @@
         %}
 
         <div class="facets-mobile-wrapper facets-controls-wrapper{% if child_count > 1 %} facets-mobile-wrapper--multiple-controls{% endif %}">
-          {% if block_settings.enable_filtering == false and block_settings.enable_sorting %}
-            <facets-form-component
-              section-id="{{ section.id }}"
-              id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
-            >
-              <form
-                action="{{ results_url }}"
-                id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
-                ref="facetsForm"
-              >
-                {% render 'sorting',
-                  results: results,
-                  sort_by: sort_by,
-                  filter_style: block_settings.filter_style,
-                  suffix: 'mobile',
-                  sort_position: 'mobile',
-                  should_use_select_on_mobile: should_use_select_on_mobile,
-                  section_id: section.id
-                %}
-              </form>
-            </facets-form-component>
-          {% endif %}
           {% if block_settings.enable_grid_density %}
             {%- comment -%} MOXIE: selector de densidad personalizado {%- endcomment -%}
             {% if block_settings.moxie_grid_density %}
@@ -179,6 +157,52 @@
               %}
             {% else %}
               {% render 'grid-density-controls', viewport: 'mobile' %}
+            {% endif %}
+          {% endif %}
+          {% if block_settings.enable_sorting %}
+            {%- comment -%} MOXIE: sort en toolbar mobile {%- endcomment -%}
+            {% if block_settings.enable_filtering == false %}
+              <facets-form-component
+                section-id="{{ section.id }}"
+                id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
+              >
+                <form
+                  action="{{ results_url }}"
+                  id="FacetFiltersForm--{{ section.id }}-mobile-sorting-only"
+                  ref="facetsForm"
+                >
+                  {% render 'sorting',
+                    results: results,
+                    sort_by: sort_by,
+                    filter_style: block_settings.filter_style,
+                    suffix: 'mobile',
+                    sort_position: 'mobile',
+                    should_use_select_on_mobile: should_use_select_on_mobile,
+                    section_id: section.id
+                  %}
+                </form>
+              </facets-form-component>
+            {% else %}
+              <facets-form-component
+                section-id="{{ section.id }}"
+                id="FacetFiltersForm--{{ section.id }}-mobile-bar"
+              >
+                <form
+                  action="{{ results_url }}"
+                  id="FacetFiltersForm--{{ section.id }}-mobile-bar"
+                  ref="facetsForm"
+                >
+                  {% render 'sorting',
+                    results: results,
+                    sort_by: sort_by,
+                    filter_style: block_settings.filter_style,
+                    suffix: 'mobile-bar',
+                    sort_position: 'mobile',
+                    should_use_select_on_mobile: false,
+                    section_id: section.id
+                  %}
+                </form>
+              </facets-form-component>
             {% endif %}
           {% endif %}
         </div>
@@ -463,11 +487,12 @@
             class="facets-drawer__filters"
           >
             {% if block_settings.enable_filtering %}
+              {%- comment -%} MOXIE: should_show_clear_all true → chip "Borrar filtros" aparece en la fila de chips del drawer {%- endcomment -%}
               {% render 'filter-remove-buttons',
                 filters: filters,
                 results_url: results_url,
                 show_filter_label: block_settings.show_filter_label,
-                should_show_clear_all: false
+                should_show_clear_all: true
               %}
 
               <div class="facets__filters-wrapper">
@@ -1537,18 +1562,6 @@
       "id": "moxie_grid_density",
       "label": "Usar selector personalizado (2 / 3 / 4 / 5 col)",
       "default": false
-    },
-    {
-      "type": "select",
-      "id": "moxie_grid_density_brand",
-      "label": "Visible en marca",
-      "options": [
-        { "value": "all", "label": "Todas" },
-        { "value": "mic", "label": "MIC" },
-        { "value": "little-mic", "label": "Little MIC" }
-      ],
-      "default": "all",
-      "visible_if": "{{ block.settings.moxie_grid_density == true }}"
     },
     {
       "type": "checkbox",

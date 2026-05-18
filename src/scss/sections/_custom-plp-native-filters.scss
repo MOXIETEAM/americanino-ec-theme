@@ -102,3 +102,195 @@
 }
 
 // stylelint-enable selector-class-pattern
+
+// ── Filter Drawer — Estilización Americanino ─────────────────────────────────
+
+// stylelint-disable declaration-no-important
+
+.facets--drawer {
+  // ── Header ─────────────────────────────────────────────────────────────
+
+  .facets__title-wrapper {
+    min-height: 60px;
+    padding-inline: 20px;
+    padding-block: 0;
+    border-bottom: 1px solid #a6a6a6;
+    background-color: #fff;
+  }
+
+  .facets-drawer__title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e2b51;
+    letter-spacing: 0;
+  }
+
+  .facets-drawer__close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  // ── Chips de filtros activos ──────────────────────────────────────────
+
+  .facets-remove {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #a6a6a6;
+  }
+
+  // Anula márgenes del stylesheet inline de filter-remove-buttons.liquid
+  .facets-remove:has(facet-remove-component) {
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+
+  // Chips individuales (filtros activos)
+  .facets-remove__pill {
+    display: inline-flex;
+    flex-direction: row-reverse; // icono X a la izquierda
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    border: 1px solid #1e2b51;
+    background-color: #fff;
+    color: #1e2b51;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: none;
+  }
+
+  .facets-remove__pill .svg-wrapper {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .facets-remove__pill svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  // Chip "Borrar filtros" — mismo aspecto que los demás chips
+  .facets__clear-all-link {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: 100px;
+    border: 1px solid #1e2b51;
+    background-color: #fff;
+    color: #1e2b51;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+
+    &::before {
+      content: '×';
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    &:hover {
+      text-decoration: none;
+      background-color: #f5f5f5;
+    }
+  }
+
+  // ── Acordeones de filtros ─────────────────────────────────────────────
+
+  // Quitar el separador pseudo-elemento por defecto (usamos border-bottom en cada panel)
+  .facets__item::before {
+    display: none;
+  }
+
+  .facets__panel {
+    padding: 0 20px;
+    border-bottom: 1px solid #a6a6a6;
+  }
+
+  .facets__summary {
+    padding-block: 18px;
+    padding-inline: 0;
+    font-size: 14px;
+    align-items: center;
+  }
+
+  .facets__label {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #1e2b51;
+  }
+
+  .facets__summary .icon-caret {
+    width: 20px;
+    height: 20px;
+    color: #1e2b51;
+    opacity: 1;
+  }
+
+  // ── Lista de checkboxes ───────────────────────────────────────────────
+
+  .facets__inputs-list {
+    gap: 20px;
+  }
+
+  .facets__inputs {
+    padding-block-end: 16px;
+  }
+
+  .checkbox__label-text {
+    font-size: 15px;
+    color: #1e2b51;
+    font-weight: 400;
+  }
+
+  // ── Barra de acciones inferior ────────────────────────────────────────
+
+  .facets__drawer-actions {
+    padding: 12px 20px 24px;
+    background-image: none;
+    background-color: #fff;
+    border-top: none;
+    gap: 10px;
+  }
+
+  // Ocultar "Limpiar todo" del footer — va en los chips
+  .facets__clear-all,
+  .facets__clear-all--active {
+    display: none !important;
+  }
+
+  // Botón "Ver resultados / Aplicar filtros"
+  .facets__see-results {
+    width: 100%;
+    min-width: 0;
+    flex-grow: 1;
+    padding: 16px 24px;
+    background-color: #1e2b51;
+    color: #fff;
+    border-radius: 100px;
+    border: none;
+    box-shadow: none;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+
+    &:hover {
+      background-color: #16203d;
+      color: #fff;
+    }
+  }
+}
+
+// stylelint-enable declaration-no-important

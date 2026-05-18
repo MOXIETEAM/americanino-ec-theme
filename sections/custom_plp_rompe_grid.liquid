@@ -101,31 +101,31 @@
 
       {%- assign p = banner.pin_1_producto.value -%}
       {%- if p != blank -%}
-      {{ pin_sep }}{"x":{{ banner.pin_1_pos_x.value | default: 25 }},"y":{{ banner.pin_1_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {{ pin_sep }}{"x":{{ banner.pin_1_pos_x.value | default: 25 }},"y":{{ banner.pin_1_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }},"option_name":{{ p.options.first | json }},"variants":[{%- for v in p.variants -%}{%- unless forloop.first -%},{%- endunless -%}{"id":{{ v.id }},"title":{{ v.title | json }},"option1":{{ v.option1 | json }},"available":{{ v.available }}}{%- endfor -%}]}
       {%- assign pin_sep = ',' -%}
       {%- endif -%}
 
       {%- assign p = banner.pin_2_producto.value -%}
       {%- if p != blank -%}
-      {{ pin_sep }}{"x":{{ banner.pin_2_pos_x.value | default: 50 }},"y":{{ banner.pin_2_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {{ pin_sep }}{"x":{{ banner.pin_2_pos_x.value | default: 50 }},"y":{{ banner.pin_2_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }},"option_name":{{ p.options.first | json }},"variants":[{%- for v in p.variants -%}{%- unless forloop.first -%},{%- endunless -%}{"id":{{ v.id }},"title":{{ v.title | json }},"option1":{{ v.option1 | json }},"available":{{ v.available }}}{%- endfor -%}]}
       {%- assign pin_sep = ',' -%}
       {%- endif -%}
 
       {%- assign p = banner.pin_3_producto.value -%}
       {%- if p != blank -%}
-      {{ pin_sep }}{"x":{{ banner.pin_3_pos_x.value | default: 75 }},"y":{{ banner.pin_3_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {{ pin_sep }}{"x":{{ banner.pin_3_pos_x.value | default: 75 }},"y":{{ banner.pin_3_pos_y.value | default: 50 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }},"option_name":{{ p.options.first | json }},"variants":[{%- for v in p.variants -%}{%- unless forloop.first -%},{%- endunless -%}{"id":{{ v.id }},"title":{{ v.title | json }},"option1":{{ v.option1 | json }},"available":{{ v.available }}}{%- endfor -%}]}
       {%- assign pin_sep = ',' -%}
       {%- endif -%}
 
       {%- assign p = banner.pin_4_producto.value -%}
       {%- if p != blank -%}
-      {{ pin_sep }}{"x":{{ banner.pin_4_pos_x.value | default: 35 }},"y":{{ banner.pin_4_pos_y.value | default: 70 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {{ pin_sep }}{"x":{{ banner.pin_4_pos_x.value | default: 35 }},"y":{{ banner.pin_4_pos_y.value | default: 70 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }},"option_name":{{ p.options.first | json }},"variants":[{%- for v in p.variants -%}{%- unless forloop.first -%},{%- endunless -%}{"id":{{ v.id }},"title":{{ v.title | json }},"option1":{{ v.option1 | json }},"available":{{ v.available }}}{%- endfor -%}]}
       {%- assign pin_sep = ',' -%}
       {%- endif -%}
 
       {%- assign p = banner.pin_5_producto.value -%}
       {%- if p != blank -%}
-      {{ pin_sep }}{"x":{{ banner.pin_5_pos_x.value | default: 65 }},"y":{{ banner.pin_5_pos_y.value | default: 70 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }}}
+      {{ pin_sep }}{"x":{{ banner.pin_5_pos_x.value | default: 65 }},"y":{{ banner.pin_5_pos_y.value | default: 70 }},"title":{{ p.title | json }},"price":{{ p.price | money | json }},"compare_price":{%- if p.compare_at_price > p.price -%}{{ p.compare_at_price | money | json }}{%- else -%}null{%- endif -%},"image":{%- if p.featured_image -%}{{ p.featured_image | image_url: width: 400 | json }}{%- else -%}null{%- endif -%},"alt":{{ p.featured_image.alt | default: p.title | json }},"url":{{ p.url | json }},"option_name":{{ p.options.first | json }},"variants":[{%- for v in p.variants -%}{%- unless forloop.first -%},{%- endunless -%}{"id":{{ v.id }},"title":{{ v.title | json }},"option1":{{ v.option1 | json }},"available":{{ v.available }}}{%- endfor -%}]}
       {%- endif -%}
     ]
   }{% unless forloop.last %},{% endunless %}
@@ -169,6 +169,208 @@
     }
   }
 
+  /* ── Config sheet mobile ─────────────────────────────────────────────────── */
+
+  var FINANCE_TEXT       = {{ section.settings.pin_finance_text | default: '' | json }};
+  var FINANCE_LINK_LABEL = {{ section.settings.pin_finance_link_label | default: '' | json }};
+  var FINANCE_LINK_URL   = {{ section.settings.pin_finance_link_url | default: '' | json }};
+
+  function isMobile() { return window.innerWidth <= 749; }
+
+  /* ── Mobile bottom sheet ─────────────────────────────────────────────────── */
+
+  function getOrCreateSheet() {
+    var existing = document.getElementById('rompe-grid-sheet');
+    if (existing) return existing;
+
+    var overlay = document.createElement('div');
+    overlay.id = 'rompe-grid-sheet-overlay';
+    overlay.className = 'rompe-grid-sheet-overlay';
+    overlay.addEventListener('click', closeSheet);
+    document.body.appendChild(overlay);
+
+    var el = document.createElement('div');
+    el.id = 'rompe-grid-sheet';
+    el.className = 'rompe-grid-sheet';
+    el.innerHTML =
+      '<button class="rompe-grid-sheet__close" type="button" aria-label="Cerrar">' +
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+      '</button>' +
+      '<div class="rompe-grid-sheet__body">' +
+        '<div class="rompe-grid-sheet__row">' +
+          '<div class="rompe-grid-sheet__img-wrap"><img class="rompe-grid-sheet__img" src="" alt="" loading="eager"></div>' +
+          '<div class="rompe-grid-sheet__info">' +
+            '<p class="rompe-grid-sheet__finance"></p>' +
+            '<p class="rompe-grid-sheet__name"></p>' +
+            '<div class="rompe-grid-sheet__prices">' +
+              '<span class="rompe-grid-sheet__compare"></span>' +
+              '<span class="rompe-grid-sheet__price"></span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="rompe-grid-sheet__size-section">' +
+          '<label class="rompe-grid-sheet__size-label">Talla</label>' +
+          '<div class="rompe-grid-sheet__select-wrap">' +
+            '<select class="rompe-grid-sheet__select" aria-label="Talla"></select>' +
+            '<span class="rompe-grid-sheet__caret" aria-hidden="true">' +
+              '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+            '</span>' +
+          '</div>' +
+        '</div>' +
+        '<button class="rompe-grid-sheet__atb" type="button">Añadir a la bolsa</button>' +
+      '</div>';
+    document.body.appendChild(el);
+
+    el.querySelector('.rompe-grid-sheet__close').addEventListener('click', closeSheet);
+    el.querySelector('.rompe-grid-sheet__select').addEventListener('change', function () {
+      updateSheetVariant(this.value);
+    });
+    el.querySelector('.rompe-grid-sheet__atb').addEventListener('click', sheetAddToCart);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeSheet();
+    });
+
+    return el;
+  }
+
+  function openSheet(pin) {
+    var el      = getOrCreateSheet();
+    var overlay = document.getElementById('rompe-grid-sheet-overlay');
+
+    /* Imagen */
+    var imgWrap = el.querySelector('.rompe-grid-sheet__img-wrap');
+    var imgEl   = el.querySelector('.rompe-grid-sheet__img');
+    if (pin.image) {
+      imgEl.src = pin.image;
+      imgEl.alt = pin.alt || pin.title || '';
+      imgWrap.style.display = '';
+    } else {
+      imgWrap.style.display = 'none';
+    }
+
+    /* Financiamiento */
+    var financeEl = el.querySelector('.rompe-grid-sheet__finance');
+    var financeHTML = '';
+    if (FINANCE_TEXT)       financeHTML = FINANCE_TEXT;
+    if (FINANCE_LINK_LABEL) {
+      var href = FINANCE_LINK_URL || '#';
+      financeHTML += (financeHTML ? ' ' : '') + '<a href="' + href + '">' + FINANCE_LINK_LABEL + '</a>';
+    }
+    if (financeHTML) {
+      financeEl.innerHTML = financeHTML;
+      financeEl.style.display = '';
+    } else {
+      financeEl.style.display = 'none';
+    }
+
+    /* Nombre */
+    el.querySelector('.rompe-grid-sheet__name').textContent = pin.title || '';
+
+    /* Precios */
+    var cmpEl   = el.querySelector('.rompe-grid-sheet__compare');
+    var priceEl = el.querySelector('.rompe-grid-sheet__price');
+    if (pin.compare_price) {
+      cmpEl.textContent  = pin.compare_price;
+      cmpEl.style.display = '';
+    } else {
+      cmpEl.style.display = 'none';
+    }
+    priceEl.textContent = pin.price || '';
+
+    /* Tallas */
+    var sizeSection = el.querySelector('.rompe-grid-sheet__size-section');
+    var select      = el.querySelector('.rompe-grid-sheet__select');
+    var atbBtn      = el.querySelector('.rompe-grid-sheet__atb');
+    var hasRealVariants = pin.variants && pin.variants.length > 0 &&
+      !(pin.variants.length === 1 && pin.variants[0].title === 'Default Title');
+
+    if (hasRealVariants) {
+      el.querySelector('.rompe-grid-sheet__size-label').textContent = pin.option_name || 'Talla';
+      select.innerHTML = '';
+      pin.variants.forEach(function (v) {
+        var opt = document.createElement('option');
+        opt.value = v.id;
+        opt.textContent = v.option1 || v.title;
+        if (!v.available) {
+          opt.disabled = true;
+          opt.textContent += ' – Agotado';
+        }
+        select.appendChild(opt);
+      });
+      sizeSection.style.display = '';
+      atbBtn.dataset.variantId  = select.value;
+    } else {
+      sizeSection.style.display = 'none';
+      atbBtn.dataset.variantId  = pin.variants && pin.variants[0] ? String(pin.variants[0].id) : '';
+    }
+
+    atbBtn.dataset.productUrl = pin.url || '';
+    atbBtn.textContent        = 'Añadir a la bolsa';
+    atbBtn.disabled           = false;
+    atbBtn.classList.remove('is-loading', 'is-added');
+
+    el.classList.add('is-open');
+    if (overlay) overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSheet() {
+    var el      = document.getElementById('rompe-grid-sheet');
+    var overlay = document.getElementById('rompe-grid-sheet-overlay');
+    if (el)      el.classList.remove('is-open');
+    if (overlay) overlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function updateSheetVariant(variantId) {
+    var el = document.getElementById('rompe-grid-sheet');
+    if (!el) return;
+    var atbBtn = el.querySelector('.rompe-grid-sheet__atb');
+    atbBtn.dataset.variantId = variantId;
+    atbBtn.textContent = 'Añadir a la bolsa';
+    atbBtn.disabled    = false;
+  }
+
+  function sheetAddToCart() {
+    var el     = document.getElementById('rompe-grid-sheet');
+    if (!el)   return;
+    var btn        = el.querySelector('.rompe-grid-sheet__atb');
+    var variantId  = btn.dataset.variantId;
+    var productUrl = btn.dataset.productUrl;
+
+    if (!variantId) {
+      if (productUrl) window.location.href = productUrl;
+      return;
+    }
+
+    btn.disabled    = true;
+    btn.textContent = 'Agregando…';
+
+    fetch('/cart/add.js', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+      body:    JSON.stringify({ items: [{ id: parseInt(variantId, 10), quantity: 1 }] })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.status && data.status >= 400) {
+        btn.disabled    = false;
+        btn.textContent = data.description || 'Error — intentar de nuevo';
+      } else {
+        btn.textContent = '¡Añadido!';
+        /* Notificar al tema para actualizar el mini-cart */
+        try { document.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true })); } catch (e) {}
+        try { document.dispatchEvent(new CustomEvent('cart:updated', { bubbles: true })); } catch (e) {}
+        setTimeout(closeSheet, 900);
+      }
+    })
+    .catch(function () {
+      btn.disabled    = false;
+      btn.textContent = 'Error — intentar de nuevo';
+    });
+  }
+
   /* ── Crear elemento de pin ───────────────────────────────────────────────── */
 
   function createPinEl(pin, index) {
@@ -187,7 +389,7 @@
     dot.textContent = '+';
     btn.appendChild(dot);
 
-    /* Popup */
+    /* Popup (desktop only) */
     var popup = document.createElement('div');
     popup.className = 'plp-rompe-grid__pin-popup';
 
@@ -258,12 +460,24 @@
     });
   }
 
-  function setupPinToggle(bannerEl) {
+  function setupPinToggle(bannerEl, pins) {
     bannerEl.querySelectorAll('.plp-rompe-grid__pin').forEach(function (pin) {
+      var pinIndex = parseInt(pin.getAttribute('data-pin'), 10) || 0;
+      var pinData  = (pins && pins[pinIndex]) || null;
+
       pin.addEventListener('click', function (e) {
         e.stopPropagation();
+
+        if (isMobile()) {
+          /* En mobile: no abrir popup inline, abrir el bottom sheet */
+          bannerEl.querySelectorAll('.plp-rompe-grid__pin.is-open')
+            .forEach(function (p) { p.classList.remove('is-open'); });
+          if (pinData) openSheet(pinData);
+          return;
+        }
+
+        /* Desktop: toggle popup inline */
         var isOpen = pin.classList.contains('is-open');
-        /* Cerrar todos los pines del banner antes de abrir */
         bannerEl.querySelectorAll('.plp-rompe-grid__pin.is-open')
           .forEach(function (p) { p.classList.remove('is-open'); });
         if (!isOpen) pin.classList.add('is-open');
@@ -359,7 +573,7 @@
 
     li.appendChild(inner);
 
-    if (hasPins) setupPinToggle(li);
+    if (hasPins) setupPinToggle(li, banner.pins);
 
     return li;
   }
@@ -479,7 +693,25 @@
   "blocks": [
     { "type": "@theme" }
   ],
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "pin_finance_text",
+      "label": "Texto de financiamiento (sheet mobile)",
+      "default": "0% de interés hasta 3 cuotas"
+    },
+    {
+      "type": "text",
+      "id": "pin_finance_link_label",
+      "label": "Etiqueta del enlace de bancos",
+      "default": "ver bancos"
+    },
+    {
+      "type": "url",
+      "id": "pin_finance_link_url",
+      "label": "URL enlace de bancos"
+    }
+  ],
   "presets": [
     {
       "name": "Moxie PLP Rompe-Grid",
