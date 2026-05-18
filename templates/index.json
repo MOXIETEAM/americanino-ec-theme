@@ -57,13 +57,13 @@
               "name": "Moxie Título SEO",
               "settings": {
                 "text": "Título SEO",
-                "heading_tag": "h2",
+                "heading_tag": "h1",
                 "font_family": "heading",
                 "font_weight": "700",
                 "font_size": 32,
                 "font_size_mobile": 24,
                 "line_height": 12,
-                "text_align": "left",
+                "text_align": "center",
                 "color": "",
                 "margin_top": 0,
                 "margin_bottom": 0
