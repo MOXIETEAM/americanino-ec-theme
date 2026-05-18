@@ -114,12 +114,16 @@
     </div>
   </div>
 </promo-countdown>
+{%- content_for 'blocks' -%}
 </div>
 
 {% schema %}
 {
   "name": "Moxie Promo Countdown",
   "tag": "section",
+  "blocks": [
+    { "type": "@theme" }
+  ],
   "settings": [
     {
       "type": "header",

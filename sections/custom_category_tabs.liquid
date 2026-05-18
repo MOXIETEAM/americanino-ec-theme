@@ -191,6 +191,7 @@
 
   {%- endif -%}
 
+  {%- content_for 'blocks' -%}
 </div>
 </div>
 
@@ -334,7 +335,8 @@
           "default": "tab-1"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "disabled_on": {
     "groups": ["header"]

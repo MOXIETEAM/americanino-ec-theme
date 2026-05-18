@@ -103,6 +103,7 @@
       </button>
     </div>
   {%- endif -%}
+  {%- content_for 'blocks' -%}
 </div>
 
 {% schema %}
@@ -144,7 +145,8 @@
           "label": "Enlace del botón CTA"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "settings": [
     {

@@ -103,6 +103,7 @@
     {%- endif -%}
 
   </div>
+  {%- content_for 'blocks' -%}
 </section>
 
 <script>
@@ -596,7 +597,8 @@
           "default": "bottom-left"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "settings": [
     {

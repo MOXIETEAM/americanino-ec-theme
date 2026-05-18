@@ -200,6 +200,7 @@
 
   </div>
 </div>
+{%- content_for 'blocks' -%}
 </div>
 {%- endif -%}
 
@@ -292,7 +293,8 @@
           "label": "Enlace"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "settings": [
     {

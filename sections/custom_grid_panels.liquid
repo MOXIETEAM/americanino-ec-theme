@@ -260,6 +260,7 @@
       </div>
     {%- endfor -%}
   </div>
+  {%- content_for 'blocks' -%}
 </div>
 
 {% schema %}
@@ -613,7 +614,8 @@
           "visible_if": "{{ block.settings.content_type == 'promo' }}"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "disabled_on": {
     "groups": ["header"]

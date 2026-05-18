@@ -64,6 +64,7 @@
       {%- endfor -%}
     </div>
   </div>
+  {%- content_for 'blocks' -%}
 </div>
 
 {% schema %}
@@ -101,7 +102,8 @@
           "default": "Envio gratis a partir de $150.000"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "disabled_on": {
     "groups": ["header"]

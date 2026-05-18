@@ -71,6 +71,7 @@
     {%- endif -%}
 
   </div>
+  {%- content_for 'blocks' -%}
 </div>
 
 <script>
@@ -160,7 +161,8 @@
           "label": "Enlace (opcional)"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "disabled_on": {
     "groups": ["header"]

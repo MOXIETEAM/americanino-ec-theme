@@ -127,6 +127,7 @@
 
   </category-grid-slider>
 
+  {%- content_for 'blocks' -%}
 </div>
 </div>
 
@@ -402,7 +403,8 @@
           "visible_if": "{{ block.settings.show_gender_links }}"
         }
       ]
-    }
+    },
+    { "type": "@theme" }
   ],
   "presets": [
     {
