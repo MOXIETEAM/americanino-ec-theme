@@ -399,6 +399,7 @@
       {{ navigation_bar }}
     </div>
   {% endif %}
+  {%- content_for 'blocks' -%}
 </header-component>
 
 <script
@@ -1648,6 +1649,7 @@
     }
   ],
   "blocks": [
+    { "type": "@theme" },
     {
       "type": "_custom-header-logo"
     },

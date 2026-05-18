@@ -398,6 +398,8 @@
       {{ navigation_bar }}
     </div>
   {% endif %}
+  {%- comment -%} MOXIE: permite insertar bloques @theme en el header {%- endcomment -%}
+  {%- content_for 'blocks' -%}
 </header-component>
 
 <script
@@ -1647,6 +1649,9 @@
       "default": "default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
     }
+  ],
+  "blocks": [
+    { "type": "@theme" }
   ],
   "presets": []
 }
