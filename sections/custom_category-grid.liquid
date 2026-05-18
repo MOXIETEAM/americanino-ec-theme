@@ -10,7 +10,7 @@
 
 <div class="custom-center-container{% unless s.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_on_mobile %} mox-hidden-mobile{% endunless %}">
 <div
-  class="mox-cg color-{{ s.color_scheme }} custom-standar-max-width"
+  class="mox-cg color-{{ s.color_scheme }} custom-standar-max-width{% if s.btn_hover_only %} mox-cg--btn-hover{% endif %}"
   style="
     --mox-cg-pt: {{ s.padding_top }}px;
     --mox-cg-pb: {{ s.padding_bottom }}px;
@@ -84,14 +84,18 @@
             {%- if has_genders -%}
               <div class="mox-cg__genders">
                 {%- if b.link_male != blank -%}
-                  <a class="mox-cg__gender-btn" href="{{ b.link_male }}">
-                    {{ b.label_male | default: 'Hombre' }}
-                  </a>
+                  <a
+                    class="mox-cg__gender-btn"
+                    href="{{ b.link_male }}"
+                    style="{% unless b.btn1_bg == blank %}--btn-bg:{{ b.btn1_bg }};{% endunless %}{% unless b.btn1_text == blank %}--btn-color:{{ b.btn1_text }};{% endunless %}{% unless b.btn1_hover == blank %}--btn-hover-bg:{{ b.btn1_hover }};{% endunless %}"
+                  >{{ b.label_male | default: 'Hombre' }}</a>
                 {%- endif -%}
                 {%- if b.link_female != blank -%}
-                  <a class="mox-cg__gender-btn" href="{{ b.link_female }}">
-                    {{ b.label_female | default: 'Mujer' }}
-                  </a>
+                  <a
+                    class="mox-cg__gender-btn"
+                    href="{{ b.link_female }}"
+                    style="{% unless b.btn2_bg == blank %}--btn-bg:{{ b.btn2_bg }};{% endunless %}{% unless b.btn2_text == blank %}--btn-color:{{ b.btn2_text }};{% endunless %}{% unless b.btn2_hover == blank %}--btn-hover-bg:{{ b.btn2_hover }};{% endunless %}"
+                  >{{ b.label_female | default: 'Mujer' }}</a>
                 {%- endif -%}
               </div>
             {%- elsif b.link != blank -%}
@@ -250,6 +254,16 @@
     },
     {
       "type": "header",
+      "content": "Botones de categoría"
+    },
+    {
+      "type": "checkbox",
+      "id": "btn_hover_only",
+      "label": "Mostrar botones solo al hacer hover (desktop)",
+      "default": true
+    },
+    {
+      "type": "header",
       "content": "Visibilidad"
     },
     {
@@ -328,24 +342,64 @@
         {
           "type": "text",
           "id": "label_male",
-          "label": "Etiqueta Boton 1",
-          "default": "Hombre"
+          "label": "Boton 1 — Etiqueta",
+          "default": "Hombre",
+          "visible_if": "{{ block.settings.show_gender_links }}"
         },
         {
           "type": "url",
           "id": "link_male",
-          "label": "Enlace Boton 1"
+          "label": "Boton 1 — Enlace",
+          "visible_if": "{{ block.settings.show_gender_links }}"
+        },
+        {
+          "type": "color",
+          "id": "btn1_bg",
+          "label": "Boton 1 — Color fondo",
+          "visible_if": "{{ block.settings.show_gender_links }}"
+        },
+        {
+          "type": "color",
+          "id": "btn1_text",
+          "label": "Boton 1 — Color texto",
+          "visible_if": "{{ block.settings.show_gender_links }}"
+        },
+        {
+          "type": "color",
+          "id": "btn1_hover",
+          "label": "Boton 1 — Color fondo hover",
+          "visible_if": "{{ block.settings.show_gender_links }}"
         },
         {
           "type": "text",
           "id": "label_female",
-          "label": "Etiqueta Boton 2",
-          "default": "Mujer"
+          "label": "Boton 2 — Etiqueta",
+          "default": "Mujer",
+          "visible_if": "{{ block.settings.show_gender_links }}"
         },
         {
           "type": "url",
           "id": "link_female",
-          "label": "Enlace Boton 2"
+          "label": "Boton 2 — Enlace",
+          "visible_if": "{{ block.settings.show_gender_links }}"
+        },
+        {
+          "type": "color",
+          "id": "btn2_bg",
+          "label": "Boton 2 — Color fondo",
+          "visible_if": "{{ block.settings.show_gender_links }}"
+        },
+        {
+          "type": "color",
+          "id": "btn2_text",
+          "label": "Boton 2 — Color texto",
+          "visible_if": "{{ block.settings.show_gender_links }}"
+        },
+        {
+          "type": "color",
+          "id": "btn2_hover",
+          "label": "Boton 2 — Color fondo hover",
+          "visible_if": "{{ block.settings.show_gender_links }}"
         }
       ]
     }

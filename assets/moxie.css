@@ -5222,19 +5222,19 @@ category-grid-slider {
 }
 
 @media (min-width: 769px) {
-  .mox-cg__genders {
+  .mox-cg--btn-hover .mox-cg__genders {
     opacity: 0;
     transform: translateY(6px);
     transition: opacity 200ms ease, transform 200ms ease;
   }
-  .mox-cg__card:hover .mox-cg__genders,
-  .mox-cg__card:focus-within .mox-cg__genders {
+  .mox-cg--btn-hover .mox-cg__card:hover .mox-cg__genders,
+  .mox-cg--btn-hover .mox-cg__card:focus-within .mox-cg__genders {
     opacity: 1;
     transform: translateY(0);
   }
 }
 @media (min-width: 769px) and (prefers-reduced-motion: reduce) {
-  .mox-cg__genders {
+  .mox-cg--btn-hover .mox-cg__genders {
     transition: none;
   }
 }
@@ -5243,18 +5243,18 @@ category-grid-slider {
   align-items: center;
   padding: 6px 18px;
   border-radius: 999px;
-  background: #fff;
-  color: #111;
+  background: var(--btn-bg, #fff);
+  color: var(--btn-color, #111);
   font-size: 0.8125rem;
   font-weight: 500;
   text-decoration: none;
   position: relative;
   z-index: 2;
   white-space: nowrap;
-  transition: background 200ms ease;
+  transition: background 180ms ease, color 180ms ease;
 }
 .mox-cg__gender-btn:hover {
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--btn-hover-bg, rgba(255, 255, 255, 0.82));
 }
 @media (prefers-reduced-motion: reduce) {
   .mox-cg__gender-btn {
