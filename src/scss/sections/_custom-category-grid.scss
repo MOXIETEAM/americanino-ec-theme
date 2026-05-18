@@ -150,6 +150,27 @@ category-grid-slider {
   flex-wrap: wrap;
 }
 
+// Solo en desktop: ocultar botones y revelarlos en hover de la card
+@media (min-width: 769px) {
+  .mox-cg__genders {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .mox-cg__card:hover .mox-cg__genders,
+  .mox-cg__card:focus-within .mox-cg__genders {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mox-cg__genders {
+      transition: none;
+    }
+  }
+}
+
 .mox-cg__gender-btn {
   display: inline-flex;
   align-items: center;
