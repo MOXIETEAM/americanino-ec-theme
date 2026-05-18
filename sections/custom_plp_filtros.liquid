@@ -115,6 +115,7 @@
     })();
   </script>
 {%- endif -%}
+{%- content_for 'blocks' -%}
 
 {% schema %}
 {
@@ -140,6 +141,9 @@
       "unit": "px",
       "default": 12
     }
+  ],
+  "blocks": [
+    { "type": "@theme" }
   ],
   "presets": [
     {

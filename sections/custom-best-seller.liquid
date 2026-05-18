@@ -295,6 +295,7 @@
   </div>
 </div>
 </div>
+{%- content_for 'blocks' -%}
 
 {% schema %}
 {
@@ -419,6 +420,9 @@
       "unit": "px",
       "default": 60
     }
+  ],
+  "blocks": [
+    { "type": "@theme" }
   ],
   "presets": [
     {

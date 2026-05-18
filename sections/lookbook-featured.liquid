@@ -713,6 +713,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
+{%- content_for 'blocks' -%}
 
 {% schema %}
 {
@@ -751,6 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ],
   "blocks": [
+    { "type": "@theme" },
     {
       "type": "look",
       "name": "Look (Imagen)",
