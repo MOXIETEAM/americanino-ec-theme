@@ -1,0 +1,170 @@
+{%- liquid
+  assign s = block.settings
+  assign tag = s.heading_tag | default: 'h2'
+  assign lh = s.line_height | divided_by: 10.0
+-%}
+
+{%- case tag -%}
+  {%- when 'h1' -%}
+    <h1 class="mox-seo-title" style="--mox-seo-fs:{{ s.font_size }}px;--mox-seo-fs-m:{{ s.font_size_mobile }}px;font-family:var(--font-{{ s.font_family }}--family);font-weight:{{ s.font_weight }};text-align:{{ s.text_align }};line-height:{{ lh }};margin-top:{{ s.margin_top }}px;margin-bottom:{{ s.margin_bottom }}px;{%- unless s.color == blank %}color:{{ s.color }};{%- endunless %}" {{ block.shopify_attributes }}>{{- s.text | escape -}}</h1>
+  {%- when 'h2' -%}
+    <h2 class="mox-seo-title" style="--mox-seo-fs:{{ s.font_size }}px;--mox-seo-fs-m:{{ s.font_size_mobile }}px;font-family:var(--font-{{ s.font_family }}--family);font-weight:{{ s.font_weight }};text-align:{{ s.text_align }};line-height:{{ lh }};margin-top:{{ s.margin_top }}px;margin-bottom:{{ s.margin_bottom }}px;{%- unless s.color == blank %}color:{{ s.color }};{%- endunless %}" {{ block.shopify_attributes }}>{{- s.text | escape -}}</h2>
+  {%- when 'h3' -%}
+    <h3 class="mox-seo-title" style="--mox-seo-fs:{{ s.font_size }}px;--mox-seo-fs-m:{{ s.font_size_mobile }}px;font-family:var(--font-{{ s.font_family }}--family);font-weight:{{ s.font_weight }};text-align:{{ s.text_align }};line-height:{{ lh }};margin-top:{{ s.margin_top }}px;margin-bottom:{{ s.margin_bottom }}px;{%- unless s.color == blank %}color:{{ s.color }};{%- endunless %}" {{ block.shopify_attributes }}>{{- s.text | escape -}}</h3>
+  {%- when 'h4' -%}
+    <h4 class="mox-seo-title" style="--mox-seo-fs:{{ s.font_size }}px;--mox-seo-fs-m:{{ s.font_size_mobile }}px;font-family:var(--font-{{ s.font_family }}--family);font-weight:{{ s.font_weight }};text-align:{{ s.text_align }};line-height:{{ lh }};margin-top:{{ s.margin_top }}px;margin-bottom:{{ s.margin_bottom }}px;{%- unless s.color == blank %}color:{{ s.color }};{%- endunless %}" {{ block.shopify_attributes }}>{{- s.text | escape -}}</h4>
+  {%- when 'h5' -%}
+    <h5 class="mox-seo-title" style="--mox-seo-fs:{{ s.font_size }}px;--mox-seo-fs-m:{{ s.font_size_mobile }}px;font-family:var(--font-{{ s.font_family }}--family);font-weight:{{ s.font_weight }};text-align:{{ s.text_align }};line-height:{{ lh }};margin-top:{{ s.margin_top }}px;margin-bottom:{{ s.margin_bottom }}px;{%- unless s.color == blank %}color:{{ s.color }};{%- endunless %}" {{ block.shopify_attributes }}>{{- s.text | escape -}}</h5>
+  {%- when 'h6' -%}
+    <h6 class="mox-seo-title" style="--mox-seo-fs:{{ s.font_size }}px;--mox-seo-fs-m:{{ s.font_size_mobile }}px;font-family:var(--font-{{ s.font_family }}--family);font-weight:{{ s.font_weight }};text-align:{{ s.text_align }};line-height:{{ lh }};margin-top:{{ s.margin_top }}px;margin-bottom:{{ s.margin_bottom }}px;{%- unless s.color == blank %}color:{{ s.color }};{%- endunless %}" {{ block.shopify_attributes }}>{{- s.text | escape -}}</h6>
+  {%- else -%}
+    <p class="mox-seo-title" style="--mox-seo-fs:{{ s.font_size }}px;--mox-seo-fs-m:{{ s.font_size_mobile }}px;font-family:var(--font-{{ s.font_family }}--family);font-weight:{{ s.font_weight }};text-align:{{ s.text_align }};line-height:{{ lh }};margin-top:{{ s.margin_top }}px;margin-bottom:{{ s.margin_bottom }}px;{%- unless s.color == blank %}color:{{ s.color }};{%- endunless %}" {{ block.shopify_attributes }}>{{- s.text | escape -}}</p>
+{%- endcase -%}
+
+{% stylesheet %}
+  .mox-seo-title {
+    font-size: var(--mox-seo-fs, 32px);
+    display: block;
+    margin-block: 0;
+  }
+
+  @media (max-width: 749px) {
+    .mox-seo-title {
+      font-size: var(--mox-seo-fs-m, 24px);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie Título SEO",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Texto del título",
+      "default": "Título SEO"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Etiqueta HTML",
+      "info": "Usa H1 solo una vez por página. Define la jerarquía SEO.",
+      "options": [
+        { "value": "h1", "label": "H1 — Título principal" },
+        { "value": "h2", "label": "H2 — Sección" },
+        { "value": "h3", "label": "H3 — Subsección" },
+        { "value": "h4", "label": "H4" },
+        { "value": "h5", "label": "H5" },
+        { "value": "h6", "label": "H6" },
+        { "value": "p",  "label": "Párrafo (p)" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "header",
+      "content": "Tipografía"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Fuente",
+      "options": [
+        { "value": "body",       "label": "Cuerpo" },
+        { "value": "heading",    "label": "Títulos" },
+        { "value": "subheading", "label": "Subtítulos" },
+        { "value": "accent",     "label": "Acento" }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Peso",
+      "options": [
+        { "value": "300", "label": "Light (300)" },
+        { "value": "400", "label": "Regular (400)" },
+        { "value": "500", "label": "Medium (500)" },
+        { "value": "600", "label": "SemiBold (600)" },
+        { "value": "700", "label": "Bold (700)" },
+        { "value": "800", "label": "ExtraBold (800)" }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Tamaño — desktop",
+      "min": 10,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Tamaño — móvil",
+      "min": 10,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "line_height",
+      "label": "Interlineado (8=0.8, 12=1.2, 15=1.5, 20=2.0)",
+      "min": 8,
+      "max": 30,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alineación",
+      "options": [
+        { "value": "left",   "label": "Izquierda" },
+        { "value": "center", "label": "Centro" },
+        { "value": "right",  "label": "Derecha" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Color"
+    },
+    {
+      "type": "color",
+      "id": "color",
+      "label": "Color del texto"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Margen superior",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margen inferior",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}
