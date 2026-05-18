@@ -395,7 +395,7 @@
           "settings": {
             "image": "shopify://shop_images/10e27c979f4155e9912663d382f1159b4ff29093.jpg",
             "label": "Lorem ipsusom",
-            "sublabel": "",
+            "sublabel": "Lorem ipsusom",
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
@@ -409,7 +409,7 @@
           "settings": {
             "image": "shopify://shop_images/5f1e724e57e2a79dda8117f4fc06e0d58ded4f50.jpg",
             "label": "Lorem ipsusom",
-            "sublabel": "",
+            "sublabel": "Lorem ipsusom",
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
@@ -423,7 +423,7 @@
           "settings": {
             "image": "shopify://shop_images/730d5b2cd3dfe0e2ca5ec79feac886362be48b51.jpg",
             "label": "Lorem ipsusom",
-            "sublabel": "",
+            "sublabel": "Lorem ipsusom",
             "link": "",
             "show_gender_links": true,
             "label_male": "Hombre",
