@@ -47,7 +47,23 @@
         <a href="{{ routes.root_url }}" class="custom-mobile-drawer__logo-link" aria-label="{{ alt_text }}">
 
           {%- comment -%} Logo del drawer: custom si está configurado, sino el logo general {%- endcomment -%}
-          {%- if block_settings.mobile_logo_mic != blank -%}
+          {%- if block_settings.mobile_logo_video != blank -%}
+            {%- liquid assign logo_v_w = logo_h | times: block_settings.mobile_logo_video.aspect_ratio | ceil -%}
+            <video
+              class="custom-mobile-drawer__logo-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              width="{{ logo_v_w }}"
+              height="{{ logo_h }}"
+              aria-label="{{ alt_text }}"
+            >
+              {%- for source in block_settings.mobile_logo_video.sources -%}
+                <source src="{{ source.url }}" type="{{ source.mime_type }}">
+              {%- endfor -%}
+            </video>
+          {%- elsif block_settings.mobile_logo_mic != blank -%}
             {%- liquid assign logo_w = logo_h | times: block_settings.mobile_logo_mic.aspect_ratio | ceil -%}
             <img
               src="{{ block_settings.mobile_logo_mic | image_url: height: logo_h }}"
@@ -395,7 +411,8 @@
     height: 40px;
   }
 
-  .custom-mobile-drawer__logo-img {
+  .custom-mobile-drawer__logo-img,
+  .custom-mobile-drawer__logo-video {
     height: 40px;
     width: auto;
     max-width: 120px;
