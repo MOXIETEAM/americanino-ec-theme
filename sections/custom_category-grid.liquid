@@ -403,9 +403,12 @@
           "visible_if": "{{ block.settings.show_gender_links }}"
         }
       ]
-    },
-    { "type": "@theme" }
+    }
   ],
+  "enabled_on": {
+    "templates": ["*"],
+    "groups": ["footer"]
+  },
   "presets": [
     {
       "name": "Moxie Category Grid",
