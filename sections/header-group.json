@@ -193,7 +193,9 @@
             "mobile_util_2_label": "Mi cuenta",
             "mobile_util_2_icon": "account",
             "mobile_secondary_menu": "",
+            "drawer_img_1": "shopify://shop_images/417fd0d86437cf959dd24cbf94b72c109f2cbc85.png",
             "drawer_img_1_url": "",
+            "drawer_img_2": "shopify://shop_images/3b1fad23137319b7c536484e822aac7e60292c4e.png",
             "drawer_img_2_url": ""
           },
           "blocks": {}
