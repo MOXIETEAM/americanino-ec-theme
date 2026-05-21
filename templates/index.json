@@ -12,6 +12,69 @@
     "custom_hero_yVxjyj": {
       "type": "custom_hero",
       "blocks": {
+        "group_W8TkL9": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "custom_seo_title_qj44Yj": {
+              "type": "custom_seo_title",
+              "name": "Moxie Título SEO",
+              "settings": {
+                "text": "Título SEO",
+                "heading_tag": "h1",
+                "font_family": "heading",
+                "font_weight": "700",
+                "font_size": 32,
+                "font_size_mobile": 24,
+                "line_height": 12,
+                "text_align": "center",
+                "color": "",
+                "margin_top": 0,
+                "margin_bottom": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "custom_seo_title_qj44Yj"
+          ]
+        },
         "spacer_4keM9T": {
           "type": "spacer",
           "name": "t:names.spacer",
@@ -129,6 +192,7 @@
         }
       },
       "block_order": [
+        "group_W8TkL9",
         "spacer_4keM9T",
         "group_Ux93dA",
         "text_PUQgip"
@@ -278,8 +342,14 @@
             "show_gender_links": true,
             "label_male": "Hombre",
             "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": "shopify://collections/test-collection"
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_WVi379": {
@@ -292,8 +362,14 @@
             "show_gender_links": false,
             "label_male": "Hombre",
             "link_male": "",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": ""
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_fK9bT3": {
@@ -306,8 +382,14 @@
             "show_gender_links": false,
             "label_male": "Hombre",
             "link_male": "",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": ""
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_6d4DGD": {
@@ -320,8 +402,14 @@
             "show_gender_links": false,
             "label_male": "Hombre",
             "link_male": "",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": ""
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_wjdHAb": {
@@ -334,8 +422,14 @@
             "show_gender_links": false,
             "label_male": "Hombre",
             "link_male": "",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": ""
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         }
       },
@@ -360,6 +454,7 @@
         "label_size": 26,
         "color_scheme": "",
         "bg_color": "",
+        "btn_hover_only": true,
         "show_on_desktop": true,
         "show_on_mobile": true,
         "padding_top": 40,
@@ -400,8 +495,14 @@
             "show_gender_links": true,
             "label_male": "Hombre",
             "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": "shopify://collections/test-collection"
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_T7dChK": {
@@ -414,8 +515,14 @@
             "show_gender_links": true,
             "label_male": "Hombre",
             "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": "shopify://collections/test-collection"
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_q7RbTL": {
@@ -428,8 +535,14 @@
             "show_gender_links": true,
             "label_male": "Hombre",
             "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "Mujer",
-            "link_female": "shopify://collections/test-collection"
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         }
       },
@@ -452,6 +565,7 @@
         "label_size": 26,
         "color_scheme": "",
         "bg_color": "",
+        "btn_hover_only": true,
         "show_on_desktop": true,
         "show_on_mobile": true,
         "padding_top": 40,
@@ -795,8 +909,14 @@
             "show_gender_links": true,
             "label_male": "Ver colección",
             "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "",
-            "link_female": ""
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_JwEezJ": {
@@ -809,8 +929,14 @@
             "show_gender_links": true,
             "label_male": "Ver colección",
             "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "",
-            "link_female": ""
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         },
         "category_4XKVxe": {
@@ -823,8 +949,14 @@
             "show_gender_links": true,
             "label_male": "Ver colección",
             "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
             "label_female": "",
-            "link_female": ""
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
           }
         }
       },
@@ -847,6 +979,7 @@
         "label_size": 26,
         "color_scheme": "",
         "bg_color": "",
+        "btn_hover_only": true,
         "show_on_desktop": false,
         "show_on_mobile": true,
         "padding_top": 0,
