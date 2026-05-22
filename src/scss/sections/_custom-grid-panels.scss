@@ -565,12 +565,18 @@ mox-size-picker-component {
 
 .mox-sp__panel {
   position: absolute;
-  bottom: 0;
+  bottom: 30px;
   left: 0;
   right: 0;
-  background: var(--color-background, #fff);
-  padding: 14px 16px 16px;
-  transform: translateY(100%);
+  background: #FFFFFFC9;
+  margin: 0 10px;
+  border-radius: 5px;
+  min-height: 68px;
+  // padding: 14px 16px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(150%);
   pointer-events: all;
 }
 
@@ -614,14 +620,14 @@ mox-size-picker-component[data-open] .mox-sp__panel {
   min-width: 38px;
   height: 32px;
   padding: 0 8px;
-  border: 1px solid rgb(var(--color-foreground-rgb) / 0.25);
-  border-radius: 4px;
-  font-size: 0.8125rem;
+  // border: 1px solid rgb(var(--color-foreground-rgb) / 0.25);
+  // border-radius: 4px;
+  font-size: 13px;
   font-weight: 500;
-  color: var(--color-foreground);
+  color: #1E2B51;
   text-decoration: none;
-  background: var(--color-background);
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  // background: var(--color-background);
+  // transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .mox-sp__option:hover,

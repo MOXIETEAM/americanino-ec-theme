@@ -36,7 +36,7 @@
 
     {%- comment -%} ── Panel de tallas ──────────────────────────────────── {%- endcomment -%}
     <div class="mox-sp__panel">
-      <p class="mox-sp__label">Selecciona tu talla</p>
+      {% comment %} <p class="mox-sp__label">Selecciona tu talla</p> {% endcomment %}
       <div class="mox-sp__options" role="list">
         {%- for value in size_option.values -%}
           {%- assign best_variant = nil -%}
