@@ -68,6 +68,11 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "custom_pdp_breadcrumb_mox": {
+              "type": "custom_pdp_breadcrumb",
+              "name": "Moxie Breadcrumb",
+              "settings": {}
+            },
             "group_icgrde": {
               "type": "group",
               "name": "Header",
@@ -318,6 +323,7 @@
             }
           },
           "block_order": [
+            "custom_pdp_breadcrumb_mox",
             "group_icgrde",
             "text_aEtTtq",
             "variant_picker_R3rGDr",

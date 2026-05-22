@@ -1,0 +1,61 @@
+{%- comment -%} MOXIE: Breadcrumb PDP — Home / Línea / Categoría / Producto
+
+  Metafields requeridos en el producto (tipo: collection_reference):
+    custom.linea     → colección de línea    (ej. "Hombre")
+    custom.categoria → colección de categoría (ej. "Ropa")
+{%- endcomment -%}
+
+{%- liquid
+  assign _product = closest.product
+  assign sep = '|||'
+
+  assign bc_t = ''
+  assign bc_u = ''
+
+  # Línea (collection_reference)
+  assign linea = _product.metafields.custom.linea.value
+  if linea and linea.url != blank
+    assign bc_t = linea.title
+    assign bc_u = linea.url
+  elsif linea != blank
+    assign bc_t = linea
+    assign bc_u = ''
+  endif
+
+  # Categoría (collection_reference)
+  assign categoria = _product.metafields.custom.categoria.value
+  if categoria and categoria.url != blank
+    if bc_t != blank
+      assign bc_t = bc_t | append: sep | append: categoria.title
+      assign bc_u = bc_u | append: sep | append: categoria.url
+    else
+      assign bc_t = categoria.title
+      assign bc_u = categoria.url
+    endif
+  elsif categoria != blank
+    if bc_t != blank
+      assign bc_t = bc_t | append: sep | append: categoria
+      assign bc_u = bc_u | append: sep | append: ''
+    else
+      assign bc_t = categoria
+      assign bc_u = ''
+    endif
+  endif
+
+  # Nombre del producto (sin enlace — página actual)
+  if bc_t != blank
+    assign bc_t = bc_t | append: sep | append: _product.title
+  else
+    assign bc_t = _product.title
+  endif
+  assign bc_u = bc_u | append: sep | append: ''
+-%}
+
+{%- render 'custom_breadcrumb', crumbs_t: bc_t, crumbs_u: bc_u -%}
+
+{% schema %}
+{
+  "name": "Moxie Breadcrumb",
+  "settings": []
+}
+{% endschema %}

@@ -1,72 +1,80 @@
 {%- comment -%} MOXIE: Breadcrumb reutilizable — PLP y PDP
 
-  Uso:
+  Modo explícito (PDP):
+    Pasa crumbs_t y crumbs_u como strings separados por |||.
+    URL vacía en un ítem = ítem actual (se renderiza como <span aria-current="page">).
+
+    {% render 'custom_breadcrumb', crumbs_t: bc_t, crumbs_u: bc_u %}
+
+  Modo auto (PLP):
+    Pasa collection y opcionalmente product.
+    Jerarquía automática vía metafield custom.parent_collection (collection_reference).
+
     {% render 'custom_breadcrumb', collection: collection %}
-    {% render 'custom_breadcrumb', collection: collection, product: product %}
 
-  Parámetros:
-    - collection : objeto Collection  (PLP y PDP)
-    - product    : objeto Product     (opcional — agrega título del producto como último ítem sin enlace)
-
-  Jerarquía automática (hasta 3 niveles):
-    Configura el metafield collection.metafields.custom.parent_collection
-    (tipo: collection_reference) en la colección para que el breadcrumb
-    resuelva el padre automáticamente. Se soportan hasta 2 niveles de padre
-    (abuelo → padre → colección actual).
+  Metafield esperado en colecciones (modo auto):
+    custom.parent_collection — tipo: collection_reference
 {%- endcomment -%}
 
 {%- liquid
   assign sep = '|||'
-  assign bc_t = ''
-  assign bc_u = ''
 
-  # Resolver la colección: si no se pasó directamente, usar la del producto
-  assign bc_collection = collection
-  if bc_collection == blank and product
-    assign bc_collection = product.collections.first
+  if crumbs_t != blank
+    # Modo explícito: usar crumbs_t / crumbs_u directamente
+    assign bc_titles = crumbs_t | split: sep
+    assign bc_urls   = crumbs_u | split: sep
+  else
+    # Modo auto: construir desde collection / product
+    assign bc_t = ''
+    assign bc_u = ''
+
+    assign bc_collection = collection
+    if bc_collection == blank and product
+      assign bc_collection = product.collections.first
+    endif
+
+    if bc_collection
+      assign parent  = bc_collection.metafields.custom.parent_collection.value
+      assign grandpa = blank
+      if parent
+        assign grandpa = parent.metafields.custom.parent_collection.value
+      endif
+
+      if grandpa
+        assign bc_t = grandpa.title
+        assign bc_u = grandpa.url
+        assign bc_t = bc_t | append: sep | append: parent.title
+        assign bc_u = bc_u | append: sep | append: parent.url
+      elsif parent
+        assign bc_t = parent.title
+        assign bc_u = parent.url
+      endif
+
+      if bc_t != blank
+        assign bc_t = bc_t | append: sep | append: bc_collection.title
+        assign bc_u = bc_u | append: sep | append: bc_collection.url
+      else
+        assign bc_t = bc_collection.title
+        assign bc_u = bc_collection.url
+      endif
+    endif
+
+    if product
+      if bc_t != blank
+        assign bc_t = bc_t | append: sep | append: product.title
+        assign bc_u = bc_u | append: sep | append: ''
+      else
+        assign bc_t = product.title
+        assign bc_u = ''
+      endif
+    endif
+
+    assign bc_titles = bc_t | split: sep
+    assign bc_urls   = bc_u | split: sep
   endif
-
-  if bc_collection
-    assign parent  = bc_collection.metafields.custom.parent_collection.value
-    assign grandpa = blank
-    if parent
-      assign grandpa = parent.metafields.custom.parent_collection.value
-    endif
-
-    if grandpa
-      assign bc_t = grandpa.title
-      assign bc_u = grandpa.url
-      assign bc_t = bc_t | append: sep | append: parent.title
-      assign bc_u = bc_u | append: sep | append: parent.url
-    elsif parent
-      assign bc_t = parent.title
-      assign bc_u = parent.url
-    endif
-
-    if bc_t != blank
-      assign bc_t = bc_t | append: sep | append: bc_collection.title
-      assign bc_u = bc_u | append: sep | append: bc_collection.url
-    else
-      assign bc_t = bc_collection.title
-      assign bc_u = bc_collection.url
-    endif
-  endif
-
-  if product
-    if bc_t != blank
-      assign bc_t = bc_t | append: sep | append: product.title
-      assign bc_u = bc_u | append: sep | append: product.url
-    else
-      assign bc_t = product.title
-      assign bc_u = product.url
-    endif
-  endif
-
-  assign bc_titles = bc_t | split: sep
-  assign bc_urls   = bc_u | split: sep
 -%}
 
-{%- if bc_t != blank -%}
+{%- if bc_titles.size > 0 and bc_titles.first != blank -%}
   <nav class="mox-breadcrumb" aria-label="Breadcrumb">
     <ol
       class="mox-breadcrumb__list"
@@ -81,7 +89,7 @@
           itemscope
           itemtype="https://schema.org/ListItem"
         >
-          {%- if forloop.last and product -%}
+          {%- if url == blank -%}
             <span
               class="mox-breadcrumb__link mox-breadcrumb__link--current"
               aria-current="page"
