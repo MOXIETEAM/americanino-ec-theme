@@ -1,0 +1,226 @@
+@use '../mixins' as *;
+
+// ─── Moxie: Inline Size Picker (mox-size-picker-component) ───────────────────
+// Desktop: panel slides up on product-card hover (CSS only).
+// Mobile: panel appears as a bottom sheet anchored to the card's bottom edge,
+//         toggled by the + button (JS). Shows "Selecciona tu talla" + size row.
+
+mox-size-picker-component {
+  --mox-sp-offset: var(--padding-sm);
+  --mox-sp-right: calc(var(--mox-sp-offset) + var(--padding-inline-end, 0px));
+  --mox-sp-bottom: calc(var(--mox-sp-offset) + var(--padding-block-end, 0px));
+  position: absolute;
+  inset: 0;
+  z-index: calc(var(--layer-raised) + 1);
+  pointer-events: none;
+}
+
+.mox-sp__panel {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.79);
+  margin: 0 10px;
+  border-radius: 5px;
+  min-height: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(150%);
+  pointer-events: all;
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: transform var(--animation-speed, 300ms) var(--ease-out-cubic, ease);
+  }
+}
+
+@include tablet-up {
+  product-card:is(:hover, :focus-within) .mox-sp__panel {
+    transform: translateY(0);
+  }
+}
+
+mox-size-picker-component[data-open] .mox-sp__panel {
+  transform: translateY(0);
+}
+
+// Hidden by default — only shown in mobile bottom sheet
+.mox-sp__label {
+  display: none;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #1e2b51;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.mox-sp__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.mox-sp__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e2b51;
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-foreground);
+    color: var(--color-background);
+    border-color: var(--color-foreground);
+    text-decoration: none;
+    outline: none;
+  }
+}
+
+.mox-sp__option--unavailable {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.mox-sp__toggle {
+  display: none;
+  position: absolute;
+  right: max(var(--mox-sp-right), (var(--border-radius, 0px) + var(--mox-sp-right)) * 0.2928932188);
+  bottom: max(var(--mox-sp-bottom), (var(--border-radius, 0px) + var(--mox-sp-bottom)) * 0.2928932188);
+  width: var(--button-size-md, 40px);
+  height: var(--button-size-md, 40px);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: var(--color-background);
+  border: 2px solid hsl(0deg 0% 0% / 15%);
+  border-radius: 50px;
+  color: var(--color-foreground);
+  cursor: pointer;
+  pointer-events: all;
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+[product-grid-view='zoom-out'] mox-size-picker-component {
+  display: none;
+}
+
+// ── Mobile: viewport bottom sheet ────────────────────────────────────────────
+// Al tocar +, el componente se vuelve position:fixed cubriendo todo el viewport.
+// El backdrop oscuro cierra al tocar fuera; el panel sube desde el borde inferior.
+
+// Backdrop base (solo visible en mobile cuando está abierto)
+.mox-sp__backdrop {
+  display: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+@include mobile-only {
+  // Toggle button: visible en mobile cuando está cerrado
+  .mox-sp__toggle {
+    display: flex;
+
+    svg {
+      transition: transform var(--animation-speed, 300ms) var(--ease-out-cubic, ease);
+    }
+  }
+
+  // stylelint-disable declaration-no-important
+  .card-gallery:has(mox-size-picker-component) .quick-add__button {
+    display: none !important;
+  }
+  // stylelint-enable declaration-no-important
+
+  // Cuando está abierto: componente cubre todo el viewport
+  mox-size-picker-component[data-open] {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    pointer-events: all;
+  }
+
+  // Backdrop: cubre el viewport y oscurece el fondo
+  mox-size-picker-component[data-open] .mox-sp__backdrop {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: mox-sp-fade-in var(--animation-speed, 300ms) var(--ease-out-cubic, ease) both;
+    }
+  }
+
+  // Toggle se oculta cuando está abierto (el backdrop maneja el cierre)
+  mox-size-picker-component[data-open] .mox-sp__toggle {
+    display: none;
+  }
+
+  // Panel: bottom sheet al borde inferior del viewport
+  mox-size-picker-component .mox-sp__panel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: 1; // sobre el backdrop
+    border-radius: 16px 16px 0 0;
+    background: #fff;
+    padding: 20px 20px 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 14px;
+    min-height: auto;
+    transform: translateY(100%);
+  }
+
+  // Label visible en el bottom sheet
+  .mox-sp__label {
+    display: block;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  // Tallas en fila horizontal scrollable
+  mox-size-picker-component .mox-sp__options {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  // Botones de talla: táctiles, con borde
+  mox-size-picker-component .mox-sp__option {
+    flex-shrink: 0;
+    border: 1px solid rgba(30, 43, 81, 0.3);
+    border-radius: 4px;
+    height: 36px;
+    min-width: 40px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}
+
+@keyframes mox-sp-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

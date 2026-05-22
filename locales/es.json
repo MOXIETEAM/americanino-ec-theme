@@ -196,6 +196,8 @@
     "search": "Buscar",
     "search_results_no_results_check_spelling": "No se encontró ningún resultado para \"{{ terms }}\". Revisa la ortografía o usa una palabra o frase diferente.",
     "no_products_found": "No se encontró ningún producto.",
+    "load_more_progress": "Mostrando {{ current }} de {{ total }} productos",
+    "load_more": "Ver más",
     "price_from": "Desde {{ price }}",
     "use_fewer_filters_html": "Prueba a utilizar menos filtros o <a class=\"{{ class }}\" href=\"{{ link }}\">elimina todos los filtros</a>.",
     "featured_products": "Productos destacados",

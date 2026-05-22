@@ -1,0 +1,118 @@
+{%- doc -%}
+  Moxie: Load more progress UI for PLP/search results.
+  Renders progress text, progress bar, and "Ver más" button.
+  Replaces infinite scroll auto-trigger (viewMoreNext span).
+
+  @param {object} section - The section object
+  @param {object} paginate - Shopify paginate object
+{%- enddoc -%}
+
+<script src="{{ 'custom_load_more.js' | asset_url }}" type="module" fetchpriority="low"></script>
+
+{%- assign shown_count = paginate.current_page | times: paginate.page_size | at_most: paginate.items -%}
+
+<custom-load-more
+  class="custom-load-more"
+  data-section-id="{{ section.id }}"
+  data-per-page="{{ paginate.page_size }}"
+  data-total="{{ paginate.items }}"
+  data-current-page="{{ paginate.current_page }}"
+  data-total-pages="{{ paginate.pages }}"
+  data-progress-template="{{ 'content.load_more_progress' | t: current: '__CURRENT__', total: paginate.items }}"
+>
+  <p class="custom-load-more__text" ref="progressText">
+    {{- 'content.load_more_progress' | t: current: shown_count, total: paginate.items -}}
+  </p>
+
+  <div class="custom-load-more__track" aria-hidden="true">
+    <div
+      class="custom-load-more__fill"
+      ref="progressBar"
+      style="--load-more-progress: {{ shown_count | times: 100.0 | divided_by: paginate.items | round: 2 }}%"
+    ></div>
+  </div>
+
+  {%- if paginate.current_page < paginate.pages -%}
+    <button
+      class="custom-load-more__btn"
+      ref="button"
+      on:click="/loadMore"
+      type="button"
+    >
+      {{- 'content.load_more' | t -}}
+    </button>
+  {%- endif -%}
+</custom-load-more>
+
+{% stylesheet %}
+  .custom-load-more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-block: 32px;
+    width: 100%;
+  }
+
+  .custom-load-more__text {
+    margin: 0;
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground);
+  }
+
+  .custom-load-more__track {
+    width: 100%;
+    max-width: 280px;
+    height: 3px;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10, 0.1));
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .custom-load-more__fill {
+    height: 100%;
+    width: var(--load-more-progress, 0%);
+    background-color: var(--color-foreground);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+  }
+
+  .custom-load-more__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 2.5rem;
+    border: 1.5px solid var(--color-foreground);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-foreground);
+    font-size: var(--font-size--md);
+    font-family: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    min-width: 10rem;
+    transition:
+      background-color var(--hover-transition-duration, 0.2s) var(--hover-transition-timing, ease),
+      color var(--hover-transition-duration, 0.2s) var(--hover-transition-timing, ease);
+  }
+
+  .custom-load-more__btn:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .custom-load-more__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .custom-load-more__btn[hidden] {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .custom-load-more__fill {
+      transition: none;
+    }
+  }
+{% endstylesheet %}

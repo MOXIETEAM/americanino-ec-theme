@@ -110,9 +110,7 @@
         </p>
       </div>
     {% else %}
-      {% if enable_infinite_scroll %}
-        <span ref="viewMorePrevious"></span>
-      {% endif %}
+      {%- comment -%} MOXIE: viewMorePrevious removed — load-more button replaces auto-scroll {%- endcomment -%}
 
       {% if title %}
         <h4 class="main-collection-grid__title">{{ title }}</h4>
@@ -159,8 +157,9 @@
 
         {{ children }}
       </ul>
+      {%- comment -%} MOXIE: Manual load more replaces viewMoreNext auto-scroll span {%- endcomment -%}
       {% if enable_infinite_scroll != false %}
-        <span ref="viewMoreNext"></span>
+        {% render 'custom_load_more', section: section, paginate: paginate %}
       {% else %}
         {% render 'pagination-controls', paginate: paginate %}
       {% endif %}

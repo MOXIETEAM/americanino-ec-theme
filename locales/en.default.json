@@ -211,6 +211,8 @@
     "language": "Language",
     "localization_region_and_language": "Region and language",
     "no_products_found": "No products found.",
+    "load_more_progress": "Showing {{ current }} of {{ total }} products",
+    "load_more": "Load more",
     "no_results_found": "No results found",
     "page_placeholder_title": "Page title",
     "page_placeholder_content": "Select a page to display its content.",

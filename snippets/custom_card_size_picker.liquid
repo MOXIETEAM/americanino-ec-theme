@@ -34,9 +34,12 @@
     aria-hidden="true"
   >
 
+    {%- comment -%} ── Backdrop: cierra el panel al tocar fuera (solo mobile) ─ {%- endcomment -%}
+    <button type="button" class="mox-sp__backdrop" aria-hidden="true" tabindex="-1" on:click="/toggle"></button>
+
     {%- comment -%} ── Panel de tallas ──────────────────────────────────── {%- endcomment -%}
     <div class="mox-sp__panel">
-      {% comment %} <p class="mox-sp__label">Selecciona tu talla</p> {% endcomment %}
+      <p class="mox-sp__label">Selecciona tu talla</p>
       <div class="mox-sp__options" role="list">
         {%- for value in size_option.values -%}
           {%- assign best_variant = nil -%}
