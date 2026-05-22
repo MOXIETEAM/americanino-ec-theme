@@ -10,6 +10,19 @@ export default class ResultsList extends PaginatedList {
 
     mediaQueryLarge.addEventListener('change', this.#handleMediaQueryChange);
     this.setAttribute('initialized', '');
+
+    // On first visit (no sessionStorage), the inline script leaves product-grid-view="default".
+    // Apply the pre-checked option's value so the grid matches the selected button.
+    requestIdleCallback(() => {
+      const { grid } = this.refs;
+      if (!grid || grid.getAttribute('product-grid-view') !== 'default') return;
+      const defaultOption = mediaQueryLarge.matches
+        ? this.querySelector('[data-grid-layout="desktop-default-option"]')
+        : this.querySelector('[data-grid-layout="mobile-option"]');
+      if (defaultOption instanceof HTMLInputElement) {
+        this.#setLayout(defaultOption.value);
+      }
+    });
   }
 
   disconnectedCallback() {
@@ -69,7 +82,7 @@ export default class ResultsList extends PaginatedList {
     if (!(targetElement instanceof HTMLInputElement)) return;
 
     targetElement.checked = true;
-    this.#setLayout('default');
+    this.#setLayout(targetElement.value);
   };
 }
 
