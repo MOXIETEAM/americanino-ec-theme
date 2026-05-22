@@ -84,7 +84,7 @@
   },
   "actions": {
     "add_to_cart": "Agregar al carrito",
-    "clear_all": "Borrar todo",
+    "clear_all": "Borrar filtros",
     "remove": "Eliminar",
     "view_in_your_space": "Ver en tu espacio",
     "show_filters": "Filtro",
@@ -92,9 +92,9 @@
     "continue_shopping": "Seguir comprando",
     "log_in_html": "¿Tienes una cuenta? <a href=\"{{ link }}\">Inicia sesión</a> para pagar más rápido.",
     "see_items": {
-      "one": "Ver {{ count }} artículo",
-      "other": "Ver {{ count }} artículos",
-      "many": "Ver {{ count }} artículos"
+      "one": "Aplicar filtros",
+      "other": "Aplicar filtros",
+      "many": "Aplicar filtros"
     },
     "view_all": "Ver todo",
     "add": "Añadir",
@@ -119,7 +119,7 @@
     "open_image_in_full_screen": "Abrir imagen a pantalla completa",
     "sign_in_options": "Otras opciones de inicio de sesión",
     "sign_up": "Registrarse",
-    "sort": "Ordenar",
+    "sort": "Ordena por:",
     "show_all_options": "Mostrar todas las opciones",
     "open": "Abrir"
   },

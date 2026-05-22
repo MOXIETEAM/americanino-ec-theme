@@ -10,6 +10,28 @@
 //   [col-4..col-12] = .facets-controls-wrapper  (ordenar + densidad, derecha)
 //   [col-1..col-14] = .main-collection-grid  (fila 2, ancho completo)
 
+// ── Mobile: mostrar la barra de controles ────────────────────────────────────
+// .facets--horizontal tiene display:none en mobile (CSS nativo de Horizon).
+// Como la barra de controles tiene esa clase, el botón Filtros + grid density
+// + sort quedan ocultos. Este override los muestra.
+// Los hijos desktop-only (grid density y sort fuera del facets-toggle) se ocultan.
+
+@include mobile-only {
+  // Mostrar el contenedor de controles (2 clases → especificidad > .facets--horizontal)
+  .facets.facets-controls-wrapper {
+    display: block;
+  }
+
+  // Ocultar los elementos exclusivos de desktop que están fuera del facets-toggle
+  // (el facets-toggle contiene sus propias versiones mobile dentro de facets-mobile-wrapper)
+  // stylelint-disable declaration-no-important
+  .facets.facets-controls-wrapper > .moxie-grid-density,
+  .facets.facets-controls-wrapper > sorting-filter-component {
+    display: none !important;
+  }
+  // stylelint-enable declaration-no-important
+}
+
 @include tablet-up {
   // 1. Ocultar el sidebar vertical inline (el dialog #filters-drawer conserva su layout)
   .facets-block-wrapper--vertical:not(#filters-drawer) {
@@ -294,3 +316,10 @@
 }
 
 // stylelint-enable declaration-no-important
+
+// ── Sort pill mobile: sólo "Ordena por: ↓", sin nombre del sort activo ────────
+// El pill tiene min-width fijo y el status text lo desborda visualmente.
+// La label + caret son suficientes en el toolbar compacto.
+.facets-mobile-wrapper .sorting-filter .facets__status {
+  display: none;
+}
