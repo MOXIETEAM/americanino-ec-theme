@@ -325,21 +325,24 @@
   .cg-header {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+   
   }
 
   .cg-header__title {
     margin: 0;
-    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
-    font-weight: 700;
-    line-height: 1.15;
-    color: inherit;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 38px;
+    color: #1E2B51;
+    text-transform: none;
   }
 
   .cg-header__subtitle {
     margin: 0;
-    font-size: 0.9rem;
-    color: rgb(var(--color-foreground-rgb) / 0.6);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 18px;
+    color: #1E2B51;
   }
 
   /* ── Tabs ── */
@@ -360,6 +363,7 @@
     cursor: pointer;
     transition: background 0.2s, color 0.2s, border-color 0.2s;
     line-height: 1;
+    max-height: 31px;
   }
 
   .cg-tab--active,
