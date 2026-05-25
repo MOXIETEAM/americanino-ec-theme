@@ -1,0 +1,117 @@
+{%- comment -%} MOXIE: Card de producto unificada — render desde secciones de vitrinas {%- endcomment -%}
+{%- liquid
+  assign _max_swatches = max_swatches | default: 4
+
+  assign color_option = nil
+  for opt in product.options_with_values
+    assign opt_lower = opt.name | downcase
+    if opt_lower == 'color' or opt_lower == 'colour' or opt_lower == 'color swatch'
+      assign color_option = opt
+      break
+    endif
+  endfor
+
+  assign has_discount = false
+  assign discount_pct = 0
+  if product.compare_at_price > product.price
+    assign has_discount = true
+    assign diff = product.compare_at_price | minus: product.price
+    assign discount_pct = diff | times: 100.0 | divided_by: product.compare_at_price | round
+  endif
+
+  assign is_new = false
+  for tag in product.tags
+    assign tag_lower = tag | downcase | strip
+    if tag_lower == 'new' or tag_lower == 'nuevo'
+      assign is_new = true
+      break
+    endif
+  endfor
+
+-%}
+
+<div class="cg-card custom-product-card-amcno">
+
+  {%- comment -%} Imagen + quick-add ─────────────────────── {%- endcomment -%}
+  <div class="cg-card__media">
+    <a href="{{ product.url }}" class="cg-card__media-link" tabindex="-1" aria-hidden="true">
+      {%- if product.featured_media -%}
+        {{
+          product.featured_media.preview_image
+          | image_url: width: 800
+          | image_tag:
+            loading: 'lazy',
+            alt: product.title,
+            class: 'cg-card__img',
+            widths: '300, 500, 800',
+            sizes: '(min-width: 990px) 25vw, 50vw'
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'cg-card__img cg-card__img--placeholder' }}
+      {%- endif -%}
+    </a>
+
+    {%- if has_discount or is_new -%}
+      <div class="cg-card__badges">
+        {%- if has_discount -%}
+          <span class="cg-badge cg-badge--sale">{{ discount_pct }}%OFF</span>
+        {%- endif -%}
+        {%- if is_new -%}
+          <span class="cg-badge cg-badge--new">NEW</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- unless product == blank -%}
+      {%- render 'custom_card_size_picker', product: product -%}
+    {%- endunless -%}
+
+  </div>
+
+  {%- comment -%} Info ───────────────────────────────────── {%- endcomment -%}
+  <div class="cg-card__info">
+    {%- if cuotas_text != blank -%}
+      <p class="cg-card__cuotas">{{ cuotas_text }}</p>
+    {%- endif -%}
+
+    <a href="{{ product.url }}" class="cg-card__title"><h3>{{ product.title | truncate: 55 }}</h3></a>
+
+    <div class="cg-card__bottom">
+      <div class="cg-card__price">
+        {%- if has_discount -%}
+          <s class="cg-card__price-compare">{{ product.compare_at_price | money }}</s>
+        {%- endif -%}
+        <span class="cg-card__price-current">{{ product.price | money }}</span>
+      </div>
+
+      {%- if color_option != blank -%}
+        <div class="cg-card__swatches">
+          {%- assign swatch_count  = color_option.values.size -%}
+          {%- assign hidden_count  = 0 -%}
+          {%- if swatch_count > _max_swatches -%}
+            {%- assign hidden_count = swatch_count | minus: _max_swatches -%}
+          {%- endif -%}
+          {%- for value in color_option.values limit: _max_swatches -%}
+            {%- render 'swatch', swatch: value.swatch, label: value.name -%}
+          {%- endfor -%}
+          {%- if hidden_count > 0 -%}
+            <span class="cg-card__swatch-more">+{{ hidden_count }}</span>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+</div>
+
+{% stylesheet %}
+  /*
+   * custom-card-size-picker usa `product-card:hover` para mostrar el panel.
+   * Aquí se overridea para que funcione con .cg-card.
+   */
+  @media screen and (min-width: 750px) {
+    .cg-card:is(:hover, :focus-within) .mox-sp__panel {
+      transform: translateY(0);
+    }
+  }
+{% endstylesheet %}

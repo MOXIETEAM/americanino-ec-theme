@@ -3,14 +3,13 @@
   assign collection = collections[s.collection]
 -%}
 
-<script src="{{ 'custom-shop-the-look.js' | asset_url }}" type="module" fetchpriority="low"></script>
-
 <div class="custom-center-container">
 <div
   class="mox-bs color-{{ s.color_scheme }} custom-standar-max-width"
   style="
     --mox-bs-pt: {{ s.padding_top }}px;
     --mox-bs-pb: {{ s.padding_bottom }}px;
+    --cg-ratio: {{ s.image_ratio | default: '3/4' }};
     {% unless s.bg_color == blank %}background-color: {{ s.bg_color }};{% endunless %}
   "
   {{ section.shopify_attributes }}
@@ -64,226 +63,25 @@
       <div class="mox-bs__products">
         {%- if collection != blank -%}
           {%- for product in collection.products limit: 4 -%}
-
-            {%- liquid
-              assign has_discount = false
-              if product.compare_at_price > product.price
-                assign has_discount = true
-                assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
-              endif
-              assign is_new = false
-              if product.tags contains 'new' or product.tags contains 'NEW' or product.tags contains 'New'
-                assign is_new = true
-              endif
-
-              assign color_opt_idx = nil
-              for opt in product.options
-                assign opt_lower = opt | downcase
-                if opt_lower == 'color' or opt_lower == 'colour' or opt == 'Color'
-                  assign color_opt_idx = forloop.index0
-                  break
-                endif
-              endfor
-
-              assign selected_variant = product.selected_or_first_available_variant
+            {%- render 'custom_product_card',
+              product: product,
+              section_id: section.id,
+              cuotas_text: s.installments_text,
+              max_swatches: s.max_swatches
             -%}
-
-            <div class="mox-bs__card">
-
-              {{- '<!-- Media + quick-add -->' -}}
-              <shop-the-look-item class="mox-bs__card-media">
-
-                {{- '<!-- Badges -->' -}}
-                {%- if has_discount or is_new -%}
-                  <div class="mox-bs__badges">
-                    {%- if has_discount -%}
-                      <span class="mox-bs__badge mox-bs__badge--discount">{{ discount_pct }}% OFF</span>
-                    {%- endif -%}
-                    {%- if is_new -%}
-                      <span class="mox-bs__badge mox-bs__badge--new">NEW</span>
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
-
-                {{
-                  product.featured_image
-                  | image_url: width: 500
-                  | image_tag:
-                    class: 'mox-bs__card-img',
-                    loading: 'lazy',
-                    widths: '250, 350, 500',
-                    alt: product.title
-                }}
-
-                <button
-                  class="stl-plus-btn"
-                  ref="plusBtn"
-                  on:click="/handlePlusBtnClick"
-                  aria-label="Ver opciones de {{ product.title | escape }}"
-                  aria-expanded="false"
-                  aria-haspopup="true"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                    <line x1="12" y1="5" x2="12" y2="19"/>
-                    <line x1="5" y1="12" x2="19" y2="12"/>
-                  </svg>
-                </button>
-
-                {{- '<!-- Quick-add popup -->' -}}
-                <div
-                  class="stl-popup"
-                  ref="popup"
-                  role="dialog"
-                  aria-label="Añadir {{ product.title | escape }} a la bolsa"
-                  aria-modal="true"
-                >
-                  <button class="stl-popup__close" aria-label="Cerrar">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                      <line x1="18" y1="6" x2="6" y2="18"/>
-                      <line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                  </button>
-
-                  <div class="stl-popup__products">
-                    <div class="stl-product" data-product-id="{{ product.id }}">
-
-                      {%- if product.featured_image != blank -%}
-                        <img
-                          class="stl-product__image"
-                          src="{{ product.featured_image | image_url: width: 200 }}"
-                          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                          width="100"
-                          height="134"
-                          loading="lazy"
-                        >
-                      {%- else -%}
-                        <div class="stl-product__image-placeholder" aria-hidden="true"></div>
-                      {%- endif -%}
-
-                      <div class="stl-product__info">
-
-                        {%- if s.installments_text != blank -%}
-                          <p class="mox-bs__popup-installments">{{ s.installments_text }}</p>
-                        {%- endif -%}
-
-                        <p class="stl-product__title">
-                          <a href="{{ product.url }}" tabindex="-1">{{ product.title | truncate: 45 | escape }}</a>
-                        </p>
-
-                        <div class="stl-product__price">
-                          {%- if selected_variant.compare_at_price > selected_variant.price -%}
-                            <span class="stl-price--compare">{{ selected_variant.compare_at_price | money }}</span>
-                          {%- endif -%}
-                          <span class="stl-price--current">{{ selected_variant.price | money }}</span>
-                        </div>
-
-                        {%- if product.variants.size > 1 -%}
-                          <label
-                            class="stl-product__option-label"
-                            for="bs-select-{{ product.id }}-{{ section.id }}-{{ forloop.index }}"
-                          >
-                            {{- product.options.first -}}
-                          </label>
-                          <select
-                            id="bs-select-{{ product.id }}-{{ section.id }}-{{ forloop.index }}"
-                            class="stl-variant-select"
-                          >
-                            {%- for variant in product.variants -%}
-                              <option
-                                value="{{ variant.id }}"
-                                {%- unless variant.available %} disabled{%- endunless %}
-                                {%- if variant == selected_variant %} selected{%- endif %}
-                              >
-                                {{- variant.title -}}
-                              </option>
-                            {%- endfor -%}
-                          </select>
-                        {%- endif -%}
-
-                        <button
-                          class="stl-add-btn mox-bs__popup-add-btn"
-                          data-variant-id="{{ selected_variant.id }}"
-                          {%- unless selected_variant.available %} disabled{%- endunless %}
-                          aria-label="Añadir {{ product.title | escape }} a la bolsa"
-                        >
-                          {%- if selected_variant.available -%}
-                            Añadir a la bolsa
-                          {%- else -%}
-                            Agotado
-                          {%- endif -%}
-                        </button>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </shop-the-look-item>
-
-              {{- '<!-- Card info → link to PDP -->' -}}
-              <a class="mox-bs__card-info" href="{{ product.url }}">
-                {%- if s.installments_text != blank -%}
-                  <p class="mox-bs__installments">{{ s.installments_text }}</p>
-                {%- endif -%}
-
-                <p class="mox-bs__card-title">{{ product.title | truncate: 55 }}</p>
-
-                <div class="mox-bs__pricing">
-                  {%- if has_discount -%}
-                    <s class="mox-bs__compare">{{ product.compare_at_price | money }}</s>
-                  {%- endif -%}
-                  <span class="mox-bs__price{% if has_discount %} mox-bs__price--sale{% endif %}">
-                    {{ product.price | money }}
-                  </span>
-                </div>
-
-                {%- if color_opt_idx != nil and s.show_swatches -%}
-                  {%- liquid
-                    assign shown_colors = ''
-                    assign swatch_count = 0
-                    for variant in product.variants
-                      assign cval = variant.options[color_opt_idx]
-                      unless shown_colors contains cval
-                        assign shown_colors = shown_colors | append: cval | append: '||'
-                        assign swatch_count = swatch_count | plus: 1
-                      endunless
-                    endfor
-                    assign unique_colors = shown_colors | split: '||'
-                    assign extra = swatch_count | minus: s.max_swatches
-                  -%}
-                  <div class="mox-bs__swatches">
-                    {%- assign sw_shown = 0 -%}
-                    {%- for cval in unique_colors limit: s.max_swatches -%}
-                      {%- if cval != blank -%}
-                        <span
-                          class="mox-bs__swatch"
-                          title="{{ cval }}"
-                          style="background-color: {{ cval | downcase | replace: ' ', '' }};"
-                        ></span>
-                        {%- assign sw_shown = sw_shown | plus: 1 -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                    {%- if extra > 0 -%}
-                      <span class="mox-bs__swatch mox-bs__swatch--more">+{{ extra }}</span>
-                    {%- endif -%}
-                  </div>
-                {%- endif -%}
-
-              </a>
-
-            </div>
-
           {%- endfor -%}
         {%- else -%}
           {%- for i in (1..4) -%}
-            <div class="mox-bs__card">
-              <div class="mox-bs__card-media">
-                {{ 'product-apparel-2' | placeholder_svg_tag: 'mox-bs__card-img' }}
+            <div class="cg-card cg-card--placeholder">
+              <div class="cg-card__media">
+                {{ 'product-apparel-2' | placeholder_svg_tag: 'cg-card__img' }}
               </div>
-              <div class="mox-bs__card-info">
-                <p class="mox-bs__card-title">Nombre del producto de ejemplo</p>
-                <div class="mox-bs__pricing">
-                  <span class="mox-bs__price">$000.000</span>
+              <div class="cg-card__info">
+                <span class="cg-card__title">Nombre del producto</span>
+                <div class="cg-card__bottom">
+                  <div class="cg-card__price">
+                    <span class="cg-card__price-current">$000.000</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -296,6 +94,7 @@
 </div>
 </div>
 {%- content_for 'blocks' -%}
+
 
 {% schema %}
 {
@@ -367,10 +166,15 @@
       "info": "Deja vacío para ocultar. Ej: 0% de interés hasta 3 cuotas"
     },
     {
-      "type": "checkbox",
-      "id": "show_swatches",
-      "label": "Mostrar swatches de color",
-      "default": true
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Proporción de imagen",
+      "options": [
+        { "value": "2/3",  "label": "Retrato alto (2:3)" },
+        { "value": "3/4",  "label": "Retrato (3:4)" },
+        { "value": "1/1",  "label": "Cuadrado (1:1)" }
+      ],
+      "default": "3/4"
     },
     {
       "type": "range",
