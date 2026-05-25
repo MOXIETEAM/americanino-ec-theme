@@ -175,19 +175,23 @@ category-grid-slider {
   display: inline-flex;
   align-items: center;
   padding: 6px 18px;
-  border-radius: 999px;
+  border-radius: 28px;
   background: var(--btn-bg, #fff);
-  color: var(--btn-color, #111);
-  font-size: 0.8125rem;
+  color: var(--btn-color, #1E2B51);
+  font-size: 15px;
   font-weight: 500;
+  line-height: 20px;
   text-decoration: none;
   position: relative;
   z-index: 2;
   white-space: nowrap;
   transition: background 180ms ease, color 180ms ease;
+  max-width: 93px;
+  max-height: 31px;
 
   &:hover {
-    background: var(--btn-hover-bg, rgba(255, 255, 255, 0.82));
+    background: var(--btn-hover-bg, #1E2B51);
+    color: var(--btn-hover-color, #fff);
   }
 
   @include reduced-motion {
