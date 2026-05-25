@@ -730,8 +730,8 @@
       "settings": {
         "title": "New Arrivals",
         "subtitle": "Lorem Ipsum es simplemente el texto de relleno de",
-        "tab_color": "#1a1a1a",
-        "tab_active_bg": "#1a1a1a",
+        "tab_color": "#1e2b51",
+        "tab_active_bg": "#1e2b51",
         "tab_active_text": "#ffffff",
         "image_ratio": "3/4",
         "cols_desktop": 4,
