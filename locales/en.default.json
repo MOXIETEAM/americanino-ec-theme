@@ -352,6 +352,27 @@
     "blog_post_date": "Date",
     "blog_post_description": "An excerpt of your blog post's content"
   },
+  "moxie": {
+    "nav": {
+      "back": "Volver",
+      "saved": "Guardados",
+      "my_account": "Mi cuenta",
+      "gender_male": "Hombre",
+      "gender_female": "Mujer"
+    },
+    "search": {
+      "placeholder": "Buscar..."
+    },
+    "content": {
+      "show_more": "Ver más",
+      "show_less": "Ver menos"
+    },
+    "slideshow": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "go_to_slide": "Ir al slide {{ index }}"
+    }
+  },
   "products": {
     "product": {
       "add_to_cart": "Agregar a la bolsa",

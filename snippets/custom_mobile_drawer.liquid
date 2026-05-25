@@ -149,7 +149,7 @@
                           aria-label="{{ 'actions.back_to' | t: title: link.title }}"
                         >
                           <span class="svg-wrapper icon-caret icon-caret--backward custom-mobile-drawer__breadcrumb-caret">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
-                          <span class="custom-mobile-drawer__breadcrumb-back-label">Volver</span>
+                          <span class="custom-mobile-drawer__breadcrumb-back-label">{{ 'moxie.nav.back' | t }}</span>
                         </button>
                         <span class="custom-mobile-drawer__breadcrumb-title">{{ link.title | escape }}</span>
                         <button
@@ -196,7 +196,7 @@
                                         aria-label="{{ 'actions.back_to' | t: title: childlink.title }}"
                                       >
                                         <span class="svg-wrapper icon-caret icon-caret--backward custom-mobile-drawer__breadcrumb-caret">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
-                                        <span class="custom-mobile-drawer__breadcrumb-back-label">Volver</span>
+                                        <span class="custom-mobile-drawer__breadcrumb-back-label">{{ 'moxie.nav.back' | t }}</span>
                                       </button>
                                       <span class="custom-mobile-drawer__breadcrumb-title">{{ childlink.title | escape }}</span>
                                       <button
@@ -346,7 +346,8 @@
                     </svg>
                   </span>
                 {%- endif -%}
-                <span>{{ block_settings.mobile_util_1_label | default: 'Guardados' }}</span>
+                {%- assign _util1_fallback = 'moxie.nav.saved' | t -%}
+                <span>{{ block_settings.mobile_util_1_label | default: _util1_fallback }}</span>
               </a>
             {%- endif -%}
             {%- if has_util_2 -%}
@@ -371,7 +372,8 @@
                 {%- else -%}
                   <span class="svg-wrapper" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
                 {%- endif -%}
-                <span>{{ block_settings.mobile_util_2_label | default: 'Mi cuenta' }}</span>
+                {%- assign _util2_fallback = 'moxie.nav.my_account' | t -%}
+                <span>{{ block_settings.mobile_util_2_label | default: _util2_fallback }}</span>
               </a>
             {%- endif -%}
           </div>

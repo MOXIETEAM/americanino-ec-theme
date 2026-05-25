@@ -39,7 +39,7 @@
   <category-grid-slider>
 
     {%- if s.show_arrows -%}
-      <button class="mox-cg__arrow mox-cg__arrow--prev" ref="prev" aria-label="Anterior" disabled>
+      <button class="mox-cg__arrow mox-cg__arrow--prev" ref="prev" aria-label="{{ 'moxie.slideshow.previous' | t }}" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
     {%- endif -%}
@@ -88,14 +88,14 @@
                     class="mox-cg__gender-btn"
                     href="{{ b.link_male }}"
                     style="{% unless b.btn1_bg == blank %}--btn-bg:{{ b.btn1_bg }};{% endunless %}{% unless b.btn1_text == blank %}--btn-color:{{ b.btn1_text }};{% endunless %}{% unless b.btn1_hover == blank %}--btn-hover-bg:{{ b.btn1_hover }};{% endunless %}"
-                  >{{ b.label_male | default: 'Hombre' }}</a>
+                  >{%- assign _male_fallback = 'moxie.nav.gender_male' | t -%}{{ b.label_male | default: _male_fallback }}</a>
                 {%- endif -%}
                 {%- if b.link_female != blank -%}
                   <a
                     class="mox-cg__gender-btn"
                     href="{{ b.link_female }}"
                     style="{% unless b.btn2_bg == blank %}--btn-bg:{{ b.btn2_bg }};{% endunless %}{% unless b.btn2_text == blank %}--btn-color:{{ b.btn2_text }};{% endunless %}{% unless b.btn2_hover == blank %}--btn-hover-bg:{{ b.btn2_hover }};{% endunless %}"
-                  >{{ b.label_female | default: 'Mujer' }}</a>
+                  >{%- assign _female_fallback = 'moxie.nav.gender_female' | t -%}{{ b.label_female | default: _female_fallback }}</a>
                 {%- endif -%}
               </div>
             {%- elsif b.link != blank -%}
@@ -108,7 +108,7 @@
     </div>
 
     {%- if s.show_arrows -%}
-      <button class="mox-cg__arrow mox-cg__arrow--next" ref="next" aria-label="Siguiente">
+      <button class="mox-cg__arrow mox-cg__arrow--next" ref="next" aria-label="{{ 'moxie.slideshow.next' | t }}">
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     {%- endif -%}
@@ -119,7 +119,7 @@
           <button
             class="mox-cg__dot{% if forloop.first %} mox-cg__dot--active{% endif %}"
             data-index="{{ forloop.index0 }}"
-            aria-label="Slide {{ forloop.index }}"
+            aria-label="{{ 'moxie.slideshow.go_to_slide' | t: index: forloop.index }}"
           ></button>
         {%- endfor -%}
       </div>

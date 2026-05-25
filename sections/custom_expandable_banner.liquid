@@ -82,10 +82,10 @@
 
     {%- comment -%} Flechas de navegación {%- endcomment -%}
     {%- if section.blocks.size > 1 -%}
-      <button class="expand-banner__arrow expand-banner__arrow--prev" data-prev aria-label="Anterior">
+      <button class="expand-banner__arrow expand-banner__arrow--prev" data-prev aria-label="{{ 'moxie.slideshow.previous' | t }}">
         {{- 'icon-chevron-left.svg' | inline_asset_content -}}
       </button>
-      <button class="expand-banner__arrow expand-banner__arrow--next" data-next aria-label="Siguiente">
+      <button class="expand-banner__arrow expand-banner__arrow--next" data-next aria-label="{{ 'moxie.slideshow.next' | t }}">
         {{- 'icon-chevron-right.svg' | inline_asset_content -}}
       </button>
     {%- endif -%}

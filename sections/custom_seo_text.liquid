@@ -50,8 +50,10 @@
       {%- if collapse_enabled -%}
         <div class="custom-seo-text__toggle-wrap" data-toggle-wrap>
           <button class="custom-seo-text__toggle" data-toggle aria-expanded="false">
-            <span data-label-more>{{ section.settings.label_more | default: 'Ver mas' }}</span>
-            <span data-label-less hidden>{{ section.settings.label_less | default: 'Ver menos' }}</span>
+            {%- assign _show_more = 'moxie.content.show_more' | t -%}
+            {%- assign _show_less = 'moxie.content.show_less' | t -%}
+            <span data-label-more>{{ section.settings.label_more | default: _show_more }}</span>
+            <span data-label-less hidden>{{ section.settings.label_less | default: _show_less }}</span>
           </button>
         </div>
       {%- endif -%}

@@ -82,7 +82,7 @@
 
   {%- if section.blocks.size > 1 -%}
     <div class="banner-reveal__nav" data-nav>
-      <button class="banner-reveal__arrow banner-reveal__arrow--prev" data-prev aria-label="Slide anterior">
+      <button class="banner-reveal__arrow banner-reveal__arrow--prev" data-prev aria-label="{{ 'moxie.slideshow.previous' | t }}">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="15,18 9,12 15,6"></polyline>
         </svg>
@@ -92,11 +92,11 @@
           <button
             class="banner-reveal__dot{% if forloop.first %} is-active{% endif %}"
             data-dot="{{ forloop.index0 }}"
-            aria-label="Ir al slide {{ forloop.index }}"
+            aria-label="{{ 'moxie.slideshow.go_to_slide' | t: index: forloop.index }}"
           ></button>
         {%- endfor -%}
       </div>
-      <button class="banner-reveal__arrow banner-reveal__arrow--next" data-next aria-label="Siguiente slide">
+      <button class="banner-reveal__arrow banner-reveal__arrow--next" data-next aria-label="{{ 'moxie.slideshow.next' | t }}">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="9,18 15,12 9,6"></polyline>
         </svg>
