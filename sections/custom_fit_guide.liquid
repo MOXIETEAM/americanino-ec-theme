@@ -1,0 +1,319 @@
+{%- comment -%} MOXIE: Guía de fits — bloques configurables por tipo de corte {%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign fit_blocks = section.blocks | where: 'type', 'fit_item'
+-%}
+
+<div class="fit-guide page-width" style="padding-block: {{ s.padding_top }}px {{ s.padding_bottom }}px">
+
+  {%- if s.title != blank or s.subtitle != blank -%}
+    <header class="fit-guide__header">
+      {%- if s.title != blank -%}
+        <h1 class="fit-guide__title">{{ s.title | escape }}</h1>
+      {%- endif -%}
+      {%- if s.subtitle != blank -%}
+        <p class="fit-guide__subtitle">{{ s.subtitle }}</p>
+      {%- endif -%}
+    </header>
+  {%- endif -%}
+
+  {%- if fit_blocks.size > 0 -%}
+    <div class="fit-guide__items">
+      {%- for block in fit_blocks -%}
+        {%- assign b = block.settings -%}
+        {%- assign _mod = forloop.index0 | modulo: 2 -%}
+        <article
+          class="fit-guide__item{% if _mod == 1 %} fit-guide__item--reverse{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if b.image != blank -%}
+            <div class="fit-guide__media">
+              {{
+                b.image
+                | image_url: width: 800
+                | image_tag:
+                  loading: 'lazy',
+                  alt: b.name,
+                  class: 'fit-guide__img',
+                  widths: '400, 600, 800',
+                  sizes: '(min-width: 990px) 45vw, 90vw'
+              }}
+            </div>
+          {%- endif -%}
+
+          <div class="fit-guide__content">
+            {%- if b.badge != blank -%}
+              <span class="fit-guide__badge">{{ b.badge | escape }}</span>
+            {%- endif -%}
+            {%- if b.name != blank -%}
+              <h2 class="fit-guide__name">{{ b.name | escape }}</h2>
+            {%- endif -%}
+            {%- if b.description != blank -%}
+              <div class="fit-guide__description rte">{{ b.description }}</div>
+            {%- endif -%}
+            {%- if b.characteristics != blank -%}
+              <ul class="fit-guide__traits">
+                {%- assign traits = b.characteristics | split: '|' -%}
+                {%- for trait in traits -%}
+                  {%- assign t = trait | strip -%}
+                  {%- if t != blank -%}
+                    <li class="fit-guide__trait">{{ t }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+            {%- if b.collection != blank -%}
+              <a class="fit-guide__cta button button-secondary" href="{{ b.collection.url }}">
+                Ver colección {{ b.name | escape }}
+              </a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% stylesheet %}
+  .fit-guide__header {
+    text-align: center;
+    margin-block-end: var(--gap-2xl, 48px);
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .fit-guide__title {
+    font-size: var(--font-size-h1);
+    margin-block-end: var(--gap-sm);
+  }
+
+  .fit-guide__subtitle {
+    color: var(--color-foreground-secondary);
+    font-size: var(--font-size--lg);
+    margin: 0;
+  }
+
+  .fit-guide__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-4xl, 80px);
+  }
+
+  .fit-guide__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-2xl, 48px);
+    align-items: center;
+  }
+
+  .fit-guide__item--reverse {
+    direction: rtl;
+  }
+
+  .fit-guide__item--reverse > * {
+    direction: ltr;
+  }
+
+  .fit-guide__media {
+    border-radius: var(--style-border-radius-images, 8px);
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+
+  .fit-guide__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .fit-guide__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .fit-guide__badge {
+    display: inline-block;
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-foreground-secondary);
+  }
+
+  .fit-guide__name {
+    font-size: var(--font-size-h2);
+    margin: 0;
+  }
+
+  .fit-guide__description {
+    color: var(--color-foreground-secondary);
+  }
+
+  .fit-guide__traits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+  }
+
+  .fit-guide__trait {
+    padding-inline-start: 1.25em;
+    position: relative;
+    color: var(--color-foreground-secondary);
+    font-size: var(--font-size--sm);
+  }
+
+  .fit-guide__trait::before {
+    content: '—';
+    position: absolute;
+    inset-inline-start: 0;
+    color: var(--color-primary);
+  }
+
+  .fit-guide__cta {
+    align-self: flex-start;
+    margin-block-start: var(--gap-sm);
+  }
+
+  @media screen and (max-width: 749px) {
+    .fit-guide__item,
+    .fit-guide__item--reverse {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fit-guide__item {
+      opacity: 0;
+      translate: 0 24px;
+      animation: fit-guide-reveal 0.5s ease forwards;
+    }
+
+    @keyframes fit-guide-reveal {
+      to { opacity: 1; translate: 0 0; }
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie Guía de fits",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Guía de fits"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "fit_item",
+      "name": "Tipo de fit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen del fit"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Etiqueta (ej: Slim Fit)",
+          "default": "Slim Fit"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Nombre del fit",
+          "default": "Slim Fit"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descripción"
+        },
+        {
+          "type": "textarea",
+          "id": "characteristics",
+          "label": "Características (separadas por |)",
+          "info": "Ejemplo: Silueta ajustada | Largo sobre el tobillo | Ideal para looks formales",
+          "default": "Silueta ajustada | Largo sobre el tobillo | Ideal para looks formales"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colección relacionada"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Guía de fits",
+      "category": "Moxie",
+      "blocks": [
+        {
+          "type": "fit_item",
+          "settings": {
+            "badge": "Slim Fit",
+            "name": "Slim Fit",
+            "characteristics": "Silueta muy ajustada al cuerpo | Corte estrecho en pierna | Perfecto para looks de ciudad"
+          }
+        },
+        {
+          "type": "fit_item",
+          "settings": {
+            "badge": "Regular Fit",
+            "name": "Regular Fit",
+            "characteristics": "Silueta cómoda sin ser holgada | Versátil para el día a día | Apto para todos los cuerpos"
+          }
+        },
+        {
+          "type": "fit_item",
+          "settings": {
+            "badge": "Relaxed Fit",
+            "name": "Relaxed Fit",
+            "characteristics": "Corte amplio y confortable | Caída suelta | Tendencia streetwear"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

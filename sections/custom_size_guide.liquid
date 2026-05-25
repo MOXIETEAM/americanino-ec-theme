@@ -1,0 +1,327 @@
+{%- comment -%} MOXIE: Guía de tallas — tabs por género con imagen de tabla y guía de medidas {%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign chart_blocks = section.blocks | where: 'type', 'size_chart'
+-%}
+
+<div class="size-guide page-width" style="padding-block: {{ s.padding_top }}px {{ s.padding_bottom }}px">
+
+  {%- if s.title != blank -%}
+    <header class="size-guide__header">
+      <h1 class="size-guide__title">{{ s.title | escape }}</h1>
+      {%- if s.intro != blank -%}
+        <div class="size-guide__intro rte">{{ s.intro }}</div>
+      {%- endif -%}
+    </header>
+  {%- endif -%}
+
+  {%- if s.how_to_measure_image != blank or s.how_to_measure_text != blank -%}
+    <div class="size-guide__measure">
+      {%- if s.how_to_measure_image != blank -%}
+        <div class="size-guide__measure-media">
+          {{
+            s.how_to_measure_image
+            | image_url: width: 600
+            | image_tag:
+              loading: 'lazy',
+              alt: 'Cómo tomar medidas',
+              class: 'size-guide__measure-img',
+              widths: '300, 500, 600'
+          }}
+        </div>
+      {%- endif -%}
+      {%- if s.how_to_measure_text != blank -%}
+        <div class="size-guide__measure-content">
+          <h2 class="size-guide__measure-title">{{ s.how_to_measure_title | default: 'Cómo tomar tus medidas' | escape }}</h2>
+          <div class="rte">{{ s.how_to_measure_text }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if chart_blocks.size > 0 -%}
+
+    {%- if chart_blocks.size > 1 -%}
+      <div class="size-guide__tabs" role="tablist">
+        {%- for block in chart_blocks -%}
+          <button
+            class="size-guide__tab{% if forloop.first %} size-guide__tab--active{% endif %}"
+            role="tab"
+            aria-selected="{{ forloop.first }}"
+            aria-controls="size-chart-{{ block.id }}"
+            data-tab="{{ block.id }}"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.label | default: block.settings.title | escape }}
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="size-guide__panels">
+      {%- for block in chart_blocks -%}
+        {%- assign b = block.settings -%}
+        <div
+          id="size-chart-{{ block.id }}"
+          class="size-guide__panel{% if forloop.first %} size-guide__panel--active{% endif %}"
+          role="tabpanel"
+          {{ block.shopify_attributes }}
+        >
+          {%- if b.title != blank -%}
+            <h2 class="size-guide__chart-title">{{ b.title | escape }}</h2>
+          {%- endif -%}
+
+          {%- if b.chart_image != blank -%}
+            <div class="size-guide__chart-img-wrap">
+              {{
+                b.chart_image
+                | image_url: width: 1200
+                | image_tag:
+                  loading: 'lazy',
+                  alt: b.title,
+                  class: 'size-guide__chart-img',
+                  widths: '600, 900, 1200',
+                  sizes: '(min-width: 990px) 80vw, 95vw'
+              }}
+            </div>
+          {%- endif -%}
+
+          {%- if b.notes != blank -%}
+            <div class="size-guide__notes rte">{{ b.notes }}</div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+</div>
+
+<script>
+  document.querySelectorAll('.size-guide__tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const guide = tab.closest('.size-guide');
+      guide.querySelectorAll('.size-guide__tab').forEach(t => {
+        t.classList.remove('size-guide__tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      guide.querySelectorAll('.size-guide__panel').forEach(p => p.classList.remove('size-guide__panel--active'));
+      tab.classList.add('size-guide__tab--active');
+      tab.setAttribute('aria-selected', 'true');
+      guide.querySelector('#size-chart-' + tab.dataset.tab)?.classList.add('size-guide__panel--active');
+    });
+  });
+</script>
+
+{% stylesheet %}
+  .size-guide__header {
+    text-align: center;
+    margin-block-end: var(--gap-2xl, 48px);
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .size-guide__title {
+    font-size: var(--font-size-h1);
+    margin-block-end: var(--gap-sm);
+  }
+
+  .size-guide__intro {
+    color: var(--color-foreground-secondary);
+  }
+
+  .size-guide__measure {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-2xl, 48px);
+    align-items: start;
+    margin-block-end: var(--gap-3xl, 64px);
+    padding: var(--padding-2xl);
+    background: rgb(var(--color-foreground-rgb) / 0.04);
+    border-radius: var(--style-border-radius-images, 8px);
+  }
+
+  .size-guide__measure-img {
+    width: 100%;
+    border-radius: var(--style-border-radius-images, 8px);
+  }
+
+  .size-guide__measure-title {
+    font-size: var(--font-size-h3);
+    margin-block-end: var(--gap-md);
+  }
+
+  .size-guide__tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--color-border);
+    margin-block-end: var(--gap-xl, 32px);
+  }
+
+  .size-guide__tab {
+    padding: var(--padding-md) var(--padding-xl);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    font-size: var(--font-size--md);
+    font-family: var(--font-body--family);
+    color: var(--color-foreground-secondary);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .size-guide__tab--active,
+  .size-guide__tab:hover {
+    color: var(--color-foreground);
+    border-bottom-color: var(--color-foreground);
+  }
+
+  .size-guide__panel {
+    display: none;
+  }
+
+  .size-guide__panel--active {
+    display: block;
+  }
+
+  .size-guide__chart-title {
+    font-size: var(--font-size-h3);
+    margin-block-end: var(--gap-lg);
+  }
+
+  .size-guide__chart-img-wrap {
+    overflow-x: auto;
+  }
+
+  .size-guide__chart-img {
+    max-width: 100%;
+    display: block;
+  }
+
+  .size-guide__notes {
+    margin-block-start: var(--gap-lg);
+    color: var(--color-foreground-secondary);
+    font-size: var(--font-size--sm);
+  }
+
+  @media screen and (max-width: 749px) {
+    .size-guide__measure {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie Guía de tallas",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Guía de tallas"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Texto introductorio"
+    },
+    {
+      "type": "header",
+      "content": "Cómo tomar medidas"
+    },
+    {
+      "type": "image_picker",
+      "id": "how_to_measure_image",
+      "label": "Imagen de referencia corporal"
+    },
+    {
+      "type": "text",
+      "id": "how_to_measure_title",
+      "label": "Título de la sección",
+      "default": "Cómo tomar tus medidas"
+    },
+    {
+      "type": "richtext",
+      "id": "how_to_measure_text",
+      "label": "Instrucciones de medición"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "size_chart",
+      "name": "Tabla de tallas",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etiqueta del tab",
+          "default": "Hombre"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título de la tabla",
+          "default": "Tabla de tallas — Hombre"
+        },
+        {
+          "type": "image_picker",
+          "id": "chart_image",
+          "label": "Imagen de la tabla de tallas"
+        },
+        {
+          "type": "richtext",
+          "id": "notes",
+          "label": "Notas adicionales"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Guía de tallas",
+      "category": "Moxie",
+      "blocks": [
+        {
+          "type": "size_chart",
+          "settings": {
+            "label": "Hombre",
+            "title": "Tabla de tallas — Hombre"
+          }
+        },
+        {
+          "type": "size_chart",
+          "settings": {
+            "label": "Mujer",
+            "title": "Tabla de tallas — Mujer"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,307 @@
+{%- comment -%} MOXIE: Cómo comprar — guía de pasos numerados con íconos opcionales {%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign step_blocks = section.blocks | where: 'type', 'step'
+  assign faq_blocks  = section.blocks | where: 'type', 'faq'
+-%}
+
+<div class="how-to-buy" style="padding-block: {{ s.padding_top }}px {{ s.padding_bottom }}px">
+  <div class="page-width">
+
+    {%- if s.title != blank or s.subtitle != blank -%}
+      <header class="how-to-buy__header">
+        {%- if s.title != blank -%}
+          <h1 class="how-to-buy__title">{{ s.title | escape }}</h1>
+        {%- endif -%}
+        {%- if s.subtitle != blank -%}
+          <div class="how-to-buy__subtitle rte">{{ s.subtitle }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if step_blocks.size > 0 -%}
+      <ol class="how-to-buy__steps" role="list">
+        {%- for block in step_blocks -%}
+          {%- assign b = block.settings -%}
+          <li class="how-to-buy__step" {{ block.shopify_attributes }}>
+            <div class="how-to-buy__step-number" aria-hidden="true">{{ forloop.index }}</div>
+            <div class="how-to-buy__step-body">
+              {%- if b.icon != blank -%}
+                <div class="how-to-buy__step-icon">
+                  {{
+                    b.icon
+                    | image_url: width: 80
+                    | image_tag: loading: 'lazy', alt: '', class: 'how-to-buy__step-icon-img'
+                  }}
+                </div>
+              {%- endif -%}
+              {%- if b.title != blank -%}
+                <h2 class="how-to-buy__step-title">{{ b.title | escape }}</h2>
+              {%- endif -%}
+              {%- if b.description != blank -%}
+                <div class="how-to-buy__step-desc rte">{{ b.description }}</div>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+
+    {%- if faq_blocks.size > 0 -%}
+      <div class="how-to-buy__faq">
+        <h2 class="how-to-buy__faq-title">{{ s.faq_title | default: 'Preguntas frecuentes' | escape }}</h2>
+        <div class="how-to-buy__faq-list">
+          {%- for block in faq_blocks -%}
+            {%- assign b = block.settings -%}
+            <details class="how-to-buy__faq-item" {{ block.shopify_attributes }}>
+              <summary class="how-to-buy__faq-q">
+                {{ b.question | escape }}
+                <span class="how-to-buy__faq-icon" aria-hidden="true">
+                  {{- 'icon-plus.svg' | inline_asset_content -}}
+                </span>
+              </summary>
+              <div class="how-to-buy__faq-a rte">{{ b.answer }}</div>
+            </details>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .how-to-buy__header {
+    text-align: center;
+    margin-block-end: var(--gap-3xl, 64px);
+    max-width: 680px;
+    margin-inline: auto;
+  }
+
+  .how-to-buy__title {
+    font-size: var(--font-size-h1);
+    margin-block-end: var(--gap-sm);
+  }
+
+  .how-to-buy__subtitle {
+    color: var(--color-foreground-secondary);
+    font-size: var(--font-size--lg);
+  }
+
+  .how-to-buy__steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--gap-4xl, 80px);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gap-xl, 32px);
+    counter-reset: steps;
+  }
+
+  .how-to-buy__step {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-md);
+    padding: var(--padding-2xl);
+    background: rgb(var(--color-foreground-rgb) / 0.03);
+    border-radius: var(--style-border-radius-images, 12px);
+    border: 1px solid var(--color-border);
+    position: relative;
+  }
+
+  .how-to-buy__step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-foreground);
+    color: var(--color-background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size--sm);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .how-to-buy__step-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+    width: 100%;
+  }
+
+  .how-to-buy__step-icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .how-to-buy__step-title {
+    font-size: var(--font-size-h4, 1.125rem);
+    margin: 0;
+  }
+
+  .how-to-buy__step-desc {
+    color: var(--color-foreground-secondary);
+    font-size: var(--font-size--sm);
+    margin: 0;
+  }
+
+  .how-to-buy__faq {
+    max-width: 760px;
+    margin-inline: auto;
+  }
+
+  .how-to-buy__faq-title {
+    font-size: var(--font-size-h2);
+    margin-block-end: var(--gap-xl, 32px);
+    text-align: center;
+  }
+
+  .how-to-buy__faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .how-to-buy__faq-item {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .how-to-buy__faq-item:last-child {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .how-to-buy__faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-sm);
+    padding-block: var(--padding-lg);
+    cursor: pointer;
+    font-weight: 600;
+    list-style: none;
+  }
+
+  .how-to-buy__faq-q::-webkit-details-marker { display: none; }
+
+  .how-to-buy__faq-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    transition: rotate 0.2s;
+  }
+
+  .how-to-buy__faq-item[open] .how-to-buy__faq-icon {
+    rotate: 45deg;
+  }
+
+  .how-to-buy__faq-a {
+    padding-block-end: var(--padding-lg);
+    color: var(--color-foreground-secondary);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie Cómo comprar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "¿Cómo comprar?"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "text",
+      "id": "faq_title",
+      "label": "Título de preguntas frecuentes",
+      "default": "Preguntas frecuentes"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Paso",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Ícono (opcional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título del paso",
+          "default": "Elige tus productos"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descripción"
+        }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Pregunta frecuente",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cuánto tarda el envío?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Respuesta"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Cómo comprar",
+      "category": "Moxie",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Explora y elige", "description": "<p>Navega por nuestras colecciones y selecciona los productos que más te gusten.</p>" } },
+        { "type": "step", "settings": { "title": "Selecciona tu talla", "description": "<p>Usa nuestra guía de tallas para encontrar el fit perfecto para ti.</p>" } },
+        { "type": "step", "settings": { "title": "Agrega al carrito", "description": "<p>Haz clic en <strong>Agregar a la bolsa</strong> y revisa tu selección.</p>" } },
+        { "type": "step", "settings": { "title": "Paga de forma segura", "description": "<p>Completa tu compra con tu método de pago preferido. Aceptamos tarjetas, PSE y más.</p>" } },
+        { "type": "step", "settings": { "title": "Recibe en casa", "description": "<p>Tu pedido llegará a la dirección indicada en el tiempo estimado de envío.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,252 @@
+{%- comment -%} MOXIE: Mapa del sitio SEO — enlista colecciones, páginas y blogs del sitio {%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign group_blocks = section.blocks | where: 'type', 'link_group'
+-%}
+
+<div class="sitemap-seo page-width" style="padding-block: {{ s.padding_top }}px {{ s.padding_bottom }}px">
+
+  {%- if s.title != blank -%}
+    <h1 class="sitemap-seo__title">{{ s.title | escape }}</h1>
+  {%- endif -%}
+
+  <div class="sitemap-seo__grid">
+
+    {%- if s.show_collections -%}
+      <div class="sitemap-seo__group">
+        <h2 class="sitemap-seo__group-title">{{ s.collections_title | default: 'Colecciones' | escape }}</h2>
+        <ul class="sitemap-seo__list" role="list">
+          {%- for collection in collections -%}
+            {%- unless collection.handle == 'frontpage' -%}
+              <li><a class="sitemap-seo__link" href="{{ collection.url }}">{{ collection.title | escape }}</a></li>
+            {%- endunless -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if s.show_pages -%}
+      <div class="sitemap-seo__group">
+        <h2 class="sitemap-seo__group-title">{{ s.pages_title | default: 'Páginas' | escape }}</h2>
+        <ul class="sitemap-seo__list" role="list">
+          {%- for page in pages -%}
+            <li><a class="sitemap-seo__link" href="{{ page.url }}">{{ page.title | escape }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if s.show_blogs -%}
+      <div class="sitemap-seo__group">
+        <h2 class="sitemap-seo__group-title">{{ s.blogs_title | default: 'Blog' | escape }}</h2>
+        <ul class="sitemap-seo__list" role="list">
+          {%- for blog in blogs -%}
+            <li>
+              <a class="sitemap-seo__link sitemap-seo__link--parent" href="{{ blog.url }}">{{ blog.title | escape }}</a>
+              {%- if blog.articles_count > 0 -%}
+                <ul class="sitemap-seo__sublist" role="list">
+                  {%- for article in blog.articles limit: 20 -%}
+                    <li><a class="sitemap-seo__link" href="{{ article.url }}">{{ article.title | escape }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- for block in group_blocks -%}
+      {%- assign b = block.settings -%}
+      {%- if b.group_title != blank -%}
+        <div class="sitemap-seo__group" {{ block.shopify_attributes }}>
+          <h2 class="sitemap-seo__group-title">{{ b.group_title | escape }}</h2>
+          <ul class="sitemap-seo__list" role="list">
+            {%- for i in (1..8) -%}
+              {%- assign link_label = 'link_' | append: i | append: '_label' -%}
+              {%- assign link_url   = 'link_' | append: i | append: '_url' -%}
+              {%- if b[link_label] != blank -%}
+                <li>
+                  <a class="sitemap-seo__link" href="{{ b[link_url] | default: '#' }}">
+                    {{ b[link_label] | escape }}
+                  </a>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+  .sitemap-seo__title {
+    font-size: var(--font-size-h1);
+    margin-block-end: var(--gap-2xl, 48px);
+  }
+
+  .sitemap-seo__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--gap-2xl, 48px);
+    align-items: start;
+  }
+
+  .sitemap-seo__group-title {
+    font-size: var(--font-size--sm);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-foreground-secondary);
+    margin-block-end: var(--gap-md);
+    padding-block-end: var(--gap-xs);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .sitemap-seo__list,
+  .sitemap-seo__sublist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+  }
+
+  .sitemap-seo__sublist {
+    padding-inline-start: var(--padding-md);
+    margin-block-start: var(--gap-xs);
+  }
+
+  .sitemap-seo__link {
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-size: var(--font-size--sm);
+    transition: color 0.15s;
+    line-height: 1.5;
+  }
+
+  .sitemap-seo__link:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .sitemap-seo__link--parent {
+    font-weight: 600;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie Mapa del sitio SEO",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "Mapa del sitio"
+    },
+    {
+      "type": "header",
+      "content": "Contenido automático"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collections",
+      "label": "Mostrar colecciones",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "collections_title",
+      "label": "Título del grupo Colecciones",
+      "default": "Colecciones"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pages",
+      "label": "Mostrar páginas",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "pages_title",
+      "label": "Título del grupo Páginas",
+      "default": "Páginas"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_blogs",
+      "label": "Mostrar blogs y artículos",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "blogs_title",
+      "label": "Título del grupo Blog",
+      "default": "Blog"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espacio superior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espacio inferior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_group",
+      "name": "Grupo de enlaces manual",
+      "settings": [
+        {
+          "type": "text",
+          "id": "group_title",
+          "label": "Título del grupo"
+        },
+        { "type": "text", "id": "link_1_label", "label": "Enlace 1 — texto" },
+        { "type": "url",  "id": "link_1_url",   "label": "Enlace 1 — URL" },
+        { "type": "text", "id": "link_2_label", "label": "Enlace 2 — texto" },
+        { "type": "url",  "id": "link_2_url",   "label": "Enlace 2 — URL" },
+        { "type": "text", "id": "link_3_label", "label": "Enlace 3 — texto" },
+        { "type": "url",  "id": "link_3_url",   "label": "Enlace 3 — URL" },
+        { "type": "text", "id": "link_4_label", "label": "Enlace 4 — texto" },
+        { "type": "url",  "id": "link_4_url",   "label": "Enlace 4 — URL" },
+        { "type": "text", "id": "link_5_label", "label": "Enlace 5 — texto" },
+        { "type": "url",  "id": "link_5_url",   "label": "Enlace 5 — URL" },
+        { "type": "text", "id": "link_6_label", "label": "Enlace 6 — texto" },
+        { "type": "url",  "id": "link_6_url",   "label": "Enlace 6 — URL" },
+        { "type": "text", "id": "link_7_label", "label": "Enlace 7 — texto" },
+        { "type": "url",  "id": "link_7_url",   "label": "Enlace 7 — URL" },
+        { "type": "text", "id": "link_8_label", "label": "Enlace 8 — texto" },
+        { "type": "url",  "id": "link_8_url",   "label": "Enlace 8 — URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Mapa del sitio SEO",
+      "category": "Moxie"
+    }
+  ]
+}
+{% endschema %}

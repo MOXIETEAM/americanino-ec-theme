@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "custom_how_to_buy",
+      "settings": {}
+    },
+    "flexible": {
+      "type": "main-page",
+      "blocks": {},
+      "block_order": [],
+      "settings": {
+        "content_direction": "column",
+        "gap": 24,
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": ["main", "flexible"]
+}

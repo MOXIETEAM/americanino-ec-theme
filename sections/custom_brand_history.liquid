@@ -1,0 +1,469 @@
+{%- comment -%} MOXIE: Historia de la marca — hero + secciones de story con imagen y texto alternados {%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+  assign story_blocks  = section.blocks | where: 'type', 'story_section'
+  assign value_blocks  = section.blocks | where: 'type', 'brand_value'
+-%}
+
+<article class="brand-history">
+
+  {%- comment -%} ── Hero ────────────────────────────────────────────────── {%- endcomment -%}
+  {%- if s.hero_image != blank or s.hero_title != blank -%}
+    <div class="brand-history__hero{% if s.hero_image != blank %} brand-history__hero--with-image{% endif %}">
+      {%- if s.hero_image != blank -%}
+        <div class="brand-history__hero-media">
+          {{
+            s.hero_image
+            | image_url: width: 2000
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              alt: s.hero_title,
+              class: 'brand-history__hero-img',
+              widths: '750, 1100, 1500, 2000',
+              sizes: '100vw'
+          }}
+          <div class="brand-history__hero-overlay"></div>
+        </div>
+      {%- endif -%}
+      <div class="brand-history__hero-content page-width">
+        {%- if s.founded_year != blank -%}
+          <span class="brand-history__year">{{ s.founded_year | escape }}</span>
+        {%- endif -%}
+        {%- if s.hero_title != blank -%}
+          <h1 class="brand-history__hero-title">{{ s.hero_title | escape }}</h1>
+        {%- endif -%}
+        {%- if s.hero_tagline != blank -%}
+          <p class="brand-history__hero-tagline">{{ s.hero_tagline | escape }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Story sections ─────────────────────────────────────── {%- endcomment -%}
+  {%- if story_blocks.size > 0 -%}
+    <div class="brand-history__stories">
+      {%- for block in story_blocks -%}
+        {%- assign b = block.settings -%}
+        {%- assign reverse = false -%}
+        {%- if b.image_position == 'right' -%}{%- assign reverse = true -%}{%- endif -%}
+
+        <div
+          class="brand-history__story{% if reverse %} brand-history__story--reverse{% endif %}"
+          style="padding-block: {{ s.story_padding_top | default: 64 }}px {{ s.story_padding_bottom | default: 64 }}px"
+          {{ block.shopify_attributes }}
+        >
+          <div class="page-width brand-history__story-inner">
+
+            {%- if b.image != blank -%}
+              <div class="brand-history__story-media">
+                {{
+                  b.image
+                  | image_url: width: 1000
+                  | image_tag:
+                    loading: 'lazy',
+                    alt: b.title,
+                    class: 'brand-history__story-img',
+                    widths: '500, 750, 1000',
+                    sizes: '(min-width: 990px) 50vw, 90vw'
+                }}
+              </div>
+            {%- endif -%}
+
+            <div class="brand-history__story-content">
+              {%- if b.year != blank -%}
+                <span class="brand-history__story-year">{{ b.year | escape }}</span>
+              {%- endif -%}
+              {%- if b.title != blank -%}
+                <h2 class="brand-history__story-title">{{ b.title | escape }}</h2>
+              {%- endif -%}
+              {%- if b.text != blank -%}
+                <div class="brand-history__story-text rte">{{ b.text }}</div>
+              {%- endif -%}
+            </div>
+
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ── Valores de la marca ─────────────────────────────────── {%- endcomment -%}
+  {%- if value_blocks.size > 0 -%}
+    <div class="brand-history__values page-width" style="padding-block: {{ s.values_padding_top | default: 80 }}px">
+      {%- if s.values_title != blank -%}
+        <h2 class="brand-history__values-title">{{ s.values_title | escape }}</h2>
+      {%- endif -%}
+      <ul class="brand-history__values-list" role="list">
+        {%- for block in value_blocks -%}
+          {%- assign b = block.settings -%}
+          <li class="brand-history__value" {{ block.shopify_attributes }}>
+            {%- if b.icon != blank -%}
+              <div class="brand-history__value-icon">
+                {{
+                  b.icon
+                  | image_url: width: 80
+                  | image_tag: loading: 'lazy', alt: '', class: 'brand-history__value-icon-img'
+                }}
+              </div>
+            {%- endif -%}
+            {%- if b.title != blank -%}
+              <h3 class="brand-history__value-title">{{ b.title | escape }}</h3>
+            {%- endif -%}
+            {%- if b.description != blank -%}
+              <p class="brand-history__value-desc">{{ b.description | escape }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+</article>
+
+{% stylesheet %}
+  /* ─── Hero ─────────────────────────────────────────────────────────── */
+  .brand-history__hero {
+    position: relative;
+    min-height: 60svh;
+    display: flex;
+    align-items: flex-end;
+    color: var(--color-background);
+    overflow: hidden;
+  }
+
+  .brand-history__hero--with-image {
+    min-height: 75svh;
+  }
+
+  .brand-history__hero-media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .brand-history__hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .brand-history__hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.7) 0%, rgb(0 0 0 / 0.1) 60%, transparent 100%);
+  }
+
+  .brand-history__hero-content {
+    position: relative;
+    padding-block: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    max-width: 760px;
+  }
+
+  .brand-history__year {
+    font-size: var(--font-size--sm);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .brand-history__hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  .brand-history__hero-tagline {
+    font-size: var(--font-size--lg);
+    opacity: 0.85;
+    margin: 0;
+    max-width: 560px;
+  }
+
+  /* ─── Story sections ─────────────────────────────────────────────── */
+  .brand-history__story {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .brand-history__story-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-3xl, 64px);
+    align-items: center;
+  }
+
+  .brand-history__story--reverse .brand-history__story-inner {
+    direction: rtl;
+  }
+
+  .brand-history__story--reverse .brand-history__story-inner > * {
+    direction: ltr;
+  }
+
+  .brand-history__story-media {
+    border-radius: var(--style-border-radius-images, 8px);
+    overflow: hidden;
+    aspect-ratio: 4/5;
+  }
+
+  .brand-history__story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .brand-history__story-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .brand-history__story-year {
+    font-size: var(--font-size--sm);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-foreground-secondary);
+  }
+
+  .brand-history__story-title {
+    font-size: var(--font-size-h2);
+    margin: 0;
+  }
+
+  .brand-history__story-text {
+    color: var(--color-foreground-secondary);
+  }
+
+  /* ─── Valores ────────────────────────────────────────────────────── */
+  .brand-history__values-title {
+    font-size: var(--font-size-h2);
+    text-align: center;
+    margin-block-end: var(--gap-3xl, 64px);
+  }
+
+  .brand-history__values-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--gap-2xl, 48px);
+  }
+
+  .brand-history__value {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .brand-history__value-icon-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  .brand-history__value-title {
+    font-size: var(--font-size-h4, 1.125rem);
+    margin: 0;
+  }
+
+  .brand-history__value-desc {
+    color: var(--color-foreground-secondary);
+    font-size: var(--font-size--sm);
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .brand-history__story-inner,
+    .brand-history__story--reverse .brand-history__story-inner {
+      grid-template-columns: 1fr;
+      direction: ltr;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .brand-history__story-content {
+      opacity: 0;
+      translate: 0 20px;
+      animation: bh-reveal 0.6s ease forwards;
+    }
+
+    @keyframes bh-reveal {
+      to { opacity: 1; translate: 0 0; }
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Moxie Historia de marca",
+  "tag": "article",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Imagen hero"
+    },
+    {
+      "type": "text",
+      "id": "founded_year",
+      "label": "Año de fundación",
+      "default": "Desde 1994"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "Título hero",
+      "default": "Historia de Americanino"
+    },
+    {
+      "type": "text",
+      "id": "hero_tagline",
+      "label": "Tagline hero"
+    },
+    {
+      "type": "header",
+      "content": "Valores de la marca"
+    },
+    {
+      "type": "text",
+      "id": "values_title",
+      "label": "Título de la sección",
+      "default": "Nuestros valores"
+    },
+    {
+      "type": "range",
+      "id": "values_padding_top",
+      "label": "Espacio superior valores (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Espaciado stories"
+    },
+    {
+      "type": "range",
+      "id": "story_padding_top",
+      "label": "Espacio superior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "story_padding_bottom",
+      "label": "Espacio inferior (px)",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "story_section",
+      "name": "Sección de historia",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Posición de la imagen",
+          "options": [
+            { "value": "left",  "label": "Izquierda" },
+            { "value": "right", "label": "Derecha" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Año o período",
+          "default": "1994"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        }
+      ]
+    },
+    {
+      "type": "brand_value",
+      "name": "Valor de marca",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Ícono"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Nombre del valor",
+          "default": "Calidad"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Descripción breve"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Historia de marca",
+      "category": "Moxie",
+      "blocks": [
+        {
+          "type": "story_section",
+          "settings": {
+            "year": "1994",
+            "title": "Nuestros orígenes",
+            "image_position": "left"
+          }
+        },
+        {
+          "type": "story_section",
+          "settings": {
+            "year": "Hoy",
+            "title": "Una marca en constante evolución",
+            "image_position": "right"
+          }
+        },
+        { "type": "brand_value", "settings": { "title": "Calidad" } },
+        { "type": "brand_value", "settings": { "title": "Estilo" } },
+        { "type": "brand_value", "settings": { "title": "Sostenibilidad" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
