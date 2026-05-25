@@ -4,7 +4,9 @@
     min-height: 37px;
 }
 
-
+.custom-header-moxie {
+    background-color: transparent;
+}
 
 // ── Altura del header: 67px ────────────────────────────────────────────────────
 // Especificidad > body { --header-height: 60px } del section base.
@@ -25,9 +27,9 @@
 .mox-custom-header-component {
     .header__row--top {
         margin-top: 37px;
-         background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+        background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 }
 

@@ -167,6 +167,10 @@
     assign class = class | append: ' ' | append: collapse_header_paddings_class
   endif
 
+  if section.settings.glass_home and template.name == 'index'
+    assign class = class | append: ' header--glass-home'
+  endif
+
   # Determine transparent background value
   assign top_transparent = false
   assign bottom_transparent = false
@@ -1113,6 +1117,24 @@
     font-family: var(--menu-localization-font);
     font-size: var(--menu-localization-font-size);
   }
+
+  /* ── Glass header (home) ── */
+  /* .header.header--glass-home specificity (0,2,0) beats .header[transparent] (0,1,1)
+     — ensures the underlay stays at full height even when transparent mode collapses it at scroll=0 */
+  .header.header--glass-home {
+    --closed-underlay-height: 100%;
+  }
+
+  .header--glass-home .header__underlay-closed {
+    height: 100%;
+    background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.35) 7.98%, rgba(255, 255, 255, 0.05) 150.17%);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    box-shadow: 0px 5px 33px 0px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border: 1px solid;
+    border-image-source: linear-gradient(90.11deg, rgba(255, 255, 255, 0.63) 0%, rgba(0, 0, 0, 0) 103.95%);
+    border-image-slice: 1;
+  }
 {% endstylesheet %}
 
 {% unless request.design_mode %}
@@ -1605,6 +1627,13 @@
       "id": "enable_transparent_header_home",
       "label": "t:settings.transparent_background",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "glass_home",
+      "label": "Efecto glass en home",
+      "default": true,
+      "info": "Reemplaza el fondo del header con glassmorphism en la página de inicio"
     },
     {
       "type": "color_scheme",

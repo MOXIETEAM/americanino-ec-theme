@@ -5,6 +5,10 @@
    ============================================================================= */
 
 /* ── Contenedor principal (fixed, debajo del header sticky) ─────────────── */
+#shopify-section-mega-menu {
+  margin-top: 0;
+}
+
 .moxie-mega {
   position: fixed;
   top: var(--moxie-mega-top, 80px);
