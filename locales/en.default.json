@@ -354,23 +354,29 @@
   },
   "moxie": {
     "nav": {
-      "back": "Volver",
-      "saved": "Guardados",
-      "my_account": "Mi cuenta",
-      "gender_male": "Hombre",
-      "gender_female": "Mujer"
+      "back": "Back",
+      "saved": "Saved",
+      "my_account": "My account",
+      "gender_male": "Men",
+      "gender_female": "Women"
     },
     "search": {
-      "placeholder": "Buscar..."
+      "placeholder": "Search..."
     },
     "content": {
-      "show_more": "Ver más",
-      "show_less": "Ver menos"
+      "show_more": "Show more",
+      "show_less": "Show less"
     },
     "slideshow": {
-      "previous": "Anterior",
-      "next": "Siguiente",
-      "go_to_slide": "Ir al slide {{ index }}"
+      "previous": "Previous",
+      "next": "Next",
+      "go_to_slide": "Go to slide {{ index }}"
+    },
+    "product": {
+      "select_size": "Select your size",
+      "view_sizes": "View sizes",
+      "badge_new": "New",
+      "badge_free_shipping": "Free Shipping"
     }
   },
   "products": {

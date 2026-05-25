@@ -47,7 +47,7 @@
   <div class="product-flags" aria-label="Etiquetas de producto">
 
     {%- if show_new -%}
-      <span class="product-flag product-flag--new">Nuevo</span>
+      <span class="product-flag product-flag--new">{{ 'moxie.product.badge_new' | t }}</span>
     {%- endif -%}
 
     {%- if show_sale -%}
@@ -55,7 +55,7 @@
     {%- endif -%}
 
     {%- if show_free -%}
-      <span class="product-flag product-flag--free">Envío Gratis</span>
+      <span class="product-flag product-flag--free">{{ 'moxie.product.badge_free_shipping' | t }}</span>
     {%- endif -%}
 
     {%- if custom_label -%}

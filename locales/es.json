@@ -310,9 +310,36 @@
     "blog_post_date": "Fecha",
     "blog_post_description": "Un extracto del contenido de tus artículos del blog"
   },
+  "moxie": {
+    "nav": {
+      "back": "Volver",
+      "saved": "Guardados",
+      "my_account": "Mi cuenta",
+      "gender_male": "Hombre",
+      "gender_female": "Mujer"
+    },
+    "search": {
+      "placeholder": "Buscar..."
+    },
+    "content": {
+      "show_more": "Ver más",
+      "show_less": "Ver menos"
+    },
+    "slideshow": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "go_to_slide": "Ir al slide {{ index }}"
+    },
+    "product": {
+      "select_size": "Selecciona tu talla",
+      "view_sizes": "Ver tallas",
+      "badge_new": "Nuevo",
+      "badge_free_shipping": "Envío Gratis"
+    }
+  },
   "products": {
     "product": {
-      "add_to_cart": "Agregar al carrito",
+      "add_to_cart": "Agregar a la bolsa",
       "added_to_cart": "Agregado al carrito",
       "adding_to_cart": "Agregando...",
       "add_to_cart_error": "Error al agregar al carrito",

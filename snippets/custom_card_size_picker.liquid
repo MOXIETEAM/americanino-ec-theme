@@ -39,7 +39,7 @@
 
     {%- comment -%} ── Panel de tallas ──────────────────────────────────── {%- endcomment -%}
     <div class="mox-sp__panel">
-      <p class="mox-sp__label">Selecciona tu talla</p>
+      <p class="mox-sp__label">{{ 'moxie.product.select_size' | t }}</p>
       <div class="mox-sp__options" role="list">
         {%- for value in size_option.values -%}
           {%- assign best_variant = nil -%}
@@ -69,7 +69,7 @@
     <button
       type="button"
       class="mox-sp__toggle"
-      aria-label="Ver tallas"
+      aria-label="{{ 'moxie.product.view_sizes' | t }}"
       aria-expanded="false"
       on:click="/toggle"
     >
