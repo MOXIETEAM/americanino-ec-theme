@@ -6,7 +6,7 @@
   Claves del metaobjeto:
     activo                          → boolean
     etiqueta_del_filtro             → texto corto
-    query_del_filtro                → enlace (URL)
+    url_del_filtro                  → URL
     forma_del_filtro                → lista de opciones: "Redondo" | "Cuadrado"
     color_del_borde_del_filtro      → color
     fondo_del_filtro                → color
@@ -31,6 +31,35 @@
   endif
 -%}
 
+{%- comment -%} DEBUG: activo con ?moxie_debug=1 en la URL {%- endcomment -%}
+{%- if request.query_string contains 'moxie_debug=1' -%}
+<div style="background:#1e1e1e;color:#d4d4d4;font-family:monospace;font-size:12px;padding:16px;margin:8px;border-radius:8px;white-space:pre-wrap;z-index:9999;position:relative;">
+<strong style="color:#4ec9b0;">MOXIE PLP FILTROS DEBUG</strong>
+
+<strong style="color:#9cdcfe;">Coleccion:</strong> {{ collection.title }} ({{ collection.handle }})
+<strong style="color:#9cdcfe;">Metacampo custom.mox_plp_filtro_coleccion_personalizado:</strong>
+{%- if filtros_raw != blank -%}
+  {{ filtros_raw.size }} filtro(s) encontrado(s)
+{%- else -%}
+  <span style="color:#f44747;">VACIO — el metacampo no esta asignado a esta coleccion o la clave es incorrecta</span>
+{%- endif -%}
+
+{%- if filtros_raw != blank -%}
+  {%- for filtro in filtros_raw -%}
+<hr style="border-color:#444;margin:8px 0;">
+<strong style="color:#dcdcaa;">Filtro {{ forloop.index }}</strong>
+  activo                        = {{ filtro.activo.value | json }}
+  etiqueta_del_filtro           = {{ filtro.etiqueta_del_filtro.value | json }}
+  query_del_filtro              = {{ filtro.query_del_filtro.value | json }}
+  forma_del_filtro              = {{ filtro.forma_del_filtro.value | json }}
+  color_del_borde_del_filtro    = {{ filtro.color_del_borde_del_filtro.value | json }}
+  fondo_del_filtro              = {{ filtro.fondo_del_filtro.value | json }}
+  color_del_texto_de_la_etiqueta = {{ filtro.color_del_texto_de_la_etiqueta.value | json }}
+  {%- endfor -%}
+{%- endif -%}
+</div>
+{%- endif -%}
+
 {%- if tiene_filtros -%}
   <div class="custom-center-container">
     <div
@@ -51,7 +80,7 @@
             assign border_color = filtro.color_del_borde_del_filtro.value
             assign bg_color = filtro.fondo_del_filtro.value
             assign text_color = filtro.color_del_texto_de_la_etiqueta.value
-            assign pill_url = filtro.query_del_filtro.value | default: '#'
+            assign pill_url = filtro.url_del_filtro.value | default: '#'
             assign pill_label = filtro.etiqueta_del_filtro.value
           -%}
 

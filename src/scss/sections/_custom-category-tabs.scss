@@ -230,7 +230,13 @@
     }
 
     .cat-swiper-wrap {
-      padding-inline: 0px;
+      padding-inline: 0px !important;
+    } 
+  }
+
+  .custom-plp-hero__inner {
+    .cat-swiper-wrap {
+      padding-inline: 0px !important;
     } 
   }
 }
