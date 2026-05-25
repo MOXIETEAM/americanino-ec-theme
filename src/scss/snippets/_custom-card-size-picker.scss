@@ -48,11 +48,11 @@ mox-size-picker-component[data-open] .mox-sp__panel {
 // Hidden by default — only shown in mobile bottom sheet
 .mox-sp__label {
   display: none;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  color: #1e2b51;
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
+  text-transform: none;
   margin: 0;
 }
 
@@ -182,29 +182,33 @@ mox-size-picker-component[data-adding] .mox-sp__options {
     right: 0;
     margin: 0;
     z-index: 1; // sobre el backdrop
-    border-radius: 16px 16px 0 0;
+    // border-radius: 16px 16px 0 0;
     background: #fff;
-    padding: 20px 20px 40px;
+    // padding: 40px 20px;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
+    justify-content: center;
     gap: 14px;
-    min-height: auto;
+    min-height: 120px;
+    max-height: 124px;
     transform: translateY(100%);
+    box-shadow: 0px 1px 10px 0px #00000026;
+
   }
 
   // Label visible en el bottom sheet
   .mox-sp__label {
     display: block;
-    text-align: left;
-    font-size: 13px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   // Tallas en fila horizontal scrollable
   mox-size-picker-component .mox-sp__options {
     flex-wrap: nowrap;
     overflow-x: auto;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 8px;
     width: 100%;
     scrollbar-width: none;
@@ -216,13 +220,14 @@ mox-size-picker-component[data-adding] .mox-sp__options {
 
   // Botones de talla: táctiles, con borde
   mox-size-picker-component .mox-sp__option {
-    flex-shrink: 0;
-    border: 1px solid rgba(30, 43, 81, 0.3);
-    border-radius: 4px;
+    // flex-shrink: 0;
+    // border: 1px solid rgba(30, 43, 81, 0.3);
+    // border-radius: 4px;
     height: 36px;
-    min-width: 40px;
-    padding: 0 10px;
-    font-size: 13px;
+    // min-width: 40px;
+    // padding: 0 10px;
+    font-size: 17px;
+    color: #000000;
   }
 }
 
