@@ -319,7 +319,7 @@
       "settings": {
         "title": "Compra tu look",
         "subtitle": "Lorem Ipsum es simplemente el texto",
-        "scroll_speed": 40,
+        "scroll_speed": 65,
         "item_width": 280,
         "item_gap": 0,
         "section_width": "full-width",
