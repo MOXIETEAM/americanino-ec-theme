@@ -133,7 +133,7 @@
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "Shop now",
+                "label": "Hombre",
                 "link": "shopify://collections/all",
                 "open_in_new_tab": false,
                 "style_class": "button",
@@ -148,7 +148,7 @@
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "Shop now",
+                "label": "Mujer",
                 "link": "shopify://collections/all",
                 "open_in_new_tab": false,
                 "style_class": "button",
