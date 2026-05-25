@@ -134,7 +134,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Hombre",
-                "link": "shopify://collections/all",
+                "link": "shopify://collections/hombre",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
