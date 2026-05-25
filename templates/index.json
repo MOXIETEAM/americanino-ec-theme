@@ -903,7 +903,7 @@
           "type": "tab",
           "settings": {
             "label": "Hombre",
-            "collection": "",
+            "collection": "hombre",
             "products_limit": 8
           }
         },
