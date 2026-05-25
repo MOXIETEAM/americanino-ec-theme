@@ -911,7 +911,7 @@
           "type": "tab",
           "settings": {
             "label": "Mujer",
-            "collection": "",
+            "collection": "basicos-mujer",
             "products_limit": 8
           }
         }
