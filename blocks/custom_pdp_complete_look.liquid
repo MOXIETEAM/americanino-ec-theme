@@ -109,9 +109,7 @@
         </div>
       </div>
 
-      {%- unless forloop.last -%}
-        <hr class="pdp-complete-look__divider">
-      {%- endunless -%}
+     
     {%- endfor -%}
   </div>
 </div>
@@ -193,11 +191,12 @@
   }
 
   .pdp-complete-look__title {
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.2;
-    color: rgb(var(--color-foreground-rgb));
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    color: #2C2C2C;
     margin: 0;
+    text-transform: none;
   }
 
   .pdp-complete-look__list {
@@ -223,10 +222,9 @@
 
   .pdp-complete-look__image-wrap {
     flex-shrink: 0;
-    width: 130px;
-    height: 170px;
+    max-width: 134px;
+    max-height: 166px;
     overflow: hidden;
-    border-radius: 4px;
     display: block;
     background-color: rgb(var(--color-foreground-rgb) / 0.05);
   }
@@ -252,18 +250,21 @@
     flex-direction: column;
     gap: 10px;
     min-width: 0;
+    max-width: 199px;
   }
 
   .pdp-complete-look__name {
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.35;
-    color: rgb(var(--color-foreground-rgb));
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #666666;
     text-decoration: none;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    min-height: 32px;
+    max-width: 199px;
   }
 
   .pdp-complete-look__name:hover {
@@ -356,14 +357,16 @@
 
   .pdp-complete-look__btn {
     width: 100%;
-    height: 44px;
+    max-height: 35px;
+    min-height: 35px;
     padding-inline: 16px;
     border: none;
     border-radius: 40px;
     background-color: #1E2B51;
     color: #ffffff;
-    font-size: 0.8125rem;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16px;
     letter-spacing: 0.02em;
     cursor: pointer;
     transition: background-color 0.2s ease, opacity 0.2s ease;
