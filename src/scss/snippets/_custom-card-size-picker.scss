@@ -114,6 +114,12 @@ mox-size-picker-component[data-open] .mox-sp__panel {
   display: none;
 }
 
+// ── Loading state while adding to cart ───────────────────────────────────────
+mox-size-picker-component[data-adding] .mox-sp__options {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 // ── Mobile: viewport bottom sheet ────────────────────────────────────────────
 // Al tocar +, el componente se vuelve position:fixed cubriendo todo el viewport.
 // El backdrop oscuro cierra al tocar fuera; el panel sube desde el borde inferior.

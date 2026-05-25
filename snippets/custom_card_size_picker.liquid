@@ -60,6 +60,7 @@
             class="mox-sp__option{% unless best_variant.available %} mox-sp__option--unavailable{% endunless %}"
             role="listitem"
             aria-label="{{ value }}"
+            data-variant-id="{{ best_variant.id }}"
           >{{ value }}</a>
         {%- endfor -%}
       </div>
@@ -80,3 +81,10 @@
 
   </mox-size-picker-component>
 {%- endif -%}
+
+{% stylesheet %}
+  mox-size-picker-component[data-adding] .mox-sp__options {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+{% endstylesheet %}
