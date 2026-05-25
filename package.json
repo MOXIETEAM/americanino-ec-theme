@@ -7,7 +7,7 @@
     "win:sass:watch": "cross-env sass src/scss/main.scss assets/moxie.css --watch --style=expanded --embed-source-map",
     "sass:build": "sass src/scss/main.scss assets/moxie.css --style=compressed --no-source-map",
     "win:sass:build": "cross-env sass src/scss/main.scss assets/moxie.css --style=compressed --no-source-map",
-    "theme:dev": "shopify theme dev --store=americanino-ec",
+    "theme:dev": "shopify theme dev --store=ame-1",
     "dev:shopify": "npm-run-all --parallel sass:watch theme:dev",
     "win:dev:shopify": "npm-run-all --parallel win:sass:watch theme:dev"
   },

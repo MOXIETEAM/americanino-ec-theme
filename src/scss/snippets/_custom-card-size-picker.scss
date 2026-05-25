@@ -77,9 +77,9 @@ mox-size-picker-component[data-open] .mox-sp__panel {
 
   &:hover,
   &:focus-visible {
-    background: var(--color-foreground);
-    color: var(--color-background);
-    border-color: var(--color-foreground);
+    // background: var(--color-foreground);
+    // color: var(--color-background);
+    // border-color: var(--color-foreground);
     text-decoration: none;
     outline: none;
   }
