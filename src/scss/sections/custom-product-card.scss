@@ -21,6 +21,9 @@ $bp-mobile-max:        749px;
 
 // ── Tarjeta ────────────────────────────────────────────────────────────────
 
+.quick-add__button {
+  display: none !important;
+}
 .cg-card {
   display: flex;
   flex-direction: column;
