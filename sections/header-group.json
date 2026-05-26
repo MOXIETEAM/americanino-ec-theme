@@ -159,8 +159,8 @@
             "hide_logo_on_home_page": false,
             "padding-block-start": 0,
             "padding-block-end": 0,
-            "logo_height_override": 0,
-            "logo_height_mobile_override": 0,
+            "logo_height_override": 62,
+            "logo_height_mobile_override": 48,
             "logo_video": "shopify://files/videos/americanino-amcno.mp4",
             "logo_video_loop": false
           },
@@ -233,6 +233,7 @@
         "color_scheme_top": "",
         "color_scheme_bottom": "",
         "enable_transparent_header_home": true,
+        "glass_home": true,
         "home_color_scheme": "default",
         "enable_transparent_header_product": false,
         "product_color_scheme": "default",
