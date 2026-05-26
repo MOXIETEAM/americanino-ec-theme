@@ -53,18 +53,7 @@
       aria-label="Productos del look"
       aria-modal="true"
     >
-      <button
-        class="stl-popup__close"
-        ref="closeBtn"
-        on:click="/handleClosePopup"
-        aria-label="Cerrar"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-
+      <div class="stl-popup__inner">
       <div class="stl-popup__products">
         {%- for i in (1..5) -%}
           {%- assign product_key = 'product_' | append: i -%}
@@ -144,6 +133,7 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+      </div>{%- comment -%} /stl-popup__inner {%- endcomment -%}
     </div>
   {%- endif -%}
 

@@ -1,5 +1,5 @@
 import { Component } from '@theme/component';
-import { ThemeEvents } from '@theme/events';
+import { CartAddEvent } from '@theme/events';
 
 /**
  * @typedef {object} CarouselRefs
@@ -145,6 +145,12 @@ class ShopTheLookItemComponent extends Component {
   // ─── Public handlers (wired via on:* in Liquid for the + button only) ─────
 
   handlePlusBtnClick = () => {
+    // Toggle: if popup is already open, close it
+    if (this.#openPopup?.hasAttribute('open')) {
+      this.#close();
+      return;
+    }
+
     const { plusBtn } = this.refs;
     // Read popup from refs before the MutationObserver clears it when we move it to <body>
     const popup = /** @type {HTMLElement | null} */ (this.refs.popup);
@@ -173,10 +179,13 @@ class ShopTheLookItemComponent extends Component {
 
       popup.style.top = `${top}px`;
       popup.style.left = `${Math.max(margin, left)}px`;
-      popup.style.maxHeight = `${maxHeight}px`;
       popup.style.width = `${Math.min(320, rect.width)}px`;
+      popup.style.maxHeight = '';
       popup.style.bottom = '';
       popup.style.right = '';
+
+      const inner = /** @type {HTMLElement | null} */ (popup.querySelector('.stl-popup__inner'));
+      if (inner) inner.style.maxHeight = `${maxHeight}px`;
     }
 
     // Hide the + button while popup is open (× inside popup takes its place)
@@ -195,9 +204,6 @@ class ShopTheLookItemComponent extends Component {
     this.#portalAC = new AbortController();
     const { signal } = this.#portalAC;
 
-    popup.querySelector('.stl-popup__close')
-      ?.addEventListener('click', this.#closeHandler, { signal });
-
     popup.querySelectorAll('.stl-variant-select').forEach((select) =>
       select.addEventListener('change', this.handleVariantChange, { signal })
     );
@@ -209,6 +215,7 @@ class ShopTheLookItemComponent extends Component {
 
     popup.setAttribute('open', '');
     plusBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
     this.#carousel?.pauseScroll();
   };
 
@@ -244,10 +251,11 @@ class ShopTheLookItemComponent extends Component {
 
       const cart = await response.json();
 
-      document.dispatchEvent(
-        new CustomEvent(ThemeEvents.cartUpdate, {
-          bubbles: true,
-          detail: { source: 'shop-the-look', cart },
+      this.dispatchEvent(
+        new CartAddEvent(cart, variantId, {
+          source: 'shop-the-look',
+          itemCount: 1,
+          variantId,
         })
       );
 
@@ -284,6 +292,7 @@ class ShopTheLookItemComponent extends Component {
     this.#portalAC = null;
 
     this.#hideOverlay();
+    document.body.style.overflow = '';
 
     // Restore popup to its original position in the DOM
     this.#restorePopup();
@@ -308,6 +317,8 @@ class ShopTheLookItemComponent extends Component {
   #restorePopup() {
     const popup = this.#openPopup;
     if (!popup || !this.#placeholder) return;
+    const inner = /** @type {HTMLElement | null} */ (popup.querySelector('.stl-popup__inner'));
+    if (inner) inner.style.maxHeight = '';
     this.#placeholder.parentNode?.insertBefore(popup, this.#placeholder);
     this.#placeholder.remove();
     this.#placeholder = null;
