@@ -247,8 +247,9 @@ category-grid-slider {
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  width: 42px;
-  height: 42px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.92);
   border: none;
@@ -260,8 +261,8 @@ category-grid-slider {
   transition: opacity 200ms ease, background 200ms ease;
 
   svg {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
     stroke: #111;
     fill: none;
     stroke-width: 2.5;

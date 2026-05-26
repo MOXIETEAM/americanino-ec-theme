@@ -213,33 +213,36 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-start;
+  align-self: center;
   margin-block-end: 20px;
-  padding: 9px 24px;
-  border: 1.5px solid rgb(var(--color-foreground-rgb));
+  padding: 12px 36px;
+  // border-image doesn't work with border-radius — use background multicapa
+  // padding-box = fill semi-transparente · border-box = degradado del borde
+  border: 1px solid transparent;
   border-radius: 999px;
   font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgb(var(--color-foreground-rgb));
-  background: transparent;
+  color: #fff;
+  background:
+    rgba(255, 255, 255, 0.15) padding-box,
+    linear-gradient(90.17deg, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100.43%) border-box;
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+  box-shadow: 0 5px 33px 0 #00000040;
   white-space: nowrap;
-  transition: background-color var(--animation-speed) var(--animation-easing),
-              color var(--animation-speed) var(--animation-easing);
+  transition: background var(--animation-speed) var(--animation-easing);
 
   &:hover {
-    background-color: rgb(var(--color-foreground-rgb));
-    color: rgb(var(--color-background-rgb));
+    background:
+      rgba(255, 255, 255, 0.22) padding-box,
+      linear-gradient(90.17deg, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100.43%) border-box;
   }
 
   &:focus-visible { @include focus-ring; }
   @include reduced-motion { transition: none; }
-
-  @include mobile-only {
-    align-self: center;
-  }
 }
 
 // ── Social ────────────────────────────────────────────────────────────────────
