@@ -106,12 +106,14 @@
   display: inline-flex;
   align-items: center;
   padding: 6px 16px;
-  border: 1px solid rgb(var(--color-foreground-rgb) / 0.25);
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  line-height: 1;
-  text-decoration: none;
-  color: inherit;
+  // border: 1px solid rgb(var(--color-foreground-rgb) / 0.25);
+  // border-radius: 999px;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 16px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #1E2B51;
   transition: border-color var(--animation-speed) var(--animation-easing),
               opacity var(--animation-speed) var(--animation-easing);
 

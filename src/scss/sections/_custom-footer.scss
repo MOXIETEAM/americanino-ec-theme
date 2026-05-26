@@ -177,6 +177,7 @@
 .custom-footer__brand-block {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0;
 }
 
@@ -195,16 +196,17 @@
 // ── Tagline newsletter en columna de marca ────────────────────────────────────
 
 .custom-footer__brand-tagline {
-  font-size: 0.8125rem;
-  line-height: 1.55;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
   color: #FFFFFF;
   margin: 0 0 14px;
   max-width: 260px;
   text-align: center;
 
-  @include tablet-up {
-    text-align: left;
-  }
+  // @include tablet-up {
+  //   text-align: left;
+  // }
 }
 
 .custom-footer__brand-cta {
@@ -310,11 +312,16 @@
 }
 
 .custom-footer__nav-heading {
-  font-size: 0.75rem;
+  font-size: 14px;
+  line-height: 18px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   margin: 0;
+  color: #FFFFFF;
+}
+
+.custom-footer__nav-heading:hover {
   color: #FFFFFF;
 }
 
@@ -324,15 +331,22 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
+
+  li {
+    font-size: 14px !important;
+    line-height: 18px;
+    color: #FFFFFF;
+    font-weight: 400;
+  }
 }
 
 .custom-footer__nav-link {
-  font-size: 0.8125rem;
-  line-height: 1.45;
+  font-size: 14px !important;
+  line-height: 18px;
   color: #FFFFFF;
+  font-weight: 400;
   text-decoration: none;
-  opacity: 0.65;
   transition: opacity var(--animation-speed) var(--animation-easing);
 
   &:hover { opacity: 1; }
