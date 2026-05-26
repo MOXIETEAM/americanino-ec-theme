@@ -135,6 +135,7 @@
             {%- if block.type == 'brand_info' -%}
               <div class="custom-footer__brand-block" {{ block.shopify_attributes }}>
 
+                <div class="custom-footer__brand-identity">
                 {%- comment -%} Logo {%- endcomment -%}
                 {%- if block.settings.logo != blank -%}
                   <div class="custom-footer__logo">
@@ -162,6 +163,8 @@
                   </a>
                 {%- endif -%}
 
+                </div>{%- comment -%} /brand-identity {%- endcomment -%}
+                <div class="custom-footer__brand-connect">
                 {%- comment -%} Redes sociales {%- endcomment -%}
                 <div class="custom-footer__social">
                   {%- if block.settings.facebook_url != blank -%}
@@ -268,6 +271,7 @@
                     </li>
                   {%- endif -%}
                 </ul>
+                </div>{%- comment -%} /brand-connect {%- endcomment -%}
 
               </div>
             {%- endif -%}

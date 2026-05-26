@@ -484,6 +484,24 @@
   }
 }
 
+// ── Brand identity / connect wrappers ────────────────────────────────────────
+// On desktop these are transparent containers (already centered by brand-block).
+// On mobile they become flex items with explicit order.
+
+.custom-footer__brand-identity,
+.custom-footer__brand-connect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+// ── Nav toggle icon ───────────────────────────────────────────────────────────
+
+.custom-footer__nav-toggle {
+  display: none; // hidden on desktop (all accordions are always open)
+}
+
 // ── Mobile overrides ──────────────────────────────────────────────────────────
 
 @media (max-width: 768px) {
@@ -543,5 +561,86 @@
         }
       }
     }
+  }
+
+  // ── Reordering: brand-identity → nav cols → brand-connect ──────────────────
+  // Use display:contents to "unbox" both brand-area and brand-block so their
+  // children participate directly in the grid's flex layout and can be ordered.
+
+  .custom-footer__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-inline: 20px;
+  }
+
+  .custom-footer__brand-area,
+  .custom-footer__brand-block {
+    display: contents;
+  }
+
+  .custom-footer__brand-identity {
+    order: 1;
+    padding-bottom: 28px;
+  }
+
+  .custom-footer__nav-col {
+    order: 2;
+    gap: 0 !important;
+  }
+
+  .custom-footer__brand-connect {
+    order: 3;
+    padding-block: 24px;
+    gap: 4px;
+  }
+
+  // ── Nav accordion styles on mobile ─────────────────────────────────────────
+
+  .custom-footer__nav-toggle {
+    display: block;
+    line-height: 1;
+
+    &::after {
+      content: '+';
+      font-size: 20px;
+      font-weight: 300;
+      color: #fff;
+    }
+  }
+
+  details[open].custom-footer__nav-col .custom-footer__nav-toggle::after {
+    content: '−';
+  }
+
+  .custom-footer__nav-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 18px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker { display: none; }
+  }
+
+  // Bottom border closes the last accordion row
+  .custom-footer__grid details.custom-footer__nav-col:last-of-type {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .custom-footer__nav-list {
+    padding-bottom: 16px;
+  }
+
+  // ── Main footer padding on mobile ──────────────────────────────────────────
+
+  .custom-footer__main {
+    padding-block: 36px 0;
+  }
+
+  .custom-footer__main-inner {
+    padding-inline: 0;
   }
 }
