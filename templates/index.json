@@ -474,7 +474,7 @@
         "hero_text": "Lorem ipsum",
         "collection": "test-collection",
         "installments_text": "0% de interés hasta 3 cuotas",
-        "show_swatches": true,
+        "image_ratio": "3/4",
         "max_swatches": 4,
         "color_scheme": "",
         "bg_color": "",
@@ -753,7 +753,7 @@
             "title": "Colección nueva",
             "subtitle": "Descubre las últimas tendencias de la temporada.",
             "cta_label": "Ver colección",
-            "cta_link": ""
+            "cta_link": "/"
           }
         },
         "slide_qM3GYD": {
