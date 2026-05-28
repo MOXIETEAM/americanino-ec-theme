@@ -297,6 +297,17 @@
   }
 </script>
 
+{%- liquid
+  assign mox_bg_type = section.settings.custom_bg_type
+  if mox_bg_type == 'glass'
+    assign mox_glass_alpha = section.settings.glass_overlay_opacity | divided_by: 100.0
+    assign mox_glass_overlay_rgba = section.settings.glass_overlay_color | color_modify: 'alpha', mox_glass_alpha
+  elsif mox_bg_type == 'solid_texture'
+    assign mox_texture_alpha = section.settings.texture_opacity | divided_by: 100.0
+  elsif mox_bg_type == 'gradient_texture'
+    assign mox_texture_alpha = section.settings.grad_texture_opacity | divided_by: 100.0
+  endif
+-%}
 <header-component
   id="header-component"
   class="{{ class }} mox-custom-header-component"
@@ -326,7 +337,30 @@
       --header-actions-font-weight: var(--font-{{ section.settings.actions_font | default: 'heading' }}--weight);
       --header-actions-text-case: {{ section.settings.actions_text_case | default: 'none' }};
     {% endif %}
+    {%- comment -%} MOXIE: Custom background CSS variables {%- endcomment -%}
+    {% if mox_bg_type == 'glass' %}
+      --mox-hbg-blur: {{ section.settings.glass_blur }}px;
+      --mox-hbg-saturate: {{ section.settings.glass_saturate }}%;
+      --mox-hbg-overlay-rgba: {{ mox_glass_overlay_rgba }};
+    {% elsif mox_bg_type == 'solid' %}
+      --mox-hbg-color: {{ section.settings.solid_color }};
+    {% elsif mox_bg_type == 'gradient' %}
+      --mox-hbg-gradient-from: {{ section.settings.gradient_from }};
+      --mox-hbg-gradient-to: {{ section.settings.gradient_to }};
+      --mox-hbg-gradient-angle: {{ section.settings.gradient_angle }}deg;
+    {% elsif mox_bg_type == 'solid_texture' %}
+      --mox-hbg-color: {{ section.settings.solid_texture_color }};
+      --mox-hbg-texture-alpha: {{ mox_texture_alpha }};
+      --mox-hbg-texture-size: {{ section.settings.texture_size }}px;
+    {% elsif mox_bg_type == 'gradient_texture' %}
+      --mox-hbg-gradient-from: {{ section.settings.grad_texture_from }};
+      --mox-hbg-gradient-to: {{ section.settings.grad_texture_to }};
+      --mox-hbg-gradient-angle: {{ section.settings.grad_texture_angle }}deg;
+      --mox-hbg-texture-alpha: {{ mox_texture_alpha }};
+      --mox-hbg-texture-size: {{ section.settings.grad_texture_size }}px;
+    {% endif %}
   "
+  data-bg-type="{{ section.settings.custom_bg_type }}"
 >
   <div class="header__underlay header__underlay-closed"></div>
   <div
@@ -1118,9 +1152,7 @@
     font-size: var(--menu-localization-font-size);
   }
 
-  /* ── Glass header (home) ── */
-  /* .header.header--glass-home specificity (0,2,0) beats .header[transparent] (0,1,1)
-     — ensures the underlay stays at full height even when transparent mode collapses it at scroll=0 */
+  /* ── Glass header (home) — kept for backward compat when glass_home checkbox is active ── */
   .header.header--glass-home {
     --closed-underlay-height: 100%;
   }
@@ -1134,6 +1166,124 @@
     border: 1px solid;
     border-image-source: linear-gradient(90.11deg, rgba(255, 255, 255, 0.63) 0%, rgba(0, 0, 0, 0) 103.95%);
     border-image-slice: 1;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     MOXIE — Custom background types
+     Controlled via data-bg-type attribute + CSS custom properties on
+     #header-component. All selectors use the attribute for specificity,
+     ensuring they beat the base theme's color-scheme-derived underlay.
+     ══════════════════════════════════════════════════════════════════════ */
+
+  /* Cuando hay fondo personalizado, el underlay debe ser siempre visible
+     (sobreescribe el --closed-underlay-height: 0px del modo transparente) */
+  #header-component:is(
+    [data-bg-type='glass'],
+    [data-bg-type='solid'],
+    [data-bg-type='gradient'],
+    [data-bg-type='solid_texture'],
+    [data-bg-type='gradient_texture']
+  ) {
+    --closed-underlay-height: 100%;
+  }
+
+  /* ── 1. Blur / Glass ──────────────────────────────────────────────── */
+  #header-component[data-bg-type='glass'] .header__underlay-closed {
+    background: var(--mox-hbg-overlay-rgba, rgba(255, 255, 255, 0.3));
+    backdrop-filter: blur(var(--mox-hbg-blur, 10px)) saturate(var(--mox-hbg-saturate, 160%));
+    -webkit-backdrop-filter: blur(var(--mox-hbg-blur, 10px)) saturate(var(--mox-hbg-saturate, 160%));
+  }
+
+  /* ── 2. Color sólido ──────────────────────────────────────────────── */
+  #header-component[data-bg-type='solid'] .header__underlay-closed {
+    background: var(--mox-hbg-color, #ffffff);
+  }
+
+  /* ── 3. Degradado ─────────────────────────────────────────────────── */
+  #header-component[data-bg-type='gradient'] .header__underlay-closed {
+    background: linear-gradient(
+      var(--mox-hbg-gradient-angle, 90deg),
+      var(--mox-hbg-gradient-from, #1E2B51),
+      var(--mox-hbg-gradient-to, #ffffff)
+    );
+  }
+
+  /* ── 4. Sólido con textura ────────────────────────────────────────── */
+  #header-component[data-bg-type='solid_texture'] .header__underlay-closed {
+    background-color: var(--mox-hbg-color, #ffffff);
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 0px,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 1px,
+        transparent 1px,
+        transparent 50%
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 0px,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 1px,
+        transparent 1px,
+        transparent 50%
+      );
+    background-size: var(--mox-hbg-texture-size, 4px) var(--mox-hbg-texture-size, 4px);
+  }
+
+  /* ── 5. Degradado con textura ─────────────────────────────────────── */
+  #header-component[data-bg-type='gradient_texture'] .header__underlay-closed {
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 0px,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 1px,
+        transparent 1px,
+        transparent 50%
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 0px,
+        rgba(0, 0, 0, var(--mox-hbg-texture-alpha, 0.08)) 1px,
+        transparent 1px,
+        transparent 50%
+      ),
+      linear-gradient(
+        var(--mox-hbg-gradient-angle, 90deg),
+        var(--mox-hbg-gradient-from, #1E2B51),
+        var(--mox-hbg-gradient-to, #ffffff)
+      );
+    background-size:
+      var(--mox-hbg-texture-size, 4px) var(--mox-hbg-texture-size, 4px),
+      var(--mox-hbg-texture-size, 4px) var(--mox-hbg-texture-size, 4px),
+      100% 100%;
+  }
+
+  /* Cuando el tipo de fondo personalizado está activo, desactivar los
+     color-scheme-derived underlays del header__underlay-open para evitar
+     conflictos visuales con el fondo personalizado */
+  #header-component:is(
+    [data-bg-type='glass'],
+    [data-bg-type='solid'],
+    [data-bg-type='gradient'],
+    [data-bg-type='solid_texture'],
+    [data-bg-type='gradient_texture']
+  ) .header__underlay-open {
+    background: linear-gradient(
+      var(--color-scheme-top-row) 0 var(--top-row-height),
+      var(--color-scheme-bottom-row) var(--top-row-height) var(--header-height),
+      var(--color-submenu) var(--header-height) 100%
+    );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #header-component:is(
+      [data-bg-type='glass'],
+      [data-bg-type='solid'],
+      [data-bg-type='gradient'],
+      [data-bg-type='solid_texture'],
+      [data-bg-type='gradient_texture']
+    ) .header__underlay-closed {
+      transition: none;
+    }
   }
 {% endstylesheet %}
 
@@ -1600,6 +1750,172 @@
       ],
       "default": "none",
       "visible_if": "{{ section.settings.actions_display_style == 'text' }}"
+    },
+    {
+      "type": "header",
+      "content": "Fondo personalizado del header"
+    },
+    {
+      "type": "select",
+      "id": "custom_bg_type",
+      "label": "Tipo de fondo",
+      "options": [
+        { "value": "glass",           "label": "Blur / Glass" },
+        { "value": "solid",           "label": "Color sólido" },
+        { "value": "gradient",        "label": "Degradado" },
+        { "value": "solid_texture",   "label": "Sólido con textura" },
+        { "value": "gradient_texture","label": "Degradado con textura" }
+      ],
+      "default": "glass",
+      "info": "Selecciona el tipo de fondo para el header."
+    },
+    {
+      "type": "range",
+      "id": "glass_blur",
+      "label": "Intensidad del blur (px)",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 10,
+      "visible_if": "{{ section.settings.custom_bg_type == 'glass' }}"
+    },
+    {
+      "type": "range",
+      "id": "glass_saturate",
+      "label": "Saturación (%)",
+      "min": 100,
+      "max": 200,
+      "step": 5,
+      "unit": "%",
+      "default": 160,
+      "visible_if": "{{ section.settings.custom_bg_type == 'glass' }}"
+    },
+    {
+      "type": "color",
+      "id": "glass_overlay_color",
+      "label": "Color de la capa de vidrio",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.custom_bg_type == 'glass' }}"
+    },
+    {
+      "type": "range",
+      "id": "glass_overlay_opacity",
+      "label": "Opacidad de la capa (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 30,
+      "visible_if": "{{ section.settings.custom_bg_type == 'glass' }}"
+    },
+    {
+      "type": "color",
+      "id": "solid_color",
+      "label": "Color de fondo",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.custom_bg_type == 'solid' }}"
+    },
+    {
+      "type": "color",
+      "id": "gradient_from",
+      "label": "Color inicial",
+      "default": "#1E2B51",
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient' }}"
+    },
+    {
+      "type": "color",
+      "id": "gradient_to",
+      "label": "Color final",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient' }}"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "label": "Ángulo del degradado",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "default": 90,
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient' }}"
+    },
+    {
+      "type": "color",
+      "id": "solid_texture_color",
+      "label": "Color de fondo",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.custom_bg_type == 'solid_texture' }}"
+    },
+    {
+      "type": "range",
+      "id": "texture_opacity",
+      "label": "Opacidad de la textura (%)",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 20,
+      "visible_if": "{{ section.settings.custom_bg_type == 'solid_texture' }}"
+    },
+    {
+      "type": "range",
+      "id": "texture_size",
+      "label": "Tamaño de la textura (px)",
+      "min": 2,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4,
+      "visible_if": "{{ section.settings.custom_bg_type == 'solid_texture' }}"
+    },
+    {
+      "type": "color",
+      "id": "grad_texture_from",
+      "label": "Color inicial",
+      "default": "#1E2B51",
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient_texture' }}"
+    },
+    {
+      "type": "color",
+      "id": "grad_texture_to",
+      "label": "Color final",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient_texture' }}"
+    },
+    {
+      "type": "range",
+      "id": "grad_texture_angle",
+      "label": "Ángulo del degradado",
+      "min": 0,
+      "max": 360,
+      "step": 5,
+      "unit": "°",
+      "default": 90,
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient_texture' }}"
+    },
+    {
+      "type": "range",
+      "id": "grad_texture_opacity",
+      "label": "Opacidad de la textura (%)",
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 20,
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient_texture' }}"
+    },
+    {
+      "type": "range",
+      "id": "grad_texture_size",
+      "label": "Tamaño de la textura (px)",
+      "min": 2,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 4,
+      "visible_if": "{{ section.settings.custom_bg_type == 'gradient_texture' }}"
     },
     {
       "type": "header",

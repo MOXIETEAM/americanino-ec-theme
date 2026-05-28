@@ -1008,9 +1008,6 @@ body {
 
 .mox-custom-header-component .header__row--top {
   margin-top: 37px;
-  background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 #header-component:has(custom-search-drawer[data-open]) .header__row {
@@ -1261,23 +1258,6 @@ custom-search-drawer[data-open] .mox-spill__input {
 }
 
 @media screen and (max-width: 989px) {
-  .mox-custom-header-component .header__row--top {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    background: none;
-    position: relative;
-    z-index: 0;
-  }
-  .mox-custom-header-component .header__row--top::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    pointer-events: none;
-    z-index: -1;
-  }
   .header-section:has(.menu-drawer-container.menu-open) {
     z-index: 1002 !important;
   }
