@@ -1188,10 +1188,41 @@
   }
 
   /* ── 1. Blur / Glass ──────────────────────────────────────────────── */
-  #header-component[data-bg-type='glass'] .header__underlay-closed {
-    background: var(--mox-hbg-overlay-rgba, rgba(255, 255, 255, 0.3));
+  /*
+    backdrop-filter se aplica en #header-component directamente (el sticky).
+    Cuando header-component está sticky, el compositor lo apila sobre el
+    contenido de la página; backdrop-filter en el propio elemento procesa
+    ese contenido real y se mantiene durante el scroll.
+    backdrop-filter en hijos (como .header__row--top) no puede cruzar la
+    frontera del compositor sticky — solo borrosa otros elementos dentro
+    de la misma capa, no el contenido de la página.
+  */
+  #header-component[data-bg-type='glass'] {
     backdrop-filter: blur(var(--mox-hbg-blur, 10px)) saturate(var(--mox-hbg-saturate, 160%));
     -webkit-backdrop-filter: blur(var(--mox-hbg-blur, 10px)) saturate(var(--mox-hbg-saturate, 160%));
+  }
+
+  /* Underlays transparentes — no deben tapar el blur del componente */
+  #header-component[data-bg-type='glass'] .header__underlay-closed,
+  #header-component[data-bg-type='glass'] .header__underlay-open {
+    background: transparent !important;
+  }
+
+  /* Overlay semi-transparente del merchant sobre el blur (top y bottom row) */
+  #header-component[data-bg-type='glass'] .header__row--top,
+  #header-component[data-bg-type='glass'] .header__row--bottom {
+    background: var(--mox-hbg-overlay-rgba, rgba(255, 255, 255, 0.3)) !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #header-component[data-bg-type='glass'] {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    #header-component[data-bg-type='glass'] .header__row--top,
+    #header-component[data-bg-type='glass'] .header__row--bottom {
+      background: var(--mox-hbg-overlay-rgba, rgba(255, 255, 255, 0.85)) !important;
+    }
   }
 
   /* ── 2. Color sólido ──────────────────────────────────────────────── */
