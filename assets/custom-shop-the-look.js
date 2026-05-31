@@ -17,10 +17,6 @@ class ShopTheLookCarouselComponent extends Component {
     super.connectedCallback();
     // Defer to next frame so offsetWidth is available after layout
     requestAnimationFrame(() => this.#cloneItems());
-
-    // In the Shopify editor, re-apply the animation when settings change so
-    // the speed slider takes effect immediately without waiting for the current
-    // animation cycle to finish.
     document.addEventListener('shopify:section:load', /** @type {EventListener} */ (this.#onEditorLoad));
   }
 
@@ -32,15 +28,22 @@ class ShopTheLookCarouselComponent extends Component {
   #onEditorLoad = (/** @type {Event} */ e) => {
     const sectionId = /** @type {CustomEvent} */ (e).detail?.sectionId;
     if (!this.closest(`#shopify-section-${sectionId}`)) return;
-    this.#restartAnimation();
+    // Defer one frame so #cloneItems() (also RAF-queued in connectedCallback) runs
+    // first on full section reload. If data-stl-ready isn't set yet, #restartAnimation
+    // is a no-op and the animation starts correctly at the end of #cloneItems().
+    requestAnimationFrame(() => this.#restartAnimation());
   };
 
   #restartAnimation() {
     const { track } = this.refs;
-    track.style.animationName = 'none';
-    // Force reflow so the browser registers the name removal
+    // Guard: cloneItems hasn't run yet — animation will start correctly there.
+    if (!track.hasAttribute('data-stl-ready')) return;
+    // CSS animation-duration resolved from var(--stl-duration) is baked in at
+    // animation start and does not update on a running animation when the custom
+    // property changes. A full restart forces re-resolution with the new value.
+    track.removeAttribute('data-stl-ready');
     void track.offsetWidth;
-    track.style.animationName = '';
+    track.setAttribute('data-stl-ready', '');
   }
 
   #cloneItems() {
@@ -52,22 +55,45 @@ class ShopTheLookCarouselComponent extends Component {
     const originalWidth = originals.reduce((sum, el) => sum + (/** @type {HTMLElement} */ (el)).offsetWidth, 0);
     if (originalWidth === 0) return;
 
-    // Clone enough sets so the total track fills at least 2× the viewport —
-    // this guarantees no empty gap is ever visible during the loop.
-    const setsNeeded = Math.max(1, Math.ceil((window.innerWidth * 2) / originalWidth));
+    // In the editor use 1 clone set (minimum for a seamless loop) to reduce
+    // DOM size and GIF decoding cost during frequent section reloads.
+    // On the storefront use 2× viewport to guarantee no gap at any scroll speed.
+    const isDesignMode = window.Shopify?.designMode === true;
+    const setsNeeded = isDesignMode
+      ? 1
+      : Math.max(1, Math.ceil((window.innerWidth * 2) / originalWidth));
 
     for (let i = 0; i < setsNeeded; i++) {
       originals.forEach((item) => {
-        const clone = /** @type {HTMLElement} */ (item.cloneNode(true));
+        // Use a plain div instead of cloneNode() so connectedCallback() is never
+        // triggered on decorative clones. A custom-element clone would register
+        // its own MutationObserver and two document-level event listeners per item,
+        // multiplying with every clone set and every editor section reload.
+        const clone = document.createElement('div');
+        clone.className = item.className;
         clone.setAttribute('aria-hidden', 'true');
+        clone.setAttribute('role', 'presentation');
+        clone.innerHTML = item.innerHTML;
         clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+        // Disable interactive descendants — clones are purely decorative
+        clone.querySelectorAll('button, select, input').forEach((el) => {
+          el.setAttribute('tabindex', '-1');
+          el.setAttribute('disabled', '');
+        });
         track.appendChild(clone);
       });
     }
 
     // Tell the keyframe the exact distance to scroll: one original set in px.
-    // This makes the loop seamless regardless of how many clone sets were added.
     track.style.setProperty('--stl-scroll-to', `-${originalWidth}px`);
+
+    // Start (or restart) the animation only now that --stl-scroll-to is set.
+    // Removing and re-adding the attribute resets the animation from 0% with
+    // the correct target and the current --stl-duration, so the speed slider
+    // in the editor always takes effect immediately on section reload.
+    track.removeAttribute('data-stl-ready');
+    void track.offsetWidth; // force reflow so the browser registers the reset
+    track.setAttribute('data-stl-ready', '');
   }
 
   pauseScroll() {
@@ -129,10 +155,11 @@ class ShopTheLookItemComponent extends Component {
   disconnectedCallback() {
     super.disconnectedCallback();
     this.#ac.abort();
-    // If popup is open when the component is removed, put it back and clean up
     if (this.#placeholder) {
       this.#restorePopup();
     }
+    this.#overlay?.remove();
+    this.#overlay = null;
   }
 
   /** @returns {ShopTheLookCarouselComponent | null} */
@@ -311,7 +338,9 @@ class ShopTheLookItemComponent extends Component {
   }
 
   #hideOverlay() {
-    this.#overlay?.classList.remove('stl-overlay--visible');
+    if (!this.#overlay) return;
+    this.#overlay.remove();
+    this.#overlay = null;
   }
 
   #restorePopup() {

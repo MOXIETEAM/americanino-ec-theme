@@ -1657,6 +1657,8 @@ shop-the-look-item {
   display: flex;
   width: max-content;
   will-change: transform;
+}
+.stl-track[data-stl-ready] {
   animation: stl-scroll var(--stl-duration, 40s) linear infinite;
 }
 .stl-track.stl-track--paused {
@@ -1676,8 +1678,10 @@ shop-the-look-item {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .stl-track {
+  .stl-track[data-stl-ready] {
     animation: none;
+  }
+  .stl-track {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     width: 100%;
