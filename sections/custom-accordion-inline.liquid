@@ -1,0 +1,797 @@
+<!-- Accordion_inline.liquid -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+{{ 'hdt-accordion.css' | asset_url | stylesheet_tag }}
+
+{% style %}
+#shopify-section-{{ section.id }}{
+  --section-pt: {{ section.settings.padding_top }}px;
+  --section-pb: {{ section.settings.padding_bottom }}px;
+  --section-prate: {{ section.settings.padding_rate }};
+
+  --accordion-bg: {{ section.settings.accordion_bg }};
+
+  --heading-color: {{ section.settings.heading_color }};
+  --subheading-color: {{ section.settings.subheading_color }};
+
+  --accordion-title-color: {{ section.settings.title_color }};
+  --accordion-content-color: {{ section.settings.content_color }};
+  --accordion-icon-color: {{ section.settings.icon_color }};
+  --accordion-border-color: {{ section.settings.border_color }};
+
+  --accordion-title-size: {{ section.settings.title_size }}px;
+  --accordion-content-size: {{ section.settings.content_size }}px;
+
+  --accordion-title-weight: {{ section.settings.title_weight }};
+  --accordion-content-weight: {{ section.settings.content_weight }};
+
+  /* =========================
+     INDIVIDUAL FONTS
+  ========================= */
+
+  --heading-font:
+    {% if section.settings.heading_font == 'playfair' %}
+      'Playfair Display', serif;
+    {% else %}
+      'Inter', sans-serif;
+    {% endif %};
+
+  --subheading-font:
+    {% if section.settings.subheading_font == 'playfair' %}
+      'Playfair Display', serif;
+    {% else %}
+      'Inter', sans-serif;
+    {% endif %};
+
+  --question-font:
+    {% if section.settings.question_font == 'playfair' %}
+      'Playfair Display', serif;
+    {% else %}
+      'Inter', sans-serif;
+    {% endif %};
+
+  --answer-font:
+    {% if section.settings.answer_font == 'playfair' %}
+      'Playfair Display', serif;
+    {% else %}
+      'Inter', sans-serif;
+    {% endif %};
+}
+{% endstyle %}
+
+<style>
+
+html{
+  scroll-behavior:smooth;
+}
+
+#{{ section.id }}{
+  background:var(--accordion-bg);
+}
+
+#{{ section.id }} .hdt-main-accordion-inline{
+  {% comment %} max-width:900px;
+  margin:0 auto; {% endcomment %}
+}
+
+#{{ section.id }} .hdt-accordion-inline-content{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+
+/* =========================
+   HEADING
+========================= */
+
+.faq-heading{
+  text-align:center;
+  margin-bottom:48px;
+}
+
+.faq-heading-title{
+  margin:0 0 20px;
+
+  color:var(--heading-color);
+
+  font-family:var(--heading-font);
+
+  font-size:50px;
+  font-weight:400;
+  line-height: 55px;
+}
+
+.faq-heading-subtitle{
+  margin:0;
+
+  color:var(--subheading-color);
+
+  font-family:var(--subheading-font);
+
+  font-size: 20px;
+  line-height:25px;
+}
+
+@media (min-width: 769px) and (max-width: 990px) {
+    .faq-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .faq-heading-title{
+    font-size: 45px;
+    font-weight:400;
+    line-height: 50px;
+  }
+
+ .faq-heading-subtitle{
+    font-size: 25px;
+    font-weight: 300;
+    line-height: 30px;
+    max-width: 600px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .hdt-main-accordion-inline {
+    margin-top: 20px;
+  }
+
+  .faq-heading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .faq-heading-title{
+    font-size:30px;
+    font-weight:400;
+    line-height: 35px;
+  }
+  .faq-heading-subtitle{
+    font-size: 15px;
+    font-weight: 300;
+    line-height:20px;
+    max-width: 254px;
+  }
+}
+
+/* =========================
+   ITEM
+========================= */
+
+#{{ section.id }} .hdt-accordion-item{
+  margin:0;
+  border-bottom:1px solid var(--accordion-border-color);
+  background:transparent;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+#{{ section.id }} .hdt-accordion-item summary{
+  background:transparent;
+  border:none;
+  border-radius:0;
+  box-shadow:none;
+
+  padding:26px 8px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+
+  cursor:pointer;
+
+  
+  transition:opacity .25s ease;
+  
+  list-style:none;
+  
+  h2 {
+    color:var(--accordion-title-color);
+  
+    font-size:var(--accordion-title-size);
+    font-weight:var(--accordion-title-weight);
+  
+    font-family:var(--question-font);
+    }
+}
+
+#{{ section.id }} .hdt-accordion-item summary::-webkit-details-marker{
+  display:none;
+}
+
+#{{ section.id }} .hdt-accordion-item summary:hover{
+  opacity:.75;
+}
+
+@media screen and (max-width: 768px) {
+    
+  #{{ section.id }} .hdt-accordion-item summary{ 
+    h2 {
+      color:var(--accordion-title-color);
+    
+      font-size: 15px;
+      line-height: 20px;
+      font-weight:400;
+    
+      font-family:var(--question-font);
+      }
+  }
+}
+
+/* =========================
+   CONTENT
+========================= */
+
+#{{ section.id }} .hdt-accordion-content{
+  background:transparent;
+  border-radius:0;
+  padding:0 8px 28px;
+
+  color:var(--accordion-content-color);
+
+  font-size:var(--accordion-content-size);
+  font-weight:var(--accordion-content-weight);
+
+  font-family:var(--answer-font);
+
+  line-height:1.7;
+}
+
+/* =========================
+   ICONS
+========================= */
+
+.hdt-accordion-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:20px;
+  height:20px;
+
+  color:var(--accordion-icon-color);
+
+  flex-shrink:0;
+}
+
+.hdt-accordion-icon svg{
+  width:14px;
+  height:14px;
+
+  stroke:currentColor;
+  fill:none;
+
+  transition:transform .3s ease;
+}
+
+/* ROTATE PLUS */
+
+details[open] .hdt-icon-plus{
+  transform:rotate(45deg);
+}
+
+/* ROTATE ARROW */
+
+details[open] .hdt-icon-arrow{
+  transform:rotate(180deg);
+}
+
+@media (min-width: 769px) and (max-width: 990px) { 
+  #{{ section.id }} .hdt-accordion-content{
+    padding:0 0 22px;
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+
+  .faq-heading{
+    margin-bottom:32px;
+  }
+
+  {% comment %} .faq-heading-title{
+    font-size:34px;
+  } {% endcomment %}
+
+  #{{ section.id }} .hdt-accordion-item summary{
+    padding:20px 0;
+    font-size:calc(var(--accordion-title-size) - 2px);
+  }
+
+  #{{ section.id }} .hdt-accordion-content{
+    padding:0 0 22px;
+    font-size:calc(var(--accordion-content-size) - 1px);
+  }
+
+}
+
+</style>
+
+<div
+  id="{{ section.id }}"
+  class="hdt-section-spacing hdt-s-gradient custom-center-container"
+  color-scheme="{{ section.settings.color_scheme }}"
+>
+
+  <div class="custom-standar-max-width hdt-container{% if section.settings.section_fullwidth %}-full{% endif %}">
+
+    <div class="hdt-main-accordion-inline">
+
+      <!-- HEADING -->
+      <div class="faq-heading">
+
+        <h2 class="faq-heading-title">
+          {{ section.settings.heading }}
+        </h2>
+
+        {% if section.settings.subheading != blank %}
+          <p class="faq-heading-subtitle">
+            {{ section.settings.subheading }}
+          </p>
+        {% endif %}
+
+      </div>
+
+      <!-- ACCORDION -->
+      <div
+        class="hdt-accordion-inline-content"
+        itemscope
+        itemtype="https://schema.org/FAQPage"
+      >
+
+        {% assign index = 0 %}
+
+        {% for block in section.blocks %}
+
+          {% if block.settings.title != blank and block.settings.content != blank %}
+
+            <hdt-accordion
+              class="hdt-contents"
+              {{ block.shopify_attributes }}
+            >
+
+              <details
+                class="hdt-accordion-item"
+                {% if index == 0 and section.settings.open_first %}
+                  open
+                {% endif %}
+                itemscope
+                itemprop="mainEntity"
+                itemtype="https://schema.org/Question"
+              >
+
+                <summary>
+
+                  <h2 itemprop="name">
+                    {{ block.settings.title }}
+                  </h2>
+
+                  {% if section.settings.accordion_icon == "1" %}
+
+                    <span class="hdt-accordion-icon">
+
+                      <svg
+                        class="hdt-icon-arrow"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="12"
+                        height="8"
+                        viewBox="0 0 12 8"
+                      >
+                        <path
+                          d="M1 1.5L6 6.5L11 1.5"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+
+                    </span>
+
+                  {% else %}
+
+                    <span class="hdt-accordion-icon">
+
+                      <svg
+                        class="hdt-icon-plus"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                      >
+                        <path
+                          d="M7 1V13"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                        <path
+                          d="M1 7H13"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+
+                    </span>
+
+                  {% endif %}
+
+                </summary>
+
+                <div
+                  id="{{ block.id }}-item"
+                  class="hdt-accordion-content"
+                  itemscope
+                  itemprop="acceptedAnswer"
+                  itemtype="https://schema.org/Answer"
+                >
+                  <p itemprop="text">
+                    {{ block.settings.content }}
+                  </p>
+                </div>
+
+              </details>
+
+            </hdt-accordion>
+
+          {% endif %}
+
+          {% assign index = 1 %}
+
+        {% endfor %}
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Accordion Inline",
+  "tag": "section",
+  "class": "hdt-section hdt-accordion hdt-accordion-inline",
+  "disabled_on": {
+    "groups": ["*"]
+  },
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Preguntas frecuentes"
+    },
+
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Resuelve tus dudas y prepárate para entrenar sin excusas"
+    },
+
+    {
+      "type": "header",
+      "content": "General Options"
+    },
+
+    {
+      "type": "select",
+      "id": "accordion_icon",
+      "label": "Accordion Icon",
+      "options": [
+        {
+          "value": "1",
+          "label": "Arrow"
+        },
+        {
+          "value": "2",
+          "label": "Plus"
+        }
+      ],
+      "default": "2"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "open_first",
+      "label": "Open First Item",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading Font",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair"
+        }
+      ],
+      "default": "playfair"
+    },
+
+    {
+      "type": "select",
+      "id": "subheading_font",
+      "label": "Subheading Font",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair"
+        }
+      ],
+      "default": "inter"
+    },
+
+    {
+      "type": "select",
+      "id": "question_font",
+      "label": "Question Font",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair"
+        }
+      ],
+      "default": "playfair"
+    },
+
+    {
+      "type": "select",
+      "id": "answer_font",
+      "label": "Answer Font",
+      "options": [
+        {
+          "value": "inter",
+          "label": "Inter"
+        },
+        {
+          "value": "playfair",
+          "label": "Playfair"
+        }
+      ],
+      "default": "inter"
+    },
+
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "label": "Question Font Size",
+      "default": 18
+    },
+
+    {
+      "type": "range",
+      "id": "content_size",
+      "min": 12,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "label": "Answer Font Size",
+      "default": 15
+    },
+
+    {
+      "type": "select",
+      "id": "title_weight",
+      "label": "Question Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi Bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+
+    {
+      "type": "select",
+      "id": "content_weight",
+      "label": "Answer Font Weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Regular"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        }
+      ],
+      "default": "400"
+    },
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+
+    {
+      "type": "color",
+      "id": "accordion_bg",
+      "label": "Section Background",
+      "default": "#f5f0ee"
+    },
+
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#6c4b3f"
+    },
+
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#8a6a5e"
+    },
+
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Question Color",
+      "default": "#6c4b3f"
+    },
+
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Answer Color",
+      "default": "#8a6a5e"
+    },
+
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#6c4b3f"
+    },
+
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#cdbdb5"
+    },
+
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    },
+
+    {
+      "type": "range",
+      "id": "padding_rate",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Padding Rate",
+      "default": 75
+    }
+
+  ],
+
+  "blocks": [
+    {
+      "type": "accordion_item",
+      "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Mox- Custom Accordion Inline",
+      "category": "Moxie Custom",
+      "blocks": [
+        {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Proceso de compra",
+            "content": "<p>Ingresa a nuestro sitio web para buscar el producto que quieres comprar, puedes navegar a través de nuestro menú de categorías o usar la barra de búsqueda. Una vez hayas elegido el producto que deseas, el color y la talla, agrégalo a tu bolsa de compras haciendo clic en el botón comprar.</p>"
+          }
+        },
+        {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Proceso de pago",
+            "content": "<p>Ingresa a nuestro sitio web para buscar el producto que quieres comprar, puedes navegar a través de nuestro menú de categorías o usar la barra de búsqueda. Una vez hayas elegido el producto que deseas, el color y la talla, agrégalo a tu bolsa de compras haciendo clic en el botón comprar.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
