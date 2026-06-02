@@ -42,6 +42,7 @@
       "block_order": [
         "title"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 0,
@@ -49,37 +50,9 @@
         "padding-block-start": 40,
         "padding-block-end": 0
       }
-    },
-    "accordion": {
-      "type": "custom-accordion-inline",
-      "settings": {
-        "heading": "Ayuda",
-        "subheading": "",
-        "accordion_icon": "2",
-        "open_first": false,
-        "heading_font": "playfair",
-        "subheading_font": "inter",
-        "question_font": "playfair",
-        "answer_font": "inter",
-        "title_size": 18,
-        "content_size": 15,
-        "title_weight": "400",
-        "content_weight": "400",
-        "accordion_bg": "#ffffff",
-        "heading_color": "#1a1a1a",
-        "subheading_color": "#555555",
-        "title_color": "#1a1a1a",
-        "content_color": "#555555",
-        "icon_color": "#1a1a1a",
-        "border_color": "#e0e0e0",
-        "padding_top": 40,
-        "padding_bottom": 80,
-        "padding_rate": 75
-      }
     }
   },
   "order": [
-    "main",
-    "accordion"
+    "main"
   ]
 }
