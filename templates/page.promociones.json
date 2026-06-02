@@ -69,6 +69,7 @@
         "title",
         "content"
       ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -91,7 +92,7 @@
           "type": "accordion_item",
           "settings": {
             "title": "SPECIAL PRICES",
-            "content": "<p>Valido del 29 de mayo de 2026 al 03 de junio de 2026 o hasta agotar existencias lo primero que ocurra. Unidades disponibles: 4.100. Prendas desde $12,900 en referencias seleccionadas de la sección sale. Las referencias seleccionadas se encuentran identificadas con la etiqueta “special prices”. Exclusivo en la tienda online<a href=\"http://www.americanino.com/\">www.americanino.com</a>. No es acumulable con otras promociones, ni descuentos. Productos en promoción no tiene cambio excepto por garantía, en caso de garantía se reconocerá el valor pagado por las prendas. Descuento no redimible en dinero. No aplica para la compra de bonos regalo.<br/><br/></p>"
+            "content": "<p>Valido del 29 de mayo de 2026 al 03 de junio de 2026 o hasta agotar existencias lo primero que ocurra. Unidades disponibles: 4.100. Prendas desde $12,900 en referencias seleccionadas de la sección sale. Las referencias seleccionadas se encuentran identificadas con la etiqueta “special prices”. Exclusivo en la tienda online <a href=\"http://www.americanino.com/\">www.americanino.com</a>. No es acumulable con otras promociones, ni descuentos. Productos en promoción no tiene cambio excepto por garantía, en caso de garantía se reconocerá el valor pagado por las prendas. Descuento no redimible en dinero. No aplica para la compra de bonos regalo.<br/><br/></p>"
           }
         }
       },
