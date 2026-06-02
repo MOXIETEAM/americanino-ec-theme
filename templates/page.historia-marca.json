@@ -65,7 +65,11 @@
           "blocks": {}
         }
       },
-      "block_order": ["title", "content"],
+      "block_order": [
+        "title",
+        "content"
+      ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -73,7 +77,116 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "custom_brand_history_PappQG": {
+      "type": "custom-brand-history",
+      "blocks": {
+        "chapter_heading_K4mWky": {
+          "type": "chapter_heading",
+          "settings": {
+            "title": "ORIGEN"
+          }
+        },
+        "chapter_card_mxxdMq": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "COMIENZO",
+            "subtitle": "1975",
+            "body": "<p>Fundada en 1975 Gegé Schiena quien quiso crear un producto que mezclara lo mejor de dos culturas, la comodidad y calidad de los americanos con el estilo y diseño de los italianos.</p>"
+          }
+        },
+        "chapter_card_wwrdMJ": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "PROYECTO",
+            "subtitle": "Intención",
+            "body": "<p>En medio de la revolución nació Americanino, con una inédita pasión por el denim y la clara visión de convertir el tradicional jean en el protagonista de la moda informal como símbolo del espíritu libre.</p>"
+          }
+        },
+        "chapter_card_NX37HW": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "FIRMA",
+            "subtitle": "Opuestos",
+            "body": "<p>Los dos indios representan las dos caras de la historia, América y Europa, la tradición y el progreso, el pasado y el futuro, lo masculino y lo femenino. Los opuestos se convierten en la fuerza que alimenta nuestro producto.</p>"
+          }
+        },
+        "chapter_heading_3kNE6j": {
+          "type": "chapter_heading",
+          "settings": {
+            "title": "MARCA"
+          }
+        },
+        "chapter_card_iLGjHF": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "ESENCIA",
+            "subtitle": "RE-volución Denim",
+            "body": "<p>Estilo de vida impulsado por el instinto; emocionarse en contraposición a la razón. Expresión sencilla y natural. El denim se muestra como equidad y libertad, como una forma de reinventarse a sí mismo.</p>"
+          }
+        },
+        "chapter_card_RGmiAf": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "QUIÉNES SOMOS",
+            "subtitle": "Libre-Explorador-Espontáneo",
+            "body": "<p>Somos una marca jeanswear de moda urbana y espíritu joven, orientada a un consumidor libre, explorador y espontáneo. Creamos experiencias únicas y construimos relaciones de valor con nuestros consumidores, basados en sus anhelos y necesidades.</p>"
+          }
+        },
+        "chapter_card_7XdDVM": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "WE ARE DENIM",
+            "subtitle": "Universo Azul",
+            "body": "<p>We are denim es una interpretación de mundo azul. We are denim es la traducción de las nuevas tendencias de la innovación. We are denim es un compromiso por inventar un lenguaje, una pasión, un universo del que todos seamos parte.</p>"
+          }
+        },
+        "chapter_heading_7hPkGk": {
+          "type": "chapter_heading",
+          "settings": {
+            "title": "PROMESA"
+          }
+        },
+        "chapter_card_xnR9jd": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "QUÉ QUEREMOS",
+            "subtitle": "Hacia dónde vamos",
+            "body": "<p>RE-inventarse. RE-inventar la realidad a través de la creación, decidir con poder, con pasión, construir puentes, derrumbar barreras.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "chapter_heading_K4mWky",
+        "chapter_card_mxxdMq",
+        "chapter_card_wwrdMJ",
+        "chapter_card_NX37HW",
+        "chapter_heading_3kNE6j",
+        "chapter_card_iLGjHF",
+        "chapter_card_RGmiAf",
+        "chapter_card_7XdDVM",
+        "chapter_heading_7hPkGk",
+        "chapter_card_xnR9jd"
+      ],
+      "name": "Moxie Historia de Marca",
+      "settings": {
+        "eyebrow": "Sé parte de la revolución",
+        "brand_name": "AMERICANINO®",
+        "bg_color": "#ffffff",
+        "eyebrow_color": "#1e2b51",
+        "brand_color": "#1a3a5c",
+        "heading_color": "#1a3a5c",
+        "title_color": "#0a1a2e",
+        "subtitle_color": "#4a6fa5",
+        "body_color": "#1a1a1a",
+        "border_color": "#b8ccd8",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "custom_brand_history_PappQG"
+  ]
 }
