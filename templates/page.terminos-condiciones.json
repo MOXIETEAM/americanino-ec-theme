@@ -78,69 +78,114 @@
         "padding-block-end": 40
       }
     },
-    "custom_accordion_inline_HHNHjA": {
-      "type": "custom-accordion-inline",
+    "section_XtTTRM": {
+      "type": "section",
       "blocks": {
-        "accordion_item_hrrMDL": {
-          "type": "accordion_item",
+        "text_pWLUWC": {
+          "type": "text",
+          "name": "t:names.heading",
           "settings": {
-            "title": "Proceso de compra",
-            "content": ""
-          }
+            "text": "<h1>TÉRMINOS Y CONDICIONES DE AMERICANINO</h1>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
-        "accordion_subitem_zRwdeL": {
-          "type": "accordion_subitem",
+        "text_KQgbzD": {
+          "type": "text",
+          "name": "t:names.text",
           "settings": {
-            "title": "¿Cómo puedo comprar?",
-            "content": "<p>Ingresa a nuestro sitio web para buscar el producto que quieres comprar, puedes navegar a través de nuestro menú de categorías o usar la barra de búsqueda. Una vez hayas elegido el producto que deseas, el color y la talla, agrégalo a tu bolsa de compras haciendo clic en el botón comprar.</p>"
-          }
+            "text": "<p>AMERICANINO dispone este sitio para dar un mejor servicio a sus clientes. Por favor lee las siguientes normas que gobiernan tu uso de americanino.com, el cual aceptas al acceder a él. Si no estás de acuerdo, por favor no lo uses. Nos reservamos el derecho a actualizar o cambiar los Términos y Condiciones en cualquier momento sin previo aviso, es por esto que te recomendamos leer esta sección cada vez que vayas a usar este sitio.</p><h2><strong>A.</strong> Restricciones de uso.</h2><p>Todo el contenido que ves y oyes en el sitio <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> incluyendo, por ejemplo, las imágenes, diseño del sitio, ilustraciones, gráficos son propiedad intelectual de Americanino . El contenido del sitio <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> tiene como propósito el uso personal, no comercial de los usuarios de este sitio. Podrás descargar, imprimir o guardar porciones seleccionadas del contenido que te proveemos, pero con las siguientes condiciones:</p><ul><li>Que el uso sea personal, sin ningún propósito comercial.</li><li>No copiar ni reproducir el contenido en ningún medio.</li><li>No alterar o modificar en ninguna manera cualquier marca registrada.</li></ul><p>Americanino es una marca registrada. Ningún derecho, título o interés de cualquier contenido o material te es transferido por el resultado de las actividades anteriormente mencionadas. Americanino tiene completa propiedad intelectual de cualquier contenido que descargues, reproduzcas, imprimas, redistribuyas o guardes de este sitio.</p><p>Todos los contenidos del sitio web <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> son de propiedad exclusiva y mundial de Americanino incluyendo, sin limitación, reproducciones de los artículos, diseño gráfico, logos, imágenes, textos, ilustraciones, fotografías, marcas y otros signos distintivos, en cualquiera de los lenguajes de programación utilizados o utilizables, así como todo el software de funcionamiento y desarrollo del sitio web. La reproducción, distribución, comunicación al público, puesta a disposición del público, transformación, cesión y cualquier otro acto o modalidad de explotación, en cualquier formato online u offline que no haya sido expresamente autorizado por el titular de los derechos, quedan expresamente prohibidos.</p><p>Americanino no concede ninguna licencia o autorización de uso de ninguna clase sobre sus derechos de propiedad intelectual e industrial o sobre cualquier otra propiedad o derecho relacionado con la página web, y los servicios y productos ofrecidos.</p><p>En el caso de datos o contenidos facilitados por el usuario al sitio web (<a href=\"https://www.americanino.com/\">https://www.americanino.com/</a>, como comentarios y/o cualquier tipo de interacción en el sitio web que pueda generar derechos de propiedad intelectual, imagen u otros, el usuario concede a Americanino el derecho no exclusivo, exento de pagos por derechos de autor y/o propiedad intelectual, de forma perpetua, irrevocable y totalmente transferible a terceros, a utilizar, reproducir, modificar, adaptar, publicar, traducir, crear servicios derivados, distribuir y exhibir dichas reseñas, contenidos o comentarios en todo el mundo y en cualquier medio de comunicación. Para tal efecto, el usuario declara que los mismos no vulneran derechos de terceros y será directa y exclusivamente responsable en caso de no observar aquello, liberando a Americanino de cualquier tipo de responsabilidad por tal hecho.</p><p>Todas las marcas y denominaciones de servicios que aparecen en el sitio web <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> son marcas registradas y de propiedad de Americanino.</p><h2><strong>B.</strong> Política de precios.</h2><p>En <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> nuestro compromiso es ofrecer comodidad, servicio y disponibilidad de productos en línea todos los días y a precios atractivos, con algunas ofertas de mercancías, de tiempo limitado y a precios promocionales.</p><p>La mercancía ofrecida en línea en <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> suele tener el mismo precio que la mercancía ofrecida en nuestras tiendas físicas Americanino , aunque en algunos casos, podrían existir diferencias.</p><h2><strong>C.</strong> Colores y modelos de prendas.</h2><p>Americanino ha realizado un esfuerzo para mostrar los colores de las prendas de la forma más cercana a la realidad posible. No obstante ello, el color de las prendas que aparecen en pantalla puede estar sujeto a variaciones dependiendo de la calidad del monitor de tu computador. En este sentido Americanino no puede garantizar que los colores que aparezcan en tu monitor se ajusten fielmente a la realidad.</p><h2><strong>D.</strong> Comunicación.</h2><p><a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> puede entregarte información, por medio de correos electrónicos, avisos generales en el sitio, o por comunicación escrita enviada por correo físico a tu dirección de registro.</p><h2><strong>E.</strong> Aceptación de términos y condiciones.</h2><p>Al acceder y utilizar el sitio web <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> aceptas que este sujeto a los Términos y Condiciones, y todas las leyes aplicables regirán y se interpretarán de conformidad con las leyes colombianas.</p><h2><strong>F.</strong> Uso del sitio.</h2><p>El acoso de cualquier manera o forma del sitio, incluso a través de correo electrónico y chat o por lenguaje obsceno o abusivo está estrictamente prohibido.</p><p>La suplantación de identidad está prohibida, inclusive para los directivos o empleados con licencia, el anfitrión, o representante de Americanino Colombia, así como para otros miembros o visitantes.</p><p>No se puede cargar, distribuir o publicar a través de este sitio cualquier contenido que sea difamatorio, calumnioso, obsceno, amenazante, invasor de la privacidad o de los derechos de publicidad, abusivo, ilegal, o de cualquier otra manera que puedan constituir o fomentar un delito penal, violar los derechos de cualquiera de las partes o que de lo contrario puede dar lugar a responsabilidad civil o violar cualquier ley.</p><p>El contenido comercial para solicitar a otros a unirse o ser miembros de cualquier otro servicio comercial en línea u organización está prohibido.</p><p>Para una mejor experiencia de compra en nuestra tienda online y garantizar que la información que estás viendo en el sitio está actualizada, te recomendamos usar los siguientes navegadores: Firefox:37.0 o superior, Chrome: 41.0. o superior.</p><h2><strong>G.</strong> Vinculos a terceros.</h2><p>En un intento de dar más valor a nuestros visitantes, Americanino puede elegir varios sitios web de terceros para acceder desde ellos. Sin embargo, incluso si el tercero fue contratado por Americanino , no tenemos ningún control sobre estos sitios, los cuales pueden tener prácticas de privacidad y de recopilación de datos diferentes e independientes a las nuestras.</p><p>Americanino no tiene ninguna responsabilidad u obligación por estas políticas o acciones de terceros, y no es responsable por las prácticas de privacidad o el contenido de dichos sitios web.</p><h2><strong>H.</strong> Responsabilidad.</h2><p>Este sitio, los materiales y productos expuestos en él son mostrados de forma real y sin garantías de ningún tipo, ya sea explícita o implícitamente.</p><p>Americanino renuncia a las garantías y representaciones hasta el límite impuesto por la ley colombiana, incluyendo, pero no limitado a, las garantías de comercialización y aptitud para un propósito particular legal.</p><p>Americanino no garantiza que las funciones contenidas en el sitio no puedan ser sujetas de interrupciones o errores, ni que todos los defectos serán corregidos, ni que el sitio o el servidor esté libre de virus o de otros componentes peligrosos.</p><p>Americanino no hace ninguna garantía o representación sobre el uso de los materiales en este sitio en cuanto a su exactitud, adecuación, utilidad, puntualidad, confiabilidad o de otra manera. Estas limitaciones pueden no ser aplicables al usuario.</p><h2><strong>I.</strong> Políticas de envío.</h2><p>En <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> nuestro compromiso es cumplir con los tiempos de entrega, por lo tanto, si el día que llegue tu pedido no estás presente para recibirlo, la transportadora estará autorizada para dejarlo en la portería de la dirección indicada. Sabemos lo importante que es para ti y que no te gustaría esperar hasta una próxima oportunidad para recibirlo. En tal sentido, de proceder de esta forma, Americanino quedará liberado de responsabilidad en la entrega del producto.</p><p>En Americanino queremos garantizar que tu pedido sea entregado en el tiempo acordado. Si necesitamos comunicarnos contigo para notificarte alguna novedad del pedido y en el transcurso de un mes no logramos encontrarte, procederemos con la devolución del dinero. Si el pago fue a través de tarjeta de crédito se solicita a la pasarela de pago utilizada la reversión del pago, si fue con tarjeta débito enviaremos a tu correo personal un vale por el valor de tu compra.</p><p>En nuestra tienda online queremos entregar tu pedido en el menor tiempo posible, por eso nuestra promesa de entrega en las ciudades principales es de (1) a (3) días hábiles. Para las ciudades intermedias del país de (3) a (5) días hábiles, y para el resto de poblaciones, entre (5) y (15) días hábiles.</p><p>Durante eventos promocionales del tipo Cyberlunes, Cybermonday, Black Weekend, Black Friday, Hot Sale, Clickdeals, SALE, entre otros, el tiempo de entrega en cualquier ciudad del país puede ampliarse hasta (3) días hábiles adicionales a los tiempos de entrega definidos para ciudades principales, intermedias y el resto de ciudades.</p><p>En ocasiones se presentan novedades que nos impiden cumplir con nuestra promesa, sin embargo, queremos garantizarte que este tiempo no excederá el plazo de 30 días que otorga el Estatuto del Consumidor para la entrega de tu compra.</p><h2><strong>J.</strong> Reversión de un pago.</h2><p>La reversión del pago es un derecho que tienes como consumidor, según lo establece el Estatuto del Consumidor. Te permite anular los pagos que hayas realizado a través de mecanismos de comercio electrónico, como internet, PSE, Call Center o cualquier otro canal de televenta o tienda virtual, siempre que hayas utilizado tarjeta de crédito, débito o algún otro instrumento de pago electrónico.</p><p><strong>A.</strong> Canales para radicar tu solicitud de reversión</p><p>Americanino pone a tu disposición los siguientes canales para que puedas radicar tu solicitud de reversión:</p><ul><li>Por medio del módulo de autogestión que encuentras en nuestra página <a href=\"https://www.americanino.com/login\">https://www.americanino.com/login</a></li><li>Por medio del formulario web <a href=\"https://www.americanino.com/ayuda-pqr\">https://www.americanino.com/ayuda-pqr</a>.</li><li>Comunicándote por medio de nuestro canal de WhatsApp 3228230631.</li><li>Comunicándote por medio de la línea de atención al cliente 01 8000 1860 04.</li></ul><p><strong>B.</strong> La reversión del pago aplica en los siguientes casos:</p><ul><li>Si eres víctima de fraude.</li><li>Si la operación corresponde a una transacción no solicitada.</li><li>Si el producto adquirido no llega dentro de los 30 días calendario después de la compra.</li><li>Si el producto que recibiste no corresponde a lo que pediste, no cumple con las características prometidas o no es igual al que viste en la información proporcionada.</li><li>Si el producto entregado está defectuoso.</li></ul><p><strong>Recuerda.</strong> En caso de que tu producto no sea entregado dentro del plazo informado por Americanino o dentro de los 30 días calendario posteriores a tu compra, Americanino podrá ofrecerte una segunda fecha de entrega, si así lo deseas. Nuestro personal se pondrá en contacto contigo para conocer tu decisión respecto a la compra, la cual puede ser (i) aceptar una nueva fecha de entrega del producto, si es posible, o (ii) solicitar la devolución de tu dinero.</p><p>Como consumidor, tienes el derecho de resolver o terminar el contrato de forma unilateral si el pedido no es entregado dentro del plazo acordado o dentro de los treinta (30) días calendario contados a partir del día siguiente de tu compra. En este caso, Americanino procederá con la devolución total del valor pagado, sin retenciones ni descuentos. La devolución del dinero se realizará en un plazo máximo de quince (15) días calendario contados a partir de la solicitud donde deberás suministrar tu información bancaria.</p><p>En caso de que surja una novedad en el inventario que impida la entrega de tu producto, Americanino se pondrá en contacto contigo. Dependiendo de las posibilidades logísticas y de disponibilidad del producto, te ofrecerá la opción de reprogramar la entrega o solicitar la devolución del dinero, ya sea a tu medio de pago o mediante un saldo a favor, según lo que prefieras.</p><p><strong>C.</strong> ¿Cuál es el plazo para solicitar la reversión del pago a Americanino?</p><p>Tienes hasta cinco (5) días hábiles después de que te enteres de que la operación fue fraudulenta o no solicitada, o de la fecha en que debías haber recibido el producto, o si el producto que recibiste está defectuoso o no es lo que pediste.</p><p><strong>D.</strong> ¿Cuándo debes notificar al instrumento de pago electrónico?</p><p>Dentro de los cinco (5) días hábiles para presentar la queja ante Americanino , debes informar al instrumento de pago electrónico que utilizaste para hacer la compra, sobre la reclamación que hiciste ante Americanino . Para ello, debes proporcionar la constancia de que hiciste la queja, explicar la razón de la reclamación y decir si ya devolviste el producto.</p><p>Recuerda que debes usar los canales de atención dispuestos por el instrumento de pago para notificar la solicitud de reversión de pago a Americanino.</p><p><strong>E.</strong> ¿Qué debe contener la queja que presentes ante Americanino?</p><p>Tu queja debe incluir, al menos, la siguiente información:</p><ul><li>Una explicación clara de por qué estás solicitando la reversión del pago.</li><li>La razón por la que haces la solicitud, que debe corresponder a alguna de las causales mencionadas en el artículo 2.2.2.51.2 del Decreto 587 de 2016.</li><li>El valor del pago por el que estás pidiendo la reversión.</li><li>La identificación de la cuenta bancaria, tarjeta de crédito o el instrumento de pago que usaste para hacer la compra.</li></ul><p><strong>F.</strong> ¿Cuándo se hará efectiva la reversión del dinero?</p><p>Una vez que hayas presentado la solicitud de reversión ante el emisor del instrumento de pago electrónico que utilizaste, los participantes en el proceso de pago tendrán 15 días calendario para hacer efectiva la reversión.</p><p>Es importante destacar que, si la solicitud de reversión es procedente, Americanino podrá oponerse si no informaste correctamente la razón de la solicitud o si no sustentaste adecuadamente tu petición.</p><h2><strong>K.</strong> Derecho de retracto.</h2><p>El derecho de retracto, establecido en la Ley 1480 de 2011, otorga a los consumidores la facultad de deshacer el negocio realizado con Americanino cuando adquieren bienes o servicios a través de medios no convencionales. Estos son aquellos canales donde el consumidor no puede ver, tocar o sentir el producto de manera presencial. Es importante resaltar que este derecho solo aplica en compras realizadas a través del canal de WhatsApp de Americanino o en la tienda online Americanino en el país.</p><p><strong>Recuerda.</strong> El derecho de retracto NO aplica para compras realizadas en tiendas físicas.</p><p><strong>A.</strong> Plazo para ejercer el derecho de retracto:</p><p>El plazo máximo para ejercer el derecho de retracto es de 5 días hábiles contados a partir de la fecha de entrega del producto adquirido por medio del canal WhatsApp Americanino o tienda online <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a>.</p><p><strong>B.</strong> Procedimiento para ejercer el derecho de retracto:</p><p><strong>1.</strong> Solicitud de retracto: Dentro del plazo establecido para ejercer el derecho de retracto, debes presentar tu solicitud a través de los canales de atención al cliente de Americanino . En tu solicitud, por favor incluye la siguiente información:</p><ul><li>Información de tu compra o pedido: cédula del comprador, número de pedido.</li><li>Datos de contacto: nombre, cédula, teléfono, celular, correo electrónico.</li><li>Información bancaria para la devolución de tu dinero (tipo de cuenta, número de cuenta).</li><li>Indica si deseas que Americanino programe la recogida de tu prenda para proceder con tu solicitud, o si prefieres realizar el envío directamente.</li></ul><p><strong>2.</strong> Envío del producto: Para poder procesar tu solicitud, es necesario que Americanino reciba el producto objeto de reclamación. Tienes dos opciones para enviarlo:</p><ul><li>Envío por transportadora: Puedes enviar el producto a la dirección proporcionada por nuestro equipo. La información sobre el destino será enviada por nuestro personal al recibir tu solicitud en la que indiques que deseas hacer el envío directo. Ten en cuenta que el costo del envío será asumido por ti.<br/>El producto debe enviarse de lunes a viernes a la dirección indicada por nuestro personal. Esta dirección puede ser el centro de distribución de Americanino o una tienda física, dependiendo de cómo se haya despachado el producto.</li><li>Recogida por transportadora: Americanino ofrece la opción de recoger el producto mediante una transportadora aliada. Es importante destacar que este proceso puede tomar un poco más de tiempo que la opción anterior, por lo que debes tener en cuenta que tu solicitud de retracto se tramitará una vez Americanino reciba el producto y verifique su estado.</li></ul><p><strong>3.</strong> Condiciones del producto: Recuerda que, para ejercer el derecho de retracto, el producto debe encontrarse en condiciones óptimas, es decir, en el mismo estado en que lo recibiste. Debe cumplir con las siguientes condiciones:</p><ul><li>No debe haber sido usado.</li><li>Debe conservar todas las etiquetas originales (se recomienda probar las prendas antes de retirarlas)</li><li>No debe estar sucio ni presentar rastros de uso de desodorantes, maquillaje, blanqueador, químicos u otros materiales que puedan dañar o alterar las telas.</li><li>No debe presentar desteñido ni alteraciones.</li><li>No debe haber sido modificado o alterado por el consumidor.</li><li>La horma de la prenda debe estar intacta.</li><li>El estampado, los apliques o bordados no deben presentar daños por lavado, planchado o adulteración.</li><li>Debió haberse comprado en un medio no convencional, es decir en la tienda online <a href=\"https://www.americanino.com/\">https://www.americanino.com/</a> o a través del canal de WhatsApp de Americanino.</li><li>La solicitud para el ejercicio del derecho de retracto debió radicarse dentro de los 5 días hábiles contados a partir de la entrega de tu producto.</li></ul><p>Una vez la Compañía reciba el producto, verificará su estado, si el producto no cumple con estas condiciones, Americanino no procederá con la devolución del dinero y se enviará la prenda a la dirección que nos indiques.</p><p><strong>4.</strong> Devolución del dinero: Una vez cumplas con los dos requisitos establecidos por la ley y detallados en este procedimiento:</p><ul><li>Proporcionar la información bancaria para la devolución del dinero, acorde con los canales y medios informados por Americanino en esta política.</li><li>Devolver el producto en condiciones óptimas.</li></ul><p>Americanino procederá con la devolución del dinero, para lo cual cuenta con un plazo de 15 días calendario, a partir de la recepción del producto en condiciones adecuadas y de la información bancaria proporcionada. Te notificaremos una vez se haya realizado el reembolso.</p><p><strong>Recuerda:</strong> La devolución de dinero será únicamente por el valor del producto. Americanino tiene habilitados las siguientes opciones para realizar la devolución del dinero: Transferencia del valor a la cuenta bancaria del consumidor, la cual puede ser de los siguientes bancos: Banco de Bogota, Banco Popular, Itau Corpbanca Colombia S.A, Bancolombia S.A, Citibank Colombia, Gnb Sudameris S.A., Financiera Juriscoop, Bbva Colombia, Colpatria, Banco de Occidente, Cooperativa Financiera de Antioquia, Cootrafa Cooperativa Financiera, Confiar Cooperativa Financiera, Banco Caja Social - Bcsc S.A., Banco Agrario de Colombia S.A., Nequi, Banco Davivienda S.A., Banco AV Villas, Banco W S.A., Daviplata, Banco Credifinanciera S.A.C.F., Bancamia, Banco Pichincha S.A., Bancoomeva, CMR Falabella S.A., Banco Compartir S.A, Banco Serfinanza S.A, Helm Bank, Banco Cooperativo Coopcentral, Banco Finandia, NU, Lulo Bank.</p><p><strong>Nota.</strong> Por mutuo acuerdo con el consumidor, Americanino podrá realizar la devolución del dinero por medio de un saldo a favor, el cual podrá ser utilizado en una nueva compra en la tienda online de Americanino ; en este caso Americanino tendrá el mismo termino - 15 días calendario - contados a partir de la devolución del producto y la aceptación del saldo a favor para generarlo.</p><p>Consideraciones importantes:</p><p>Gasto de envío: Si realizas el envío directo del producto objeto de tu solicitud, deberás asumir el costo de envió para la devolución, en caso de que utilices el servicio de ´envío contra entrega´ o ´pago por el destinatario´, Americanino no recibirá el paquete. En este caso, será tu responsabilidad exclusiva gestionar la trazabilidad, el extravío, el cuidado o la recuperación de la prenda con la empresa de transporte contratada.</p><p>En el evento en el que decidas que Americanino programe la recogida de tu producto deberás asumir el valor de la recogida y envío.</p><p>Información bancaria: Recuerda que, para realizar la devolución del dinero, necesitamos tu información bancaria para transferir los fondos, de acuerdo con los canales y medios habilitados por Americanino . Si no proporcionas esta información, el plazo para la devolución de tu dinero no comenzará a contar.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
         },
-        "accordion_item_GfK7tn": {
-          "type": "accordion_item",
+        "button_nWUrKj": {
+          "type": "button",
+          "name": "t:names.button",
           "settings": {
-            "title": "Proceso de pago",
-            "content": ""
-          }
-        },
-        "accordion_subitem_NbyUXb": {
-          "type": "accordion_subitem",
-          "settings": {
-            "title": "¿Qué puedo hacer cuando la página rechaza el pago con mi tarjeta?",
-            "content": "<p>Si realizaste un pago y recibiste notificación de que tu pago fue <strong>RECHAZADO</strong>, debes revisar que el dinero no haya sido descontado de tu cuenta o tarjeta. Si evidencias que el cobro no se realizó, intenta de nuevo la compra. En caso de que veas algún cobro, comunicate con nuestro equipo de servicio quien te ayudará a solucionar la novedad.</p>"
-          }
+            "label": "Shop now",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "accordion_item_hrrMDL",
-        "accordion_subitem_zRwdeL",
-        "accordion_item_GfK7tn",
-        "accordion_subitem_NbyUXb"
+        "text_pWLUWC",
+        "text_KQgbzD",
+        "button_nWUrKj"
       ],
-      "name": "Mox- Custom Accordion Inline",
+      "name": "t:names.rich_text_section",
       "settings": {
-        "heading": "Preguntas frecuentes",
-        "subheading": "",
-        "accordion_icon": "2",
-        "open_first": false,
-        "title_size": 18,
-        "content_size": 15,
-        "title_weight": "400",
-        "content_weight": "400",
-        "accordion_bg": "#ffffff",
-        "heading_color": "#1a1a1a",
-        "subheading_color": "#000000",
-        "title_color": "#000000",
-        "content_color": "#000000",
-        "icon_color": "#000000",
-        "border_color": "#000000",
-        "padding_top": 80,
-        "padding_bottom": 80,
-        "padding_rate": 75
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "section_width": "page-width",
+        "section_height": "small",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     }
   },
   "order": [
     "main",
-    "custom_accordion_inline_HHNHjA"
+    "section_XtTTRM"
   ]
 }
