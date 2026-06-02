@@ -65,7 +65,10 @@
           "blocks": {}
         }
       },
-      "block_order": ["title", "content"],
+      "block_order": [
+        "title",
+        "content"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -73,7 +76,54 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "custom_accordion_inline_VFfRiR": {
+      "type": "custom-accordion-inline",
+      "blocks": {
+        "accordion_item_ycQzd9": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "10% EXTRA SALE NOTURNO",
+            "content": "<p>Valido del 1 de junio de 2026 al 3 de junio de 2026 en la<br/>franja horaria del 6:00pm a 10:00am del otro día. Aplica en referencias<br/>seleccionadas de la sección de nuevo. Recibe 10% de descuento extra en el valor<br/>total de tu compra. El descuento es acumulable con otras campañas, promociones<br/>y/o descuentos vigentes excepto la sección de “Sale” y se aplicará de forma<br/>adicional a los descuentos iniciales que tenga el producto al momento del pago.<br/>Aplica exclusivamente en la tienda online<a href=\"http://www.americanino.com.co/\">www.americanino.com.co</a>. Las<br/>referencias seleccionadas se encuentran identificadas con un tag que informa el<br/>porcentaje de descuento extra. El descuento no aplica en tiendas físicas ni en<br/>el canal WhatsApp. En caso de cambio y/o garantía, se reconocerá el valor<br/>efectivamente pagado por la(s) prenda(s). El descuento no es redimible ni<br/>canjeable por dinero, ni aplica para la compra de bono regalo.<br/><br/></p>"
+          }
+        },
+        "accordion_item_87E348": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "SPECIAL PRICES",
+            "content": "<p>Valido del 29 de mayo de 2026 al 03 de junio de 2026 o hasta agotar existencias lo primero que ocurra. Unidades disponibles: 4.100. Prendas desde $12,900 en referencias seleccionadas de la sección sale. Las referencias seleccionadas se encuentran identificadas con la etiqueta “special prices”. Exclusivo en la tienda online<a href=\"http://www.americanino.com/\">www.americanino.com</a>. No es acumulable con otras promociones, ni descuentos. Productos en promoción no tiene cambio excepto por garantía, en caso de garantía se reconocerá el valor pagado por las prendas. Descuento no redimible en dinero. No aplica para la compra de bonos regalo.<br/><br/></p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_item_ycQzd9",
+        "accordion_item_87E348"
+      ],
+      "name": "Mox- Custom Accordion Inline",
+      "settings": {
+        "heading": "Políticas de promociones",
+        "subheading": "",
+        "accordion_icon": "2",
+        "open_first": false,
+        "title_size": 18,
+        "content_size": 15,
+        "title_weight": "400",
+        "content_weight": "400",
+        "accordion_bg": "#ffffff",
+        "heading_color": "#1E2B51",
+        "subheading_color": "#1E2B51",
+        "title_color": "#1E2B51",
+        "content_color": "#1E2B51",
+        "icon_color": "#1E2B51",
+        "border_color": "#1E2B51",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_rate": 75
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "custom_accordion_inline_VFfRiR"
+  ]
 }
