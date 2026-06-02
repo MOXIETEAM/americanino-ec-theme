@@ -1,9 +1,5 @@
 <!-- Accordion_inline.liquid -->
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 {{ 'hdt-accordion.css' | asset_url | stylesheet_tag }}
 
 {% style %}
@@ -28,37 +24,6 @@
   --accordion-title-weight: {{ section.settings.title_weight }};
   --accordion-content-weight: {{ section.settings.content_weight }};
 
-  /* =========================
-     INDIVIDUAL FONTS
-  ========================= */
-
-  --heading-font:
-    {% if section.settings.heading_font == 'playfair' %}
-      'Playfair Display', serif;
-    {% else %}
-      'Inter', sans-serif;
-    {% endif %};
-
-  --subheading-font:
-    {% if section.settings.subheading_font == 'playfair' %}
-      'Playfair Display', serif;
-    {% else %}
-      'Inter', sans-serif;
-    {% endif %};
-
-  --question-font:
-    {% if section.settings.question_font == 'playfair' %}
-      'Playfair Display', serif;
-    {% else %}
-      'Inter', sans-serif;
-    {% endif %};
-
-  --answer-font:
-    {% if section.settings.answer_font == 'playfair' %}
-      'Playfair Display', serif;
-    {% else %}
-      'Inter', sans-serif;
-    {% endif %};
 }
 {% endstyle %}
 
@@ -97,19 +62,16 @@ html{
 
   color:var(--heading-color);
 
-  font-family:var(--heading-font);
-
   font-size:50px;
   font-weight:400;
   line-height: 55px;
+  text-transform:none;
 }
 
 .faq-heading-subtitle{
   margin:0;
 
   color:var(--subheading-color);
-
-  font-family:var(--subheading-font);
 
   font-size: 20px;
   line-height:25px;
@@ -202,8 +164,7 @@ html{
   
     font-size:var(--accordion-title-size);
     font-weight:var(--accordion-title-weight);
-  
-    font-family:var(--question-font);
+    text-transform:none;
     }
 }
 
@@ -224,8 +185,6 @@ html{
       font-size: 15px;
       line-height: 20px;
       font-weight:400;
-    
-      font-family:var(--question-font);
       }
   }
 }
@@ -243,8 +202,6 @@ html{
 
   font-size:var(--accordion-content-size);
   font-weight:var(--accordion-content-weight);
-
-  font-family:var(--answer-font);
 
   line-height:1.7;
 }
@@ -323,6 +280,44 @@ details[open] .hdt-icon-arrow{
 
 }
 
+/* =========================
+   SUB-ACCORDION
+========================= */
+
+#{{ section.id }} .hdt-accordion-item--sub{
+  margin-left:16px;
+  border-bottom:none;
+  border-top:1px solid var(--accordion-border-color);
+}
+
+#{{ section.id }} .hdt-accordion-item--sub:last-child{
+  border-bottom:1px solid var(--accordion-border-color);
+}
+
+#{{ section.id }} .hdt-accordion-item--sub summary{
+  padding:18px 8px;
+
+  h3{
+    color:var(--accordion-title-color);
+    font-size:calc(var(--accordion-title-size) - 2px);
+    font-weight:var(--accordion-title-weight);
+    margin:0;
+  }
+}
+
+@media (max-width:768px){
+
+  #{{ section.id }} .hdt-accordion-item--sub{
+    margin-left:10px;
+  }
+
+  #{{ section.id }} .hdt-accordion-item--sub summary h3{
+    font-size:14px;
+    line-height:18px;
+  }
+
+}
+
 </style>
 
 <div
@@ -357,11 +352,13 @@ details[open] .hdt-icon-arrow{
         itemtype="https://schema.org/FAQPage"
       >
 
-        {% assign index = 0 %}
+        {%- assign accordion_count = 0 -%}
 
         {% for block in section.blocks %}
 
-          {% if block.settings.title != blank and block.settings.content != blank %}
+          {%- if block.type == 'accordion_item' and block.settings.title != blank -%}
+
+            {%- assign sub_offset = forloop.index0 | plus: 1 -%}
 
             <hdt-accordion
               class="hdt-contents"
@@ -370,9 +367,7 @@ details[open] .hdt-icon-arrow{
 
               <details
                 class="hdt-accordion-item"
-                {% if index == 0 and section.settings.open_first %}
-                  open
-                {% endif %}
+                {% if accordion_count == 0 and section.settings.open_first %}open{% endif %}
                 itemscope
                 itemprop="mainEntity"
                 itemtype="https://schema.org/Question"
@@ -385,51 +380,18 @@ details[open] .hdt-icon-arrow{
                   </h2>
 
                   {% if section.settings.accordion_icon == "1" %}
-
                     <span class="hdt-accordion-icon">
-
-                      <svg
-                        class="hdt-icon-arrow"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="8"
-                        viewBox="0 0 12 8"
-                      >
-                        <path
-                          d="M1 1.5L6 6.5L11 1.5"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
+                      <svg class="hdt-icon-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
-
                     </span>
-
                   {% else %}
-
                     <span class="hdt-accordion-icon">
-
-                      <svg
-                        class="hdt-icon-plus"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 14 14"
-                      >
-                        <path
-                          d="M7 1V13"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                        />
-                        <path
-                          d="M1 7H13"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                        />
+                      <svg class="hdt-icon-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                        <path d="M7 1V13" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M1 7H13" stroke-width="1.5" stroke-linecap="round"/>
                       </svg>
-
                     </span>
-
                   {% endif %}
 
                 </summary>
@@ -441,18 +403,65 @@ details[open] .hdt-icon-arrow{
                   itemprop="acceptedAnswer"
                   itemtype="https://schema.org/Answer"
                 >
-                  <p itemprop="text">
-                    {{ block.settings.content }}
-                  </p>
+
+                  {% if block.settings.content != blank %}
+                    <p itemprop="text">
+                      {{ block.settings.content }}
+                    </p>
+                  {% endif %}
+
+                  {%- for sub_block in section.blocks offset: sub_offset -%}
+                    {%- if sub_block.type == 'accordion_item' -%}{%- break -%}{%- endif -%}
+                    {%- if sub_block.type == 'accordion_subitem' and sub_block.settings.title != blank -%}
+
+                      <hdt-accordion
+                        class="hdt-contents"
+                        {{ sub_block.shopify_attributes }}
+                      >
+                        <details class="hdt-accordion-item hdt-accordion-item--sub">
+
+                          <summary>
+
+                            <h3>{{ sub_block.settings.title }}</h3>
+
+                            {% if section.settings.accordion_icon == "1" %}
+                              <span class="hdt-accordion-icon">
+                                <svg class="hdt-icon-arrow" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8">
+                                  <path d="M1 1.5L6 6.5L11 1.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                              </span>
+                            {% else %}
+                              <span class="hdt-accordion-icon">
+                                <svg class="hdt-icon-plus" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+                                  <path d="M7 1V13" stroke-width="1.5" stroke-linecap="round"/>
+                                  <path d="M1 7H13" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                              </span>
+                            {% endif %}
+
+                          </summary>
+
+                          <div id="{{ sub_block.id }}-item" class="hdt-accordion-content">
+                            {% if sub_block.settings.content != blank %}
+                              <p>{{ sub_block.settings.content }}</p>
+                            {% endif %}
+                          </div>
+
+                        </details>
+                      </hdt-accordion>
+
+                    {%- endif -%}
+                  {%- endfor -%}
+
                 </div>
 
               </details>
 
             </hdt-accordion>
 
-          {% endif %}
+            {%- assign accordion_count = accordion_count | plus: 1 -%}
 
-          {% assign index = 1 %}
+          {%- endif -%}
 
         {% endfor %}
 
@@ -524,74 +533,6 @@ details[open] .hdt-icon-arrow{
     {
       "type": "header",
       "content": "Typography"
-    },
-
-    {
-      "type": "select",
-      "id": "heading_font",
-      "label": "Heading Font",
-      "options": [
-        {
-          "value": "inter",
-          "label": "Inter"
-        },
-        {
-          "value": "playfair",
-          "label": "Playfair"
-        }
-      ],
-      "default": "playfair"
-    },
-
-    {
-      "type": "select",
-      "id": "subheading_font",
-      "label": "Subheading Font",
-      "options": [
-        {
-          "value": "inter",
-          "label": "Inter"
-        },
-        {
-          "value": "playfair",
-          "label": "Playfair"
-        }
-      ],
-      "default": "inter"
-    },
-
-    {
-      "type": "select",
-      "id": "question_font",
-      "label": "Question Font",
-      "options": [
-        {
-          "value": "inter",
-          "label": "Inter"
-        },
-        {
-          "value": "playfair",
-          "label": "Playfair"
-        }
-      ],
-      "default": "playfair"
-    },
-
-    {
-      "type": "select",
-      "id": "answer_font",
-      "label": "Answer Font",
-      "options": [
-        {
-          "value": "inter",
-          "label": "Inter"
-        },
-        {
-          "value": "playfair",
-          "label": "Playfair"
-        }
-      ],
-      "default": "inter"
     },
 
     {
@@ -667,49 +608,49 @@ details[open] .hdt-icon-arrow{
       "type": "color",
       "id": "accordion_bg",
       "label": "Section Background",
-      "default": "#f5f0ee"
+      "default": "#ffffff"
     },
 
     {
       "type": "color",
       "id": "heading_color",
       "label": "Heading Color",
-      "default": "#6c4b3f"
+      "default": "#1E2B51"
     },
 
     {
       "type": "color",
       "id": "subheading_color",
       "label": "Subheading Color",
-      "default": "#8a6a5e"
+      "default": "#1E2B51"
     },
 
     {
       "type": "color",
       "id": "title_color",
       "label": "Question Color",
-      "default": "#6c4b3f"
+      "default": "#1E2B51"
     },
 
     {
       "type": "color",
       "id": "content_color",
       "label": "Answer Color",
-      "default": "#8a6a5e"
+      "default": "#1E2B51"
     },
 
     {
       "type": "color",
       "id": "icon_color",
       "label": "Icon Color",
-      "default": "#6c4b3f"
+      "default": "#1E2B51"
     },
 
     {
       "type": "color",
       "id": "border_color",
       "label": "Border Color",
-      "default": "#cdbdb5"
+      "default": "#1E2B51"
     },
 
     {
@@ -756,6 +697,22 @@ details[open] .hdt-icon-arrow{
     {
       "type": "accordion_item",
       "name": "Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Answer"
+        }
+      ]
+    },
+    {
+      "type": "accordion_subitem",
+      "name": "↳ Sub-Accordion",
       "settings": [
         {
           "type": "text",
