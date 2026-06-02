@@ -98,14 +98,22 @@
           "type": "accordion_item",
           "settings": {
             "title": "Proceso de pago",
-            "content": "<p>Ingresa a nuestro sitio web para buscar el producto que quieres comprar, puedes navegar a través de nuestro menú de categorías o usar la barra de búsqueda. Una vez hayas elegido el producto que deseas, el color y la talla, agrégalo a tu bolsa de compras haciendo clic en el botón comprar.</p>"
+            "content": ""
+          }
+        },
+        "accordion_subitem_NbyUXb": {
+          "type": "accordion_subitem",
+          "settings": {
+            "title": "¿Qué puedo hacer cuando la página rechaza el pago con mi tarjeta?",
+            "content": "<p>Si realizaste un pago y recibiste notificación de que tu pago fue <strong>RECHAZADO</strong>, debes revisar que el dinero no haya sido descontado de tu cuenta o tarjeta. Si evidencias que el cobro no se realizó, intenta de nuevo la compra. En caso de que veas algún cobro, comunicate con nuestro equipo de servicio quien te ayudará a solucionar la novedad.</p>"
           }
         }
       },
       "block_order": [
         "accordion_item_hrrMDL",
         "accordion_subitem_zRwdeL",
-        "accordion_item_GfK7tn"
+        "accordion_item_GfK7tn",
+        "accordion_subitem_NbyUXb"
       ],
       "name": "Mox- Custom Accordion Inline",
       "settings": {
