@@ -344,6 +344,126 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "section_ABUCzK": {
+      "type": "section",
+      "blocks": {
+        "image_mN983A": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/formas-de-pago3.webp",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "image_mN983A"
+      ],
+      "name": "t:names.image_with_text",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "section_VyWi9n": {
+      "type": "section",
+      "blocks": {
+        "text_mFDajN": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p><strong>Baloto:</strong><br/>Para pagar con Baloto debes tener mínimo $20.000 pesos en tu carro de compras. El plazo para realizar el pago en cualquier punto Baloto es de 24 horas, pasado este plazo tu pedido será cancelado automáticamente.<br/>*Monto máximo Baloto: $1.000.000</p><ol><li>En el checkout elige como medio de pago BALOTO.</li><li>Haz clic en comprar ahora.</li><li>Tu pedido ha sido confirmado, haz clic en imprimir boleto. Luego verás el resumen de tu compra y debes hacer clic en imprimir comprobante.</li><li>Dirígete al punto BALOTO más cercano y haz el pago en efectivo de tu producto.</li><li>En los próximos días recibirás tu compra.</li></ol><p><strong>PAGO EN BANCO:</strong><br/>Imprime tu recibo de consignación con código de barras y preséntalo en cualquier sucursal de Bancolombia o Banco de Bogotá. El plazo para realizar el pago es de 24 horas, pasado este plazo tu pedido será cancelado automáticamente.</p><p><strong>INSTRUCTIVO PARA COMPRAR CON PSE:</strong><br/>Haz clic <a href=\"https:\">aquí</a> para ver instructivo</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_mFDajN"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
@@ -351,6 +471,8 @@
     "section_WbMfzC",
     "section_8JHiBd",
     "section_yKP4mj",
-    "section_C4BbEy"
+    "section_C4BbEy",
+    "section_ABUCzK",
+    "section_VyWi9n"
   ]
 }
