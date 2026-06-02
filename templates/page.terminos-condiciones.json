@@ -84,6 +84,13 @@
           "type": "accordion_item",
           "settings": {
             "title": "Proceso de compra",
+            "content": ""
+          }
+        },
+        "accordion_subitem_zRwdeL": {
+          "type": "accordion_subitem",
+          "settings": {
+            "title": "¿Cómo puedo comprar?",
             "content": "<p>Ingresa a nuestro sitio web para buscar el producto que quieres comprar, puedes navegar a través de nuestro menú de categorías o usar la barra de búsqueda. Una vez hayas elegido el producto que deseas, el color y la talla, agrégalo a tu bolsa de compras haciendo clic en el botón comprar.</p>"
           }
         },
@@ -97,6 +104,7 @@
       },
       "block_order": [
         "accordion_item_hrrMDL",
+        "accordion_subitem_zRwdeL",
         "accordion_item_GfK7tn"
       ],
       "name": "Mox- Custom Accordion Inline",
@@ -105,10 +113,6 @@
         "subheading": "Resuelve tus dudas y prepárate para entrenar sin excusas",
         "accordion_icon": "2",
         "open_first": false,
-        "heading_font": "inter",
-        "subheading_font": "inter",
-        "question_font": "inter",
-        "answer_font": "inter",
         "title_size": 18,
         "content_size": 15,
         "title_weight": "400",
