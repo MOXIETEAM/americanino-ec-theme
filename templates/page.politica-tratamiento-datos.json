@@ -65,7 +65,11 @@
           "blocks": {}
         }
       },
-      "block_order": ["title", "content"],
+      "block_order": [
+        "title",
+        "content"
+      ],
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -73,7 +77,115 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "section_EaCaTB": {
+      "type": "section",
+      "blocks": {
+        "text_f6yJYA": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h1>Políticas de privacidad</h1>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_QTDcAh": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h2><strong>¿QUÉ INFORMACIÓN PEDIMOS Y CÓMO LA USAMOS?</strong></h2><p>En americanino.com pedimos información de nuestros clientes en un esfuerzo para mejorar la experiencia y la comunicación de productos, servicios y promociones. Recogemos datos como tu nombre, correo electrónico y dirección, que nos proporcionas cuando te registras en nuestro sitio o cuando realizas un pedido. Por seguridad, la información sobre tus medios de pagos no la pedimos directamente y permanece privada entre tú y nuestro proveedor del sistema de pagos electrónicos Payu.<br/><br/>En americanino.com podemos utilizar la información recolectada en línea para procesar y completar su solicitud. También usamos las direcciones de correo electrónico en varios lugares dentro del sitio, para poder enviar comunicaciones por correo electrónico relacionados con tu solicitud. Además, mantenemos un registro de tus compras y cualquier otra cosa que nos permita mejorar y personalizar tu experiencia de compra. También monitoreamos el sitio para verificar los patrones de tráfico con el fin de mejorar su diseño y los productos y servicios que ofrecemos. En americanino.com reconocemos que debemos utilizar tu información responsablemente.<br/><br/>Para darte un mejor servicio, podemos combinar la información que nos das por varios medios como nuestro sitio americanino.com y nuestras tiendas AMERICANINO. También podríamos cruzar estos datos con información pública o con algunos establecimientos aliados o subsidiarias. Al combinar esta información podremos hacerte una mejor comunicación sobre nuestros productos, eventos, promociones o personalizando tu experiencia de compra.<br/><br/>Tus datos personales no serán alquilados o vendidos por ningún motivo pero podrían ser compartidos cuando tu participas en algún sorteo que se realice con alguna otra compañía con la cual nos hayamos asociado para hacerlo que puedan ser de tu interés.</p><p></p><p></p><h2><strong>SEGURIDAD</strong></h2><p>Al realizar un pedido con nosotros, queremos que te sientas confiado de que la información personal y los datos de tus tarjetas de crédito están totalmente seguros. En americanino.com, con el objetivo de dar la máxima seguridad al sistema de pago, utilizamos sistemas de “pago seguro” de entidades financieras de primera línea en comercio electrónico. En este sentido, los datos confidenciales del pago son transmitidos directamente y de forma encriptada a la entidad financiera correspondiente.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_GB4hm3": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop now",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_f6yJYA",
+        "text_QTDcAh",
+        "button_GB4hm3"
+      ],
+      "name": "t:names.rich_text_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 25,
+        "section_width": "page-width",
+        "section_height": "small",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "section_EaCaTB"
+  ]
 }
