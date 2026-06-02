@@ -1,0 +1,472 @@
+<!-- custom-brand-history.liquid -->
+
+{% style %}
+#shopify-section-{{ section.id }} {
+  --cbh-bg:              {{ section.settings.bg_color }};
+  --cbh-eyebrow-color:   {{ section.settings.eyebrow_color }};
+  --cbh-brand-color:     {{ section.settings.brand_color }};
+  --cbh-heading-color:   {{ section.settings.heading_color }};
+  --cbh-title-color:     {{ section.settings.title_color }};
+  --cbh-subtitle-color:  {{ section.settings.subtitle_color }};
+  --cbh-body-color:      {{ section.settings.body_color }};
+  --cbh-border-color:    {{ section.settings.border_color }};
+  --section-pt:          {{ section.settings.padding_top }}px;
+  --section-pb:          {{ section.settings.padding_bottom }}px;
+}
+{% endstyle %}
+
+<style>
+
+#shopify-section-{{ section.id }} {
+  background: var(--cbh-bg);
+}
+
+.cbh-wrapper {
+  padding-block-start: var(--section-pt);
+  padding-block-end: var(--section-pb);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.cbh-hero {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.cbh-eyebrow {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cbh-eyebrow-color);
+}
+
+.cbh-brand-name {
+  margin: 0;
+  font-size: clamp(52px, 9vw, 104px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cbh-brand-color);
+  line-height: 1;
+}
+
+/* =========================
+   CHAPTERS
+========================= */
+
+.cbh-chapters {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* =========================
+   CHAPTER HEADER
+========================= */
+
+.cbh-chapter-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.cbh-chapter-line {
+  flex: 1;
+  height: 1px;
+  background: var(--cbh-border-color);
+  display: block;
+}
+
+.cbh-chapter-title {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--cbh-heading-color);
+  white-space: nowrap;
+}
+
+/* =========================
+   CHAPTER FRAME
+========================= */
+
+.cbh-chapter-frame {
+  position: relative;
+  border: 1px solid var(--cbh-border-color);
+  padding: 48px 44px;
+}
+
+.cbh-corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-style: solid;
+  border-color: var(--cbh-border-color);
+}
+
+.cbh-corner--tl { top: -1px;    left: -1px;    border-width: 2px 0 0 2px; }
+.cbh-corner--tr { top: -1px;    right: -1px;   border-width: 2px 2px 0 0; }
+.cbh-corner--bl { bottom: -1px; left: -1px;    border-width: 0 0 2px 2px; }
+.cbh-corner--br { bottom: -1px; right: -1px;   border-width: 0 2px 2px 0; }
+
+/* =========================
+   CARDS GRID
+========================= */
+
+.cbh-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+}
+
+/* =========================
+   CARD
+========================= */
+
+.cbh-card__title {
+  margin: 0 0 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cbh-title-color);
+}
+
+.cbh-card__subtitle {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--cbh-subtitle-color);
+}
+
+.cbh-card__body {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--cbh-body-color);
+}
+
+.cbh-card__body p {
+  margin: 0;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (min-width: 769px) and (max-width: 990px) {
+  .cbh-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px;
+  }
+
+  .cbh-chapter-frame {
+    padding: 36px 28px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .cbh-hero {
+    margin-bottom: 48px;
+  }
+
+  .cbh-chapters {
+    gap: 44px;
+  }
+
+  .cbh-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .cbh-chapter-frame {
+    padding: 28px 20px;
+  }
+
+  .cbh-chapter-header {
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+}
+
+</style>
+
+<div class="cbh-wrapper">
+  <div class="custom-standar-max-width hdt-container">
+
+    {%- if section.settings.eyebrow != blank or section.settings.brand_name != blank -%}
+      <div class="cbh-hero">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="cbh-eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.brand_name != blank -%}
+          <p class="cbh-brand-name">{{ section.settings.brand_name }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="cbh-chapters">
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'chapter_heading' and block.settings.title != blank -%}
+          {%- assign sub_offset = forloop.index0 | plus: 1 -%}
+
+          <div class="cbh-chapter" {{ block.shopify_attributes }}>
+
+            <div class="cbh-chapter-header">
+              <span class="cbh-chapter-line"></span>
+              <h2 class="cbh-chapter-title">{{ block.settings.title }}</h2>
+              <span class="cbh-chapter-line"></span>
+            </div>
+
+            <div class="cbh-chapter-frame">
+              <span class="cbh-corner cbh-corner--tl"></span>
+              <span class="cbh-corner cbh-corner--tr"></span>
+              <span class="cbh-corner cbh-corner--bl"></span>
+              <span class="cbh-corner cbh-corner--br"></span>
+
+              <div class="cbh-cards-grid">
+                {%- for card in section.blocks offset: sub_offset -%}
+                  {%- if card.type == 'chapter_heading' -%}{%- break -%}{%- endif -%}
+                  {%- if card.type == 'chapter_card' -%}
+                    <div class="cbh-card" {{ card.shopify_attributes }}>
+                      {%- if card.settings.title != blank -%}
+                        <p class="cbh-card__title">{{ card.settings.title }}</p>
+                      {%- endif -%}
+                      {%- if card.settings.subtitle != blank -%}
+                        <p class="cbh-card__subtitle">{{ card.settings.subtitle }}</p>
+                      {%- endif -%}
+                      {%- if card.settings.body != blank -%}
+                        <div class="cbh-card__body">{{ card.settings.body }}</div>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+
+            </div>
+
+          </div>
+
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Historia de Marca",
+  "tag": "section",
+  "class": "hdt-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Texto superior",
+      "info": "Dejar vacío para ocultar",
+      "default": "Sé parte de la revolución"
+    },
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Nombre de marca",
+      "info": "Dejar vacío para ocultar",
+      "default": "AMERICANINO®"
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Fondo",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Texto superior",
+      "default": "#1a3a5c"
+    },
+    {
+      "type": "color",
+      "id": "brand_color",
+      "label": "Nombre de marca",
+      "default": "#1a3a5c"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Título capítulo (ORIGEN)",
+      "default": "#1a3a5c"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Título tarjeta (COMIENZO)",
+      "default": "#0a1a2e"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtítulo tarjeta",
+      "default": "#4a6fa5"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Texto cuerpo",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Bordes y líneas",
+      "default": "#b8ccd8"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding superior",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding inferior",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "chapter_heading",
+      "name": "Capítulo",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título del capítulo",
+          "default": "ORIGEN"
+        }
+      ]
+    },
+    {
+      "type": "chapter_card",
+      "name": "↳ Tarjeta",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Contenido"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie Historia de Marca",
+      "category": "Moxie",
+      "blocks": [
+        {
+          "type": "chapter_heading",
+          "settings": { "title": "ORIGEN" }
+        },
+        {
+          "type": "chapter_card",
+          "settings": {
+            "title": "COMIENZO",
+            "subtitle": "1975",
+            "body": "<p>Fundada en 1975 Gegé Schiena quien quiso crear un producto que mezclara lo mejor de dos culturas, la comodidad y calidad de los americanos con el estilo y diseño de los italianos.</p>"
+          }
+        },
+        {
+          "type": "chapter_card",
+          "settings": {
+            "title": "PROYECTO",
+            "subtitle": "Intención",
+            "body": "<p>En medio de la revolución nació Americanino, con una inédita pasión por el denim y la clara visión de convertir el tradicional jean en el protagonista de la moda informal como símbolo del espíritu libre.</p>"
+          }
+        },
+        {
+          "type": "chapter_card",
+          "settings": {
+            "title": "FIRMA",
+            "subtitle": "Opuestos",
+            "body": "<p>Los dos indios representan las dos caras de la historia, América y Europa, la tradición y el progreso, el pasado y el futuro, lo masculino y lo femenino. Los opuestos se convierten en la fuerza que alimenta nuestro producto.</p>"
+          }
+        },
+        {
+          "type": "chapter_heading",
+          "settings": { "title": "MARCA" }
+        },
+        {
+          "type": "chapter_card",
+          "settings": {
+            "title": "ESENCIA",
+            "subtitle": "RE-volución Denim",
+            "body": "<p>Estilo de vida impulsado por el instinto; emocionarse en contraposición a la razón. Expresión sencilla y natural. El denim se muestra como equidad y libertad, como una forma de reinventarse a sí mismo.</p>"
+          }
+        },
+        {
+          "type": "chapter_card",
+          "settings": {
+            "title": "QUIÉNES SOMOS",
+            "subtitle": "Libre-Explorador-Espontáneo",
+            "body": "<p>Somos una marca jeanswear de moda urbana y espíritu joven, orientada a un consumidor libre, explorador y espontáneo. Creamos experiencias únicas y construimos relaciones de valor con nuestros consumidores, basados en sus anhelos y necesidades.</p>"
+          }
+        },
+        {
+          "type": "chapter_card",
+          "settings": {
+            "title": "WE ARE DENIM",
+            "subtitle": "Universo Azul",
+            "body": "<p>We are denim es una interpretación de mundo azul. We are denim es la traducción de las nuevas tendencias de la innovación. We are denim es un compromiso por inventar un lenguaje, una pasión, un universo del que todos seamos parte.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
