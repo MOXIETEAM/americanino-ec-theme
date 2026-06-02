@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -30,7 +39,9 @@
           "blocks": {}
         }
       },
-      "block_order": ["title"],
+      "block_order": [
+        "title"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 0,
@@ -41,8 +52,6 @@
     },
     "accordion": {
       "type": "custom-accordion-inline",
-      "blocks": {},
-      "block_order": [],
       "settings": {
         "heading": "Preguntas frecuentes",
         "subheading": "",
@@ -69,5 +78,8 @@
       }
     }
   },
-  "order": ["main", "accordion"]
+  "order": [
+    "main",
+    "accordion"
+  ]
 }

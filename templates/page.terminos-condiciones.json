@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -56,7 +65,10 @@
           "blocks": {}
         }
       },
-      "block_order": ["title", "content"],
+      "block_order": [
+        "title",
+        "content"
+      ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
@@ -64,7 +76,58 @@
         "padding-block-start": 40,
         "padding-block-end": 40
       }
+    },
+    "custom_accordion_inline_HHNHjA": {
+      "type": "custom-accordion-inline",
+      "blocks": {
+        "accordion_item_hrrMDL": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Proceso de compra",
+            "content": "<p>Ingresa a nuestro sitio web para buscar el producto que quieres comprar, puedes navegar a través de nuestro menú de categorías o usar la barra de búsqueda. Una vez hayas elegido el producto que deseas, el color y la talla, agrégalo a tu bolsa de compras haciendo clic en el botón comprar.</p>"
+          }
+        },
+        "accordion_item_GfK7tn": {
+          "type": "accordion_item",
+          "settings": {
+            "title": "Proceso de pago",
+            "content": "<p>Ingresa a nuestro sitio web para buscar el producto que quieres comprar, puedes navegar a través de nuestro menú de categorías o usar la barra de búsqueda. Una vez hayas elegido el producto que deseas, el color y la talla, agrégalo a tu bolsa de compras haciendo clic en el botón comprar.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_item_hrrMDL",
+        "accordion_item_GfK7tn"
+      ],
+      "name": "Mox- Custom Accordion Inline",
+      "settings": {
+        "heading": "Preguntas frecuentes",
+        "subheading": "Resuelve tus dudas y prepárate para entrenar sin excusas",
+        "accordion_icon": "2",
+        "open_first": false,
+        "heading_font": "inter",
+        "subheading_font": "inter",
+        "question_font": "inter",
+        "answer_font": "inter",
+        "title_size": 18,
+        "content_size": 15,
+        "title_weight": "400",
+        "content_weight": "400",
+        "accordion_bg": "#ffffff",
+        "heading_color": "#1a1a1a",
+        "subheading_color": "#000000",
+        "title_color": "#000000",
+        "content_color": "#000000",
+        "icon_color": "#000000",
+        "border_color": "#000000",
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_rate": 75
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "custom_accordion_inline_HHNHjA"
+  ]
 }
