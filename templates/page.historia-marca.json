@@ -154,6 +154,14 @@
             "subtitle": "Hacia dónde vamos",
             "body": "<p>RE-inventarse. RE-inventar la realidad a través de la creación, decidir con poder, con pasión, construir puentes, derrumbar barreras.</p>"
           }
+        },
+        "chapter_card_PAr9Bd": {
+          "type": "chapter_card",
+          "settings": {
+            "title": "MANIFIESTO",
+            "subtitle": "",
+            "body": "<p>Denim es libertad y equidad. Denim es tiempo, historias y recuerdos. Denim es fuerza y poder. Denim es ser proactivo, es ser parte de la RE-volución.</p>"
+          }
         }
       },
       "block_order": [
@@ -166,7 +174,8 @@
         "chapter_card_RGmiAf",
         "chapter_card_7XdDVM",
         "chapter_heading_7hPkGk",
-        "chapter_card_xnR9jd"
+        "chapter_card_xnR9jd",
+        "chapter_card_PAr9Bd"
       ],
       "name": "Moxie Historia de Marca",
       "settings": {
