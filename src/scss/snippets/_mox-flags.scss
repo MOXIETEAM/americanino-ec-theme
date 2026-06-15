@@ -47,6 +47,12 @@
     border-color: var(--flag-armado-gratis-border, #1a1a1a);
   }
 
+  &--sale {
+    background-color: var(--flag-sale-bg, #ff6b00);
+    color: var(--flag-sale-color, #fff);
+    border-color: var(--flag-sale-border, #ff6b00);
+  }
+
   &--outlet {
     background-color: var(--flag-outlet-bg, #ff6b00);
     color: var(--flag-outlet-color, #fff);

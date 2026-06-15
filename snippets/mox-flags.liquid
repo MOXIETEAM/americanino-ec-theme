@@ -1,92 +1,75 @@
-{%- comment -%}
-  Renders product flags/badges from metafields (namespace: custom)
-
-  ── Etiquetas predefinidas (boolean) ─────────────────────────────────────
-  product.metafields.custom.flag_envio_gratis      → boolean
-  product.metafields.custom.flag_nuevo              → boolean
-  product.metafields.custom.flag_armado_gratis      → boolean
-  product.metafields.custom.flag_outlet             → boolean
-  product.metafields.custom.flag_exclusivo          → boolean
-  product.metafields.custom.flag_reacondicionado    → boolean
-
-  ── Etiquetas personalizadas (metaobjeto) ────────────────────────────────
-  product.metafields.custom.flag_personalizada → list.metaobject_reference
-  Metaobjeto tipo: product_custom_flag
-    campos: active (boolean), label (single_line_text), color_de_fondo (color),
-            color_de_texto (color), icon (file_reference), shape (single_line_text)
-
-  Accepts:
-  - product : {Object} (required)
-  - align   : {String} left | center | right  (optional, default: left)
-{%- endcomment -%}
-
 {%- liquid
   assign mc           = product.metafields.custom
   assign align        = align | default: 'left'
   assign modifier     = modifier | default: ''
-  assign custom_flags = mc.flag_personalizada.value
+  assign custom_flags = mc.mox_flags.value
   assign any          = false
 
-  if mc.flag_envio_gratis.value == true
-    assign any = true
-  endif
+  comment ── 1. Flags por metafield de producto ──────────────────────────
+  endcomment
   if mc.flag_nuevo.value == true
     assign any = true
   endif
-  if mc.flag_armado_gratis.value == true
-    assign any = true
-  endif
-  if mc.flag_outlet.value == true
-    assign any = true
-  endif
-  if mc.flag_exclusivo.value == true
-    assign any = true
-  endif
-  if mc.flag_reacondicionado.value == true
+  if mc.flag_sale.value == true
     assign any = true
   endif
   if custom_flags != blank
     assign any = true
   endif
+
+
+  comment
+    ── 3. Reglas por colección (mox_flag_rule) ─────────────────────────────
+    Primera pasada: verificar si alguna regla aplica al producto para
+    activar el flag `any` antes del bloque de renderizado.
+    La verificación se repite en el HTML para obtener el contexto de cada regla.
+  endcomment
+  assign mox_any_rule = false
+  for rule in shop.metaobjects.mox_flags.values
+    if rule.activa.value == true
+      assign rule_col_handle = rule.coleccion.value.handle | downcase | strip
+      unless rule_col_handle == blank
+        assign rule_match = false
+        for col in product.collections
+          if col.handle == rule_col_handle
+            assign rule_match = true
+            break
+          endif
+        endfor
+        unless rule_match
+          for p in collections[rule_col_handle].products
+            if p.id == product.id
+              assign rule_match = true
+              break
+            endif
+          endfor
+        endunless
+        if rule_match
+          assign mox_any_rule = true
+          assign any = true
+        endif
+      endunless
+    endif
+  endfor
 -%}
 
 
 {%- if any -%}
 <div class="mox-flags mox-flags--align-{{ align }}{% if modifier != blank %} {{ modifier }}{% endif %}">
 
-  {%- comment -%} ── Predefinidas ── {%- endcomment -%}
-
-  {%- if mc.flag_envio_gratis.value == true -%}
-    {%- assign f_label = settings.flag_envio_gratis_label | default: 'Envío Gratis' -%}
-    <span class="mox-flag mox-flag--envio-gratis">{{ f_label }}</span>
-  {%- endif -%}
+  {%- comment -%} ── Predefinidas por metafield de producto ── {%- endcomment -%}
 
   {%- if mc.flag_nuevo.value == true -%}
     {%- assign f_label = settings.flag_nuevo_label | default: 'Nuevo' -%}
     <span class="mox-flag mox-flag--nuevo">{{ f_label }}</span>
   {%- endif -%}
 
-  {%- if mc.flag_armado_gratis.value == true -%}
-    {%- assign f_label = settings.flag_armado_gratis_label | default: 'Armado Gratis' -%}
-    <span class="mox-flag mox-flag--armado-gratis">{{ f_label }}</span>
+  {%- if mc.flag_sale.value == true -%}
+    {%- assign f_label = settings.flag_sale_label | default: 'Sale' -%}
+    <span class="mox-flag mox-flag--sale">{{ f_label }}</span>
   {%- endif -%}
 
-  {%- if mc.flag_outlet.value == true -%}
-    {%- assign f_label = settings.flag_outlet_label | default: 'Outlet' -%}
-    <span class="mox-flag mox-flag--outlet">{{ f_label }}</span>
-  {%- endif -%}
-
-  {%- if mc.flag_exclusivo.value == true -%}
-    {%- assign f_label = settings.flag_exclusivo_label | default: 'Exclusivo' -%}
-    <span class="mox-flag mox-flag--exclusivo">{{ f_label }}</span>
-  {%- endif -%}
-
-  {%- if mc.flag_reacondicionado.value == true -%}
-    {%- assign f_label = settings.flag_reacondicionado_label | default: 'Reacondicionado' -%}
-    <span class="mox-flag mox-flag--reacondicionado">{{ f_label }}</span>
-  {%- endif -%}
-
-  {%- comment -%} ── Personalizadas (metaobjeto) ── {%- endcomment -%}
+  {%- comment -%} ── Personalizadas por producto (metaobjeto product_custom_flag) ── {%- endcomment -%}
   {%- if custom_flags != blank -%}
     {%- for flag in custom_flags -%}
       {%- if flag.active == true -%}
@@ -101,7 +84,8 @@
             {%- if f_color != blank %}color:{{ f_color }};{% endif -%}
             {%- if f_shape == 'outline' and f_color != blank %}border-color:{{ f_color }};{% endif -%}
           {%- endcapture -%}
-          <span class="mox-flag mox-flag--custom mox-flag--{{ f_shape }}"
+          <span
+            class="mox-flag mox-flag--custom mox-flag--{{ f_shape }}"
             {%- if inline_style != blank %} style="{{ inline_style | strip }}"{% endif -%}
           >
             {%- if f_icon != blank -%}
@@ -121,5 +105,253 @@
     {%- endfor -%}
   {%- endif -%}
 
+  {%- comment -%} ── Reglas por colección (mox_flag_rule) ── {%- endcomment -%}
+  {%- if mox_any_rule -%}
+    {%- for rule in shop.metaobjects.mox_flags.values -%}
+      {%- if rule.activa.value == true -%}
+        {%- assign rule_col_handle = rule.coleccion.value.handle | downcase | strip -%}
+        {%- unless rule_col_handle == blank -%}
+
+          {%- comment -%} Re-verificar pertenencia a colección ─{%- endcomment -%}
+          {%- assign rule_match = false -%}
+          {%- for col in product.collections -%}
+            {%- if col.handle == rule_col_handle -%}
+              {%- assign rule_match = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- unless rule_match -%}
+            {%- for p in collections[rule_col_handle].products -%}
+              {%- if p.id == product.id -%}
+                {%- assign rule_match = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endunless -%}
+
+          {%- if rule_match -%}
+            {%- assign rule_tipo = rule.tipo.value -%}
+            {%- if rule_tipo == 'Nuevo' -%}
+              {%- assign r_label = settings.flag_nuevo_label | default: 'Nuevo' -%}
+              {%- assign r_icon  = rule.icono.value -%}
+              {%- assign r_bg    = rule.color_de_fondo.value -%}
+              {%- assign r_fg    = rule.color_de_texto.value -%}
+              {%- capture r_style -%}
+                {%- if r_bg != blank %}background-color:{{ r_bg }};border-color:{{ r_bg }};{% endif -%}
+                {%- if r_fg != blank %}color:{{ r_fg }};{% endif -%}
+              {%- endcapture -%}
+              <span
+                class="mox-flag mox-flag--nuevo"
+                data-brand-show="{{ rule_brand }}"
+                {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
+              >
+                {%- if r_icon != blank -%}<img src="{{ r_icon | image_url: width: 40 }}" alt="" class="mox-flag__img" width="20" height="20" loading="lazy">{%- endif -%}
+                {{- r_label -}}
+              </span>
+
+            {%- elsif rule_tipo == 'Sale' -%}
+              {%- assign r_label = settings.flag_sale_label | default: 'Sale' -%}
+              {%- assign r_icon  = rule.icono.value -%}
+              {%- assign r_bg    = rule.color_de_fondo.value -%}
+              {%- assign r_fg    = rule.color_de_texto.value -%}
+              {%- capture r_style -%}
+                {%- if r_bg != blank %}background-color:{{ r_bg }};border-color:{{ r_bg }};{% endif -%}
+                {%- if r_fg != blank %}color:{{ r_fg }};{% endif -%}
+              {%- endcapture -%}
+              <span
+                class="mox-flag mox-flag--sale"
+                data-brand-show="{{ rule_brand }}"
+                {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
+              >
+                {%- if r_icon != blank -%}<img src="{{ r_icon | image_url: width: 40 }}" alt="" class="mox-flag__img" width="20" height="20" loading="lazy">{%- endif -%}
+                {{- r_label -}}
+              </span>
+
+            {%- elsif rule_tipo == 'Outlet' -%}
+              {%- assign r_icon = rule.icono.value -%}
+              {%- assign r_bg   = rule.color_de_fondo.value -%}
+              {%- assign r_fg   = rule.color_de_texto.value -%}
+              {%- capture r_style -%}
+                {%- if r_bg != blank %}background-color:{{ r_bg }};border-color:{{ r_bg }};{% endif -%}
+                {%- if r_fg != blank %}color:{{ r_fg }};{% endif -%}
+              {%- endcapture -%}
+              <span
+                class="mox-flag mox-flag--outlet"
+                data-brand-show="{{ rule_brand }}"
+                {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
+              >
+                {%- if r_icon != blank -%}<img src="{{ r_icon | image_url: width: 40 }}" alt="" class="mox-flag__img" width="20" height="20" loading="lazy">{%- endif -%}
+                Outlet
+              </span>
+
+            {%- elsif rule_tipo == 'Personalizada' -%}
+              {%- assign r_texto = rule.texto.value -%}
+              {%- assign r_icon  = rule.icono.value -%}
+              {%- assign r_bg    = rule.color_de_fondo.value -%}
+              {%- assign r_fg    = rule.color_de_texto.value -%}
+              {%- assign r_forma = rule.forma.value | default: 'Redonda' -%}
+              {%- if r_forma == 'Cuadrada' -%}
+                {%- assign r_shape_class = 'mox-flag--square' -%}
+              {%- else -%}
+                {%- assign r_shape_class = '' -%}
+              {%- endif -%}
+              {%- capture r_style -%}
+                {%- if r_bg != blank %}background-color:{{ r_bg }};{% endif -%}
+                {%- if r_fg != blank %}color:{{ r_fg }};{% endif -%}
+              {%- endcapture -%}
+              {%- if r_texto != blank or r_icon != blank -%}
+                <span
+                  class="mox-flag mox-flag--custom {{ r_shape_class }}"
+                  data-brand-show="{{ rule_brand }}"
+                  {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
+                >
+                  {%- if r_icon != blank -%}
+                    <img
+                      src="{{ r_icon | image_url: width: 40 }}"
+                      alt=""
+                      class="mox-flag__img"
+                      width="20"
+                      height="20"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+                  {%- if r_texto != blank -%}{{ r_texto }}{%- endif -%}
+                </span>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- comment -%} ── Descuento Extra ── {%- endcomment -%}
+  {%- if mox_de_show -%}
+    <span
+      class="mox-flag mox-flag--extra-discount"
+      data-brand-show="{{ mox_de_brand }}"
+      style="background-color:{{ mox_de_bg }};border-color:{{ mox_de_border }};color:{{ mox_de_fg }};font-weight:{{ mox_de_fw }};"
+    >
+      {%- if mox_de_icon != blank -%}
+        <img
+          src="{{ mox_de_icon | image_url: width: 40 }}"
+          alt=""
+          class="mox-flag__img"
+          width="20"
+          height="20"
+          loading="lazy"
+        >
+      {%- endif -%}
+      {%- if mox_de_label != blank -%}{{- mox_de_label -}}{%- endif -%}
+    </span>
+  {%- endif -%}
+
 </div>
 {%- endif -%}
+
+{% stylesheet %}
+  /* ══ MOXIE DEBUG — eliminar cuando se confirme que funciona ══ */
+  .mox-debug-panel {
+    background: rgba(0,0,0,0.82);
+    color: #0ff;
+    font-size: 10px;
+    line-height: 1.5;
+    padding: 4px 6px;
+    border-radius: 4px;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: monospace;
+    z-index: 9999;
+  }
+  .mox-debug-panel b { color: #ff0; }
+  .mox-debug-panel i { color: #aaa; }
+  .mox-dbg-sep { color: #888; font-size: 9px; }
+  /* ══ FIN DEBUG ══ */
+
+  /* ── Contenedores: posición relativa para anclar los flags ── */
+  product-card  { position: relative; }
+  media-gallery { position: relative; }
+  .cg-card__media { position: relative; }
+
+  /* ── Wrapper de flags ── */
+  .mox-flags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    pointer-events: none;
+  }
+
+  .mox-flags--align-center { align-items: center; }
+  .mox-flags--align-right  { align-items: flex-end; }
+
+  /* ── Posicionamiento en card de PLP ── */
+  .mox-flags--card {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* ── Posicionamiento en galería de PDP ── */
+  .mox-flags--pdp {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* ── Flag base ── */
+  .mox-flag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* ── Variantes de flag ── */
+  .mox-flag--nuevo {
+    background-color: var(--flag-nuevo-bg, #f5f5f5);
+    color: var(--flag-nuevo-color, #222);
+    border-color: var(--flag-nuevo-border, #222);
+  }
+
+  .mox-flag--sale {
+    background-color: var(--flag-sale-bg, #ff6b00);
+    color: var(--flag-sale-color, #fff);
+    border-color: var(--flag-sale-border, #ff6b00);
+  }
+
+  .mox-flag--outlet {
+    background-color: var(--flag-outlet-bg, #6b21a8);
+    color: var(--flag-outlet-color, #fff);
+    border-color: var(--flag-outlet-border, #6b21a8);
+  }
+
+  .mox-flag--custom   { border: 1px solid transparent; }
+  .mox-flag--outline  { background-color: transparent !important; border-width: 1.5px; border-style: solid; }
+  .mox-flag--square   { border-radius: 0; }
+  .mox-flag--pill     { border-radius: 999px; }
+
+  .mox-flag--extra-discount { border-width: 1px; border-style: solid; }
+
+  .mox-flag__img {
+    display: block;
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+{% endstylesheet %}

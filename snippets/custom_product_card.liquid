@@ -19,15 +19,6 @@
     assign discount_pct = diff | times: 100.0 | divided_by: product.compare_at_price | round
   endif
 
-  assign is_new = false
-  for tag in product.tags
-    assign tag_lower = tag | downcase | strip
-    if tag_lower == 'new' or tag_lower == 'nuevo'
-      assign is_new = true
-      break
-    endif
-  endfor
-
 -%}
 
 <div class="cg-card custom-product-card-amcno">
@@ -51,16 +42,10 @@
       {%- endif -%}
     </a>
 
-    {%- if has_discount or is_new -%}
-      <div class="cg-card__badges">
-        {%- if has_discount -%}
-          <span class="cg-badge cg-badge--sale">{{ discount_pct }}%OFF</span>
-        {%- endif -%}
-        {%- if is_new -%}
-          <span class="cg-badge cg-badge--new">NEW</span>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+    {%- comment -%} MOXIE: flags de producto por metafield — sobre la imagen {%- endcomment -%}
+    {%- unless product == blank -%}
+      {%- render 'mox-flags', product: product, align: 'left', modifier: 'mox-flags--card' -%}
+    {%- endunless -%}
 
     {%- unless product == blank -%}
       {%- render 'custom_card_size_picker', product: product -%}
