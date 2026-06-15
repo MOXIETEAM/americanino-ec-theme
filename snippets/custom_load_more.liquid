@@ -10,7 +10,7 @@
 <script src="{{ 'custom_load_more.js' | asset_url }}" type="module" fetchpriority="low"></script>
 
 {%- assign shown_count = paginate.current_page | times: paginate.page_size | at_most: paginate.items -%}
-
+<div class="custom-load-more-container custom-center-container">
 <custom-load-more
   class="custom-load-more"
   data-section-id="{{ section.id }}"
@@ -43,7 +43,7 @@
     </button>
   {%- endif -%}
 </custom-load-more>
-
+</div>
 {% stylesheet %}
   .custom-load-more {
     display: flex;
@@ -52,6 +52,7 @@
     gap: 10px;
     padding-block: 28px;
     width: 100%;
+    max-width: 168px;
   }
 
   .custom-load-more__text {
