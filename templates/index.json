@@ -355,8 +355,8 @@
         "category_WVi379": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/1b51959e499351d972c71872d8220c00c6c00fee.jpg",
-            "label": "Buzos",
+            "image": "shopify://shop_images/pantalones.webp",
+            "label": "Pantalones",
             "sublabel": "",
             "link": "",
             "show_gender_links": false,
@@ -375,8 +375,8 @@
         "category_fK9bT3": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/428dfe54874fcbe29d1f6948b647a818033d784a.jpg",
-            "label": "Chaquetas",
+            "image": "shopify://shop_images/camisetas.webp",
+            "label": "Camisetas",
             "sublabel": "",
             "link": "",
             "show_gender_links": false,
@@ -395,7 +395,7 @@
         "category_6d4DGD": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/c4131c1f8021cc794e4bafd58424872c5c195988.jpg",
+            "image": "shopify://shop_images/camisas.webp",
             "label": "Camisetas",
             "sublabel": "",
             "link": "",
@@ -415,8 +415,28 @@
         "category_wjdHAb": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/1945604705aff8c0b0b537ee634a78c6a6a8be25.jpg",
+            "image": "shopify://shop_images/Buzos.webp",
             "label": "Accesorios",
+            "sublabel": "",
+            "link": "",
+            "show_gender_links": false,
+            "label_male": "Hombre",
+            "link_male": "",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        },
+        "category_7LTWPM": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/bermudas.webp",
+            "label": "Bermuda",
             "sublabel": "",
             "link": "",
             "show_gender_links": false,
@@ -438,7 +458,8 @@
         "category_WVi379",
         "category_fK9bT3",
         "category_6d4DGD",
-        "category_wjdHAb"
+        "category_wjdHAb",
+        "category_7LTWPM"
       ],
       "name": "Moxie Category Grid",
       "settings": {
