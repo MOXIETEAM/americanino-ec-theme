@@ -686,21 +686,21 @@
           "type": "look",
           "settings": {
             "look_id": "look-1",
-            "image": "shopify://shop_images/38b9e2a7aee711cbf6c0f182205cca2076c3640c.png"
+            "image": "shopify://shop_images/look1.webp"
           }
         },
         "look_QiWRWJ": {
           "type": "look",
           "settings": {
             "look_id": "look-2",
-            "image": "shopify://shop_images/37701ce05efb2ebe5ebff99d5265992e940885eb.png"
+            "image": "shopify://shop_images/look2.webp"
           }
         },
         "look_EWfyqJ": {
           "type": "look",
           "settings": {
             "look_id": "look-3",
-            "image": "shopify://shop_images/17103421e04042490964987fdf154c9b93c5077a.png"
+            "image": "shopify://shop_images/look3.webp"
           }
         }
       },
