@@ -345,8 +345,8 @@
             "btn1_bg": "",
             "btn1_text": "",
             "btn1_hover": "",
-            "label_female": "Mujer",
-            "link_female": "shopify://collections/test-collection",
+            "label_female": "",
+            "link_female": "",
             "btn2_bg": "",
             "btn2_text": "",
             "btn2_hover": ""
