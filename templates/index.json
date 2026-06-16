@@ -335,13 +335,13 @@
         "category_7grgpf": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/271110ef913d2ab05625cc8fb13ed475ed900b4a.jpg",
-            "label": "Jeans",
+            "image": "shopify://shop_images/vestidos.webp",
+            "label": "Vestidos",
             "sublabel": "",
             "link": "",
             "show_gender_links": true,
-            "label_male": "Hombre",
-            "link_male": "shopify://collections/test-collection",
+            "label_male": "Mujer",
+            "link_male": "shopify://collections/ropa-mujer-vestidos",
             "btn1_bg": "",
             "btn1_text": "",
             "btn1_hover": "",
