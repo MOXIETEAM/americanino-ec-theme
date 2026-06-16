@@ -833,11 +833,33 @@
             "cta_label": "Ver colección",
             "cta_link": "shopify://collections/all"
           }
+        },
+        "slide_AWpf4w": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/denim3.webp",
+            "title": "Nueva Colección",
+            "subtitle": "Descubre las últimas tendencias de la temporada.",
+            "cta_label": "Ver colección",
+            "cta_link": "shopify://collections/all"
+          }
+        },
+        "slide_A43MRc": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/denim4.webp",
+            "title": "Nueva Colección",
+            "subtitle": "Descubre las últimas tendencias de la temporada.",
+            "cta_label": "Ver colección",
+            "cta_link": "shopify://collections/all"
+          }
         }
       },
       "block_order": [
         "slide_JrkHm9",
-        "slide_qM3GYD"
+        "slide_qM3GYD",
+        "slide_AWpf4w",
+        "slide_A43MRc"
       ],
       "name": "Moxie Banner Reveal",
       "settings": {
