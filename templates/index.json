@@ -533,7 +533,7 @@
         "category_T7dChK": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/5f1e724e57e2a79dda8117f4fc06e0d58ded4f50.jpg",
+            "image": "shopify://shop_images/colecc_party_denim.webp",
             "label": "Lorem ipsusom",
             "sublabel": "Lorem ipsusom",
             "link": "",
@@ -553,7 +553,47 @@
         "category_q7RbTL": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/730d5b2cd3dfe0e2ca5ec79feac886362be48b51.jpg",
+            "image": "shopify://shop_images/colecc_new_vintage.webp",
+            "label": "Lorem ipsusom",
+            "sublabel": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        },
+        "category_7PWfLQ": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/colecc_home_ofiice.webp",
+            "label": "Lorem ipsusom",
+            "sublabel": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        },
+        "category_mTyYpp": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/colecc_am-75.webp",
             "label": "Lorem ipsusom",
             "sublabel": "Lorem ipsusom",
             "link": "",
@@ -574,7 +614,9 @@
       "block_order": [
         "category_VhkyHX",
         "category_T7dChK",
-        "category_q7RbTL"
+        "category_q7RbTL",
+        "category_7PWfLQ",
+        "category_mTyYpp"
       ],
       "name": "Moxie Category Grid",
       "settings": {
