@@ -396,7 +396,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/camisas.webp",
-            "label": "Camisetas",
+            "label": "Camisas",
             "sublabel": "",
             "link": "",
             "show_gender_links": false,
@@ -416,7 +416,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/Buzos.webp",
-            "label": "Accesorios",
+            "label": "Buzos",
             "sublabel": "",
             "link": "",
             "show_gender_links": false,
