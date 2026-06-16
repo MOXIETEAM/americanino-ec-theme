@@ -199,7 +199,8 @@
       ],
       "name": "Moxie Hero",
       "settings": {
-        "media_type_1": "video",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/home.webp",
         "video_1": "shopify://files/videos/BANNER-TOP 1.mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": true,
