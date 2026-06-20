@@ -6,30 +6,214 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "main-page",
       "blocks": {
-        "page-content": {
-          "type": "page-content",
-          "settings": {},
+        "text_fBTNz7": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2><strong>POLÍTICA DE PAGO CONTRA ENTREGA</strong></h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
           "blocks": {}
         }
       },
       "block_order": [
-        "page-content"
+        "text_fBTNz7"
       ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
         "color_scheme": "",
-        "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-start": 15,
+        "padding-block-end": 20
+      }
+    },
+    "section_WxUNKq": {
+      "type": "section",
+      "blocks": {
+        "group_mhTxt3": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-5",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "hero-apparel-2",
+            "padding-block-start": 40,
+            "padding-block-end": 40,
+            "padding-inline-start": 40,
+            "padding-inline-end": 40
+          },
+          "blocks": {
+            "spacer_pDnamR": {
+              "type": "spacer",
+              "settings": {
+                "size": "pixel",
+                "percent_size": 100,
+                "pixel_size": 16,
+                "custom_mobile_size": false,
+                "size_mobile": "percent",
+                "percent_size_mobile": 100,
+                "pixel_size_mobile": 120
+              },
+              "blocks": {}
+            },
+            "text_iLj4PK": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Al momento de hacer tu pedido, ten presente:</p><p><strong>1:</strong> Ingresar la dirección donde deseas que entreguemos tu pedido.</p><p><strong>2:</strong> Elegir como medio de pago la opción de 'pago contra entrega'.</p><p><strong>3: </strong>Verificar que la dirección que ingresaste si se encuentre dentro de la cobertura de este servicio.<br/>NOTA: En caso de que no tengamos cobertura a la dirección de destino, te aparecerá un mensaje informando lo siguiente: 'Este producto no se puede entregar en esta dirección.'.</p><p><strong>4:</strong> El monto máximo de tu pedido es de $800.000 (pesos colombianos).</p><p><strong>5: </strong>Haremos máximo 3 intentos de entrega de tu pedido dentro de las 2 semanas siguientes a la confirmación el despacho. Si luego de estos intentos, no se realiza la entrega de la prenda y no se recibe su pago, retornaremos el producto a nuestro centro de distribución para lo cual deberás realizar nuevamente el pedido.<br/>Ten en cuenta que:</p><ul><li>En caso de que no cuentes con el dinero al momento de la entrega del pedido y ya se hayan cumplido las 2 semanas desde la confirmación del despacho, retornaremos el producto a nuestro centro de distribución para lo cual deberás realizar nuevamente el pedido. Ten presente que un nuevo pedido está sujeto a disponibilidad de inventario al momento de tu compra.</li><li>En caso de que no cuentes con el dinero al momento de la entrega del pedido y no se hayan cumplido las 2 semanas desde la confirmación del despacho, comunícate con nuestros canales de Servicio al cliente para reprogramar tu entrega. Esto no asegura que la entrega pueda reprogramarse. De no ser posible una nueva entrega, te estaremos informando para que realices un nuevo pedido, sujeto a disponibilidad de inventario al momento de tu compra.</li><li>Para el caso en el que el cliente solicite reclamar la prenda en una sede de Coordinadora, contará con 5 días hábiles para reclamarla, contados desde que la prenda esté disponible en la sede. Pasados los 5 días, retornaremos el producto a nuestro centro de distribución para lo cual deberás realizar nuevamente el pedido. Ten presente que un nuevo pedido está sujeto a disponibilidad de inventario al momento de tu compra.</li><li>Rastrea tu despacho ingresando el número de guía, <a href=\"http://www.coordinadora.com/\">www.coordinadora.com</a></li></ul><p><strong>6:</strong> En el correo electrónico que te enviemos confirmando tu pedido, te informaremos el número de guía con el que se te entregará el producto para que lo confirmes al momento del pago, a la empresa de transporte.</p><p><strong>7:</strong> En caso de que debas realizar un cambio en la dirección de entrega de tu producto, comunícate con la línea de servicio al cliente, donde revisaremos si posible proceder con el cambio de la dirección.</p><p><strong>8:</strong> En caso de que alguno de los productos se encuentre agotado (debido a la alta demanda de consumidores comprando en línea al mismo tiempo), te notificaremos la novedad dentro de los 5 días hábiles desde que se realiza el pedido, con el fin de actualizar tu compra.</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "spacer_pDnamR",
+            "text_iLj4PK"
+          ]
+        },
+        "group_c7YH4x": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-5",
+            "background_media": "image",
+            "video_position": "cover",
+            "background_image": "shopify://shop_images/banner1_desk_mob_pagos.webp",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "hero-apparel-1",
+            "padding-block-start": 40,
+            "padding-block-end": 40,
+            "padding-inline-start": 40,
+            "padding-inline-end": 40
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_mhTxt3",
+        "group_c7YH4x"
+      ],
+      "name": "t:names.split_showcase",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "section_WxUNKq"
   ]
 }
