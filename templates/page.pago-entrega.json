@@ -379,12 +379,592 @@
         "padding-block-end": 0,
         "enable_stacking": false
       }
+    },
+    "section_aA6mRV": {
+      "type": "section",
+      "blocks": {
+        "text_UR6tGW": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<p><strong>PREGUNTAS FRECUENTES</strong></p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h5",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion_EQhJkC": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_ctCHyt": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "¿El transportador puede esperar a que yo abra el paquete para ver si lo que me están entregando es lo que había pedido y hacer mi pago con tranquilidad?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_b3EbLe": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>El transportador no está autorizado para esperar la revisión de tu pedido. En caso de presentarse alguna novedad en el mismo, por favor repórtala a nuestros canales de Servicio al cliente donde gestionaremos tu caso. Ten presente que debes hacer el pago de tu pedido antes de recibirlo, y posteriormente, realizar la reclamación a través de nuestros canales de atención.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_b3EbLe"
+              ]
+            },
+            "accordion_row_8ewEH9": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "¿Si al momento de recibir mi pedido, decido devolverlo porque no quedé conforme, se la puedo entregar al transportador?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_aXQQLW": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>No debes entregarlo al transportador. En caso de presentarse alguna novedad en tu pedido, por favor repórtala a la nuestros canales de Servicio al cliente. Ten presente que debes hacer el pago de tu pedido antes de recibirlo, y posteriormente, realizar la reclamación a través de nuestros canales de atención.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_aXQQLW"
+              ]
+            },
+            "accordion_row_cKF3Mw": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Cómo sabe el transportador cuánto dinero tengo que entregarle?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_9txUMm": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>El transportador llevará una planilla donde se le indica el valor a cobrar. Este debe ser el mismo valor que registra en la guía de entrega, que llega con tu paquete y coincide con el valor de tu pedido.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_9txUMm"
+              ]
+            },
+            "accordion_row_yGA7eK": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Puedo pagar con dinero de mayor denominación para que el transportador me devuelva el valor sobrante?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_YrqLzm": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Ten presente que la transportadora solo está autorizada para recibir el valor exacto de tu compra. Recuerda que puedes hacer uso del código QR como medio de pago.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_YrqLzm"
+              ]
+            },
+            "accordion_row_HEyWXN": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Puedo hacer compras por pago contra entrega desde cualquier parte del país?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_qnVYA9": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "<p>Debes verificar que la ciudad en la cual deseas recibir tu pedido, si esté habilitada en la cobertura de pago contra entrega. Al momento de realizar la compra, el sistema te indicará si tu dirección, se encuentra dentro de la zona de cobertura.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_qnVYA9"
+              ]
+            },
+            "accordion_row_VaMRR6": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Puedo hacer compras por pago contra entrega por cualquier valor?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_jTpMcB": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>El monto máximo de compras permitidas para pago contra entrega es de $800.000 por pedido (pesos colombianos).</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_jTpMcB"
+              ]
+            },
+            "accordion_row_izMmbX": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Puedo pagar con tarjeta de crédito, débito o efectivo?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_XYpndt": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Los canales habilitados para el pago son los siguientes: (i) pago en efectivo (pesos colombianos) por el valor exacto, (ii) pago por medio de código QR (tarjeta de crédito o débito) al momento de recibir el paquete. NOTA: Si deseas realizar el pago por medio de código QR debes contar con un dispositivo inteligente con acceso a internet. NOTA: Si deseas realizar el pago por medio de código QR debes contar con un dispositivo inteligente con acceso a internet.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_XYpndt"
+              ]
+            },
+            "accordion_row_X4j9fD": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿El pedido lo puede recibir una persona diferente a la que realizó el pedido?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_eKkiYr": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Sí. Ten presente que solo entregaremos el pedido a un mayor de edad, quien realizará el pago y diligenciará la guía con su nombre, número de cédula y número de teléfono de contacto.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_eKkiYr"
+              ]
+            },
+            "accordion_row_XXkNRx": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Qué medidas están tomando para asegurar las entregas con las normas de higiene y salubridad requeridas?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_x8RMyP": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Para nuestros clientes y colaboradores, garantizamos un servicio 24/7 consciente, a través de nuestra tienda online, con instrucción a nuestro personal de operaciones y aliados en transporte para que se cumplan todos los protocolos de salubridad y seguridad para todos. Como recomendación, te sugerimos:<br/></p><ul><li>Firmar la entrega con tu propio lapicero.</li><li>Usar tapabocas al momento de recibir tu producto.</li></ul>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_x8RMyP"
+              ]
+            },
+            "accordion_row_aPb9D3": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿En caso de que olvide tener el dinero a la mano, cuando llega el transportador, me puede dejar la prenda y pasar más tarde por el dinero?(en caso de que yo no tenga efectivo).",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_VCQjTt": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>El transportador no está autorizado para entregar la prenda sin recibir el dinero del pedido. Recuerda que puedes hacer uso del código QR como medio de pago.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_VCQjTt"
+              ]
+            },
+            "accordion_row_NWwqfY": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Qué pasa en caso de que llegue el transportador y no haya quien reciba la prenda?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_WdBTUM": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Haremos máximo 3 intentos de entrega de tu pedido dentro de las 2 semanas siguientes a la confirmación el despacho. Si luego de estos intentos, no se realiza la entrega de la prenda y no se recibe su pago, retornaremos el producto a nuestro centro de distribución para lo cual deberás realizar nuevamente el pedido.</p><p>Ten en cuenta que:</p><ul><li>En caso de que no cuentes con el dinero al momento de la entrega del pedido y ya se hayan cumplido las 2 semanas desde la confirmación del despacho, retornaremos el producto a nuestro centro de distribución para lo cual deberás realizar nuevamente el pedido. Ten presente que un nuevo pedido está sujeto a disponibilidad de inventario al momento de tu compra.</li><li>En caso de que no cuentes con el dinero al momento de la entrega del pedido y no se hayan cumplido las 2 semanas desde la confirmación del despacho, comunícate con nuestros canales de Servicio al cliente para reprogramar tu entrega. Esto no asegura que la entrega pueda reprogramarse. De no ser posible una nueva entrega, te estaremos informando para que realices un nuevo pedido, sujeto a disponibilidad de inventario al momento de tu compra.</li><li>Para el caso en el que el cliente solicite reclamar la prenda en una sede de Coordinadora, contará con 5 días hábiles para reclamarla, contados desde que la prenda esté disponible en la sede. Pasados los 5 días, retornaremos el producto a nuestro centro de distribución para lo cual deberás realizar nuevamente el pedido. Ten presente que un nuevo pedido está sujeto a disponibilidad de inventario al momento de tu compra.</li><li>Rastrea tu despacho ingresando el número de guía, en <a href=\"http://www.coordinadora.com/\">http://www.coordinadora.com</a>.</li></ul>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_WdBTUM"
+              ]
+            },
+            "accordion_row_rLB6FG": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "¿Cómo tramito una solicitud de cambio o garantía de mi producto?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_8n4UBQ": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Reporta tu caso a nuestras líneas de Servicio al cliente donde gestionaremos tu novedad.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_8n4UBQ"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_ctCHyt",
+            "accordion_row_8ewEH9",
+            "accordion_row_cKF3Mw",
+            "accordion_row_yGA7eK",
+            "accordion_row_HEyWXN",
+            "accordion_row_VaMRR6",
+            "accordion_row_izMmbX",
+            "accordion_row_X4j9fD",
+            "accordion_row_XXkNRx",
+            "accordion_row_aPb9D3",
+            "accordion_row_NWwqfY",
+            "accordion_row_rLB6FG"
+          ]
+        }
+      },
+      "block_order": [
+        "text_UR6tGW",
+        "accordion_EQhJkC"
+      ],
+      "name": "t:names.faq_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
     }
   },
   "order": [
     "main",
     "section_WxUNKq",
     "section_beAYzA",
-    "custom_hero_dzViXW"
+    "custom_hero_dzViXW",
+    "section_aA6mRV"
   ]
 }
