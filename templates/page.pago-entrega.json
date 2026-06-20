@@ -59,16 +59,16 @@
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
+            "vertical_alignment": "flex-start",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "space-between",
+            "vertical_alignment_flex_direction_column": "flex-start",
             "gap": 32,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
-            "height": "fill",
+            "height": "fit",
             "custom_height": 100,
             "inherit_color_scheme": true,
             "color_scheme": "scheme-5",
@@ -92,19 +92,6 @@
             "padding-inline-end": 40
           },
           "blocks": {
-            "spacer_pDnamR": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
             "text_iLj4PK": {
               "type": "text",
               "settings": {
@@ -132,7 +119,6 @@
             }
           },
           "block_order": [
-            "spacer_pDnamR",
             "text_iLj4PK"
           ]
         },
@@ -210,10 +196,158 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "section_beAYzA": {
+      "type": "section",
+      "blocks": {
+        "group_Vtqq9e": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "space-between",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-5",
+            "background_media": "image",
+            "video_position": "cover",
+            "background_image": "shopify://shop_images/banner2_desk_mob_pagos.webp",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "hero-apparel-1",
+            "padding-block-start": 40,
+            "padding-block-end": 40,
+            "padding-inline-start": 40,
+            "padding-inline-end": 40
+          },
+          "blocks": {}
+        },
+        "group_UFdMDe": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 32,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "scheme-5",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "hero-apparel-2",
+            "padding-block-start": 40,
+            "padding-block-end": 40,
+            "padding-inline-start": 40,
+            "padding-inline-end": 40
+          },
+          "blocks": {
+            "text_JeM9UU": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Al momento del pago del pedido contra entrega, ten presente:</p><p><strong>1:</strong> Para todas las ciudades del país con cobertura del servicio pago contra entrega, los canales habilitados para el pago son los siguientes: (i) pago en efectivo (pesos colombianos) por el valor exacto, (ii) pago por medio de código QR, el cual te presentará el transportador, al momento de recibir el paquete. NOTA: Si deseas realizar el pago por medio de código QR debes contar con un dispositivo inteligente con acceso a internet.</p><p><strong>2: </strong>Solo entregaremos el pedido a una persona mayor de edad, quien realizará el pago y diligenciará la guía con su nombre, número de cédula y número de teléfono de contacto.</p><p><strong>3: </strong>Si pagas en efectivo, ten presente contar con el valor exacto de tu compra, ya que el transportador no asegura tener disponibilidad para cambio. Si no cuentas con el dinero en efectivo exacto, recuerda que puedes hacer uso del código QR como medio de pago.'.</p><p>Al momento de recibir tu pedido, ten presente:</p><p><strong>1: </strong>Firmar la entrega con tu propio lapicero como recomendación de salubridad.</p><p><strong>2: </strong>Usa tapabocas al momento de recibir tu producto.</p><p><strong>3:</strong> En caso de que se presente alguna novedad en la entrega (adulteración de la bolsa, sin sello de seguridad, etc.), no recibas el paquete y reporta la novedad a la línea de Servicio al cliente para que gestionemos tu caso.</p><p><strong>4: </strong>Esperamos que disfrutes tu compra para lo cual te invitamos a revisar tu pedido y que, en caso de alguna novedad o consulta (cambio o garantía), te contactes con nuestros canales de atención al cliente (link servicio al cliente). La empresa de transporte que te entrega tu pedido, no está autorizada para gestionar devoluciones o cambios.<br/>IMPORTANTE:</p><ul><li>Ten presente que debes hacer el pago de tu pedido antes de recibirlo. En caso de que tengas alguna novedad con tu pedido debes realizar la reclamación a través de nuestros canales de atención al cliente.</li><li>Bajo ningún motivo las tiendas físicas o la empresa de transporte que hace la entrega del producto, se encuentran autorizadas para devolver dinero a los consumidores.</li></ul>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_JeM9UU"
+          ]
+        }
+      },
+      "block_order": [
+        "group_Vtqq9e",
+        "group_UFdMDe"
+      ],
+      "name": "t:names.split_showcase",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "section_width": "full-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
     "main",
-    "section_WxUNKq"
+    "section_WxUNKq",
+    "section_beAYzA"
   ]
 }
