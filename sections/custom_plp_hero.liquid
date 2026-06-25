@@ -17,7 +17,7 @@
     assign hero_desc = collection.description
   endif
 
-  assign breadcrumb       = section.settings.breadcrumb_brand | default: 'Mic'
+  assign breadcrumb       = section.settings.breadcrumb_brand | default: 'Americanino'
 
   assign card_blocks = section.blocks | where: 'type', 'card'
 

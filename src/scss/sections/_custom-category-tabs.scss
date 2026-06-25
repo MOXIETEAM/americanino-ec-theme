@@ -200,14 +200,6 @@
   margin: 0;
 }
 
-// ── Brand visibility ──────────────────────────────────────────────────────────
-
-.custom-category-tabs[data-brand-show='little-mic'] { display: none; }
-
-.custom-category-tabs[data-brand-show='mic'],
-.custom-category-tabs[data-brand-show='all'] {
-  display: block;
-}
 
 // ── Reduced motion ────────────────────────────────────────────────────────────
 

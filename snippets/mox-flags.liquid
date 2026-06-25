@@ -142,7 +142,6 @@
               {%- endcapture -%}
               <span
                 class="mox-flag mox-flag--nuevo"
-                data-brand-show="{{ rule_brand }}"
                 {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
               >
                 {%- if r_icon != blank -%}<img src="{{ r_icon | image_url: width: 40 }}" alt="" class="mox-flag__img" width="20" height="20" loading="lazy">{%- endif -%}
@@ -160,7 +159,6 @@
               {%- endcapture -%}
               <span
                 class="mox-flag mox-flag--sale"
-                data-brand-show="{{ rule_brand }}"
                 {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
               >
                 {%- if r_icon != blank -%}<img src="{{ r_icon | image_url: width: 40 }}" alt="" class="mox-flag__img" width="20" height="20" loading="lazy">{%- endif -%}
@@ -177,7 +175,6 @@
               {%- endcapture -%}
               <span
                 class="mox-flag mox-flag--outlet"
-                data-brand-show="{{ rule_brand }}"
                 {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
               >
                 {%- if r_icon != blank -%}<img src="{{ r_icon | image_url: width: 40 }}" alt="" class="mox-flag__img" width="20" height="20" loading="lazy">{%- endif -%}
@@ -202,7 +199,6 @@
               {%- if r_texto != blank or r_icon != blank -%}
                 <span
                   class="mox-flag mox-flag--custom {{ r_shape_class }}"
-                  data-brand-show="{{ rule_brand }}"
                   {%- if r_style != blank %} style="{{ r_style | strip }}"{% endif -%}
                 >
                   {%- if r_icon != blank -%}
@@ -230,7 +226,6 @@
   {%- if mox_de_show -%}
     <span
       class="mox-flag mox-flag--extra-discount"
-      data-brand-show="{{ mox_de_brand }}"
       style="background-color:{{ mox_de_bg }};border-color:{{ mox_de_border }};color:{{ mox_de_fg }};font-weight:{{ mox_de_fw }};"
     >
       {%- if mox_de_icon != blank -%}

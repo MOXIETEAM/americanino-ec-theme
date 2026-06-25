@@ -4,7 +4,7 @@
   Metacampo en coleccion: custom.mox_plp_banners_rompegrids (lista de referencias a banner_rompegrids_plp)
 
   Claves de campo del metaobjeto:
-    donde_mostrar           → texto (se filtra si vale "little-mic")
+    donde_mostrar           → texto
     imagen                  → archivo (imagen)
     titulo                  → texto corto
     descripcion             → texto multilinea
@@ -598,10 +598,6 @@
     }
 
     var visible = banners
-      .filter(function (b) {
-        var dm = (b.donde_mostrar || '').trim().toLowerCase();
-        return dm !== 'little-mic';
-      })
       .sort(function (a, b) { return b.posicion - a.posicion; });
 
     if (!visible.length) {

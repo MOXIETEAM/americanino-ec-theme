@@ -83,8 +83,6 @@
       "mega-menu": {
         "type": "mega-menu",
         "settings": {
-          "menu_mic": "",
-          "menu_little_mic": "",
           "personajes_trigger": "Personajes",
           "color_scheme": "",
           "border_radius": 0

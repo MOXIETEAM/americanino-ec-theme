@@ -1,7 +1,6 @@
 {%- comment -%} MOXIE: Features Bar - barra de caracteristicas/beneficios con icono y texto {%- endcomment -%}
 
 {%- liquid
-  assign brand_visibility = section.settings.brand_visibility | default: 'all'
   assign cols_desktop = section.settings.columns_desktop | default: 4
   assign cols_mobile = section.settings.columns_mobile | default: 1
   assign padding_v = section.settings.padding_v | default: 24
@@ -11,7 +10,6 @@
 <div class="custom-center-container custom-features-bar-mox">
   <div
     class="custom-features-bar custom-standar-max-width"
-    data-brand-show="{{ brand_visibility }}"
     style="
       padding-block: {{ padding_v }}px;
       {%- if section.settings.bg_color != blank -%} background-color: {{ section.settings.bg_color }};{%- endif -%}
@@ -109,21 +107,6 @@
     "groups": ["footer"]
   },
   "settings": [
-    {
-      "type": "header",
-      "content": "Marca"
-    },
-    {
-      "type": "select",
-      "id": "brand_visibility",
-      "label": "Visible para",
-      "options": [
-        { "value": "all", "label": "Ambas marcas" },
-        { "value": "mic", "label": "Solo MIC" },
-        { "value": "little-mic", "label": "Solo Little MIC" }
-      ],
-      "default": "all"
-    },
     {
       "type": "header",
       "content": "Columnas"

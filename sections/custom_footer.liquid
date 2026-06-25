@@ -17,29 +17,6 @@
   {%- if section.settings.show_newsletter -%}
     <div class="custom-footer__newsletter custom-center-container color-{{ section.settings.color_scheme }}">
       <div class="custom-footer__newsletter_container custom-standar-max-width">
-        {%- if section.settings.newsletter_deco_left_mic != blank -%}
-          <img
-            class="custom-footer__newsletter-deco custom-footer__newsletter-deco--left"
-            src="{{ section.settings.newsletter_deco_left_mic | image_url: width: 200 }}"
-            width="140"
-            height="140"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-          >
-        {%- endif -%}
-        {%- if section.settings.newsletter_deco_right_mic != blank -%}
-          <img
-            class="custom-footer__newsletter-deco custom-footer__newsletter-deco--right"
-            src="{{ section.settings.newsletter_deco_right_mic | image_url: width: 200 }}"
-            width="140"
-            height="140"
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
-          >
-        {%- endif -%}
-
         <div class="custom-footer__newsletter-inner custom-standar-max-width">
           <div class="custom-footer__newsletter-text">
             {%- if section.settings.newsletter_title != blank -%}
@@ -318,34 +295,12 @@
     {% endif %}
   >
     <div class="custom-footer_tagline_container custom-standar-max-width">
-      {%- if section.settings.tagline_deco_left_mic != blank -%}
-        <img
-          class="custom-footer__tagline-deco custom-footer__tagline-deco--left"
-          src="{{ section.settings.tagline_deco_left_mic | image_url: width: 220 }}"
-          width="160"
-          height="160"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-        >
-      {%- endif -%}
       <p
         class="custom-footer__tagline"
         style="{% if section.settings.tagline_color != blank %}color: {{ section.settings.tagline_color }};{% endif %}"
       >
         {{- section.settings.tagline | default: 'AMERICANINO' -}}
       </p>
-      {%- if section.settings.tagline_deco_right_mic != blank -%}
-        <img
-          class="custom-footer__tagline-deco custom-footer__tagline-deco--right"
-          src="{{ section.settings.tagline_deco_right_mic | image_url: width: 220 }}"
-          width="160"
-          height="160"
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-        >
-      {%- endif -%}
     </div>
   </div>
 

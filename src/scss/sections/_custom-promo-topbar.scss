@@ -33,17 +33,6 @@
   justify-content: center;
 }
 
-// Brand visibility — uses visibility (not display:none) to preserve reserved height
-.custom-promo-topbar__content[data-promo-brand='little-mic'] {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.custom-promo-topbar__content[data-promo-brand='mic'],
-.custom-promo-topbar__content[data-promo-brand='all'] {
-  visibility: visible;
-  opacity: 1;
-}
 
 // ── Image type ───────────────────────────────────────────────────────────────
 .custom-promo-topbar__image-link {

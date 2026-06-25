@@ -1,7 +1,6 @@
 {%- comment -%} MOXIE: SEO Text - contenido de texto optimizado para SEO con colapso y pills de keywords {%- endcomment -%}
 
 {%- liquid
-  assign brand_visibility  = section.settings.brand_visibility | default: 'all'
   assign text_align        = section.settings.text_align       | default: 'center'
   assign collapse_enabled  = section.settings.collapse_enabled
   assign collapse_height   = section.settings.collapse_height  | default: 120
@@ -13,7 +12,6 @@
 <div
   class="custom-seo-text"
   id="seo-text-{{ section.id }}"
-  data-brand-show="{{ brand_visibility }}"
   style="
     padding-block: {{ padding_v }}px;
     --seo-text-align: {{ text_align }};
@@ -172,21 +170,6 @@
   "settings": [
     {
       "type": "header",
-      "content": "Marca"
-    },
-    {
-      "type": "select",
-      "id": "brand_visibility",
-      "label": "Visible para",
-      "options": [
-        { "value": "all",        "label": "Ambas marcas" },
-        { "value": "mic",        "label": "Solo MIC" },
-        { "value": "little-mic", "label": "Solo Little MIC" }
-      ],
-      "default": "all"
-    },
-    {
-      "type": "header",
       "content": "Contenido"
     },
     {
@@ -270,7 +253,7 @@
           "type": "content",
           "settings": {
             "heading": "Ropa infantil",
-            "body": "<p>La mejor tienda de ropa infantil esta aqui. Compra ya desde camisetas hasta pijamas, itodo para tus pequenos lo tiene MIC!</p>"
+            "body": "<p>La mejor tienda de ropa esta aqui!</p>"
           }
         },
         {

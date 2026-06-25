@@ -4,7 +4,6 @@
   assign show_promo    = section.settings.show_promo
   assign promo_type    = section.settings.promo_type
   assign bar_height    = section.settings.bar_height
-  assign visibility    = section.settings.brand_visibility | default: 'all'
   assign promo_text    = section.settings.promo_text
   assign promo_link    = section.settings.promo_link
   assign font_weight   = section.settings.font_weight
@@ -12,7 +11,7 @@
 -%}
 
 <style>
-  :root { --promo-bar-height: {% if visibility == 'all' or visibility == 'mic' %}{{ bar_height }}px{% else %}0px{% endif %}; }
+  :root { --promo-bar-height: {{ bar_height }}px; }
 </style>
 
 <div
@@ -23,7 +22,6 @@
   {%- if show_promo -%}
     <div
       class="custom-promo-topbar__content"
-      data-promo-brand="{{ visibility }}"
       style="{% unless section.settings.bg_color == blank %}background-color: {{ section.settings.bg_color }};{% endunless %}"
     >
 
@@ -114,21 +112,6 @@
       "label": "Mostrar barra promocional",
       "info": "El espacio se reserva siempre. Desactivar oculta el contenido sin mover el layout.",
       "default": false
-    },
-    {
-      "type": "header",
-      "content": "Marca"
-    },
-    {
-      "type": "select",
-      "id": "brand_visibility",
-      "label": "Visible para",
-      "options": [
-        { "value": "all",        "label": "Ambas marcas" },
-        { "value": "mic",        "label": "Solo MIC" },
-        { "value": "little-mic", "label": "Solo Little MIC" }
-      ],
-      "default": "all"
     },
     {
       "type": "header",

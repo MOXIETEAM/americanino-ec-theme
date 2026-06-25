@@ -1,7 +1,6 @@
 {%- comment -%} MOXIE: Logo Slider - carrusel de logos de marcas/socios {%- endcomment -%}
 
 {%- liquid
-  assign brand_visibility = section.settings.brand_visibility | default: 'all'
   assign logo_height      = section.settings.logo_height      | default: 48
   assign padding_v        = section.settings.padding_v        | default: 20
   assign spv_desktop      = section.settings.slides_desktop   | default: 6
@@ -31,7 +30,6 @@
 <div
   class="custom-logo-slider custom-standar-max-width"
   id="logo-slider-{{ section.id }}"
-  data-brand-show="{{ brand_visibility }}"
   data-slides-desktop="{{ spv_desktop }}"
   data-slides-mobile="{{ spv_mobile }}"
   data-autoplay="{{ autoplay_speed }}"
@@ -179,21 +177,6 @@
     "groups": ["footer"]
   },
   "settings": [
-    {
-      "type": "header",
-      "content": "Marca"
-    },
-    {
-      "type": "select",
-      "id": "brand_visibility",
-      "label": "Visible para",
-      "options": [
-        { "value": "all",        "label": "Ambas marcas" },
-        { "value": "mic",        "label": "Solo MIC" },
-        { "value": "little-mic", "label": "Solo Little MIC" }
-      ],
-      "default": "all"
-    },
     {
       "type": "header",
       "content": "Logos"

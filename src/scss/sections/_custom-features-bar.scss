@@ -75,11 +75,3 @@
   margin: 0;
 }
 
-// ── Brand visibility ──────────────────────────────────────────────────────────
-
-.custom-features-bar[data-brand-show='little-mic'] { display: none; }
-
-.custom-features-bar[data-brand-show='mic'],
-.custom-features-bar[data-brand-show='all'] {
-  display: block;
-}

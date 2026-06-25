@@ -74,7 +74,6 @@
         {%- for link in block_settings.menu.links -%}
           {%- assign dec_image = blank -%}
           {%- assign dec_position = 'right' -%}
-          {%- assign dec_brand = 'all' -%}
           {%- assign dec_size = 20 -%}
           {%- assign link_title_normalized = link.title | strip | downcase -%}
           {%- for n in (1..10) -%}
@@ -109,23 +108,23 @@
               {% if is_highlighted %}style="color: {{ highlight_color }}; font-weight: {{ highlight_font_weight }};"{% endif %}
             >
               {%- if dec_image != blank and dec_position == 'above' -%}
-                <span class="nav-decorator nav-decorator--above" data-brand-show="{{ dec_brand }}">
+                <span class="nav-decorator nav-decorator--above">
                   <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
                 </span>
               {%- endif -%}
               {%- if dec_image != blank and dec_position == 'left' -%}
-                <span class="nav-decorator nav-decorator--left" data-brand-show="{{ dec_brand }}">
+                <span class="nav-decorator nav-decorator--left">
                   <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
                 </span>
               {%- endif -%}
               {{- link.title -}}
               {%- if dec_image != blank and dec_position == 'right' -%}
-                <span class="nav-decorator nav-decorator--right" data-brand-show="{{ dec_brand }}">
+                <span class="nav-decorator nav-decorator--right">
                   <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
                 </span>
               {%- endif -%}
               {%- if dec_image != blank and dec_position == 'below' -%}
-                <span class="nav-decorator nav-decorator--below" data-brand-show="{{ dec_brand }}">
+                <span class="nav-decorator nav-decorator--below">
                   <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
                 </span>
               {%- endif -%}
@@ -886,11 +885,6 @@
     {
       "type": "paragraph",
       "content": "Logo que aparece dentro del menú móvil al abrirlo. Si no se configura, se usa el logo general de la tienda."
-    },
-    {
-      "type": "image_picker",
-      "id": "mobile_logo_mic",
-      "label": "Logo — imagen (drawer móvil)"
     },
     {
       "type": "video",

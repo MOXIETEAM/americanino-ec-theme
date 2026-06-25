@@ -359,14 +359,6 @@
   color: rgb(var(--color-primary-rgb, 255 100 0));
 }
 
-// ── Brand visibility ──────────────────────────────────────────────────────────
-
-.custom-brand-showcase[data-brand-show='little-mic'] { display: none; }
-
-.custom-brand-showcase[data-brand-show='mic'],
-.custom-brand-showcase[data-brand-show='all'] {
-  display: block;
-}
 
 
 @media (max-width: 768px) {

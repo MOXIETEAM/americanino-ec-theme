@@ -127,14 +127,6 @@
   @include reduced-motion { transition: none; }
 }
 
-// ── Brand visibility ──────────────────────────────────────────────────────────
-
-.custom-seo-text[data-brand-show='little-mic'] { display: none; }
-
-.custom-seo-text[data-brand-show='mic'],
-.custom-seo-text[data-brand-show='all'] {
-  display: block;
-}
 
 @media (max-width: 768px) {
   .custom-seo-text__body {

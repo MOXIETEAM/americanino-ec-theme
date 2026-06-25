@@ -64,3 +64,16 @@
     position: relative;
   }
 }
+
+/* -----------------------------------------------------------------------
+   6. Mega menu drawer fix (mobile)
+   Cuando el drawer lateral está abierto, las secciones del wrapper
+   (hero sticky z-index:1, overlay z-index:2) pueden pintar encima del
+   .menu-drawer (position:fixed) si el stacking context del header-section
+   no gana la comparación en el contexto raíz.
+   Bajando a z-index:0 mientras el drawer está abierto lo resuelve sin
+   afectar el efecto visual durante el scroll normal.
+   ----------------------------------------------------------------------- */
+body:has(.menu-drawer-container.menu-open) .moxie-stacking-wrapper > .shopify-section {
+  z-index: 0;
+}

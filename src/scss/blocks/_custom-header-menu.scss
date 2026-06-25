@@ -97,15 +97,6 @@
   flex-shrink: 0;
 }
 
-// nav-decorator always visible (Americanino — marca única)
-.nav-decorator[data-brand-show='little-mic'] {
-  display: none !important;
-}
-
-.nav-decorator[data-brand-show='mic'],
-.nav-decorator[data-brand-show='all'] {
-  display: inline-flex !important;
-}
 
 .nav-decorator__img {
   display: block;

@@ -53,8 +53,7 @@
   flex-wrap: wrap;
 }
 
-.plp-hero__bc-brand { display: none; }
-.plp-hero__bc-brand--mic { display: inline; }
+.plp-hero__bc-brand { display: inline; }
 
 .plp-hero__bc-sep,
 .plp-hero__bc-collection {
@@ -117,14 +116,6 @@
   }
 }
 
-// ── Brand visibility a nivel de seccion ───────────────────────────────────────
-
-.custom-plp-hero[data-brand-show='little-mic'] { display: none; }
-
-.custom-plp-hero[data-brand-show='mic'],
-.custom-plp-hero[data-brand-show='all'] {
-  display: block;
-}
 
 // ── Animacion de entrada ──────────────────────────────────────────────────────
 
