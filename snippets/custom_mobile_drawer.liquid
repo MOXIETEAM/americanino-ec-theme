@@ -740,3 +740,24 @@ color: #1E2B51;
     }
   }
 {% endstylesheet %}
+
+{% javascript %}
+  // MOXIE: Garantiza que el header-section tenga z-index máximo cuando el
+  // drawer está abierto. Fallback JS para casos donde el CSS :has() no gana
+  // por especificidad o no está soportado en el browser.
+  (function () {
+    var details = document.getElementById('Details-menu-drawer-container');
+    var headerSection = document.querySelector('.header-section');
+    if (!details || !headerSection) return;
+
+    var observer = new MutationObserver(function () {
+      if (details.classList.contains('menu-open')) {
+        headerSection.style.setProperty('z-index', '9999', 'important');
+      } else {
+        headerSection.style.removeProperty('z-index');
+      }
+    });
+
+    observer.observe(details, { attributes: true, attributeFilter: ['class'] });
+  })();
+{% endjavascript %}

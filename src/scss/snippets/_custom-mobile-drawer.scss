@@ -3,6 +3,17 @@
 // header-drawer.liquid (donde vive el CSS base). Este archivo porta el
 // CSS esencial para que el drawer funcione correctamente.
 
+// ── Fix: drawer siempre encima del hero stacking effect ──────────────────────
+// custom-stacking-effect.css eleva hero a z-index:1 y overlay a z-index:2
+// dentro de .moxie-stacking-wrapper. Al abrir el drawer, el header-section
+// necesita estar explícitamente sobre esas secciones para que el drawer
+// (position:fixed dentro del header-section) sea visible.
+body:has(.menu-drawer-container.menu-open) {
+  .header-section {
+    z-index: var(--layer-temporary) !important;
+  }
+}
+
 // ── Contenedor del drawer ───────────────────────────────────────────────────
 .menu-drawer {
   position: fixed;
