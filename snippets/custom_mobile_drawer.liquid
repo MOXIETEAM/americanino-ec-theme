@@ -793,47 +793,54 @@ color: #1E2B51;
 {% endstylesheet %}
 
 {% javascript %}
-  // MOXIE: Garantiza que el header-section tenga z-index máximo cuando el
-  // drawer está abierto. Fallback JS para casos donde el CSS :has() no gana
-  // por especificidad o no está soportado en el browser.
+  // MOXIE: Drawer open/close side-effects.
+  //
+  // Problema raíz: .header tiene contain:layout, lo que lo convierte en el
+  // containing block de cualquier position:fixed dentro de él (incluido
+  // .menu-drawer). Cuando el usuario ha hecho scroll, .header está en el
+  // top del *documento* (no del viewport), así que .menu-drawer aparece
+  // fuera de la pantalla visible.
+  //
+  // Solución: al abrir el drawer, forzar contain:style en el header via
+  // inline style (elimina el layout containment). Más confiable que el
+  // CSS :has() porque funciona en iOS < 16 y no tiene problemas de timing.
   (function () {
     var details = document.getElementById('Details-menu-drawer-container');
     var headerSection = document.querySelector('.header-section');
-    if (!details || !headerSection) return;
+    var header = document.querySelector('#header-component');
+    if (!details) return;
 
     var observer = new MutationObserver(function () {
-      if (details.classList.contains('menu-open')) {
-        headerSection.style.setProperty('z-index', '9999', 'important');
-      } else {
-        headerSection.style.removeProperty('z-index');
+      var isOpen = details.classList.contains('menu-open');
+
+      // Elevar z-index del header-section para que quede sobre el resto
+      if (headerSection) {
+        if (isOpen) {
+          headerSection.style.setProperty('z-index', '9999', 'important');
+        } else {
+          headerSection.style.removeProperty('z-index');
+        }
+      }
+
+      if (header) {
+        if (isOpen) {
+          // 1. Quitar contain:layout — crea containing block para fixed
+          header.style.setProperty('contain', 'style');
+          // 2. Quitar backdrop-filter — TAMBIÉN crea containing block para
+          //    position:fixed. #header-component[data-bg-type='glass'] lo
+          //    aplica directamente en el elemento, lo que hace que
+          //    .menu-drawer se posicione relativo al header en lugar del
+          //    viewport. Al abrirlo lo neutralizamos via inline style.
+          header.style.setProperty('backdrop-filter', 'none');
+          header.style.setProperty('-webkit-backdrop-filter', 'none');
+        } else {
+          header.style.removeProperty('contain');
+          header.style.removeProperty('backdrop-filter');
+          header.style.removeProperty('-webkit-backdrop-filter');
+        }
       }
     });
 
     observer.observe(details, { attributes: true, attributeFilter: ['class'] });
-  })();
-
-  // MOXIE: iOS Safari scroll-lock fix.
-  // Cuando html[scroll-lock] aplica overflow:hidden, Safari pierde la
-  // referencia al viewport para position:fixed. La solución es fijar el
-  // <body> con top:-scrollY al abrir y restaurar la posición al cerrar.
-  (function () {
-    var details = document.getElementById('Details-menu-drawer-container');
-    if (!details) return;
-
-    var savedScrollY = 0;
-
-    details.addEventListener('toggle', function () {
-      if (details.open) {
-        savedScrollY = window.scrollY;
-        document.body.style.position = 'fixed';
-        document.body.style.top = '-' + savedScrollY + 'px';
-        document.body.style.width = '100%';
-      } else {
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
-        window.scrollTo(0, savedScrollY);
-      }
-    });
   })();
 {% endjavascript %}
