@@ -373,14 +373,65 @@
 </header-drawer>
 
 {% stylesheet %}
+  /* ─── Base .menu-drawer positioning ────────────────────────────────────────
+     header-drawer.liquid no se renderiza en este tema, así que su CSS base
+     no llega a la página. Estas reglas son copia fiel de las que define ese
+     snippet para que el panel sea position:fixed y se anime correctamente.
+     ─────────────────────────────────────────────────────────────────────── */
+
+  .menu-drawer {
+    position: fixed;
+    transform: translateX(-100%);
+    visibility: hidden;
+    height: var(--drawer-height);
+    width: var(--drawer-width);
+    max-width: var(--drawer-max-width);
+    z-index: var(--layer-menu-drawer);
+    left: 0;
+    top: 0;
+    padding: 0;
+    background-color: var(--color-background);
+    overflow: auto;
+    display: flex;
+    border-right: var(--style-border-drawer);
+    box-shadow: var(--shadow-drawer);
+    flex-direction: column;
+  }
+
+  .menu-drawer.menu-drawer--has-submenu-opened {
+    overflow: initial;
+  }
+
+  .menu-drawer,
+  details[open] > .menu-drawer__submenu {
+    transition: transform var(--drawer-animation-speed) ease,
+      visibility var(--drawer-animation-speed) ease,
+      opacity var(--drawer-animation-speed) ease;
+  }
+
+  .menu-open > .menu-drawer,
+  .menu-open > .menu-drawer__submenu:not(.menu-drawer__menu--childlist) {
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-drawer__inner-submenu {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+  }
+
   /* ─── Custom Mobile Drawer ──────────────────────────────────────────────── */
 
   .custom-mobile-drawer .menu-drawer {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: var(--drawer-height);
     overflow: hidden;
-    padding: 0;
     padding: 0 20px;
   }
 
@@ -759,5 +810,30 @@ color: #1E2B51;
     });
 
     observer.observe(details, { attributes: true, attributeFilter: ['class'] });
+  })();
+
+  // MOXIE: iOS Safari scroll-lock fix.
+  // Cuando html[scroll-lock] aplica overflow:hidden, Safari pierde la
+  // referencia al viewport para position:fixed. La solución es fijar el
+  // <body> con top:-scrollY al abrir y restaurar la posición al cerrar.
+  (function () {
+    var details = document.getElementById('Details-menu-drawer-container');
+    if (!details) return;
+
+    var savedScrollY = 0;
+
+    details.addEventListener('toggle', function () {
+      if (details.open) {
+        savedScrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = '-' + savedScrollY + 'px';
+        document.body.style.width = '100%';
+      } else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, savedScrollY);
+      }
+    });
   })();
 {% endjavascript %}
