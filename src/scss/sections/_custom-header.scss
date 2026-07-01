@@ -33,6 +33,20 @@
     }
 }
 
+// Con el buscador abierto, fondo del header sólido en blanco (sin blur ni
+// gradiente) — `custom-search-drawer[data-open]` se mantiene en el header
+// aunque el panel de resultados se mueva a <body>, así que este :has() sigue
+// funcionando con el buscador abierto.
+#header-component:has(custom-search-drawer[data-open]) {
+  .header__row--top,
+  .header__row--bottom {
+    background: #fff !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+}
+
 
 // // Cuando el header es sticky (data-sticky-state="active"), el fondo pasa a blanco →
 // // el texto del navbar debe ser oscuro (foreground del color scheme activo).
@@ -40,27 +54,6 @@
 //     color: var(--mox-navbar-font-color, var(--color-foreground));
 //     transition: color var(--animation-speed) var(--animation-easing);
 // }
-
-// Cuando el drawer de búsqueda está abierto, forzar fondo blanco y texto negro
-// en todas las filas del header para que el contenido no se pierda.
-#header-component:has(custom-search-drawer[data-open]) {
-  .header__row {
-    // background-color: #fff;
-  //   background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
-  // backdrop-filter: blur(10px);
-  // -webkit-backdrop-filter: blur(10px);
-
-  // background: linear-gradient(90.04deg, rgba(255, 255, 255, 0.8) 7.98%, rgba(255, 255, 255, 0.15) 150.17%);
-  // backdrop-filter: blur(10px);
-  // -webkit-backdrop-filter: blur(10px);
-    transition: background-color var(--animation-speed) var(--animation-easing);
-  }
-
-  .custom-navbar__link {
-    color: #000;
-    transition: color var(--animation-speed) var(--animation-easing);
-  }
-}
 
 // ── Inline Search Bar (neutralización de márgenes negativos del tema base) ─────
 .custom-search-bar.search-action,
@@ -169,30 +162,58 @@ custom-search-drawer[data-open] .mox-spill__input {
   }
 }
 
-// ── Panel desplegable fijo bajo el header ─────────────────────────────────────
+// ── Panel lateral derecho, debajo del header ───────────────────────────────────
+// Reutiliza las variables de ancho/velocidad del drawer nativo del tema
+// (--drawer-width / --drawer-max-width / --drawer-animation-speed, ver
+// snippets/theme-styles-variables.liquid) solo que anclado a la derecha en vez
+// de la izquierda, y arrancando debajo del header en vez de tapándolo.
+// `--mox-sdrawer-top` la mantiene actualizada custom-search-drawer.js con la
+// posición real del borde inferior del header (soporta sticky/transparente);
+// el calc() es el valor de respaldo antes de que el JS corra.
 .mox-sdrawer {
   position: fixed;
-  inset-inline: 0;
-  top: var(--header-height, 64px);
-  z-index: calc(var(--layer-sticky) - 1); // justo debajo del header sticky
-  background-color: var(--color-background);
-  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
-  box-shadow: 0 8px 32px rgb(0 0 0 / 0.08);
+  top: var(--mox-sdrawer-top, calc(var(--header-group-height, 37px) + var(--header-height, 76px)));
+  right: 0;
+  left: auto;
+  bottom: 0;
+  width: var(--drawer-width, 100dvw);
+  max-width: var(--drawer-max-width, 500px);
+  z-index: var(--layer-menu-drawer, 18);
 
-  // Estado cerrado: panel fuera de pantalla arriba
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 200ms var(--animation-easing),
-              transform 200ms var(--animation-easing);
+  // Glass — mismo blur/saturate de marca que usa el header en modo
+  // data-bg-type="glass" (--mox-hbg-blur / --mox-hbg-saturate), con más
+  // opacidad de fondo porque este panel es alto y lleva contenido con el que
+  // hay que mantener buen contraste, no solo una franja decorativa.
+  background-color: rgb(var(--color-background-rgb) / 0.55);
+  backdrop-filter: blur(var(--mox-hbg-blur, 20px)) saturate(var(--mox-hbg-saturate, 160%));
+  -webkit-backdrop-filter: blur(var(--mox-hbg-blur, 20px)) saturate(var(--mox-hbg-saturate, 160%));
+  border-left: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+  box-shadow: var(--shadow-drawer, -8px 0 32px rgb(0 0 0 / 0.12));
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  // Estado cerrado: panel fuera de pantalla a la derecha
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform var(--drawer-animation-speed, 0.2s) ease,
+              visibility var(--drawer-animation-speed, 0.2s) ease;
 
   // Estado abierto (atributo añadido por JS)
   &[data-open] {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
+    visibility: visible;
   }
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
+
+    // Igual que el header: sin blur cuando el usuario pide menos movimiento,
+    // compensando con más opacidad para no perder contraste.
+    background-color: rgb(var(--color-background-rgb) / 0.97);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
@@ -200,10 +221,12 @@ custom-search-drawer[data-open] .mox-spill__input {
 // Esto garantiza que NO hay flash en carga — el panel empieza con hidden.
 
 .mox-sdrawer__inner {
-  max-width: 860px;
-  margin-inline: auto;
-  padding-inline: var(--page-margin);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-inline: var(--padding-lg, 20px);
   padding-block: var(--padding-md);
+  overflow: hidden;
 }
 
 // Reset de estilos globales que search-modal.liquid inyecta en predictive-search-component
@@ -220,6 +243,7 @@ custom-search-drawer[data-open] .mox-spill__input {
 .mox-sdrawer__toolbar {
   display: flex;
   justify-content: flex-end;
+  flex-shrink: 0;
   margin-block-end: var(--padding-xs);
 }
 
@@ -249,7 +273,8 @@ custom-search-drawer[data-open] .mox-spill__input {
 
 // ── Área de resultados ────────────────────────────────────────────────────────
 .mox-sdrawer__results {
-  max-height: 52dvh;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   scrollbar-width: none;
 
@@ -261,11 +286,15 @@ custom-search-drawer[data-open] .mox-spill__input {
 // ── Botón "Ver todos" ─────────────────────────────────────────────────────────
 .mox-sdrawer__foot {
   display: none;
+  flex-shrink: 0;
   padding-block-start: var(--padding-sm);
   text-align: center;
 }
 
-.mox-sdrawer__psc:has([data-search-results]):not(:has(.predictive-search-results__no-results)) {
+// Autocontenido (no depende de .mox-sdrawer__psc como ancestro): al abrir, el
+// panel se mueve fuera de predictive-search-component (ver custom-search-drawer.js),
+// así que [data-search-results] debe evaluarse dentro del propio .mox-sdrawer.
+.mox-sdrawer:has([data-search-results]):not(:has(.predictive-search-results__no-results)) {
   .mox-sdrawer__foot {
     display: block;
   }

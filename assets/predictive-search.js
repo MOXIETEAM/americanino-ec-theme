@@ -332,11 +332,6 @@ class PredictiveSearchComponent extends Component {
         morph(predictiveSearchResults, resultsMarkup);
 
         this.#resetScrollPositions();
-        
-        // MOXIE: Filtrar productos después de cargar resultados
-        requestIdleCallback(() => {
-          this.#filterProductsByVendor();
-        });
       })
       .catch((error) => {
         if (abortController.signal.aborted) return;
@@ -428,11 +423,6 @@ class PredictiveSearchComponent extends Component {
 
     morph(predictiveSearchResults, parsedEmptySectionMarkup);
     this.#resetScrollPositions();
-    
-    // MOXIE: Filtrar productos recientemente vistos
-    requestIdleCallback(() => {
-      this.#filterProductsByVendor();
-    });
   };
 }
 
