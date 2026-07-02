@@ -133,7 +133,6 @@
             "button_aJ9iMb": {
               "type": "button",
               "name": "t:names.button",
-              "disabled": true,
               "settings": {
                 "label": "Hombre",
                 "link": "shopify://collections/hombre",
@@ -149,7 +148,6 @@
             "button_berzMA": {
               "type": "button",
               "name": "t:names.button",
-              "disabled": true,
               "settings": {
                 "label": "Mujer",
                 "link": "shopify://collections/all",
