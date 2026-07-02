@@ -14,6 +14,7 @@
 
 {% unless style == 'none' %}
   <custom-search-drawer
+    id="mox-search-drawer"
     class="search-action custom-search-bar{% if class != blank %} {{ class | strip }}{% endif %}"
   >
     <predictive-search-component
@@ -85,7 +86,7 @@
                 type="button"
                 class="mox-sdrawer__close"
                 aria-label="{{ 'accessibility.close_dialog' | t }}"
-                on:click="custom-search-drawer/closeDrawer"
+                on:click="#mox-search-drawer/closeDrawer"
               >
                 <span class="svg-wrapper" aria-hidden="true">
                   {{ 'icon-close.svg' | inline_asset_content }}
