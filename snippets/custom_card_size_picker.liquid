@@ -61,9 +61,11 @@
             role="listitem"
             aria-label="{{ value }}"
             data-variant-id="{{ best_variant.id }}"
+            data-tooltip="{{ 'moxie.product.add' | t }}"
           >{{ value }}</a>
         {%- endfor -%}
       </div>
+      <p class="mox-sp__success" aria-live="polite">{{ 'moxie.product.added' | t }}</p>
     </div>
 
     {%- comment -%} ── Botón toggle (solo mobile) ──────────────────────── {%- endcomment -%}

@@ -7,9 +7,14 @@ import { CartAddEvent } from '@theme/events';
  * - Mobile: toggle open/close via the + button.
  * Clicking a size option adds it directly to the cart via AJAX.
  */
+const ADDED_MESSAGE_DURATION = 1800;
+
 class MoxSizePickerComponent extends Component {
   /** @type {((e: MouseEvent) => void) | null} */
   #outsideClickHandler = null;
+
+  /** @type {number | null} */
+  #addedTimeout = null;
 
   /**
    * Toggle the size picker open/closed (called via on:click="/toggle").
@@ -93,14 +98,28 @@ class MoxSizePickerComponent extends Component {
         })
       );
 
-      // Close picker on mobile after successful add
-      this.removeAttribute('data-open');
-      this.querySelector('.mox-sp__toggle')?.setAttribute('aria-expanded', 'false');
+      this.#showAddedMessage();
     } catch (err) {
       console.error('[mox-size-picker] Cart add failed:', err);
     } finally {
       this.removeAttribute('data-adding');
     }
+  }
+
+  /**
+   * Shows the "added to bag" message in place of the size options, then
+   * reverts (and closes the picker on mobile) after a short delay.
+   */
+  #showAddedMessage() {
+    window.clearTimeout(this.#addedTimeout ?? undefined);
+    this.setAttribute('data-added', '');
+
+    this.#addedTimeout = window.setTimeout(() => {
+      this.removeAttribute('data-added');
+      this.removeAttribute('data-open');
+      this.querySelector('.mox-sp__toggle')?.setAttribute('aria-expanded', 'false');
+      this.#addedTimeout = null;
+    }, ADDED_MESSAGE_DURATION);
   }
 
   connectedCallback() {
@@ -127,6 +146,8 @@ class MoxSizePickerComponent extends Component {
       document.removeEventListener('click', this.#outsideClickHandler);
       this.#outsideClickHandler = null;
     }
+
+    window.clearTimeout(this.#addedTimeout ?? undefined);
   }
 }
 

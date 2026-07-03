@@ -10,7 +10,7 @@
 
 <div class="custom-center-container{% unless s.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_on_mobile %} mox-hidden-mobile{% endunless %}">
 <div
-  class="mox-cg color-{{ s.color_scheme }} custom-standar-max-width{% if s.btn_hover_only %} mox-cg--btn-hover{% endif %}"
+  class="mox-cg color-{{ s.color_scheme }} custom-standar-max-width"
   style="
     --mox-cg-pt: {{ s.padding_top }}px;
     --mox-cg-pb: {{ s.padding_bottom }}px;
@@ -57,7 +57,7 @@
           endif
         -%}
 
-        <div class="mox-cg__card" {{ block.shopify_attributes }}>
+        <div class="mox-cg__card{% if has_genders and b.btn_hover_only %} mox-cg__card--btn-hover{% endif %}" {{ block.shopify_attributes }}>
 
           {%- if b.image != blank -%}
             {{
@@ -254,16 +254,6 @@
     },
     {
       "type": "header",
-      "content": "Botones de categoría"
-    },
-    {
-      "type": "checkbox",
-      "id": "btn_hover_only",
-      "label": "Mostrar botones solo al hacer hover (desktop)",
-      "default": true
-    },
-    {
-      "type": "header",
       "content": "Visibilidad"
     },
     {
@@ -338,6 +328,13 @@
           "id": "show_gender_links",
           "label": "Mostrar botones",
           "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "btn_hover_only",
+          "label": "Activar para mostrar botones siempre (desktop) / Desactivar para mostrar botones solo al hacer hover (desktop) / Siempre visibles (móvil)",
+          "default": true,
+          "visible_if": "{{ block.settings.show_gender_links }}"
         },
         {
           "type": "text",

@@ -375,6 +375,8 @@
     "product": {
       "select_size": "Select your size",
       "view_sizes": "View sizes",
+      "add": "Add",
+      "added": "Added to your shopping bag",
       "badge_new": "New",
       "badge_free_shipping": "Free Shipping"
     }

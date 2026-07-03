@@ -150,22 +150,22 @@ category-grid-slider {
   flex-wrap: wrap;
 }
 
-// Solo en desktop con clase --btn-hover: ocultar botones hasta hover
+// Por categoría: ocultar botones hasta hover solo en desktop
 @media (min-width: 769px) {
-  .mox-cg--btn-hover .mox-cg__genders {
+  .mox-cg__card--btn-hover .mox-cg__genders {
     opacity: 0;
     transform: translateY(6px);
     transition: opacity 200ms ease, transform 200ms ease;
   }
 
-  .mox-cg--btn-hover .mox-cg__card:hover .mox-cg__genders,
-  .mox-cg--btn-hover .mox-cg__card:focus-within .mox-cg__genders {
+  .mox-cg__card--btn-hover:hover .mox-cg__genders,
+  .mox-cg__card--btn-hover:focus-within .mox-cg__genders {
     opacity: 1;
     transform: translateY(0);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mox-cg--btn-hover .mox-cg__genders {
+    .mox-cg__card--btn-hover .mox-cg__genders {
       transition: none;
     }
   }

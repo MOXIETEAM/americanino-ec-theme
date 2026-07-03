@@ -56,6 +56,32 @@ mox-size-picker-component[data-open] .mox-sp__panel {
   margin: 0;
 }
 
+// ── Success message: shown after adding to cart, replaces label + options ────
+.mox-sp__success {
+  display: none;
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e2b51;
+  padding: 0 12px;
+}
+
+mox-size-picker-component[data-added] {
+  .mox-sp__label,
+  .mox-sp__options {
+    display: none;
+  }
+
+  .mox-sp__success {
+    display: block;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: mox-sp-fade-in var(--animation-speed, 300ms) var(--ease-out-cubic, ease) both;
+    }
+  }
+}
+
 .mox-sp__options {
   display: flex;
   flex-wrap: wrap;
@@ -64,6 +90,7 @@ mox-size-picker-component[data-open] .mox-sp__panel {
 }
 
 .mox-sp__option {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -82,6 +109,49 @@ mox-size-picker-component[data-open] .mox-sp__panel {
     // border-color: var(--color-foreground);
     text-decoration: none;
     outline: none;
+  }
+
+  // ── Tooltip "Agregar" (solo desktop, la panel mobile ya muestra un label) ───
+  @include tablet-up {
+    &::before,
+    &::after {
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+
+      @media (prefers-reduced-motion: no-preference) {
+        transition: opacity var(--animation-speed, 200ms) var(--animation-easing, ease);
+      }
+    }
+
+    &::before {
+      content: attr(data-tooltip);
+      white-space: nowrap;
+      background: #1e2b51;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+
+    &::after {
+      content: '';
+      bottom: 100%;
+      border: 4px solid transparent;
+      border-top-color: #1e2b51;
+    }
+
+    &:hover::before,
+    &:hover::after,
+    &:focus-visible::before,
+    &:focus-visible::after {
+      opacity: 1;
+    }
   }
 }
 

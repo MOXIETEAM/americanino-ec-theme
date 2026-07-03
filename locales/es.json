@@ -333,6 +333,8 @@
     "product": {
       "select_size": "Selecciona tu talla",
       "view_sizes": "Ver tallas",
+      "add": "Agregar",
+      "added": "Agregado a tu bolsa de compras",
       "badge_new": "Nuevo",
       "badge_free_shipping": "Envío Gratis"
     }
