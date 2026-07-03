@@ -35,6 +35,19 @@ body {
   }
 }
 
+// ── Botones de estilo principal ─────────────────────────────────────────────────
+.button:not(.button-secondary, .button-unstyled) {
+  min-width: 229px;
+  height: 31px;
+  border-radius: 31px;
+
+  &:hover {
+    --button-background-color: #1E2B51;
+    --button-color: #fff;
+    border-color: #1E2B51;
+  }
+}
+
 // ── Visibilidad por dispositivo ────────────────────────────────────────────────
 @media screen and (min-width: 750px) {
   .mox-hidden-desktop { display: none !important; }
