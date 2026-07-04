@@ -295,12 +295,26 @@
     {% endif %}
   >
     <div class="custom-footer_tagline_container custom-standar-max-width">
-      <p
-        class="custom-footer__tagline"
-        style="{% if section.settings.tagline_color != blank %}color: {{ section.settings.tagline_color }};{% endif %}"
-      >
-        {{- section.settings.tagline | default: 'AMERICANINO' -}}
-      </p>
+      {%- if section.settings.tagline_image != blank -%}
+        <img
+          src="{{ section.settings.tagline_image | image_url: width: 800 }}"
+          alt="{{ section.settings.tagline | default: 'AMERICANINO' }}"
+          width="800"
+          height="{{ 800 | divided_by: section.settings.tagline_image.aspect_ratio }}"
+          loading="lazy"
+          class="custom-footer__tagline-img"
+          {% unless section.settings.tagline_image_auto_width %}
+            style="max-width: {{ section.settings.tagline_image_width }}px;"
+          {% endunless %}
+        >
+      {%- else -%}
+        <p
+          class="custom-footer__tagline"
+          style="{% if section.settings.tagline_color != blank %}color: {{ section.settings.tagline_color }};{% endif %}"
+        >
+          {{- section.settings.tagline | default: 'AMERICANINO' -}}
+        </p>
+      {%- endif -%}
     </div>
   </div>
 
@@ -569,7 +583,31 @@
     {
       "type": "color",
       "id": "tagline_color",
-      "label": "Color del tagline"
+      "label": "Color del tagline",
+      "visible_if": "{{ section.settings.tagline_image == blank }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "tagline_image",
+      "label": "Imagen del tagline (opcional, reemplaza el texto)"
+    },
+    {
+      "type": "checkbox",
+      "id": "tagline_image_auto_width",
+      "label": "Crecer automáticamente según el contenedor",
+      "default": true,
+      "visible_if": "{{ section.settings.tagline_image != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "tagline_image_width",
+      "label": "Ancho máximo de la imagen",
+      "min": 100,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 400,
+      "visible_if": "{{ section.settings.tagline_image != blank and section.settings.tagline_image_auto_width == false }}"
     },
     {
       "type": "header",

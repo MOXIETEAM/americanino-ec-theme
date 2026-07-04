@@ -390,6 +390,14 @@
   }
 }
 
+.custom-footer__tagline-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-inline: auto;
+}
+
 .custom-footer__tagline-deco {
   position: absolute;
   top: 50%;
