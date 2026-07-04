@@ -327,7 +327,7 @@
 
   {%- comment -%} ── Barra inferior: sellos + texto legal ──────────────────────── {%- endcomment -%}
   {%- assign _has_bottom = false -%}
-  {%- if section.settings.legal_text != blank or section.settings.trust_badge_1 != blank or section.settings.trust_badge_2 != blank -%}
+  {%- if section.settings.legal_text != blank or section.settings.trust_badge_1 != blank -%}
     {%- assign _has_bottom = true -%}
   {%- endif -%}
   {%- if _has_bottom -%}
@@ -337,45 +337,24 @@
     >
       <div class="custom-footer__bottom-inner custom-standar-max-width">
 
-        {%- if section.settings.trust_badge_1 != blank or section.settings.trust_badge_2 != blank -%}
+        {%- if section.settings.trust_badge_1 != blank -%}
           <div class="custom-footer__trust-badges">
-            {%- if section.settings.trust_badge_1 != blank -%}
-              {%- if section.settings.trust_badge_1_url != blank -%}
-                <a href="{{ section.settings.trust_badge_1_url }}" class="custom-footer__trust-link" target="_blank" rel="noopener">
-                  <img
-                    src="{{ section.settings.trust_badge_1 | image_url: width: 120 }}"
-                    alt="{{ section.settings.trust_badge_1_alt | default: 'Sello de confianza' }}"
-                    height="40"
-                    loading="eager"
-                  >
-                </a>
-              {%- else -%}
+            {%- if section.settings.trust_badge_1_url != blank -%}
+              <a href="{{ section.settings.trust_badge_1_url }}" class="custom-footer__trust-link" target="_blank" rel="noopener">
                 <img
                   src="{{ section.settings.trust_badge_1 | image_url: width: 120 }}"
                   alt="{{ section.settings.trust_badge_1_alt | default: 'Sello de confianza' }}"
                   height="40"
                   loading="eager"
                 >
-              {%- endif -%}
-            {%- endif -%}
-            {%- if section.settings.trust_badge_2 != blank -%}
-              {%- if section.settings.trust_badge_2_url != blank -%}
-                <a href="{{ section.settings.trust_badge_2_url }}" class="custom-footer__trust-link" target="_blank" rel="noopener">
-                  <img
-                    src="{{ section.settings.trust_badge_2 | image_url: width: 120 }}"
-                    alt="{{ section.settings.trust_badge_2_alt | default: 'Sello de confianza' }}"
-                    height="40"
-                    loading="eager"
-                  >
-                </a>
-              {%- else -%}
-                <img
-                  src="{{ section.settings.trust_badge_2 | image_url: width: 120 }}"
-                  alt="{{ section.settings.trust_badge_2_alt | default: 'Sello de confianza' }}"
-                  height="40"
-                  loading="eager"
-                >
-              {%- endif -%}
+              </a>
+            {%- else -%}
+              <img
+                src="{{ section.settings.trust_badge_1 | image_url: width: 120 }}"
+                alt="{{ section.settings.trust_badge_1_alt | default: 'Sello de confianza' }}"
+                height="40"
+                loading="eager"
+              >
             {%- endif -%}
           </div>
         {%- endif -%}
@@ -608,32 +587,17 @@
     {
       "type": "image_picker",
       "id": "trust_badge_1",
-      "label": "Sello 1"
+      "label": "Sello de confianza"
     },
     {
       "type": "text",
       "id": "trust_badge_1_alt",
-      "label": "Texto alternativo sello 1"
+      "label": "Texto alternativo del sello"
     },
     {
       "type": "url",
       "id": "trust_badge_1_url",
-      "label": "Enlace sello 1 (opcional)"
-    },
-    {
-      "type": "image_picker",
-      "id": "trust_badge_2",
-      "label": "Sello 2"
-    },
-    {
-      "type": "text",
-      "id": "trust_badge_2_alt",
-      "label": "Texto alternativo sello 2"
-    },
-    {
-      "type": "url",
-      "id": "trust_badge_2_url",
-      "label": "Enlace sello 2 (opcional)"
+      "label": "Enlace del sello (opcional)"
     },
     {
       "type": "richtext",
