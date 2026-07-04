@@ -36,7 +36,9 @@ body {
 }
 
 // ── Botones de estilo principal ─────────────────────────────────────────────────
-.button:not(.button-secondary, .button-unstyled) {
+// Excluye botones icon-only nativos (ej: cerrar el buscador) que también usan
+// la clase base .button pero deben conservar su tamaño compacto (44x44).
+.button:not(.button-secondary, .button-unstyled, .predictive-search__close-modal-button) {
   min-width: 229px;
   height: 31px;
   border-radius: 31px;
@@ -46,6 +48,32 @@ body {
     --button-color: #fff;
     border-color: #1E2B51;
   }
+}
+
+// ── Mini cart: evitar scroll horizontal en la card de producto ─────────────────
+.cart-drawer {
+  .cart-items__table {
+    table-layout: fixed;
+  }
+
+  .cart-items__table-row {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .cart-items__details,
+  .cart-items__title,
+  .cart-items__product-info {
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+// ── Mini cart: color del botón de checkout ──────────────────────────────────────
+.cart-drawer .cart__checkout-button {
+  --button-background-color: #1E2B51;
+  --button-color: #fff;
 }
 
 // ── Visibilidad por dispositivo ────────────────────────────────────────────────
