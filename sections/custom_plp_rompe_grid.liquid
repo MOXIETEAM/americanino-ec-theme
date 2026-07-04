@@ -8,8 +8,9 @@
     imagen                  → archivo (imagen)
     titulo                  → texto corto
     descripcion             → texto multilinea
-    texto_boton             → texto corto
-    url_boton               → enlace (URL)
+    texto_del_boton         → texto corto
+    url_del_boton           → enlace (URL)
+    url_del_banner          → enlace (URL) — si tiene valor, TODO el banner es clickeable (solo sin pines)
     color_de_fondo_cuando_no_hay_imagen → color
     color_de_texto          → color
     posicion                → entero (despues de cual producto insertar, 1-based)
@@ -52,8 +53,9 @@
   imagen (blank?)   = {{ banner.imagen.value | json }}
   titulo            = {{ banner.titulo.value | json }}
   descripcion       = {{ banner.descripcion.value | json }}
-  texto_boton       = {{ banner.texto_boton.value | json }}
-  url_boton         = {{ banner.url_boton.value | json }}
+  texto_del_boton   = {{ banner.texto_del_boton.value | json }}
+  url_del_boton (raw)   = {{ banner.url_del_boton.value | json }}
+  url_del_banner (raw)  = {{ banner.url_del_banner.value | json }}
   bg_color          = {{ banner.color_de_fondo_cuando_no_hay_imagen.value | json }}
   text_color        = {{ banner.color_de_texto.value | json }}
   pin_1_producto    = {{ banner.pin_1_producto.value.title | json }}
@@ -84,6 +86,12 @@
 <script id="plp-rompe-grid-data-{{ section.id }}" type="application/json">
 [
   {%- for banner in plp_banners -%}
+    {%- comment -%}
+      url_del_boton / url_del_banner pueden ser campo "URL" (value = string)
+      o campo "Enlace" (value = {url:, text:}) — se normalizan a string plano.
+    {%- endcomment -%}
+    {%- assign _url_boton_final  = banner.url_del_boton.value.url  | default: banner.url_del_boton.value -%}
+    {%- assign _url_banner_final = banner.url_del_banner.value.url | default: banner.url_del_banner.value -%}
   {
     "donde_mostrar": {{ banner.donde_mostrar.value | json }},
     "posicion":      {{ banner.posicion.value | default: 2 | json }},
@@ -92,8 +100,9 @@
     "imagen_alt":    {{ banner.imagen.value.alt | default: '' | json }},
     "titulo":        {{ banner.titulo.value | json }},
     "descripcion":   {{ banner.descripcion.value | json }},
-    "texto_boton":   {{ banner.texto_boton.value | json }},
-    "url_boton":     {{ banner.url_boton.value | json }},
+    "texto_boton":   {{ banner.texto_del_boton.value | json }},
+    "url_boton":     {{ _url_boton_final | json }},
+    "url_del_banner": {{ _url_banner_final | json }},
     "bg_color":      {{ banner.color_de_fondo_cuando_no_hay_imagen.value | json }},
     "text_color":    {{ banner.color_de_texto.value | json }},
     "pins": [
@@ -507,7 +516,8 @@
     var hasPins  = Array.isArray(banner.pins) && banner.pins.length > 0;
 
     var li = document.createElement('li');
-    li.className = 'product-grid__item plp-rompe-grid plp-rompe-grid--span-' + colSpan;
+    li.className = 'product-grid__item plp-rompe-grid plp-rompe-grid--span-' + colSpan +
+      (hasPins ? ' plp-rompe-grid--has-pins' : ' plp-rompe-grid--no-pins');
     li.setAttribute('role', 'listitem');
 
     if (banner.bg_color)   li.style.backgroundColor = banner.bg_color;
@@ -516,12 +526,30 @@
     /*
      * Si el banner tiene pines el wrapper es siempre <div> para evitar
      * anidar <a> dentro de <a> (popup card vs banner link).
-     * Sin pines, se usa <a> si hay url_boton.
+     * Sin pines, el banner completo es clickeable si tiene url_del_banner.
      */
-    var hasWrapperLink = !hasPins && banner.url_boton && banner.url_boton.length > 0;
+    var hasBannerUrl   = banner.url_del_banner && banner.url_del_banner.length > 0;
+    var hasWrapperLink = !hasPins && hasBannerUrl;
     var inner = document.createElement(hasWrapperLink ? 'a' : 'div');
     inner.className = 'plp-rompe-grid__inner';
-    if (hasWrapperLink) inner.href = banner.url_boton;
+    if (hasWrapperLink) {
+      inner.href = banner.url_del_banner;
+      inner.target = '_blank';
+      inner.rel = 'noopener';
+    }
+
+    /*
+     * Con pines el wrapper no puede ser <a>, así que si hay url_del_banner
+     * se navega manualmente al hacer click, salvo que el click venga de un
+     * pin o de un enlace real (botón, tarjeta del popup).
+     */
+    if (hasPins && hasBannerUrl) {
+      inner.classList.add('plp-rompe-grid__inner--clickable');
+      inner.addEventListener('click', function (e) {
+        if (e.target.closest('.plp-rompe-grid__pin') || e.target.closest('a')) return;
+        window.open(banner.url_del_banner, '_blank', 'noopener');
+      });
+    }
 
     /* Imagen de fondo */
     if (banner.imagen) {
@@ -556,8 +584,8 @@
       }
 
       if (banner.texto_boton) {
-        if (hasPins && banner.url_boton) {
-          /* Con pines: botón es <a> real porque el wrapper no es <a> */
+        if (!hasWrapperLink && banner.url_boton) {
+          /* El wrapper no es <a>: el botón necesita su propio enlace real */
           var btnA = document.createElement('a');
           btnA.className = 'plp-rompe-grid__btn';
           btnA.href = banner.url_boton;

@@ -33,7 +33,8 @@
   text-decoration: none;
   color: inherit;
 
-  &[href]:hover {
+  &[href]:hover,
+  &--clickable:hover {
     .plp-rompe-grid__img {
       transform: scale(1.04);
     }
@@ -41,6 +42,10 @@
     .plp-rompe-grid__btn {
       opacity: 0.75;
     }
+  }
+
+  &--clickable {
+    cursor: pointer;
   }
 }
 
@@ -112,6 +117,67 @@
 
   @include reduced-motion {
     transition: none;
+  }
+}
+
+// ── Variante sin pines: título grande + descripción + botón sólido, centrados ──
+
+.plp-rompe-grid--no-pins {
+  .plp-rompe-grid__inner {
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.15) 40%,
+        transparent 65%
+      );
+      pointer-events: none;
+    }
+  }
+
+  .plp-rompe-grid__content {
+    align-items: center;
+    text-align: center;
+    padding-block-end: 32px;
+
+    @include tablet-up {
+      padding-block-end: 44px;
+    }
+  }
+
+  .plp-rompe-grid__title {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    font-style: italic;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 0 0 6px;
+  }
+
+  .plp-rompe-grid__desc {
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: #fff;
+    opacity: 0.9;
+    margin: 0 0 20px;
+  }
+
+  .plp-rompe-grid__btn {
+    align-self: center;
+    border: 1.5px solid #fff;
+    padding: 12px 32px;
+    color: #fff;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+    box-shadow: 0 5px 33px 0 rgba(0, 0, 0, 0.25);
   }
 }
 
