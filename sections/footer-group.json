@@ -59,7 +59,6 @@
       ],
       "name": "Moxie SEO Text",
       "settings": {
-        "brand_visibility": "all",
         "text_align": "center",
         "collapse_enabled": true,
         "collapse_height": 210,
@@ -139,9 +138,10 @@
         "tagline_color": "#293762",
         "trust_badge_1_alt": "",
         "trust_badge_1_url": "",
+        "trust_badge_2": "shopify://shop_images/645517cad3d70c2e977bee60e7bad4899e297880.png",
         "trust_badge_2_alt": "",
         "trust_badge_2_url": "",
-        "legal_text": "<p>©2025 Americanino, todos los derechos reservados</p>",
+        "legal_text": "<p>Comodin S.A.S | NIT: 800.069.933-6 ©2025 Americanino, todos los derechos reservados  |  Sitio desarrollado en Shopify por Moxie Digital</p>",
         "bottom_bar_bg": "#ffffff",
         "color_scheme": "scheme-1",
         "bg_color": "#1e2b51"
