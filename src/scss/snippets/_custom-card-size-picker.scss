@@ -166,15 +166,15 @@ mox-size-picker-component[data-added] {
   position: absolute;
   right: max(var(--mox-sp-right), (var(--border-radius, 0px) + var(--mox-sp-right)) * 0.2928932188);
   bottom: max(var(--mox-sp-bottom), (var(--border-radius, 0px) + var(--mox-sp-bottom)) * 0.2928932188);
-  width: var(--button-size-md, 40px);
-  height: var(--button-size-md, 40px);
+  width: 21px;
+  height: 21px;
   align-items: center;
   justify-content: center;
   padding: 0;
-  background: var(--color-background);
+  background: #ffffff;
   border: 2px solid hsl(0deg 0% 0% / 15%);
   border-radius: 50px;
-  color: var(--color-foreground);
+  color: #2C2C2C;
   cursor: pointer;
   pointer-events: all;
   backdrop-filter: blur(20px) saturate(180%);
@@ -209,6 +209,7 @@ mox-size-picker-component[data-adding] .mox-sp__options {
     display: flex;
 
     svg {
+      width: 10px;
       transition: transform var(--animation-speed, 300ms) var(--ease-out-cubic, ease);
     }
   }
