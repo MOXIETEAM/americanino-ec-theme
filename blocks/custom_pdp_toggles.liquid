@@ -44,7 +44,7 @@
       >
         <summary class="pdp-toggle__header">
           <span class="pdp-toggle__title">{{ desc_title }}</span>
-          <span class="pdp-toggle__icon" aria-hidden="true">
+          <span class="pdp-toggle__icon icon-plus" aria-hidden="true">
             {{- 'icon-plus.svg' | inline_asset_content -}}
           </span>
         </summary>
@@ -81,7 +81,7 @@
       <details class="pdp-toggle" data-pdp-toggle>
         <summary class="pdp-toggle__header">
           <span class="pdp-toggle__title">{{ s2_title }}</span>
-          <span class="pdp-toggle__icon" aria-hidden="true">
+          <span class="pdp-toggle__icon icon-plus" aria-hidden="true">
             {{- 'icon-plus.svg' | inline_asset_content -}}
           </span>
         </summary>
@@ -99,7 +99,7 @@
       <details class="pdp-toggle" data-pdp-toggle>
         <summary class="pdp-toggle__header">
           <span class="pdp-toggle__title">{{ s3_title }}</span>
-          <span class="pdp-toggle__icon" aria-hidden="true">
+          <span class="pdp-toggle__icon icon-plus" aria-hidden="true">
             {{- 'icon-plus.svg' | inline_asset_content -}}
           </span>
         </summary>
@@ -188,7 +188,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s ease;
     color: #1E2B51;
   }
 
@@ -198,8 +197,19 @@
     display: block;
   }
 
-  .pdp-toggle[open] > .pdp-toggle__header .pdp-toggle__icon {
-    transform: rotate(45deg);
+  /* Plus → minus: autocontenido, no depende de que base.css traiga la regla compartida */
+  .pdp-toggle__icon :is(.horizontal, .vertical) {
+    transform-origin: 50% 50%;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .pdp-toggle[open] > .pdp-toggle__header .pdp-toggle__icon .horizontal {
+    transform: rotate(90deg);
+  }
+
+  .pdp-toggle[open] > .pdp-toggle__header .pdp-toggle__icon .vertical {
+    transform: rotate(90deg);
+    opacity: 0;
   }
 
   .pdp-toggle__body {
