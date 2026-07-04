@@ -636,7 +636,7 @@
         "slides_desktop": "2.5",
         "slides_mobile": "1.5",
         "show_arrows": true,
-        "show_dots": false,
+        "show_dots": true,
         "card_gap": 3,
         "label_size": 26,
         "color_scheme": "",
