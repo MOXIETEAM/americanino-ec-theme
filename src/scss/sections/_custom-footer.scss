@@ -138,7 +138,7 @@
 // ── Main footer ───────────────────────────────────────────────────────────────
 
 .custom-footer__main {
-  padding-block: 52px 44px;
+  padding-block: 52px 5px;
 }
 
 .custom-footer__main-inner {
@@ -468,7 +468,8 @@
   font-size: 0.6875rem;
   line-height: 1.6;
   color: rgb(var(--color-foreground-rgb) / 0.55);
-  text-align: left;
+  text-align: right;
+  flex: 1;
 
   p { margin: 0; }
 
@@ -481,6 +482,7 @@
 
   @media (max-width: 989px) {
     text-align: center;
+    flex: none;
   }
 }
 
