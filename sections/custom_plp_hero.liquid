@@ -114,6 +114,7 @@
 
                   {%- assign meta_img   = item.imagen.value -%}
                   {%- assign meta_label = item.titulo_de_coleccion.value -%}
+                  {%- assign meta_desc  = item.descripcion | metafield_tag -%}
                   {%- comment -%} url_de_coleccion es tipo link → {url:, text:} {%- endcomment -%}
                   {%- assign meta_url   = item.url_de_coleccion.value.url | default: '#' -%}
                   {%- assign meta_bg    = item.color_de_fondo.value | default: '#ffffff' -%}
@@ -139,9 +140,14 @@
                           {{ 'collection-1' | placeholder_svg_tag: 'cat-card__img cat-card__img--placeholder' }}
                         {%- endif -%}
                       </div>
-                      {%- if meta_label != blank -%}
-                        <p class="cat-card__label">{{ meta_label }}</p>
-                      {%- endif -%}
+                      <div class="cat-card__content">
+                        {%- if meta_label != blank -%}
+                          <p class="cat-card__label">{{ meta_label }}</p>
+                        {%- endif -%}
+                        {%- if meta_desc != blank -%}
+                          <div class="cat-card__desc rte">{{ meta_desc }}</div>
+                        {%- endif -%}
+                      </div>
                     </a>
                   </div>
 
