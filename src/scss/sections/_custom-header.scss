@@ -8,6 +8,9 @@
     background-color: transparent;
 }
 
+.header__underlay {
+    border: none !important;
+}
 // ── Altura del header: 67px ────────────────────────────────────────────────────
 // Especificidad > body { --header-height: 60px } del section base.
 // Solo aplica a la fila de contenido; no afecta el margin del banner.
