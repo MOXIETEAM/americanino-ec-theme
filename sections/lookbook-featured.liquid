@@ -258,6 +258,8 @@ text-transform: capitalize;
   background: #fff;
   border-radius: 16px 16px 0 0;
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.15);
+}
+.lb-mobile-drawer__body {
   padding: 16px 20px 40px;
   max-height: 85vh;
   overflow-y: auto;
@@ -273,27 +275,40 @@ text-transform: capitalize;
 }
 
 .lb-mobile-drawer__close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute;
+  top: -16px;
+  right: 50%;
+  transform: translateX(50%);
   width: 28px;
   height: 28px;
-  margin-bottom: 16px;
   padding: 0;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.07);
-  color: #111;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: background 0.15s ease;
 }
 .lb-mobile-drawer__close:hover {
-  background: rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.85);
 }
-.lb-mobile-drawer__close svg {
+.lb-mobile-drawer__close::before,
+.lb-mobile-drawer__close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 13px;
-  height: 13px;
+  height: 2px;
+  background: #111;
+  border-radius: 1px;
   pointer-events: none;
+}
+.lb-mobile-drawer__close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.lb-mobile-drawer__close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /* Product layout inside drawer */
@@ -627,12 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function openMobileDrawer(mobileHtml) {
     drawer.innerHTML = `
-      <button class="lb-mobile-drawer__close" aria-label="Cerrar">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
+      <button class="lb-mobile-drawer__close" aria-label="Cerrar"></button>
       <div class="lb-mobile-drawer__body">${mobileHtml}</div>
     `;
 
