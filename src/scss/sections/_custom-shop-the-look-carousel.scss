@@ -256,6 +256,44 @@ shop-the-look-item {
   }
 }
 
+// ── Popup close button (mobile bottom sheet only) ───────────
+// Desktop already closes via the + button, which morphs into × right
+// next to the popup. On mobile the bottom sheet is anchored to the
+// viewport bottom, far from the item's + button, so it needs its own
+// explicit close control.
+
+.stl-popup-close {
+  display: none;
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 27px;
+  height: 27px;
+  padding: 0;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  border-radius: 50%;
+  background: #fff;
+  color: #1E1E1E;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.14);
+  z-index: 2;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .stl-popup-close {
+    display: flex;
+  }
+}
+
 // ── Popup inner scroll container ────────────────────────────
 
 .stl-popup__inner {

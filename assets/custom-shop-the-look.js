@@ -197,16 +197,23 @@ class ShopTheLookItemComponent extends Component {
       popup.style.maxHeight = '';
       this.#showOverlay();
     } else {
-      // Desktop: anchor popup to the item's top-left corner
+      // Desktop: unfold the popup from the top of the + / × button that toggles it,
+      // so the caret always points back at the button regardless of the item's own size.
       const rect = this.getBoundingClientRect();
+      const btnRect = plusBtn.getBoundingClientRect();
       const margin = 8;
-      const left = Math.min(rect.left, window.innerWidth - popup.offsetWidth - margin);
-      const top = Math.max(margin, rect.top);
+      const caretGap = 10; // clearance below the button for the upward-pointing caret
+      const caretOffset = 32; // caret center distance from the popup's left edge (see .stl-popup::after)
+      const width = Math.min(320, rect.width);
+
+      const btnCenter = btnRect.left + btnRect.width / 2;
+      const left = Math.min(Math.max(margin, btnCenter - caretOffset), window.innerWidth - width - margin);
+      const top = Math.max(margin, btnRect.bottom + caretGap);
       const maxHeight = window.innerHeight - top - margin;
 
       popup.style.top = `${top}px`;
-      popup.style.left = `${Math.max(margin, left)}px`;
-      popup.style.width = `${Math.min(320, rect.width)}px`;
+      popup.style.left = `${left}px`;
+      popup.style.width = `${width}px`;
       popup.style.maxHeight = '';
       popup.style.bottom = '';
       popup.style.right = '';
@@ -237,6 +244,10 @@ class ShopTheLookItemComponent extends Component {
 
     popup.querySelectorAll('.stl-add-btn').forEach((btn) =>
       btn.addEventListener('click', this.handleAddToCart, { signal })
+    );
+
+    popup.querySelectorAll('.stl-popup-close').forEach((btn) =>
+      btn.addEventListener('click', this.#closeHandler, { signal })
     );
     // ─────────────────────────────────────────────────────────────────────
 

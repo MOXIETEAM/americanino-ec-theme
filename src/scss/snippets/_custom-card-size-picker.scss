@@ -104,9 +104,9 @@ mox-size-picker-component[data-added] {
 
   &:hover,
   &:focus-visible {
-    // background: var(--color-foreground);
-    // color: var(--color-background);
-    // border-color: var(--color-foreground);
+    background: #1e2b51;
+    color: #fff;
+    border-radius: 4px;
     text-decoration: none;
     outline: none;
   }
