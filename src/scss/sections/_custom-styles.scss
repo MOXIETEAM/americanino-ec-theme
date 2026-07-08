@@ -76,6 +76,27 @@ body {
   --button-color: #fff;
 }
 
+// ── Dots de sliders nativos: pill/dash en vez de círculo ────────────────────────
+// slideshow-controls es un snippet compartido del tema base (hero, slideshow,
+// galería PDP, etc.) — se sobreescribe aquí en vez de tocar el snippet original.
+.slideshow-controls__dots button {
+  width: 20px !important;
+  height: 20px !important;
+  margin: 0 !important;
+
+  &::after {
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+    transition: width 200ms ease, background-color 200ms ease;
+  }
+
+  &[aria-selected='true']::after {
+    width: 16px !important;
+  }
+}
+
 // ── Visibilidad por dispositivo ────────────────────────────────────────────────
 @media screen and (min-width: 750px) {
   .mox-hidden-desktop { display: none !important; }

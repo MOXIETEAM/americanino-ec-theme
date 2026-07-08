@@ -212,17 +212,17 @@ category-grid-slider {
 
 .mox-cg__dot {
   width: 8px;
-  height: 8px;
-  border-radius: 50%;
+  height: 4px;
+  border-radius: 999px;
   border: none;
   padding: 0;
   cursor: pointer;
   background: rgb(var(--color-foreground-rgb) / 0.25);
-  transition: background 200ms ease, transform 200ms ease;
+  transition: background 200ms ease, width 200ms ease;
 
   &--active {
+    width: 20px;
     background: var(--color-foreground);
-    transform: scale(1.35);
   }
 
   &:hover:not(&--active) {

@@ -211,23 +211,21 @@
 
 .banner-reveal__dot {
   width: 8px;
-  height: 8px;
+  height: 4px;
   padding: 0;
   border: none;
-  border-radius: 50%;
+  border-radius: 999px;
   background: currentColor;
   opacity: 0.35;
   cursor: pointer;
   transition:
     opacity 0.3s ease,
-    width 0.3s ease,
-    border-radius 0.3s ease;
+    width 0.3s ease;
 }
 
 .banner-reveal__dot.is-active {
   opacity: 1;
   width: 22px;
-  border-radius: 4px;
 }
 
 .banner-reveal__arrow {
