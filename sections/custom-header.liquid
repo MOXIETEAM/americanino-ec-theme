@@ -60,10 +60,6 @@
     content_for 'block', type: '_custom-header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
   endcapture
 
-  capture actions
-    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
-  endcapture
-
   if shop.customer_accounts_enabled
     assign search_class = 'search-action--hidden-on-drawer'
   endif
@@ -114,6 +110,22 @@
       render 'search', class: 'search-action--hidden-on-menu', style: search_style, display_style: section.settings.actions_display_style
     endcapture
   endif
+
+  # MOXIE: buscador móvil va dentro de header-actions; drawer_search ya no se
+  # coloca como columna propia del header-row (ver abajo, donde se pasa en
+  # blanco). El megamenu móvil (drawer_menu) se agrega como HERMANO de
+  # <header-actions> — no como hijo — porque .header__drawer lleva
+  # ref="headerDrawerContainer", requerido por header-component (assets/header.js).
+  # Los refs pertenecen al Component ancestro más cercano (ver component.js
+  # #isDescendant): si drawer_menu quedara anidado dentro de <header-actions>
+  # (que es su propio Component), ese ref se lo "robaría" header-actions y
+  # header-component lanzaría MissingRefError en cada carga de página.
+  capture actions
+    render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section, mobile_search: drawer_search
+  endcapture
+  # `capture` overwrites its target when it closes, so appending drawer_menu
+  # must happen AFTER endcapture — doing it inside the block gets clobbered.
+  assign actions = actions | append: drawer_menu
 
   assign show_language = section.settings.show_language
   if localization.available_languages.size <= 1
@@ -376,7 +388,9 @@
 
       case row
         when 'top'
-          assign first = drawer_menu
+          # MOXIE: el drawer_menu (megamenu móvil) ya no va como columna
+          # propia — se renderiza dentro de header-actions (ver mobile_menu).
+          assign first = ''
 
           if bottom_row_blocks.size > 0 and section.settings.divider_size == 'page-width'
             assign class = class | append: ' divider--page-width'
@@ -412,7 +426,7 @@
         actions: actions,
         localization: localization_markup,
         search: search,
-        drawer_search: drawer_search
+        drawer_search: ''
       %}
     {% endcapture %}
 
@@ -926,10 +940,27 @@
     width: var(--button-size);
   }
 
-  .header-actions__action:not(.account-button) svg {
-    width: 28px;
-    height: 28px;
+  .account-button svg {
+    width: 34px !important;
   }
+
+  .header-actions__action svg {
+      width: 26px;
+      height: 28px;
+  }
+
+  @media screen and (max-width: 990px) {
+    
+    .account-button svg {
+      width: 26px !important;
+    }
+
+    .header-actions__action:not(.account-button) svg {
+      width: auto;
+      height: 28px;
+    }
+  }
+
 
   .header:has(#Details-menu-drawer-container[open]) {
     contain: style;
