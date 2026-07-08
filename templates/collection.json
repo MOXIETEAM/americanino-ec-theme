@@ -12,7 +12,12 @@
     "custom_plp_rompe_grid_De7LFz": {
       "type": "custom_plp_rompe_grid",
       "name": "Moxie PLP Rompe-Grid",
-      "settings": {}
+      "settings": {
+        "pin_finance_text": "0% de interés hasta 3 cuotas",
+        "pin_finance_link_label": "ver bancos",
+        "pin_finance_link_url": "",
+        "pin_gif_url": "https://cdn.shopify.com/s/files/1/0980/2380/1123/files/a9d9692f7e9ecdda3e745c1184e08629e5ec3667.gif?v=1783195571"
+      }
     },
     "plp_hero": {
       "type": "custom_plp_hero",
@@ -96,9 +101,8 @@
             "padding-inline-start": 0,
             "padding-inline-end": 0,
             "facets_margin_bottom": 8,
-            "facets_margin_right": 20,
+            "facets_margin_right": 0,
             "moxie_grid_density": true,
-            "moxie_grid_density_brand": "all",
             "moxie_grid_density_show_desktop": true,
             "moxie_grid_density_show_mobile": true
           },
