@@ -61,9 +61,21 @@ category-grid-slider {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  cursor: grab;
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  // Applied via JS while the mouse button is held down and dragging.
+  &--dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
+    user-select: none;
+
+    .mox-cg__card {
+      pointer-events: none;
+    }
   }
 }
 
