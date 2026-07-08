@@ -120,7 +120,10 @@
   margin-right: 10px;
 }
 
-[product-grid-view='list-2'] .product-grid__card > :not(.card-gallery) {
+// :not() excluye product-grid-view-zoom-out--details: ese div va con
+// display:none nativo (solo se usa en la vista "zoom-out"); si lo incluimos
+// aquí, nuestro display:block gana por especificidad y duplica el título.
+[product-grid-view='list-2'] .product-grid__card > :not(.card-gallery, .product-grid-view-zoom-out--details) {
   display: block;
   text-align: left;
 }
@@ -150,16 +153,16 @@
   font-size: 0.5625rem;
 }
 
-// Mobile: col-2 y list-2 en 2 columnas, con menos espacio entre imagen e info
-// (la columna es angosta y el margen de escritorio se come el espacio del texto).
+// Mobile: col-2 mantiene 2 columnas; list-2 pasa a 1 sola columna a ancho
+// completo — la vista de lista es un producto por fila (imagen + info en fila),
+// no dos cards angostas lado a lado.
 @include mobile-only {
-  .product-grid[product-grid-view='col-2'],
-  .product-grid[product-grid-view='list-2'] {
+  .product-grid[product-grid-view='col-2'] {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  [product-grid-view='list-2'] .card-gallery {
-    margin-right: 6px;
+  .product-grid[product-grid-view='list-2'] {
+    grid-template-columns: 1fr;
   }
 }
 
