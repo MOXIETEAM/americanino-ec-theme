@@ -3,6 +3,15 @@
   Reemplaza grid-density-controls con opciones por número exacto de columnas
   y control independiente de viewport.
 
+  IMPORTANTE: no agregar data-grid-layout="desktop-default-option" /
+  "mobile-option" a ningún input de este snippet. results-list.js escucha
+  cambios de breakpoint (mediaQueryLarge) y, en cada cruce, vuelve a aplicar
+  a la fuerza el input marcado con ese atributo — sin importar qué haya
+  elegido el usuario (ej. "Lista"). Con la marca puesta, cualquier resize
+  que cruce los 750px (rotar el dispositivo, redimensionar la ventana, o el
+  propio device toolbar de DevTools asentándose al cargar) revierte la
+  selección del usuario de vuelta a la opción por defecto.
+
   @param {string} viewport - 'desktop' | 'mobile'
   @param {boolean} show_desktop - Mostrar en desktop
   @param {boolean} show_mobile - Mostrar en mobile
@@ -88,7 +97,6 @@
           class="column-options__option-input"
           aria-label="4 productos en card"
           checked
-          data-grid-layout="desktop-default-option"
           on:change="results-list/updateLayout"
           data-skip-node-update
         >
@@ -134,7 +142,6 @@
           class="column-options__option-input"
           aria-label="2 productos en card"
           checked
-          data-grid-layout="mobile-option"
           on:change="results-list/updateLayout"
         >
         <span class="moxie-grid-density__label">

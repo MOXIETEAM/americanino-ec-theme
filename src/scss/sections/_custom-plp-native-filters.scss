@@ -128,6 +128,15 @@
   text-align: left;
 }
 
+// .text-block trae width:100% de base.css (pensado para la card vertical, donde
+// va debajo de la imagen a ancho completo). Un bloque con ancho explícito no se
+// achica para esquivar un float: el navegador termina empujándolo completo debajo
+// de la imagen en vez de ponerlo al lado. Con width:auto sí se ajusta al espacio
+// libre junto al float, que es lo que queremos en la vista lista.
+[product-grid-view='list-2'] .product-grid__card .text-block {
+  width: auto;
+}
+
 [product-grid-view='list-2'] .product-grid__card .group-block {
   align-items: flex-start;
 }
@@ -156,13 +165,18 @@
 // Mobile: col-2 mantiene 2 columnas; list-2 pasa a 1 sola columna a ancho
 // completo — la vista de lista es un producto por fila (imagen + info en fila),
 // no dos cards angostas lado a lado.
+// !important a propósito: aunque la especificidad de este selector ya gana
+// sobre la regla base .product-grid{grid-template-columns:1fr 1fr}, lo forzamos
+// para blindarlo contra cualquier caché de CDN/navegador sirviendo CSS viejo.
 @include mobile-only {
   .product-grid[product-grid-view='col-2'] {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 
   .product-grid[product-grid-view='list-2'] {
-    grid-template-columns: 1fr;
+    // grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 }
 
