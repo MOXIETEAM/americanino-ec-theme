@@ -180,13 +180,9 @@ custom-search-drawer[data-open] .mox-spill__input {
   max-width: var(--drawer-max-width, 500px);
   z-index: var(--layer-menu-drawer, 18);
 
-  // Glass — mismo blur/saturate de marca que usa el header en modo
-  // data-bg-type="glass" (--mox-hbg-blur / --mox-hbg-saturate), con más
-  // opacidad de fondo porque este panel es alto y lleva contenido con el que
-  // hay que mantener buen contraste, no solo una franja decorativa.
-  background-color: rgb(var(--color-background-rgb) / 0.55);
-  backdrop-filter: blur(var(--mox-hbg-blur, 20px)) saturate(var(--mox-hbg-saturate, 160%));
-  -webkit-backdrop-filter: blur(var(--mox-hbg-blur, 20px)) saturate(var(--mox-hbg-saturate, 160%));
+  // MOXIE: fondo blanco sólido — sin glass/blur, para máximo contraste con
+  // el contenido de resultados.
+  background-color: #fff;
   border-left: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
   box-shadow: var(--shadow-drawer, -8px 0 32px rgb(0 0 0 / 0.12));
 
@@ -208,12 +204,6 @@ custom-search-drawer[data-open] .mox-spill__input {
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
-
-    // Igual que el header: sin blur cuando el usuario pide menos movimiento,
-    // compensando con más opacidad para no perder contraste.
-    background-color: rgb(var(--color-background-rgb) / 0.97);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 }
 

@@ -112,6 +112,32 @@
   if section.index == 1
     assign fetch_priority = 'high'
   endif
+
+  # MOXIE: mobile-specific content alignment (independent from desktop alignment)
+  assign mobile_horizontal_alignment = section.settings.horizontal_alignment
+  assign mobile_vertical_alignment = section.settings.vertical_alignment
+  if section.settings.align_baseline and mobile_vertical_alignment == 'flex-end'
+    assign mobile_vertical_alignment = 'last baseline'
+  endif
+
+  unless section.settings.content_direction == 'row'
+    assign mobile_horizontal_alignment = section.settings.horizontal_alignment_flex_direction_column
+    assign mobile_vertical_alignment = section.settings.vertical_alignment_flex_direction_column
+  endunless
+
+  if section.settings.vertical_on_mobile and mobile_vertical_alignment == 'last baseline'
+    assign mobile_vertical_alignment = 'flex-end'
+  endif
+
+  if section.settings.different_alignment_mobile
+    if section.settings.content_direction == 'row'
+      assign mobile_horizontal_alignment = section.settings.horizontal_alignment_mobile
+      assign mobile_vertical_alignment = section.settings.vertical_alignment_mobile
+    else
+      assign mobile_horizontal_alignment = section.settings.horizontal_alignment_mobile_column
+      assign mobile_vertical_alignment = section.settings.vertical_alignment_mobile_column
+    endif
+  endif
 %}
 
 {% capture media_slot_1 %}
@@ -540,7 +566,11 @@
         {{section.settings.section_width}}
         {% if request.design_mode %}hero__content-wrapper--design-mode{% endif %}
       "
-      style="{% render 'layout-panel-style', settings: section.settings %}"
+      style="
+        {% render 'layout-panel-style', settings: section.settings %}
+        --horizontal-alignment-mobile: {{ mobile_horizontal_alignment }};
+        --vertical-alignment-mobile: {{ mobile_vertical_alignment }};
+      "
     >
       {% content_for 'blocks' %}
     </div>
@@ -662,6 +692,18 @@
     .hero--stack-mobile .hero__media-grid {
       grid-template-columns: 1fr;
       grid-template-rows: repeat(var(--hero-media-count-mobile, 1), calc(100% / var(--hero-media-count-mobile, 1)));
+    }
+
+    /* MOXIE: independent content alignment on mobile */
+    .hero__content-wrapper.layout-panel-flex--row:not(.mobile-column) {
+      justify-content: var(--horizontal-alignment-mobile);
+      align-items: var(--vertical-alignment-mobile);
+    }
+
+    .hero__content-wrapper.layout-panel-flex--column,
+    .hero__content-wrapper.mobile-column {
+      justify-content: var(--vertical-alignment-mobile);
+      align-items: var(--horizontal-alignment-mobile);
     }
   }
 
@@ -1078,6 +1120,109 @@
       ],
       "default": "center",
       "visible_if": "{{ section.settings.content_direction == 'column' }}"
+    },
+    {
+      "type": "header",
+      "content": "Alineación en mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "different_alignment_mobile",
+      "label": "Alineación diferente en mobile",
+      "info": "Permite definir una alineación de contenido distinta a la de escritorio para pantallas móviles.",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment_mobile",
+      "label": "Alineación horizontal (mobile)",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.space_between"
+        }
+      ],
+      "default": "flex-start",
+      "visible_if": "{{ section.settings.different_alignment_mobile and section.settings.content_direction == 'row' }}"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment_mobile",
+      "label": "Posición vertical (mobile)",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.bottom"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ section.settings.different_alignment_mobile and section.settings.content_direction == 'row' }}"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment_mobile_column",
+      "label": "Alineación horizontal (mobile)",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start",
+      "visible_if": "{{ section.settings.different_alignment_mobile and section.settings.content_direction != 'row' }}"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment_mobile_column",
+      "label": "Posición vertical (mobile)",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.bottom"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.space_between"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ section.settings.different_alignment_mobile and section.settings.content_direction != 'row' }}"
     },
     {
       "type": "range",
