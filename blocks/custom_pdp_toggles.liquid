@@ -114,6 +114,20 @@
 </div>
 
 <script type="module">
+  (function initExclusiveToggles() {
+    var root = document.getElementById('pdp-toggles-{{ block.id }}');
+    if (!root) return;
+    var toggles = root.querySelectorAll('[data-pdp-toggle]');
+    toggles.forEach(function (details) {
+      details.addEventListener('toggle', function () {
+        if (!details.open) return;
+        toggles.forEach(function (other) {
+          if (other !== details) other.open = false;
+        });
+      });
+    });
+  })();
+
   (function initReadMore() {
     var root = document.getElementById('pdp-toggles-{{ block.id }}');
     if (!root) return;

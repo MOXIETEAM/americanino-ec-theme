@@ -1,4 +1,13 @@
 .product-information {
+  // ── Título del producto — máx. 2 líneas con puntos suspensivos ────────────
+  .product-details h1 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .variant-picker {
     .variant-picker__form {
 
