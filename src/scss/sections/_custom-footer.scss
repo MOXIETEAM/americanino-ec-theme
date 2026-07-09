@@ -166,6 +166,7 @@
 .custom-footer__brand-area {
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   @include desktop-up {
     grid-column: 1;
