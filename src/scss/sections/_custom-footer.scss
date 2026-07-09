@@ -366,6 +366,10 @@
   justify-content: center;
   overflow: hidden;
   padding-block: 8px 0;
+
+  .custom-standar-max-width {
+    padding: 0 !important;
+  }
 }
 
 .custom-footer__tagline {
