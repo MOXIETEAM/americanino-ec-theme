@@ -512,8 +512,8 @@
         "max_swatches": 4,
         "color_scheme": "",
         "bg_color": "",
-        "padding_top": 60,
-        "padding_bottom": 60
+        "padding_top": 8,
+        "padding_bottom": 8
       }
     },
     "custom_category_grid_fBUh4r": {
@@ -648,8 +648,8 @@
         "bg_color": "",
         "show_on_desktop": true,
         "show_on_mobile": true,
-        "padding_top": 40,
-        "padding_bottom": 40
+        "padding_top": 8,
+        "padding_bottom": 8
       }
     },
     "lookbook_featured_tQHMhT": {
