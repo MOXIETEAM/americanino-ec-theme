@@ -226,7 +226,7 @@
   text-transform: uppercase;
   text-decoration: none;
   color: #fff;
-  
+
   background: linear-gradient(90.17deg, 
   rgba(255, 255, 255, 0.5) 0%, 
   rgba(0, 0, 0, 0) 100.43%) border-box;
@@ -441,7 +441,13 @@
 
 .custom-footer__bottom-bar {
   border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
-  padding-block: 18px;
+  // padding-block: 18px;
+  min-height: 45px;
+  max-height: 45px;
+
+  .custom-standar-max-width {
+    padding: 0 !important;
+  }
 }
 
 .custom-footer__bottom-inner {
@@ -479,9 +485,10 @@
 }
 
 .custom-footer__legal {
-  font-size: 0.6875rem;
+  font-size: 13px;
   line-height: 1.6;
-  color: rgb(var(--color-foreground-rgb) / 0.55);
+  font-weight: 400;
+  color: #24272A;
   text-align: right;
   flex: 1;
 
