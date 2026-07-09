@@ -883,6 +883,142 @@
         "animation_duration": 900,
         "stagger_delay": 150
       }
+    },
+    "custom_category_grid_m6CHbJ": {
+      "type": "custom_category-grid",
+      "blocks": {
+        "category_7aeM4D": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ban-colecc-1.webp",
+            "label": "Lorem ipsusom",
+            "sublabel": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "btn_hover_only": false,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        },
+        "category_tEmzVX": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ban-colecc-am75.webp",
+            "label": "Lorem ipsusom",
+            "sublabel": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "btn_hover_only": false,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        },
+        "category_tq6PkJ": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ban-colecc-home-office.webp",
+            "label": "Lorem ipsusom",
+            "sublabel": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "btn_hover_only": false,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        },
+        "category_Y6WDL4": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ban-colecc-new_vintage.webp",
+            "label": "Lorem ipsusom",
+            "sublabel": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "btn_hover_only": false,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        },
+        "category_QwEfn4": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/ban-colecc-party-denim.webp",
+            "label": "Lorem ipsusom",
+            "sublabel": "Lorem ipsusom",
+            "link": "",
+            "show_gender_links": true,
+            "btn_hover_only": false,
+            "label_male": "Hombre",
+            "link_male": "shopify://collections/test-collection",
+            "btn1_bg": "",
+            "btn1_text": "",
+            "btn1_hover": "",
+            "label_female": "Mujer",
+            "link_female": "shopify://collections/test-collection",
+            "btn2_bg": "",
+            "btn2_text": "",
+            "btn2_hover": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_7aeM4D",
+        "category_tEmzVX",
+        "category_tq6PkJ",
+        "category_Y6WDL4",
+        "category_QwEfn4"
+      ],
+      "name": "Moxie Category Grid",
+      "settings": {
+        "title": "Lorem ipsum",
+        "title_size": 32,
+        "subtitle": "Lorem Ipsum es simplemente el texto de relleno de",
+        "header_gap": 20,
+        "slides_desktop": "2.5",
+        "slides_mobile": "1.5",
+        "show_arrows": true,
+        "show_dots": true,
+        "card_gap": 3,
+        "label_size": 26,
+        "color_scheme": "",
+        "bg_color": "",
+        "show_on_desktop": false,
+        "show_on_mobile": true,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -895,6 +1031,7 @@
     "lookbook_featured_tQHMhT",
     "custom_expandable_banner_moxEB",
     "custom_collection_grid_chNDJi",
-    "custom_banner_scroll_reveal_Qxf3LJ"
+    "custom_banner_scroll_reveal_Qxf3LJ",
+    "custom_category_grid_m6CHbJ"
   ]
 }
