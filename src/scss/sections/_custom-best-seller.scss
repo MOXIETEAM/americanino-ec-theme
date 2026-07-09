@@ -55,11 +55,11 @@
   display: inline-flex;
   align-items: center;
   padding: 8px 20px;
-  border: 1.5px solid var(--color-foreground);
+  border: 1.5px solid #1E2B51;
   border-radius: 999px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-foreground);
+  color: #1E2B51;
   text-decoration: none;
   white-space: nowrap;
   transition: background-color 200ms ease, color 200ms ease;
@@ -67,7 +67,7 @@
   max-height: 31px;
 
   &:hover {
-    background-color: var(--color-foreground);
+    background-color:#1E2B51;
     color: var(--color-background);
   }
 
