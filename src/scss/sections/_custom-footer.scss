@@ -226,9 +226,11 @@
   text-transform: uppercase;
   text-decoration: none;
   color: #fff;
-  background:
-    rgba(255, 255, 255, 0.15) padding-box,
-    linear-gradient(90.17deg, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100.43%) border-box;
+  
+  background: linear-gradient(90.17deg, 
+  rgba(255, 255, 255, 0.5) 0%, 
+  rgba(0, 0, 0, 0) 100.43%) border-box;
+
   backdrop-filter: blur(13px);
   -webkit-backdrop-filter: blur(13px);
   box-shadow: 0 5px 33px 0 #00000040;
