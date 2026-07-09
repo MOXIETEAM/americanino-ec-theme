@@ -34,6 +34,16 @@
     if (nextBtn) nextBtn.addEventListener('click', function () { activate(current + 1); });
   }
 
+  function initSlideLinks(banner) {
+    Array.from(banner.querySelectorAll('[data-slide-link]')).forEach(function (slide) {
+      var link = slide.getAttribute('data-slide-link');
+      slide.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        window.location.href = link;
+      });
+    });
+  }
+
   function initObserver(banner) {
     if (reducedMotion) {
       banner.classList.add('is-visible');
@@ -96,6 +106,7 @@
     banner._bannerInit = true;
     initSlider(banner);
     initObserver(banner);
+    initSlideLinks(banner);
   }
 
   function initAll() {

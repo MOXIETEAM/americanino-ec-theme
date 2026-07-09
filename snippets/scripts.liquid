@@ -292,6 +292,8 @@
       items_added_to_cart_one: `{{ 'content.items_added_to_cart.one' | t }}`,
       items_added_to_cart_other: `{{ 'content.items_added_to_cart.other' | t }}`,
       cart_count: `{{ 'accessibility.cart_count' | t }}`,
+      {%- comment -%} MOXIE: needed by custom-category-grid.js to label dynamically-generated dots {%- endcomment -%}
+      mox_go_to_slide: `{{ 'moxie.slideshow.go_to_slide' | t: index: '__INDEX__' }}`,
     },
     routes: {
       cart_add_url: '{{ routes.cart_add_url | append: '.js' }}',

@@ -220,6 +220,13 @@ category-grid-slider {
   align-items: center;
   gap: 6px;
   padding-block-start: 16px;
+
+  // JS toggles [hidden] when there's nothing to page through (every card
+  // fits in view). The class selector above outranks the UA stylesheet's
+  // own [hidden] rule, so it needs restating here to actually take effect.
+  &[hidden] {
+    display: none;
+  }
 }
 
 .mox-cg__dot {

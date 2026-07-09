@@ -19,6 +19,14 @@
     assign discount_pct = diff | times: 100.0 | divided_by: product.compare_at_price | round
   endif
 
+  # MOXIE: segunda imagen para el efecto hover — primer media distinto al featured
+  assign second_media = nil
+  for media in product.media
+    unless media == product.featured_media
+      assign second_media = media
+      break
+    endunless
+  endfor
 -%}
 
 <div class="cg-card custom-product-card-amcno">
@@ -33,10 +41,22 @@
           | image_tag:
             loading: 'lazy',
             alt: product.title,
-            class: 'cg-card__img',
+            class: 'cg-card__img cg-card__img--first',
             widths: '300, 500, 800',
             sizes: '(min-width: 990px) 25vw, 50vw'
         }}
+        {%- if second_media -%}
+          {{
+            second_media.preview_image
+            | image_url: width: 800
+            | image_tag:
+              loading: 'lazy',
+              alt: '',
+              class: 'cg-card__img cg-card__img--second',
+              widths: '300, 500, 800',
+              sizes: '(min-width: 990px) 25vw, 50vw'
+          }}
+        {%- endif -%}
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'cg-card__img cg-card__img--placeholder' }}
       {%- endif -%}

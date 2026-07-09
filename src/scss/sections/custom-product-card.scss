@@ -50,10 +50,22 @@ $bp-mobile-max:        749px;
     transition: transform 0.4s ease;
 
     @include reduced-motion { transition: none; }
+
+    // ── Segunda imagen: crossfade on hover ────────────────────────────
+    &--second {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
   }
 
   &:hover &__img {
     transform: scale(1.03);
+  }
+
+  &:hover &__img--second {
+    opacity: 1;
   }
 
   // ── Badges ───────────────────────────────────────────────────────────

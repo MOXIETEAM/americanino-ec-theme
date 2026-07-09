@@ -44,6 +44,10 @@
   pointer-events: auto;
 }
 
+.banner-reveal__slide[data-slide-link] {
+  cursor: pointer;
+}
+
 /* -----------------------------------------------------------------------
    Media — scale reveal (clip-path removed: height + clip-path simultaneous = jank)
    ----------------------------------------------------------------------- */

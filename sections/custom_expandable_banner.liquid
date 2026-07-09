@@ -41,6 +41,9 @@
           data-slide="{{ forloop.index0 }}"
           data-mini-label="{{ block.settings.mini_label | escape }}"
           data-mini-title="{{ block.settings.mini_title | escape }}"
+          {%- if block.settings.cta_link != blank %}
+          data-slide-link="{{ block.settings.cta_link | escape }}"
+          {%- endif %}
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.image -%}
@@ -168,6 +171,17 @@
 
     banner.addEventListener('mouseenter', stopTimer);
     banner.addEventListener('mouseleave', startTimer);
+
+    /* ── Banner completo clickeable ───────────────────────────── */
+
+    slides.forEach(function (slide) {
+      var link = slide.getAttribute('data-slide-link');
+      if (!link) return;
+      slide.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;
+        window.location.href = link;
+      });
+    });
 
     // Touch / swipe
     var touchStartX = 0;
@@ -310,6 +324,10 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+  }
+
+  .expand-banner__slide[data-slide-link] {
+    cursor: pointer;
   }
 
   .expand-banner__img {

@@ -20,6 +20,9 @@
       <div
         class="banner-reveal__slide{% if forloop.first %} is-active{% endif %}"
         data-slide="{{ forloop.index0 }}"
+        {%- if block.settings.cta_link != blank %}
+        data-slide-link="{{ block.settings.cta_link | escape }}"
+        {%- endif %}
         {{ block.shopify_attributes }}
       >
         <div class="banner-reveal__media" data-reveal-media>

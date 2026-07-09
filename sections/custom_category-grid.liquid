@@ -114,15 +114,14 @@
     {%- endif -%}
 
     {%- if s.show_dots -%}
-      <div class="mox-cg__dots" ref="dotsContainer">
-        {%- for block in section.blocks -%}
-          <button
-            class="mox-cg__dot{% if forloop.first %} mox-cg__dot--active{% endif %}"
-            data-index="{{ forloop.index0 }}"
-            aria-label="{{ 'moxie.slideshow.go_to_slide' | t: index: forloop.index }}"
-          ></button>
-        {%- endfor -%}
-      </div>
+      {%- comment -%}
+        MOXIE: dots are generated entirely by custom-category-grid.js.
+        The number of reachable scroll positions depends on how many cards
+        fit per view (slides_desktop/mobile), which can only be measured at
+        runtime — one dot per block would be wrong whenever more than one
+        card is visible at a time (see _pageCount in the JS file).
+      {%- endcomment -%}
+      <div class="mox-cg__dots" ref="dotsContainer"></div>
     {%- endif -%}
 
   </category-grid-slider>
