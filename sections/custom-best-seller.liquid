@@ -35,7 +35,14 @@
     <div class="mox-bs__grid">
 
       {{- '<!-- Hero -->' -}}
-      <div class="mox-bs__hero">
+      {%- assign hero_tag = 'div' -%}
+      {%- if s.hero_link != blank -%}
+        {%- assign hero_tag = 'a' -%}
+      {%- endif -%}
+      <{{ hero_tag }}
+        class="mox-bs__hero"
+        {% if s.hero_link != blank %}href="{{ s.hero_link }}"{% endif %}
+      >
         {%- if s.hero_image != blank -%}
           {{
             s.hero_image
@@ -57,7 +64,7 @@
             {%- endif -%}
           </div>
         {%- endif -%}
-      </div>
+      </{{ hero_tag }}>
 
       {{- '<!-- Products 2×2 -->' -}}
       <div class="mox-bs__products">
@@ -136,6 +143,11 @@
       "type": "image_picker",
       "id": "hero_image",
       "label": "Imagen"
+    },
+    {
+      "type": "url",
+      "id": "hero_link",
+      "label": "Enlace de la imagen"
     },
     {
       "type": "text",
