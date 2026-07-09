@@ -135,6 +135,7 @@ margin-bottom: 20px;
 }
 
 .lb-product-img-wrap {
+  position: relative;
   overflow: hidden;
   aspect-ratio: 340 / 502;
   background: #f3f3f3;
@@ -145,6 +146,27 @@ margin-bottom: 20px;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.lb-product-img-wrap .lb-product-img--second {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.lb-product-img-wrap:hover .lb-product-img--first {
+  transform: scale(1.03);
+}
+
+.lb-product-img-wrap:hover .lb-product-img--second {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-product-img-wrap img {
+    transition: none;
+  }
 }
 
 .lb-installments {
@@ -538,6 +560,15 @@ document.addEventListener("DOMContentLoaded", () => {
           assign pin_color_list = pin_colors | split: '||'
 
           assign pin_selected = pin_prod.selected_or_first_available_variant
+
+          # MOXIE: segunda imagen para el efecto hover — primer media distinto al featured
+          assign pin_second_media = nil
+          for media in pin_prod.media
+            unless media == pin_prod.featured_media
+              assign pin_second_media = media
+              break
+            endunless
+          endfor
         -%}
     {
       look: "{{ block.settings.look_id }}",
@@ -547,7 +578,8 @@ document.addEventListener("DOMContentLoaded", () => {
       html: `<div class="lb-product">
         <div class="lb-product-img-wrap">
           <a href="{{ pin_prod.url }}">
-            <img src="{{ pin_prod.featured_image | image_url: width: 500 }}" alt="{{ pin_prod.title | escape }}">
+            <img class="lb-product-img--first" src="{{ pin_prod.featured_image | image_url: width: 500 }}" alt="{{ pin_prod.title | escape }}">
+            {% if pin_second_media %}<img class="lb-product-img--second" src="{{ pin_second_media.preview_image | image_url: width: 500 }}" alt="">{% endif %}
           </a>
         </div>
         {% if inst != blank %}<p class="lb-installments">{{ inst | escape }}</p>{% endif %}
