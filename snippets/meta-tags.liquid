@@ -119,6 +119,9 @@
   href="{{ canonical_url }}"
 >
 
+{%- comment -%} MOXIE: Hreflang ES-EC / ES-CO (mapeo manual con la tienda de Colombia) {%- endcomment -%}
+{%- render 'custom_hreflang' -%}
+
 {% if page_description %}
   <meta
     name="description"

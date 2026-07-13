@@ -1,0 +1,52 @@
+{%- comment -%}
+  MOXIE: Hreflang ES-EC / ES-CO — mapeo manual 1 a 1 entre esta tienda
+  (Ecuador, shop.americanino.com) y la tienda hermana de Colombia
+  (americanino.com). Son dos tiendas/plataformas distintas, por lo que
+  no aplica Shopify Markets: el par de URLs se mantiene a mano aquí.
+
+  El mismo bloque de 3 etiquetas debe existir también en el <head> del
+  lado Colombia, apuntando de vuelta a la URL de Ecuador correspondiente.
+
+  Para agregar un nuevo par: sumar un `when` con el handle de colección
+  de Ecuador y las URLs de destino (CO + x-default).
+{%- endcomment -%}
+
+{%- liquid
+  assign ec_url = blank
+  assign co_url = blank
+
+  if request.page_type == 'index'
+    assign ec_url = 'https://www.shop.americanino.com/'
+    assign co_url = 'https://www.americanino.com/'
+  elsif request.page_type == 'collection'
+    case collection.handle
+      when 'ropa-hombre-jeans'
+        assign ec_url = 'https://www.shop.americanino.com/collections/ropa-hombre-jeans'
+        assign co_url = 'https://www.americanino.com/coleccion/ropa-hombre/jeans'
+      when 'ropa-mujer-jeans'
+        assign ec_url = 'https://www.shop.americanino.com/collections/ropa-mujer-jeans'
+        assign co_url = 'https://www.americanino.com/coleccion/ropa-mujer/jeans'
+      when 'ropa-hombre-camisas'
+        assign ec_url = 'https://www.shop.americanino.com/collections/ropa-hombre-camisas'
+        assign co_url = 'https://www.americanino.com/ropa-hombre/camisas'
+      when 'ropa-mujer-camisas'
+        assign ec_url = 'https://www.shop.americanino.com/collections/ropa-mujer-camisas'
+        assign co_url = 'https://www.americanino.com/ropa-mujer/camisas'
+      when 'ropa-hombre-pantalones'
+        assign ec_url = 'https://www.shop.americanino.com/collections/ropa-hombre-pantalones'
+        assign co_url = 'https://www.americanino.com/ropa-hombre/pantalones'
+      when 'ropa-mujer-pantalones'
+        assign ec_url = 'https://www.shop.americanino.com/collections/ropa-mujer-pantalones'
+        assign co_url = 'https://www.americanino.com/ropa-mujer/pantalones'
+      when 'ropa-hombre-polos'
+        assign ec_url = 'https://www.shop.americanino.com/collections/ropa-hombre-polos'
+        assign co_url = 'https://www.americanino.com/ropa-hombre/polos'
+    endcase
+  endif
+-%}
+
+{%- if ec_url != blank -%}
+  <link rel="alternate" hreflang="es-ec" href="{{ ec_url }}">
+  <link rel="alternate" hreflang="es-co" href="{{ co_url }}">
+  <link rel="alternate" hreflang="x-default" href="{{ co_url }}">
+{%- endif -%}
