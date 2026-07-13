@@ -1,8 +1,7 @@
 
 
-<script type="application/ld+json">
-  {{ section.settings.product | structured_data }}
-</script>
+{%- comment -%} MOXIE: JSON-LD Product con sku/mpn/gtin13/aggregateRating unificados {%- endcomment -%}
+{%- render 'custom_structured_data_product', product: section.settings.product -%}
 
 {% capture media_gallery %}
   {% content_for 'block',

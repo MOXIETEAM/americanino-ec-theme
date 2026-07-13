@@ -1,0 +1,56 @@
+{%- comment -%}
+  MOXIE: Product JSON-LD (SEO) — sustituye el filtro nativo `structured_data`
+  para poder unificar sku/mpn/gtin13 y aggregateRating (reviews) en un único
+  bloque, según el brief de datos estructurados del cliente.
+
+  El precio se calcula desde el valor en centavos (`variant.price`) en vez de
+  parsear `money_without_currency`, para no depender del money_format (coma o
+  punto como separador de miles) configurado en el admin de la tienda.
+
+  @param {object} product
+{%- endcomment -%}
+
+{%- liquid
+  assign _variant = product.selected_or_first_available_variant
+  assign _rating = product.metafields.reviews.rating.value
+  assign _rating_count = product.metafields.reviews.rating_count
+-%}
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ shop.url | append: product.url | json }},
+    "image": [
+      {%- for image in product.images -%}
+        {{ image | image_url: width: 2048 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    "description": {{ product.description | strip_html | json }},
+    "sku": {{ _variant.sku | json }},
+    "mpn": {{ _variant.sku | json }},
+    {%- if _variant.barcode != blank -%}
+      "gtin13": {{ _variant.barcode | json }},
+    {%- endif -%}
+    "brand": {
+      "@type": "Brand",
+      "name": "Americanino Ecuador"
+    },
+    {%- if _rating != blank and _rating_count > 0 -%}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "{{ _rating.rating }}",
+        "bestRating": "{{ _rating.scale_max }}",
+        "reviewCount": "{{ _rating_count }}"
+      },
+    {%- endif -%}
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": "{{ _variant.price | divided_by: 100.0 | round: 2 }}",
+      "availability": "http://schema.org/{% if _variant.available %}InStock{% else %}OutOfStock{% endif %}",
+      "itemCondition": "http://schema.org/NewCondition",
+      "url": {{ shop.url | append: product.url | json }}
+    }
+  }
+</script>

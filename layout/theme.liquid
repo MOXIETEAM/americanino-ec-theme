@@ -25,6 +25,8 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
+    {%- comment -%} MOXIE: BreadcrumbList JSON-LD global (SEO) {%- endcomment -%}
+    {%- render 'custom_structured_data_breadcrumb' -%}
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
