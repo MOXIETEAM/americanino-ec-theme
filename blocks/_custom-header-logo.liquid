@@ -91,14 +91,14 @@
   {% endif %}
 
   {%- comment -%} MOXIE: Logo de marca (Americanino) {%- endcomment -%}
-  {%- if block.settings.logo_mic != blank -%}
+  {%- if block.settings.logo_ame != blank -%}
     {%- liquid
-      assign mic_w  = logo_h | times: block.settings.logo_mic.aspect_ratio | ceil
-      assign mic_wm = logo_h_mobile | times: block.settings.logo_mic.aspect_ratio | ceil
-      assign mic_style = '--header-logo-image-width: ' | append: mic_w | append: 'px; --header-logo-image-width-mobile: ' | append: mic_wm | append: 'px; --header-logo-image-height: ' | append: logo_h | append: 'px; --header-logo-image-height-mobile: ' | append: logo_h_mobile | append: 'px;'
+      assign ame_w  = logo_h | times: block.settings.logo_ame.aspect_ratio | ceil
+      assign ame_wm = logo_h_mobile | times: block.settings.logo_ame.aspect_ratio | ceil
+      assign ame_style = '--header-logo-image-width: ' | append: ame_w | append: 'px; --header-logo-image-width-mobile: ' | append: ame_wm | append: 'px; --header-logo-image-height: ' | append: logo_h | append: 'px; --header-logo-image-height-mobile: ' | append: logo_h_mobile | append: 'px;'
     -%}
     <span class="header-logo__image-container header-logo__image-container--brand" data-brand-logo>
-      {%- render 'image', image: block.settings.logo_mic, class: 'header-logo__image', height: settings.logo_height, alt_text_fallback: alt_text_fallback, text_fallback: shop.name, style: mic_style -%}
+      {%- render 'image', image: block.settings.logo_ame, class: 'header-logo__image', height: settings.logo_height, alt_text_fallback: alt_text_fallback, text_fallback: shop.name, style: ame_style -%}
     </span>
   {%- endif -%}
 
@@ -313,7 +313,7 @@
     },
     {
       "type": "image_picker",
-      "id": "logo_mic",
+      "id": "logo_ame",
       "label": "Logo Americanino"
     },
     {

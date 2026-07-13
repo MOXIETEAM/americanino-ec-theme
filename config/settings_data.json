@@ -9,11 +9,11 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/logo-mic.png",
-    "logo_inverse": "shopify://shop_images/logo-mic.png",
+    "logo": "",
+    "logo_inverse": "",
     "logo_height": 100,
     "logo_height_mobile": 72,
-    "favicon": "shopify://shop_images/logo-mic.png",
+    "favicon": "",
     "type_body_font": "archivo_n4",
     "type_subheading_font": "archivo_n4",
     "type_heading_font": "archivo_n4",
