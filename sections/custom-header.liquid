@@ -320,6 +320,22 @@
     assign mox_texture_alpha = section.settings.grad_texture_opacity | divided_by: 100.0
   endif
 -%}
+{%- comment -%}
+  MOXIE: exponemos las variables del glass header en :root (no solo en
+  #header-component) para que el megamenu (vive en <body>, fuera del header)
+  y el account dropdown puedan igualar el mismo blur/overlay. Si el header
+  no está en modo 'glass' estas variables no se emiten, así que las reglas
+  de esos componentes caen solas a su fondo sólido de siempre.
+{%- endcomment -%}
+{%- if mox_bg_type == 'glass' -%}
+  <style>
+    :root {
+      --mox-hbg-blur: {{ section.settings.glass_blur }}px;
+      --mox-hbg-saturate: {{ section.settings.glass_saturate }}%;
+      --mox-hbg-overlay-rgba: {{ mox_glass_overlay_rgba }};
+    }
+  </style>
+{%- endif -%}
 <header-component
   id="header-component"
   class="{{ class }} mox-custom-header-component"

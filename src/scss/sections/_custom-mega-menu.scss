@@ -57,6 +57,12 @@
   max-height: 395px;
   overflow-y: auto;
   background-color: var(--color-background);
+  // MOXIE: si el header está en modo 'glass', --mox-hbg-* existe en :root
+  // y el panel iguala el mismo blur/overlay; si no, estas quedan inválidas
+  // y el panel se queda con el background-color sólido de arriba.
+  background: var(--mox-hbg-overlay-rgba);
+  backdrop-filter: blur(var(--mox-hbg-blur)) saturate(var(--mox-hbg-saturate));
+  -webkit-backdrop-filter: blur(var(--mox-hbg-blur)) saturate(var(--mox-hbg-saturate));
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   border-bottom-left-radius: var(--mega-border-radius, 0px);
   border-bottom-right-radius: var(--mega-border-radius, 0px);

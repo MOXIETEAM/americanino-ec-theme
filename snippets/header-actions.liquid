@@ -348,21 +348,32 @@
     transform: rotate(180deg);
   }
 
+  /* MOXIE: position: fixed (no absolute) porque custom-account-dropdown.js
+     mueve este <ul> a <body> — ver el comentario en ese archivo sobre por
+     qué no puede quedarse anidado en #header-component. top/right los
+     calcula el JS (_positionMenu) contra el botón trigger. */
   .custom-account-dropdown__menu {
-    position: absolute;
-    top: calc(100% + 16px);
-    right: 0;
-    background: #ffffff;
+    position: fixed;
+    background-color: #ffffff;
     list-style: none;
     margin: 0;
     padding: 0;
     min-width: 165px;
     max-width: 166px;
-    backdrop-filter: blur(13px);
 
     box-shadow: 0px 5px 33px 0px #00000040;
 
-    z-index: 400;
+    z-index: var(--layer-temporary);
+    border-radius: 0 0px 5px 5px ;
+  }
+
+  /* MOXIE: si el header está en modo 'glass', --mox-hbg-* existe (ver
+     custom-header.liquid) y el dropdown iguala el mismo blur/overlay; si
+     no, quedan inválidas y se queda con el background-color sólido de arriba. */
+  .custom-account-dropdown__menu {
+    background: var(--mox-hbg-overlay-rgba);
+    backdrop-filter: blur(var(--mox-hbg-blur)) saturate(var(--mox-hbg-saturate));
+    -webkit-backdrop-filter: blur(var(--mox-hbg-blur)) saturate(var(--mox-hbg-saturate));
   }
 
   .custom-account-dropdown__link {
@@ -375,13 +386,13 @@
     letter-spacing: 0%;
     color: #1e2b51;
     white-space: nowrap;
-    transition: background 0.15s;
+    /* transition: background 0.15s; */
     -webkit-font-smoothing: antialiased;
   }
 
-  .custom-account-dropdown__link:hover {
+  /* .custom-account-dropdown__link:hover {
     background: #f7f7f7;
-  }
+  } */
 
   .cart-drawer {
     --cart-drawer-padding: var(--padding-xl) var(--padding-xl);
