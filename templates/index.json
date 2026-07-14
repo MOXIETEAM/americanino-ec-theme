@@ -284,7 +284,7 @@
         "custom_shop_the_look_item_h3W7He": {
           "type": "_custom_shop_the_look_item",
           "settings": {
-            "image": "shopify://shop_images/modelo-1.gif",
+            "image": "shopify://shop_images/Comp_1.gif",
             "product_1": "bermuda-cargo-en-algodon-tiro-medio",
             "product_2": "buzo-regular-en-algodon-estampado-localizado",
             "product_3": "",
@@ -296,7 +296,7 @@
         "custom_shop_the_look_item_t9JaEz": {
           "type": "_custom_shop_the_look_item",
           "settings": {
-            "image": "shopify://shop_images/modelo-2.gif",
+            "image": "shopify://shop_images/Comp_1_1.gif",
             "product_1": "camiseta-estampado-localizado-manga-corta-cuello-redondo-para-mujer",
             "product_2": "camisa-textura-manga-larga-cuello-en-v-para-mujer",
             "product_3": "jeans-regular-en-algodon-tiro-bajo",
@@ -308,7 +308,19 @@
         "custom_shop_the_look_item_adekrC": {
           "type": "_custom_shop_the_look_item",
           "settings": {
-            "image": "shopify://shop_images/modelo-3.gif",
+            "image": "shopify://shop_images/Comp_1_3.gif",
+            "product_1": "falda-corta-en-rayon-tiro-medio-lineas-verticales",
+            "product_2": "camisa-textura-manga-larga-cuello-en-v-para-mujer",
+            "product_3": "camiseta-oversize-algodon-con-bordado-grafico",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
+        },
+        "custom_shop_the_look_item_Gcn9yb": {
+          "type": "_custom_shop_the_look_item",
+          "settings": {
+            "image": "shopify://shop_images/Comp_1_3.gif",
             "product_1": "falda-corta-en-rayon-tiro-medio-lineas-verticales",
             "product_2": "camisa-textura-manga-larga-cuello-en-v-para-mujer",
             "product_3": "camiseta-oversize-algodon-con-bordado-grafico",
@@ -321,7 +333,8 @@
       "block_order": [
         "custom_shop_the_look_item_h3W7He",
         "custom_shop_the_look_item_t9JaEz",
-        "custom_shop_the_look_item_adekrC"
+        "custom_shop_the_look_item_adekrC",
+        "custom_shop_the_look_item_Gcn9yb"
       ],
       "name": "Moxie Shop the Look",
       "settings": {
@@ -504,6 +517,7 @@
         "button_text": "Ver todo",
         "button_link": "/",
         "hero_image": "shopify://shop_images/banner_best_sellers.webp",
+        "hero_link": "",
         "hero_title": "Lorem ipsum",
         "hero_text": "Lorem ipsum",
         "collection": "test-collection",
