@@ -60,7 +60,7 @@
       "settings": {
         "show_breadcrumb": true,
         "breadcrumb_brand": "Americanino",
-        "title_override": "",
+        "title_override": "{{ collection.title }}",
         "description_override": "{{ collection.metafields.custom.seo_descripcionlarga_mic | metafield_tag }}",
         "card_ratio": "1 / 1",
         "slides_desktop": 4,
