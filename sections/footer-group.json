@@ -61,7 +61,7 @@
       "settings": {
         "text_align": "center",
         "collapse_enabled": true,
-        "collapse_height": 90,
+        "collapse_height": 100,
         "label_more": "Ver mas",
         "label_less": "Ver menos",
         "bg_color": "",
