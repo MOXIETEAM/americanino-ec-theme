@@ -10,9 +10,7 @@
   assign show_arrows = false
   if section.blocks.size > 1
     assign autoplay = true
-    if is_static == false
-      assign show_arrows = true
-    endif
+    assign show_arrows = true
   endif
 -%}
 
@@ -49,20 +47,25 @@
       autoplay="{{ s.speed }}" aria-live="polite"
     {% endif %}
   >
-    {% unless is_static %}
-      {% if show_arrows %}
-        {%- liquid
-          assign arrows_class = ''
-          unless s.show_arrows_desktop
-            assign arrows_class = arrows_class | append: ' mox-hidden-desktop'
-          endunless
-          unless s.show_arrows_mobile
-            assign arrows_class = arrows_class | append: ' mox-hidden-mobile'
-          endunless
-        -%}
-        {% render 'slideshow-arrows', icon_style: 'chevron', class: arrows_class %}
-      {% endif %}
-    {% endunless %}
+    {% if show_arrows %}
+      {%- liquid
+        assign arrows_class = ''
+        unless s.show_arrows_desktop
+          assign arrows_class = arrows_class | append: ' mox-hidden-desktop'
+        endunless
+        unless s.show_arrows_mobile
+          assign arrows_class = arrows_class | append: ' mox-hidden-mobile'
+        endunless
+        # MOXIE: layout "static" shows every message in a row on desktop (nothing
+        # to navigate there), but always behaves as a single-slide carousel on
+        # mobile (see stylesheet below) — so force-hide arrows on desktop only,
+        # keeping them available on mobile per show_arrows_mobile.
+        if is_static
+          assign arrows_class = arrows_class | append: ' mox-hidden-desktop'
+        endif
+      -%}
+      {% render 'slideshow-arrows', icon_style: 'chevron', class: arrows_class %}
+    {% endif %}
 
     <div class="announcement-bar__slides">
       {% content_for 'blocks' %}
@@ -241,14 +244,14 @@
       "id": "show_arrows_desktop",
       "label": "Flechas — mostrar en desktop",
       "default": true,
-      "info": "Solo aplica en modo Carrusel."
+      "info": "Solo aplica en modo Carrusel — en Estático nunca se muestran en desktop, ya que todos los mensajes se ven en fila."
     },
     {
       "type": "checkbox",
       "id": "show_arrows_mobile",
       "label": "Flechas — mostrar en móvil",
       "default": true,
-      "info": "Solo aplica en modo Carrusel."
+      "info": "En móvil siempre se comporta como carrusel (incluso en modo Estático), así que esta opción aplica en ambos modos."
     },
     {
       "type": "header",
