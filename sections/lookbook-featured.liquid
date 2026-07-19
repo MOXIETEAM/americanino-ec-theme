@@ -307,11 +307,14 @@ text-transform: capitalize;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: background 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .lb-mobile-drawer__close:hover {
   background: rgba(255, 255, 255, 0.85);
 }
-.lb-mobile-drawer__close::before,
+/* .lb-mobile-drawer__close::before,
 .lb-mobile-drawer__close::after {
   content: '';
   position: absolute;
@@ -328,7 +331,7 @@ text-transform: capitalize;
 }
 .lb-mobile-drawer__close::after {
   transform: translate(-50%, -50%) rotate(-45deg);
-}
+} */
 
 /* Product layout inside drawer */
 .lb-md-product {
@@ -473,6 +476,8 @@ text-transform: capitalize;
             data-look="{{ block.settings.look_id }}"
             alt="{{ block.settings.look_id }}"
             {{ block.shopify_attributes }}
+            width="auto"
+            height="auto"
           >
         {%- endif -%}
       {%- endfor -%}
@@ -488,6 +493,8 @@ text-transform: capitalize;
           src="{{ first_look.settings.image | image_url: width: 900 }}"
           data-look="{{ first_look.settings.look_id }}"
           alt=""
+          width="auto"
+          height="auto"
         >
       {%- endif -%}
     </div>
@@ -671,7 +678,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function openMobileDrawer(mobileHtml) {
     drawer.innerHTML = `
-      <button class="lb-mobile-drawer__close" aria-label="Cerrar"></button>
+      <button class="lb-mobile-drawer__close" aria-label="Cerrar"> <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 11L4.29349 5.22741L0.399395 0H2.67927L5.52496 3.8965H5.59153L8.42058 0H10.5673L6.68986 5.21137L11 11H8.73676L5.49168 6.54227H5.39183L2.16339 11H0Z" fill="#2C2C2C"/>
+</svg>
+</button>
       <div class="lb-mobile-drawer__body">${mobileHtml}</div>
     `;
 
