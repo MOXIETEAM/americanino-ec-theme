@@ -278,6 +278,91 @@
         "padding_bottom": 14
       }
     },
+    "custom_complete_the_look_BAdUFr": {
+      "type": "custom_complete_the_look",
+      "blocks": {
+        "custom_complete_the_look_item_J3QaBF": {
+          "type": "_custom_complete_the_look_item",
+          "settings": {
+            "image": "shopify://shop_images/Comp_1.gif",
+            "product_1": "bermuda-regular-algodon-tiro-medio-para-hombre-azul-551h006-azu174021",
+            "product_2": "",
+            "product_3": "",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
+        },
+        "custom_complete_the_look_item_CwAhTe": {
+          "type": "_custom_complete_the_look_item",
+          "settings": {
+            "image": "shopify://shop_images/Comp_1_1.gif",
+            "product_1": "bermuda-ajuste-estandar-para-hombre-beige-851h002-bei151116",
+            "product_2": "",
+            "product_3": "",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
+        },
+        "custom_complete_the_look_item_YUcwik": {
+          "type": "_custom_complete_the_look_item",
+          "settings": {
+            "image": "shopify://shop_images/Comp_1_4.gif",
+            "product_1": "buzo-estampado-manga-larga-cuello-redondo-para-mujer-azul-681h003-azu174320",
+            "product_2": "",
+            "product_3": "",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
+        },
+        "custom_complete_the_look_item_zrC9e3": {
+          "type": "_custom_complete_the_look_item",
+          "settings": {
+            "image": "shopify://shop_images/Comp_1_3.gif",
+            "product_1": "bolso-compacto-en-poliester-estilo-minimalista-verde-721h500-ver170836",
+            "product_2": "",
+            "product_3": "",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
+        },
+        "custom_complete_the_look_item_GM9diq": {
+          "type": "_custom_complete_the_look_item",
+          "settings": {
+            "image": "shopify://shop_images/Comp_1_2.gif",
+            "product_1": "bermuda-regular-denim-medio-azul-551h001-azu114604",
+            "product_2": "",
+            "product_3": "",
+            "product_4": "",
+            "product_5": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "custom_complete_the_look_item_J3QaBF",
+        "custom_complete_the_look_item_CwAhTe",
+        "custom_complete_the_look_item_YUcwik",
+        "custom_complete_the_look_item_zrC9e3",
+        "custom_complete_the_look_item_GM9diq"
+      ],
+      "name": "Moxie Complete the Look",
+      "settings": {
+        "title": "Compra tu look",
+        "subtitle": "Descubre los productos de cada look",
+        "scroll_speed": 10,
+        "item_width": 280,
+        "item_gap": 0,
+        "section_width": "full-width",
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 40,
+        "enable_stacking": true
+      }
+    },
     "custom_shop_the_look_carousel_8dUNYQ": {
       "type": "custom_shop_the_look_carousel",
       "blocks": {
@@ -349,6 +434,7 @@
         "custom_shop_the_look_item_Gcn9yb",
         "custom_shop_the_look_item_hh9988"
       ],
+      "disabled": true,
       "name": "Moxie Shop the Look",
       "settings": {
         "title": "Compra tu look",
@@ -1071,6 +1157,7 @@
   "order": [
     "custom_hero_yVxjyj",
     "custom_promo_countdown_LkkQWh",
+    "custom_complete_the_look_BAdUFr",
     "custom_shop_the_look_carousel_8dUNYQ",
     "custom_category_grid_JpKEyr",
     "custom_best_seller_3gRU3k",
