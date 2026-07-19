@@ -99,6 +99,35 @@ body {
   }
 }
 
+// ── Bisel de hover en cards de producto ──────────────────────────────────────
+// Marco tipo "bisel" que envuelve toda la card al hacer hover/focus. Cubre las
+// dos familias de card de producto del tema:
+//  - .product-card (elemento base del theme: colecciones, búsqueda, relacionados)
+//    ya trae `transition: transform, box-shadow` en base.css — solo agregamos el valor.
+//  - .cg-card (card propia de Moxie, usada en vitrinas custom) — aquí sí agregamos
+//    la transición porque no la tenía.
+.product-card,
+.cg-card {
+  border-radius: 6px;
+}
+
+.cg-card {
+  transition: box-shadow 0.25s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.product-card:is(:hover, :focus-within),
+.cg-card:is(:hover, :focus-within) {
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.6),
+    inset 0 -1px 0 rgb(0 0 0 / 0.05),
+    0 0 0 1px rgb(30 43 81 / 0.08),
+    0 14px 28px -10px rgb(0 0 0 / 0.18);
+}
+
 // ── Visibilidad por dispositivo ────────────────────────────────────────────────
 @media screen and (min-width: 750px) {
   .mox-hidden-desktop { display: none !important; }
