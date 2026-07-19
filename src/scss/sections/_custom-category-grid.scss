@@ -275,7 +275,7 @@ category-grid-slider {
   height: 18px;
   padding: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.92);
+  background:  #FFFFFF66;
   border: none;
   cursor: pointer;
   display: flex;
@@ -296,7 +296,7 @@ category-grid-slider {
   }
 
   &:hover {
-    background: #fff;
+    background: #FFFFFF66;
   }
 
   &:disabled {
