@@ -353,7 +353,7 @@
       "settings": {
         "title": "Compra tu look",
         "subtitle": "Descubre los productos de cada look",
-        "scroll_speed": 10,
+        "scroll_speed": 20,
         "item_width": 280,
         "item_gap": 0,
         "section_width": "full-width",
