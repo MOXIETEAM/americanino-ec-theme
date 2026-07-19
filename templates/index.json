@@ -916,9 +916,9 @@
       "settings": {
         "show_on_desktop": true,
         "show_on_mobile": false,
-        "show_arrows_desktop": true,
+        "show_arrows_desktop": false,
         "show_arrows_mobile": true,
-        "show_dots_desktop": true,
+        "show_dots_desktop": false,
         "show_dots_mobile": true,
         "color_scheme": "",
         "collapsed_height": 200,
