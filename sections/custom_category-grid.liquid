@@ -10,7 +10,7 @@
 
 <div class="custom-center-container{% unless s.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_on_mobile %} mox-hidden-mobile{% endunless %}">
 <div
-  class="mox-cg color-{{ s.color_scheme }} custom-standar-max-width"
+  class="mox-cg color-{{ s.color_scheme }} custom-standar-max-width{% if s.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if s.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}"
   style="
     --mox-cg-pt: {{ s.padding_top }}px;
     --mox-cg-pb: {{ s.padding_bottom }}px;
@@ -298,6 +298,18 @@
     {
       "type": "header",
       "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "range",

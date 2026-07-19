@@ -201,7 +201,7 @@
 </style>
 
 <div class="cbh-wrapper">
-  <div class="custom-standar-max-width hdt-container">
+  <div class="custom-standar-max-width hdt-container{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
 
     {%- if section.settings.eyebrow != blank or section.settings.brand_name != blank -%}
       <div class="cbh-hero">
@@ -347,6 +347,18 @@
     {
       "type": "header",
       "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "range",

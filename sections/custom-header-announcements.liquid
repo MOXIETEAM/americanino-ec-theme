@@ -30,7 +30,7 @@
 ></div>
 
 <aside
-  class="custom-announcement-bar-moxie announcement-bar spacing-style section section--{{ s.section_width }} color-{{ s.color_scheme }}{% if is_static %} announcement-bar--static{% endif %}"
+  class="custom-announcement-bar-moxie announcement-bar spacing-style section section--{{ s.section_width }} color-{{ s.color_scheme }}{% if is_static %} announcement-bar--static{% endif %}{% if s.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if s.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}"
   style="
     {% render 'spacing-padding', settings: s %};
     --border-bottom-width: {{ s.divider_width }}px;
@@ -372,6 +372,18 @@
     {
       "type": "header",
       "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "range",

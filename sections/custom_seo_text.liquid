@@ -22,7 +22,7 @@
   "
   {{ section.shopify_attributes }}
 >
-  <div class="custom-seo-text__inner page-width custom-standar-max-width">
+  <div class="custom-seo-text__inner page-width custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
 
     {%- comment -%} ── Content blocks ─────────────────────────────────────── {%- endcomment -%}
     {%- if content_blocks.size > 0 -%}
@@ -227,6 +227,22 @@
       "type": "color",
       "id": "border_color",
       "label": "Linea separadora superior"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "range",

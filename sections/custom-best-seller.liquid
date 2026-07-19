@@ -5,7 +5,7 @@
 
 <div class="custom-center-container">
 <div
-  class="mox-bs color-{{ s.color_scheme }} custom-standar-max-width"
+  class="mox-bs color-{{ s.color_scheme }} custom-standar-max-width{% if s.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if s.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}"
   style="
     --mox-bs-pt: {{ s.padding_top }}px;
     --mox-bs-pb: {{ s.padding_bottom }}px;
@@ -215,6 +215,18 @@
     {
       "type": "header",
       "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "range",

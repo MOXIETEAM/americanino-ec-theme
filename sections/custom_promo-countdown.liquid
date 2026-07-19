@@ -58,7 +58,7 @@
   "
   {{ section.shopify_attributes }}
 >
-  <div class="mox-cd__inner page-width custom-standar-max-width">
+  <div class="mox-cd__inner page-width custom-standar-max-width{% if s.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if s.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
 
     {%- if s.promo_text != blank -%}
       <div class="mox-cd__text">{{ s.promo_text }}</div>
@@ -388,6 +388,18 @@
     {
       "type": "header",
       "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "range",

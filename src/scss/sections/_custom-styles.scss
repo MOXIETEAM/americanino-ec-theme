@@ -15,6 +15,22 @@ body {
   padding: 20px 0px;
 }
 
+// ── Padding lateral por dispositivo (switches de sección) ──────────────────────
+// padding-inline en vez de la shorthand `padding` — así solo toca los lados y
+// nunca pisa el padding vertical (top/bottom) que cada sección ya controla por
+// su cuenta (settings o estilos inline).
+.custom-padding-left-right-only-tablet-mobile {
+  @media screen and (max-width: 990px) {
+    padding-inline: 15px;
+  }
+}
+
+.custom-padding-left-right-only-desktop {
+  @media screen and (min-width: 991px) {
+    padding-inline: 15px;
+  }
+}
+
 .custom-hero-mox-container {
   .hero__content-wrapper {
     .text-block

@@ -17,7 +17,7 @@
   {%- if section.settings.show_newsletter -%}
     <div class="custom-footer__newsletter custom-center-container color-{{ section.settings.color_scheme }}">
       <div class="custom-footer__newsletter_container custom-standar-max-width">
-        <div class="custom-footer__newsletter-inner custom-standar-max-width">
+        <div class="custom-footer__newsletter-inner custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
           <div class="custom-footer__newsletter-text">
             {%- if section.settings.newsletter_title != blank -%}
               <div class="custom-footer__newsletter-title">{{ section.settings.newsletter_title }}</div>
@@ -103,7 +103,7 @@
       style="background-color: {{ bg_color }};"
     {% endif %}
   >
-    <div class="custom-footer__main-inner custom-standar-max-width">
+    <div class="custom-footer__main-inner custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
       <div class="custom-footer__grid">
 
         {%- comment -%} Columna 1: todos los bloques brand_info {%- endcomment -%}
@@ -293,7 +293,7 @@
       style="background-color: {{ bg_color }};"
     {% endif %}
   >
-    <div class="custom-footer_tagline_container custom-standar-max-width">
+    <div class="custom-footer_tagline_container custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
       {%- if section.settings.tagline_image != blank -%}
         <img
           src="{{ section.settings.tagline_image | image_url: width: 800 }}"
@@ -325,7 +325,7 @@
         style="background-color: {{ bg_color }};"
       {% endif %}
     >
-      <div class="custom-footer__payments-container custom-standar-max-width">
+      <div class="custom-footer__payments-container custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
         <img
           src="{{ section.settings.payments_image | image_url: width: 900 }}"
           alt="Medios de pago aceptados"
@@ -348,7 +348,7 @@
       class="custom-footer__bottom-bar custom-center-container color-{{ section.settings.color_scheme }}"
       style="{% if section.settings.bottom_bar_bg != blank %}background-color: {{ section.settings.bottom_bar_bg }};{% elsif bg_color != blank %}background-color: {{ bg_color }};{% endif %}"
     >
-      <div class="custom-footer__bottom-inner custom-standar-max-width">
+      <div class="custom-footer__bottom-inner custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
 
         {%- if section.settings.trust_badge_1 != blank -%}
           <div class="custom-footer__trust-badges">
@@ -647,6 +647,22 @@
       "id": "bottom_bar_bg",
       "label": "Color de fondo barra inferior",
       "info": "Si se deja vacío hereda el color del footer"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "header",

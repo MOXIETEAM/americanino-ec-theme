@@ -532,7 +532,7 @@
   {% endcomment %}
 
   <div
-    class="hero__container custom-hero-mox-container spacing-style section section--full-width"
+    class="hero__container custom-hero-mox-container spacing-style section section--full-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}"
     style="{% render 'spacing-style', settings: section.settings %}"
   >
     {%- if section.settings.link != blank -%}
@@ -1368,6 +1368,22 @@
       "unit": "%",
       "default": 75,
       "visible_if": "{{ section.settings.blurred_reflection and section.settings.media_type_1 != 'video' or section.settings.media_type_2 != 'video' }}"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "header",

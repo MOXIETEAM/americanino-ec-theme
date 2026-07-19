@@ -5,7 +5,7 @@
 
 <div
   id="BannerReveal-{{ section.id }}"
-  class="banner-reveal color-{{ section.settings.color_scheme }}{% unless section.settings.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_on_mobile %} mox-hidden-mobile{% endunless %}"
+  class="banner-reveal color-{{ section.settings.color_scheme }}{% unless section.settings.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_on_mobile %} mox-hidden-mobile{% endunless %}{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}"
   style="
     --banner-reveal-collapsed-height: {{ section.settings.collapsed_height }}px;
     --banner-reveal-full-height: {{ section.settings.full_height }}svh;
@@ -204,6 +204,22 @@
       "id": "color_scheme",
       "label": "Esquema de color",
       "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
     },
     {
       "type": "header",
