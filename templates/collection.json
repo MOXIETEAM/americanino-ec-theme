@@ -65,9 +65,13 @@
         "card_ratio": "1 / 1",
         "slides_desktop": 4,
         "slides_mobile": 2,
+        "show_arrows_desktop": true,
+        "show_arrows_mobile": true,
         "bg_color": "",
         "col_sep_color": "rgba(0,0,0,0)",
         "border_color": "rgba(0,0,0,0)",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding_v": 32,
         "info_col_width": 280
       }
@@ -76,6 +80,8 @@
       "type": "custom_plp_filtros",
       "settings": {
         "bg_color": "",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding_v": 12
       }
     },
@@ -209,7 +215,7 @@
         "padding-inline-end": 0,
         "color_scheme": "scheme-1",
         "padding-block-start": 0,
-        "padding-block-end": 32
+        "padding-block-end": 0
       }
     }
   },
