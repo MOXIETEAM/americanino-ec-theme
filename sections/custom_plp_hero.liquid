@@ -31,6 +31,13 @@
     assign has_meta_cards = true
   endif
 
+  assign cat_nav_class = ''
+  unless section.settings.show_arrows_desktop
+    assign cat_nav_class = cat_nav_class | append: ' mox-hidden-desktop'
+  endunless
+  unless section.settings.show_arrows_mobile
+    assign cat_nav_class = cat_nav_class | append: ' mox-hidden-mobile'
+  endunless
 -%}
 
 {%- comment -%} Swiper CDN (idempotente — no se duplica si ya existe) {%- endcomment -%}
@@ -194,10 +201,10 @@
 
             </div>
           </div>
-          <button class="cat-nav cat-nav--prev" aria-label="Anterior">
+          <button class="cat-nav cat-nav--prev{{ cat_nav_class }}" aria-label="Anterior">
             <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
-          <button class="cat-nav cat-nav--next" aria-label="Siguiente">
+          <button class="cat-nav cat-nav--next{{ cat_nav_class }}" aria-label="Siguiente">
             <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
           </button>
         </div>
@@ -366,6 +373,18 @@
       "max": 3,
       "step": 1,
       "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Flechas — mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Flechas — mostrar en móvil",
+      "default": true
     },
     {
       "type": "header",

@@ -39,7 +39,7 @@
   <category-grid-slider>
 
     {%- if s.show_arrows -%}
-      <button class="mox-cg__arrow mox-cg__arrow--prev" ref="prev" aria-label="{{ 'moxie.slideshow.previous' | t }}" disabled>
+      <button class="mox-cg__arrow mox-cg__arrow--prev{% unless s.show_arrows_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_arrows_mobile %} mox-hidden-mobile{% endunless %}" ref="prev" aria-label="{{ 'moxie.slideshow.previous' | t }}" disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
     {%- endif -%}
@@ -108,7 +108,7 @@
     </div>
 
     {%- if s.show_arrows -%}
-      <button class="mox-cg__arrow mox-cg__arrow--next" ref="next" aria-label="{{ 'moxie.slideshow.next' | t }}">
+      <button class="mox-cg__arrow mox-cg__arrow--next{% unless s.show_arrows_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_arrows_mobile %} mox-hidden-mobile{% endunless %}" ref="next" aria-label="{{ 'moxie.slideshow.next' | t }}">
         <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     {%- endif -%}
@@ -121,7 +121,7 @@
         runtime — one dot per block would be wrong whenever more than one
         card is visible at a time (see _pageCount in the JS file).
       {%- endcomment -%}
-      <div class="mox-cg__dots" ref="dotsContainer"></div>
+      <div class="mox-cg__dots{% unless s.show_dots_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_dots_mobile %} mox-hidden-mobile{% endunless %}" ref="dotsContainer"></div>
     {%- endif -%}
 
   </category-grid-slider>
@@ -212,9 +212,37 @@
     },
     {
       "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Flechas — mostrar en desktop",
+      "default": true,
+      "visible_if": "{{ section.settings.show_arrows }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Flechas — mostrar en móvil",
+      "default": true,
+      "visible_if": "{{ section.settings.show_arrows }}"
+    },
+    {
+      "type": "checkbox",
       "id": "show_dots",
       "label": "Mostrar dots de navegación",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_desktop",
+      "label": "Dots — mostrar en desktop",
+      "default": true,
+      "visible_if": "{{ section.settings.show_dots }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_mobile",
+      "label": "Dots — mostrar en móvil",
+      "default": true,
+      "visible_if": "{{ section.settings.show_dots }}"
     },
     {
       "type": "range",

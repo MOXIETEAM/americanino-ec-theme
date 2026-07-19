@@ -85,12 +85,12 @@
 
   {%- if section.blocks.size > 1 -%}
     <div class="banner-reveal__nav" data-nav>
-      <button class="banner-reveal__arrow banner-reveal__arrow--prev" data-prev aria-label="{{ 'moxie.slideshow.previous' | t }}">
+      <button class="banner-reveal__arrow banner-reveal__arrow--prev{% unless section.settings.show_arrows_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_arrows_mobile %} mox-hidden-mobile{% endunless %}" data-prev aria-label="{{ 'moxie.slideshow.previous' | t }}">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="15,18 9,12 15,6"></polyline>
         </svg>
       </button>
-      <div class="banner-reveal__dots" data-dots>
+      <div class="banner-reveal__dots{% unless section.settings.show_dots_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_dots_mobile %} mox-hidden-mobile{% endunless %}" data-dots>
         {%- for block in section.blocks -%}
           <button
             class="banner-reveal__dot{% if forloop.first %} is-active{% endif %}"
@@ -99,7 +99,7 @@
           ></button>
         {%- endfor -%}
       </div>
-      <button class="banner-reveal__arrow banner-reveal__arrow--next" data-next aria-label="{{ 'moxie.slideshow.next' | t }}">
+      <button class="banner-reveal__arrow banner-reveal__arrow--next{% unless section.settings.show_arrows_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_arrows_mobile %} mox-hidden-mobile{% endunless %}" data-next aria-label="{{ 'moxie.slideshow.next' | t }}">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="9,18 15,12 9,6"></polyline>
         </svg>
@@ -165,6 +165,34 @@
       "type": "checkbox",
       "id": "show_on_mobile",
       "label": "Mostrar en móvil",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navegación (flechas y dots)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Flechas — mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Flechas — mostrar en móvil",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_desktop",
+      "label": "Dots — mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_mobile",
+      "label": "Dots — mostrar en móvil",
       "default": true
     },
     {

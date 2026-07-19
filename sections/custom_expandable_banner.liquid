@@ -85,17 +85,17 @@
 
     {%- comment -%} Flechas de navegación {%- endcomment -%}
     {%- if section.blocks.size > 1 -%}
-      <button class="expand-banner__arrow expand-banner__arrow--prev" data-prev aria-label="{{ 'moxie.slideshow.previous' | t }}">
+      <button class="expand-banner__arrow expand-banner__arrow--prev{% unless section.settings.show_arrows_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_arrows_mobile %} mox-hidden-mobile{% endunless %}" data-prev aria-label="{{ 'moxie.slideshow.previous' | t }}">
         {{- 'icon-chevron-left.svg' | inline_asset_content -}}
       </button>
-      <button class="expand-banner__arrow expand-banner__arrow--next" data-next aria-label="{{ 'moxie.slideshow.next' | t }}">
+      <button class="expand-banner__arrow expand-banner__arrow--next{% unless section.settings.show_arrows_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_arrows_mobile %} mox-hidden-mobile{% endunless %}" data-next aria-label="{{ 'moxie.slideshow.next' | t }}">
         {{- 'icon-chevron-right.svg' | inline_asset_content -}}
       </button>
     {%- endif -%}
 
     {%- comment -%} Indicadores de posición {%- endcomment -%}
     {%- if section.blocks.size > 1 -%}
-      <div class="expand-banner__dots" data-dots aria-hidden="true">
+      <div class="expand-banner__dots{% unless section.settings.show_dots_desktop %} mox-hidden-desktop{% endunless %}{% unless section.settings.show_dots_mobile %} mox-hidden-mobile{% endunless %}" data-dots aria-hidden="true">
         {%- for block in section.blocks -%}
           <button
             class="expand-banner__dot{% if forloop.first %} is-active{% endif %}"
@@ -690,6 +690,34 @@
       "step": 1,
       "default": 5,
       "unit": "s"
+    },
+    {
+      "type": "header",
+      "content": "Navegación (flechas y dots)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Flechas — mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Flechas — mostrar en móvil",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_desktop",
+      "label": "Dots — mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots_mobile",
+      "label": "Dots — mostrar en móvil",
+      "default": true
     },
     {
       "type": "header",

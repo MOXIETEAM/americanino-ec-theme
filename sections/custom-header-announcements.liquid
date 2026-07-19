@@ -51,7 +51,16 @@
   >
     {% unless is_static %}
       {% if show_arrows %}
-        {% render 'slideshow-arrows', icon_style: 'chevron' %}
+        {%- liquid
+          assign arrows_class = ''
+          unless s.show_arrows_desktop
+            assign arrows_class = arrows_class | append: ' mox-hidden-desktop'
+          endunless
+          unless s.show_arrows_mobile
+            assign arrows_class = arrows_class | append: ' mox-hidden-mobile'
+          endunless
+        -%}
+        {% render 'slideshow-arrows', icon_style: 'chevron', class: arrows_class %}
       {% endif %}
     {% endunless %}
 
@@ -226,6 +235,20 @@
         { "value": "static", "label": "Estático (todos visibles en fila)" }
       ],
       "default": "static"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Flechas — mostrar en desktop",
+      "default": true,
+      "info": "Solo aplica en modo Carrusel."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Flechas — mostrar en móvil",
+      "default": true,
+      "info": "Solo aplica en modo Carrusel."
     },
     {
       "type": "header",

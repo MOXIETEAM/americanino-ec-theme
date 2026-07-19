@@ -100,6 +100,10 @@ category-grid-slider {
       (100% - (var(--mox-cg-visible-mobile, 1.5) - 1) * var(--mox-cg-gap, 3px)) /
       var(--mox-cg-visible-mobile, 1.5)
     );
+    max-width: 305px;
+    min-width: 305px;
+    min-height: 444px;
+    aspect-ratio: 305 / 444;
   }
 }
 

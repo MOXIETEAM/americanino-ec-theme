@@ -6,6 +6,14 @@
   assign spv_desktop      = section.settings.slides_desktop   | default: 6
   assign spv_mobile       = section.settings.slides_mobile    | default: 3
   assign autoplay_speed   = section.settings.autoplay_speed   | default: 0
+
+  assign logo_nav_class = ''
+  unless section.settings.show_arrows_desktop
+    assign logo_nav_class = logo_nav_class | append: ' mox-hidden-desktop'
+  endunless
+  unless section.settings.show_arrows_mobile
+    assign logo_nav_class = logo_nav_class | append: ' mox-hidden-mobile'
+  endunless
 -%}
 
 {%- comment -%} Load Swiper from CDN (once per page) {%- endcomment -%}
@@ -76,10 +84,10 @@
       </div>
     </div>
 
-    <button class="logo-nav logo-nav--prev" aria-label="Anterior">
+    <button class="logo-nav logo-nav--prev{{ logo_nav_class }}" aria-label="Anterior">
       <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <button class="logo-nav logo-nav--next" aria-label="Siguiente">
+    <button class="logo-nav logo-nav--next{{ logo_nav_class }}" aria-label="Siguiente">
       <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg>
     </button>
   </div>
@@ -208,6 +216,18 @@
       "max": 5,
       "step": 1,
       "default": 3
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_desktop",
+      "label": "Flechas — mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows_mobile",
+      "label": "Flechas — mostrar en móvil",
+      "default": true
     },
     {
       "type": "header",
