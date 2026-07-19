@@ -10,7 +10,7 @@
 -%}
 
 <div
-  class="custom-seo-text"
+  class="custom-seo-text custom-center-container"
   id="seo-text-{{ section.id }}"
   style="
     padding-block: {{ padding_v }}px;
@@ -22,7 +22,7 @@
   "
   {{ section.shopify_attributes }}
 >
-  <div class="custom-seo-text__inner page-width">
+  <div class="custom-seo-text__inner page-width custom-standar-max-width">
 
     {%- comment -%} ── Content blocks ─────────────────────────────────────── {%- endcomment -%}
     {%- if content_blocks.size > 0 -%}
