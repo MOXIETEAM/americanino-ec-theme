@@ -16,9 +16,9 @@
     grid-column: span 2;
   }
 
-  @include mobile-only {
-    // En mobile (2 columnas) span-2 ocupa todo el ancho — correcto.
-    min-height: 160px;
+  @media(max-width: 990px) {
+    // aspect-ratio: var(--rompe-grid-img-ratio, 1.33);
+    min-height: 387px;
   }
 }
 
