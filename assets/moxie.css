@@ -6052,7 +6052,7 @@ shop-the-look-item.mox-bs__card-media {
   }
   .custom-footer__brand-connect {
     order: 3;
-    padding-block: 24px;
+    padding-top: 24px;
     gap: 4px;
   }
   .custom-footer__nav-toggle {
