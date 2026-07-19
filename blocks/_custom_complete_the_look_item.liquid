@@ -10,28 +10,29 @@
   endfor
 %}
 
-<shop-the-look-item
-  class="stl-item"
+<complete-the-look-item
+  class="ctl-item"
   {{ block.shopify_attributes }}
 >
   {%- comment -%} ── Media (GIF / image) ── {%- endcomment -%}
   {%- if block.settings.image != blank -%}
     <img
-      class="stl-item__media"
+      class="ctl-item__media"
       src="{{ block.settings.image | image_url: width: 600 }}"
       alt="{{ block.settings.image.alt | default: '' | escape }}"
       width="{{ block.settings.image.width }}"
       height="{{ block.settings.image.height }}"
-      loading="lazy"
+      loading="eager"
+      fetchpriority="high"
     >
   {%- else -%}
-    {{ 'hero-apparel-1' | placeholder_svg_tag: 'stl-item__media placeholder' }}
+    {{ 'hero-apparel-1' | placeholder_svg_tag: 'ctl-item__media placeholder' }}
   {%- endif -%}
 
   {%- if has_products -%}
     {%- comment -%} ── "+" button — shown on hover via CSS ── {%- endcomment -%}
     <button
-      class="stl-plus-btn"
+      class="ctl-plus-btn"
       ref="plusBtn"
       on:click="/handlePlusBtnClick"
       aria-label="Ver productos del look"
@@ -46,37 +47,35 @@
 
     {%- comment -%} ── Product popup (fixed, opened by JS) ── {%- endcomment -%}
     <div
-      class="stl-popup"
+      class="ctl-popup"
       ref="popup"
       role="dialog"
       aria-label="Productos del look"
       aria-modal="true"
     >
       <button
-        class="stl-popup__close"
-        ref="closeBtn"
-        on:click="/handleClosePopup"
+        type="button"
+        class="ctl-popup-close"
         aria-label="Cerrar"
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18"/>
           <line x1="6" y1="6" x2="18" y2="18"/>
+          <line x1="6" y1="18" x2="18" y2="6"/>
         </svg>
       </button>
-
-      <div class="stl-popup__products">
+      <div class="ctl-popup__inner">
+      <div class="ctl-popup__products">
         {%- for i in (1..5) -%}
           {%- assign product_key = 'product_' | append: i -%}
           {%- assign p = block.settings[product_key] -%}
           {%- if p != blank -%}
             {%- assign selected_variant = p.selected_or_first_available_variant -%}
 
-            <div class="stl-product" data-product-id="{{ p.id }}">
+            <div class="ctl-product" data-product-id="{{ p.id }}">
 
-              {%- comment -%} Product image {%- endcomment -%}
               {%- if p.featured_image != blank -%}
                 <img
-                  class="stl-product__image"
+                  class="ctl-product__image"
                   src="{{ p.featured_image | image_url: width: 176 }}"
                   alt="{{ p.featured_image.alt | default: p.title | escape }}"
                   width="88"
@@ -84,35 +83,32 @@
                   loading="lazy"
                 >
               {%- else -%}
-                <div class="stl-product__image-placeholder" aria-hidden="true"></div>
+                <div class="ctl-product__image-placeholder" aria-hidden="true"></div>
               {%- endif -%}
 
-              <div class="stl-product__info">
+              <div class="ctl-product__info">
 
-                {%- comment -%} Title {%- endcomment -%}
-                <p class="stl-product__title">
+                <p class="ctl-product__title">
                   <a href="{{ p.url }}" tabindex="-1" aria-label="{{ p.title | escape }}">{{ p.title | escape }}</a>
                 </p>
 
-                {%- comment -%} Price {%- endcomment -%}
-                <div class="stl-product__price">
+                <div class="ctl-product__price">
                   {%- if selected_variant.compare_at_price > selected_variant.price -%}
-                    <span class="stl-price--compare">{{ selected_variant.compare_at_price | money }}</span>
+                    <span class="ctl-price--compare">{{ selected_variant.compare_at_price | money }}</span>
                   {%- endif -%}
-                  <span class="stl-price--current">{{ selected_variant.price | money }}</span>
+                  <span class="ctl-price--current">{{ selected_variant.price | money }}</span>
                 </div>
 
-                {%- comment -%} Variant selector (only when multiple variants exist) {%- endcomment -%}
                 {%- if p.variants.size > 1 -%}
                   <label
-                    class="stl-product__option-label"
-                    for="stl-select-{{ p.id }}-{{ block.id }}-{{ i }}"
+                    class="ctl-product__option-label"
+                    for="ctl-select-{{ p.id }}-{{ block.id }}-{{ i }}"
                   >
                     {{- p.options.first -}}
                   </label>
                   <select
-                    id="stl-select-{{ p.id }}-{{ block.id }}-{{ i }}"
-                    class="stl-variant-select"
+                    id="ctl-select-{{ p.id }}-{{ block.id }}-{{ i }}"
+                    class="ctl-variant-select"
                     on:change="/handleVariantChange"
                     aria-label="{{ p.options.first | escape }}"
                   >
@@ -128,9 +124,8 @@
                   </select>
                 {%- endif -%}
 
-                {%- comment -%} Add-to-cart button {%- endcomment -%}
                 <button
-                  class="stl-add-btn"
+                  class="ctl-add-btn"
                   on:click="/handleAddToCart"
                   data-variant-id="{{ selected_variant.id }}"
                   {%- unless selected_variant.available %} disabled{%- endunless %}
@@ -148,10 +143,11 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+      </div>{%- comment -%} /ctl-popup__inner {%- endcomment -%}
     </div>
   {%- endif -%}
 
-</shop-the-look-item>
+</complete-the-look-item>
 
 {% schema %}
 {
@@ -192,11 +188,6 @@
       "type": "product",
       "id": "product_5",
       "label": "Producto 5"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Moxie Item"
     }
   ]
 }

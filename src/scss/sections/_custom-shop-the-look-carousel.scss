@@ -1,522 +1,545 @@
-// ============================================================
-// Shop the Look Carousel
-// ============================================================
-
-// ── Custom element display fix ──────────────────────────────
-// By default all custom elements are display: inline.
-// Both elements need display: block for layout to work.
-
-shop-the-look-carousel {
-  display: block;
-}
-
-shop-the-look-item {
-  display: block;
-}
-
-// ── Section ─────────────────────────────────────────────────
-
-.section-shop-the-look {
-  overflow: hidden;
-}
-
-// ── Header ──────────────────────────────────────────────────
-.custom-shop-the-look-mox
-.stl-header {
-  margin: 50px 0;
-}
-
-.custom-shop-the-look-mox
-.stl-header__title {
-  margin-block-end: 8px;
-  font-weight: 500 !important;
-  font-size: 32px !important;
-  line-height: 36px;
-  color: #1E2B51 !important;
-}
-
-.custom-shop-the-look-mox
-.stl-header__subtitle {
-  font-weight: 300;
-  font-size: 15px;
-  line-height: 100%;
-  color: #1E2B51 !important;
-  margin-block-start: 0;
-}
-
-@media (max-width: 768px) {
-  .custom-shop-the-look-mox
-  .stl-header {
-    margin: 10px 0;
-  }
-
-  .custom-shop-the-look-mox
-  .stl-header__title {
-    font-size: 24px !important;
-    line-height: 26px;
-    color: #1E2B51 !important;
-  }
-}
-// ── Track / Carousel ────────────────────────────────────────
-
-.stl-track-wrapper {
-  overflow: hidden;
-  // background: var(--color-background);
-}
-
-.stl-track {
-  display: flex;
-  // gap: var(--stl-gap, 0px);
-  width: max-content;
-  will-change: transform;
-  animation: stl-scroll var(--stl-duration, 40s) linear infinite;
-  // background: var(--color-background);
-
-  // Paused via JS when popup is open
-  &.stl-track--paused {
-    animation-play-state: paused;
-  }
-}
-
-
-// Pause on hover — user interacts over any item
-.stl-track-wrapper:hover .stl-track {
-  animation-play-state: paused;
-}
-
-@keyframes stl-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(var(--stl-scroll-to, -50%)); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stl-track {
-    animation: none;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    width: 100%;
-  }
-
-  .stl-item {
-    scroll-snap-align: start;
-  }
-}
-
-// ── Item ────────────────────────────────────────────────────
-
-.stl-item {
-  position: relative;
-  flex-shrink: 0;
-  width: var(--stl-item-width, 280px);
-  border-radius: 0;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background: var(--color-background);
-
-  // overflow: visible so the popup (position: fixed) isn't clipped
-  overflow: visible;
-}
-
-.stl-item__media {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  border-radius: 0;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  max-width: 193px;
-  max-height: 413px;
-  min-height: 413px;
-}
-
-.stl-item__media.placeholder {
-  // background: rgb(var(--color-foreground-rgb, 0 0 0) / 0.06);
-}
-
-@media (max-width: 990px) {
-
-  .stl-item__media {
-    max-width: 118px;
-    min-height: 254px;
-    max-height: 254px;
-    // max-height: 300px;
-    // min-height: 300px;
-  }
-}
-
-// ── Plus button ─────────────────────────────────────────────
-// Hidden by default, revealed on hover via CSS.
-
-.stl-plus-btn {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  background-color: #1E1E1E;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.14);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: scale(0.85);
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
-  z-index: 2;
-  color: #ffffff;
-
-  svg {
-    width: 16px;
-    height: 16px;
-    pointer-events: none;
-    transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
-  }
-}
-
-// Desktop: reveal on hover
-@media (hover: hover) {
-  .stl-item:hover .stl-plus-btn {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-// Touch / mobile: always visible
-@media (hover: none) {
-  .stl-plus-btn {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-// When popup is open: + morphs to × via 45° rotation, stays interactive as close trigger
-.stl-item.stl-popup-open .stl-plus-btn {
-  opacity: 1;
-  transform: scale(1);
-  pointer-events: all;
-
-  svg {
-    transform: rotate(45deg);
-  }
-}
-
-// ── Popup ───────────────────────────────────────────────────
-
-.stl-popup {
-  display: none;
-  position: fixed;
-  z-index: 400;
-  min-width: 392px;
-  // overflow visible so the ::before/::after caret can appear above the box
-  overflow: visible;
-  border-radius: 5px;
-  border: 1px solid rgb(0 0 0 / 0.08);
-  box-shadow: 0 8px 40px rgb(0 0 0 / 0.14);
-
-  &[open] {
-    display: block;
-    animation: stl-popup-in 0.18s cubic-bezier(0.33, 1, 0.68, 1) both;
-  }
-
-  // Upward-pointing caret — aligns with the + button (left: 12px, width: 36px → center ≈ 30px)
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    left: 24px;
-    pointer-events: none;
-    border-style: solid;
-    border-color: transparent;
-  }
-
-  // Border layer (slightly larger, matches popup border color)
-  &::before {
-    top: -10px;
-    border-width: 0 9px 10px;
-    border-bottom-color: rgb(0 0 0 / 0.1);
-    z-index: 0;
-  }
-
-  // Fill layer (white, sits on top of border layer)
-  &::after {
-    top: -8px;
-    border-width: 0 8px 9px;
-    border-bottom-color: var(--color-background, #fff);
-    z-index: 1;
-  }
-}
-
-@keyframes stl-popup-in {
-  from {
-    opacity: 0;
-    transform: scale(0.93) translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-// ── Popup close button (mobile bottom sheet only) ───────────
-// Desktop already closes via the + button, which morphs into × right
-// next to the popup. On mobile the bottom sheet is anchored to the
-// viewport bottom, far from the item's + button, so it needs its own
-// explicit close control.
-
-.stl-popup-close {
-  display: none;
-  position: absolute;
-  top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 27px;
-  height: 27px;
-  padding: 0;
-  border: 1px solid rgb(0 0 0 / 0.15);
-  border-radius: 50%;
-  background: #fff;
-  color: #1E1E1E;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.14);
-  z-index: 2;
-
-  svg {
-    width: 16px;
-    height: 16px;
-    pointer-events: none;
-  }
-}
-
-@media (max-width: 768px) {
-  .stl-popup-close {
-    display: flex;
-  }
-}
-
-// ── Popup inner scroll container ────────────────────────────
-
-.stl-popup__inner {
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  max-height: 415px;
-  border-radius: 5px;
-  background: var(--color-background, #fff);
-}
-
-.stl-popup__products {
-  padding: 12px 28px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-// ── Product card inside popup ────────────────────────────────
-
-.stl-product {
-  display: grid;
-  grid-template-columns: 114px 1fr;
-  gap: 12px;
-  align-items: start;
-  padding-block: 16px;
-
-  & + .stl-product {
-    // border-block-start: 1px solid rgb(0 0 0 / 0.07);
-  }
-
-  &:first-child {
-    padding-block-start: 4px;
-  }
-}
-
-.stl-product__image {
-  min-width: 112px;
-  min-height: 151px;
-  max-height: 151px;
-  object-fit: cover;
-  // border-radius: 6px;
-  display: block;
-}
-
-.stl-product__image-placeholder {
-  min-width: 112px;
-  min-height: 151px;
-  // border-radius: 6px;
-  background: rgb(0 0 0 / 0.06);
-}
-
-.stl-product__info {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  min-width: 0;
-}
-
-.stl-product__title {
-font-weight: 500;
-font-size: 15px;
-line-height: 100%;
-color: #1E2B51;
-
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-}
-
-.stl-product__price {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-items: baseline;
-
-  .stl-price--compare {
-    text-decoration: line-through;
-    opacity: 0.45;
-    font-size: 0.85em;
-  }
-
-  .stl-price--current {
-    font-weight: 500;
-  }
-}
-
-.stl-product__option-label {
-font-weight: 500;
-font-size: 15px;
-line-height: 100%;
-letter-spacing: 5%;
-color: #1E2B51;
-  margin-block-start: 4px;
-}
-
-.stl-variant-select {
-  max-width: 78px;
-  min-height: 29px;
-  padding: 0px 8px;
-  border: 1px solid #1E2B51;
-  border-radius: 23px;
-  font-weight: 500;
-  font-size: 17px;
-  line-height: 24px;
-  vertical-align: middle;
-  color: #1E2B51;
-  background: transparent;
-  cursor: pointer;
-  color: var(--color-foreground);
-  appearance: auto;
-}
-
-// ── Overlay (mobile bottom sheet backdrop) ──────────────────
-
-.stl-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 399;
-  background: rgb(0 0 0 / 0.5);
-
-  &.stl-overlay--visible {
-    display: block;
-    animation: stl-overlay-in 0.22s ease both;
-  }
-}
-
-@keyframes stl-overlay-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-// ── Mobile: bottom sheet ─────────────────────────────────────
-
-@media (max-width: 768px) {
-  .stl-popup {
-    top: auto !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset !important;
-    border-radius: 16px 16px 0 0;
-    border: none;
-    box-shadow: 0 -4px 30px rgb(0 0 0 / 0.15);
-
-    // No caret on bottom sheet
-    &::before,
-    &::after {
-      display: none;
-    }
-
-    &[open] {
-      animation: stl-slide-up 0.3s cubic-bezier(0.33, 1, 0.68, 1) both;
-    }
-  }
-
-  .stl-popup__inner {
-    max-height: 85vh;
-    border-radius: 16px 16px 0 0;
-  }
-}
-
-@keyframes stl-slide-up {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
-}
-
-// Add-to-cart button
-.stl-add-btn {
-  width: 100%;
-  margin-block-start: 6px;
-  padding: 8px 12px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
-  border-radius: 27px;
-  border: 1px solid #1E2B51;
-  background: transparent;
-  color: #1E2B51;
-  cursor: pointer;
-  transition:
-    background 0.18s ease,
-    color 0.18s ease,
-    opacity 0.18s ease;
-  text-align: center;
-
-  &:hover:not(:disabled) {
-    background: #1E2B51;
-    color: #fff;
-  }
-
-  &:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
-  }
-
-  &.stl-add-btn--loading {
-    opacity: 0.6;
-    pointer-events: none;
-  }
-
-  &.stl-add-btn--success {
-    background: var(--color-foreground);
-    color: var(--color-background);
-    pointer-events: none;
-  }
-}
+// // ============================================================
+// // Shop the Look Carousel
+// // ============================================================
+
+// // ── Custom element display fix ──────────────────────────────
+// // By default all custom elements are display: inline.
+// // Both elements need display: block for layout to work.
+
+// shop-the-look-carousel {
+//   display: block;
+// }
+
+// shop-the-look-item {
+//   display: block;
+// }
+
+// // ── MOXIE TEMP DEBUG 3 — solid-fill test to catch the line by color ────────
+// [id^="shopify-section"]:has(shop-the-look-carousel) { background: lime !important; }
+// .custom-shop-the-look-mox { background: yellow !important; }
+// shop-the-look-carousel { background: red !important; }
+// .section-background:has(+ .custom-shop-the-look-mox) { background: blue !important; }
+// .stl-track-wrapper { background: orange !important; }
+// // ── /MOXIE TEMP DEBUG 3 ─────────────────────────────────────────────────────
+
+// // ── Section ─────────────────────────────────────────────────
+
+// .section-shop-the-look {
+//   overflow: hidden;
+// }
+
+// // ── Header ──────────────────────────────────────────────────
+// .custom-shop-the-look-mox
+// .stl-header {
+//   margin: 50px 0;
+// }
+
+// .custom-shop-the-look-mox
+// .stl-header__title {
+//   margin-block-end: 8px;
+//   font-weight: 500 !important;
+//   font-size: 32px !important;
+//   line-height: 36px;
+//   color: #1E2B51 !important;
+// }
+
+// .custom-shop-the-look-mox
+// .stl-header__subtitle {
+//   font-weight: 300;
+//   font-size: 15px;
+//   line-height: 100%;
+//   color: #1E2B51 !important;
+//   margin-block-start: 0;
+// }
+
+// @media (max-width: 768px) {
+//   .custom-shop-the-look-mox
+//   .stl-header {
+//     margin: 10px 0;
+//   }
+
+//   .custom-shop-the-look-mox
+//   .stl-header__title {
+//     font-size: 24px !important;
+//     line-height: 26px;
+//     color: #1E2B51 !important;
+//   }
+// }
+// // ── Track / Carousel ────────────────────────────────────────
+
+// .stl-track-wrapper {
+//   overflow: hidden;
+//   // background: var(--color-background);
+// }
+
+// .stl-track {
+//   display: flex;
+//   // gap: var(--stl-gap, 0px);
+//   width: max-content;
+//   will-change: transform;
+//   animation: stl-scroll var(--stl-duration, 40s) linear infinite;
+//   // background: var(--color-background);
+
+//   // Paused via JS when popup is open
+//   &.stl-track--paused {
+//     animation-play-state: paused;
+//   }
+// }
+
+
+// // Pause on hover — user interacts over any item
+// .stl-track-wrapper:hover .stl-track {
+//   animation-play-state: paused;
+// }
+
+// @keyframes stl-scroll {
+//   from { transform: translateX(0); }
+//   to   { transform: translateX(var(--stl-scroll-to, -50%)); }
+// }
+
+// @media (prefers-reduced-motion: reduce) {
+//   .stl-track {
+//     animation: none;
+//     overflow-x: auto;
+//     scroll-snap-type: x mandatory;
+//     width: 100%;
+//   }
+
+//   .stl-item {
+//     scroll-snap-align: start;
+//   }
+// }
+
+// // ── Item ────────────────────────────────────────────────────
+
+// .stl-item {
+//   position: relative;
+//   flex-shrink: 0;
+//   width: var(--stl-item-width, 280px);
+//   // MOXIE: .stl-item__media has its own fixed max-width (193px) independent of
+//   // --stl-item-width (merchant setting, default 280px, range 160-480px). Capping
+//   // the container to match keeps the two in sync at every breakpoint — otherwise
+//   // the container's own background shows through as a gap beside the photo
+//   // whenever --stl-item-width is set above the media's fixed size (true by
+//   // default, since 280 > 193).
+//   max-width: 193px;
+//   border-radius: 0;
+//   border: none;
+//   outline: none;
+//   box-shadow: none;
+//   background: var(--color-background);
+
+//   // overflow: visible so the popup (position: fixed) isn't clipped
+//   overflow: visible;
+// }
+
+// .stl-item__media {
+//   display: block;
+//   width: 100%;
+//   height: 100%;
+//   object-fit: cover;
+//   object-position: center;
+//   border-radius: 0;
+//   border: none;
+//   outline: none;
+//   box-shadow: none;
+//   max-width: 193px;
+//   max-height: 413px;
+//   min-height: 413px;
+// }
+
+// .stl-item__media.placeholder {
+//   // background: rgb(var(--color-foreground-rgb, 0 0 0) / 0.06);
+// }
+
+// @media (max-width: 990px) {
+
+//   // MOXIE: .stl-item keeps the desktop --stl-item-width (merchant setting, up to
+//   // 480px) unless capped here too. Without this, the item container stayed wide
+//   // while its media shrank to 118px, leaving a visible background-colored gap
+//   // beside each photo that reads as a stray "border/card" around it on mobile.
+//   .stl-item {
+//     max-width: 118px;
+//   }
+
+//   .stl-item__media {
+//     max-width: 118px;
+//     min-height: 254px;
+//     max-height: 254px;
+//     // max-height: 300px;
+//     // min-height: 300px;
+//   }
+// }
+
+// // ── Plus button ─────────────────────────────────────────────
+// // Hidden by default, revealed on hover via CSS.
+
+// .stl-plus-btn {
+//   position: absolute;
+//   top: 12px;
+//   left: 12px;
+//   width: 20px;
+//   height: 20px;
+//   padding: 0;
+//   border-radius: 50%;
+//   border: none;
+//   cursor: pointer;
+//   background-color: #1E1E1E;
+//   backdrop-filter: blur(6px);
+//   box-shadow: 0 2px 10px rgb(0 0 0 / 0.14);
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   opacity: 0;
+//   transform: scale(0.85);
+//   transition:
+//     opacity 0.2s ease,
+//     transform 0.2s ease;
+//   z-index: 2;
+//   color: #ffffff;
+
+//   svg {
+//     width: 16px;
+//     height: 16px;
+//     pointer-events: none;
+//     transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+//   }
+// }
+
+// // Desktop: reveal on hover
+// @media (hover: hover) {
+//   .stl-item:hover .stl-plus-btn {
+//     opacity: 1;
+//     transform: scale(1);
+//   }
+// }
+
+// // Touch / mobile: always visible
+// @media (hover: none) {
+//   .stl-plus-btn {
+//     opacity: 1;
+//     transform: scale(1);
+//   }
+// }
+
+// // When popup is open: + morphs to × via 45° rotation, stays interactive as close trigger
+// .stl-item.stl-popup-open .stl-plus-btn {
+//   opacity: 1;
+//   transform: scale(1);
+//   pointer-events: all;
+
+//   svg {
+//     transform: rotate(45deg);
+//   }
+// }
+
+// // ── Popup ───────────────────────────────────────────────────
+
+// .stl-popup {
+//   display: none;
+//   position: fixed;
+//   z-index: 400;
+//   min-width: 392px;
+//   // overflow visible so the ::before/::after caret can appear above the box
+//   overflow: visible;
+//   border-radius: 5px;
+//   border: 1px solid rgb(0 0 0 / 0.08);
+//   box-shadow: 0 8px 40px rgb(0 0 0 / 0.14);
+
+//   &[open] {
+//     display: block;
+//     animation: stl-popup-in 0.18s cubic-bezier(0.33, 1, 0.68, 1) both;
+//   }
+
+//   // Upward-pointing caret — aligns with the + button (left: 12px, width: 36px → center ≈ 30px)
+//   &::before,
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     left: 24px;
+//     pointer-events: none;
+//     border-style: solid;
+//     border-color: transparent;
+//   }
+
+//   // Border layer (slightly larger, matches popup border color)
+//   &::before {
+//     top: -10px;
+//     border-width: 0 9px 10px;
+//     border-bottom-color: rgb(0 0 0 / 0.1);
+//     z-index: 0;
+//   }
+
+//   // Fill layer (white, sits on top of border layer)
+//   &::after {
+//     top: -8px;
+//     border-width: 0 8px 9px;
+//     border-bottom-color: var(--color-background, #fff);
+//     z-index: 1;
+//   }
+// }
+
+// @keyframes stl-popup-in {
+//   from {
+//     opacity: 0;
+//     transform: scale(0.93) translateY(8px);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: scale(1) translateY(0);
+//   }
+// }
+
+// // ── Popup close button (mobile bottom sheet only) ───────────
+// // Desktop already closes via the + button, which morphs into × right
+// // next to the popup. On mobile the bottom sheet is anchored to the
+// // viewport bottom, far from the item's + button, so it needs its own
+// // explicit close control.
+
+// .stl-popup-close {
+//   display: none;
+//   position: absolute;
+//   top: -16px;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   width: 27px;
+//   height: 27px;
+//   padding: 0;
+//   border: 1px solid rgb(0 0 0 / 0.15);
+//   border-radius: 50%;
+//   background: #fff;
+//   color: #1E1E1E;
+//   align-items: center;
+//   justify-content: center;
+//   cursor: pointer;
+//   box-shadow: 0 2px 10px rgb(0 0 0 / 0.14);
+//   z-index: 2;
+
+//   svg {
+//     width: 16px;
+//     height: 16px;
+//     pointer-events: none;
+//   }
+// }
+
+// @media (max-width: 768px) {
+//   .stl-popup-close {
+//     display: flex;
+//   }
+// }
+
+// // ── Popup inner scroll container ────────────────────────────
+
+// .stl-popup__inner {
+//   overflow-y: auto;
+//   overscroll-behavior: contain;
+//   max-height: 415px;
+//   border-radius: 5px;
+//   background: var(--color-background, #fff);
+// }
+
+// .stl-popup__products {
+//   padding: 12px 28px 20px;
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0;
+// }
+
+// // ── Product card inside popup ────────────────────────────────
+
+// .stl-product {
+//   display: grid;
+//   grid-template-columns: 114px 1fr;
+//   gap: 12px;
+//   align-items: start;
+//   padding-block: 16px;
+
+//   & + .stl-product {
+//     // border-block-start: 1px solid rgb(0 0 0 / 0.07);
+//   }
+
+//   &:first-child {
+//     padding-block-start: 4px;
+//   }
+// }
+
+// .stl-product__image {
+//   min-width: 112px;
+//   min-height: 151px;
+//   max-height: 151px;
+//   object-fit: cover;
+//   // border-radius: 6px;
+//   display: block;
+// }
+
+// .stl-product__image-placeholder {
+//   min-width: 112px;
+//   min-height: 151px;
+//   // border-radius: 6px;
+//   background: rgb(0 0 0 / 0.06);
+// }
+
+// .stl-product__info {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 5px;
+//   min-width: 0;
+// }
+
+// .stl-product__title {
+// font-weight: 500;
+// font-size: 15px;
+// line-height: 100%;
+// color: #1E2B51;
+
+//   margin: 0;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+
+//   a {
+//     color: inherit;
+//     text-decoration: none;
+//   }
+// }
+
+// .stl-product__price {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 5px;
+//   align-items: baseline;
+
+//   .stl-price--compare {
+//     text-decoration: line-through;
+//     opacity: 0.45;
+//     font-size: 0.85em;
+//   }
+
+//   .stl-price--current {
+//     font-weight: 500;
+//   }
+// }
+
+// .stl-product__option-label {
+// font-weight: 500;
+// font-size: 15px;
+// line-height: 100%;
+// letter-spacing: 5%;
+// color: #1E2B51;
+//   margin-block-start: 4px;
+// }
+
+// .stl-variant-select {
+//   max-width: 78px;
+//   min-height: 29px;
+//   padding: 0px 8px;
+//   border: 1px solid #1E2B51;
+//   border-radius: 23px;
+//   font-weight: 500;
+//   font-size: 17px;
+//   line-height: 24px;
+//   vertical-align: middle;
+//   color: #1E2B51;
+//   background: transparent;
+//   cursor: pointer;
+//   color: var(--color-foreground);
+//   appearance: auto;
+// }
+
+// // ── Overlay (mobile bottom sheet backdrop) ──────────────────
+
+// .stl-overlay {
+//   display: none;
+//   position: fixed;
+//   inset: 0;
+//   z-index: 399;
+//   background: rgb(0 0 0 / 0.5);
+
+//   &.stl-overlay--visible {
+//     display: block;
+//     animation: stl-overlay-in 0.22s ease both;
+//   }
+// }
+
+// @keyframes stl-overlay-in {
+//   from { opacity: 0; }
+//   to   { opacity: 1; }
+// }
+
+// // ── Mobile: bottom sheet ─────────────────────────────────────
+
+// @media (max-width: 768px) {
+//   .stl-popup {
+//     top: auto !important;
+//     left: 0 !important;
+//     right: 0 !important;
+//     bottom: 0 !important;
+//     width: 100% !important;
+//     max-width: 100% !important;
+//     min-width: unset !important;
+//     border-radius: 16px 16px 0 0;
+//     border: none;
+//     box-shadow: 0 -4px 30px rgb(0 0 0 / 0.15);
+
+//     // No caret on bottom sheet
+//     &::before,
+//     &::after {
+//       display: none;
+//     }
+
+//     &[open] {
+//       animation: stl-slide-up 0.3s cubic-bezier(0.33, 1, 0.68, 1) both;
+//     }
+//   }
+
+//   .stl-popup__inner {
+//     max-height: 85vh;
+//     border-radius: 16px 16px 0 0;
+//   }
+// }
+
+// @keyframes stl-slide-up {
+//   from { transform: translateY(100%); }
+//   to   { transform: translateY(0); }
+// }
+
+// // Add-to-cart button
+// .stl-add-btn {
+//   width: 100%;
+//   margin-block-start: 6px;
+//   padding: 8px 12px;
+//   font-size: 14px;
+//   font-weight: 500;
+//   line-height: 24px;
+//   border-radius: 27px;
+//   border: 1px solid #1E2B51;
+//   background: transparent;
+//   color: #1E2B51;
+//   cursor: pointer;
+//   transition:
+//     background 0.18s ease,
+//     color 0.18s ease,
+//     opacity 0.18s ease;
+//   text-align: center;
+
+//   &:hover:not(:disabled) {
+//     background: #1E2B51;
+//     color: #fff;
+//   }
+
+//   &:disabled {
+//     opacity: 0.45;
+//     cursor: not-allowed;
+//   }
+
+//   &.stl-add-btn--loading {
+//     opacity: 0.6;
+//     pointer-events: none;
+//   }
+
+//   &.stl-add-btn--success {
+//     background: var(--color-foreground);
+//     color: var(--color-background);
+//     pointer-events: none;
+//   }
+// }
