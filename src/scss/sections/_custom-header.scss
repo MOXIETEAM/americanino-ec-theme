@@ -389,15 +389,17 @@ custom-search-drawer[data-open] .mox-spill__input {
     z-index: 0;
   }
 
+  // MOXIE: sin background propio — el color/overlay real ya lo pinta la regla
+  // `#header-component[data-bg-type='glass'] .header__row--top` (!important,
+  // ver custom-header.liquid), idéntica en mobile y desktop. Este ::before solo
+  // aporta el blur adicional que en desktop entrega este mismo elemento; si le
+  // sumáramos aquí el degradado blanco duplicaríamos el overlay y el resultado
+  // se vería más "lavado" que en desktop.
   .mox-custom-header-component .header__row--top::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      90.04deg,
-      rgba(255, 255, 255, 0.8) 7.98%,
-      rgba(255, 255, 255, 0.15) 150.17%
-    );
+    background: transparent;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     pointer-events: none;

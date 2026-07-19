@@ -144,7 +144,7 @@
         "trust_badge_1": "shopify://shop_images/645517cad3d70c2e977bee60e7bad4899e297880.png",
         "trust_badge_1_alt": "",
         "trust_badge_1_url": "",
-        "legal_text": "<p>Comodin S.A.S | NIT: 800.069.933-6 ©2025 Americanino, todos los derechos reservados  |  Sitio desarrollado en Shopify por Moxie Digital</p>",
+        "legal_text": "<p>Comodin S.A.S | NIT: 800.069.933-6 ©2025 Americanino, todos los derechos reservados  |  Sitio desarrollado en Shopify por <a href='https://www.moxiedigital.co' target='_blank' rel='noopener noreferrer'>Moxie Digital</a></p>",
         "bottom_bar_bg": "#ffffff",
         "padding_lateral_desktop": false,
         "padding_lateral_mobile": true,
