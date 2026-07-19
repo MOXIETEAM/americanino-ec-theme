@@ -449,6 +449,11 @@
   .custom-standar-max-width {
     padding: 0 !important;
   }
+
+  @media (max-width: 990px) {
+    min-height: 110px;
+    max-height: 110px;
+  }
 }
 
 .custom-footer__bottom-inner {
@@ -456,7 +461,7 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
 
   @media (max-width: 989px) {
     flex-direction: column;
