@@ -137,6 +137,17 @@ shop-the-look-item {
   // background: rgb(var(--color-foreground-rgb, 0 0 0) / 0.06);
 }
 
+@media (max-width: 990px) {
+
+  .stl-item__media {
+    max-width: 118px;
+    min-height: 254px;
+    max-height: 254px;
+    // max-height: 300px;
+    // min-height: 300px;
+  }
+}
+
 // ── Plus button ─────────────────────────────────────────────
 // Hidden by default, revealed on hover via CSS.
 
