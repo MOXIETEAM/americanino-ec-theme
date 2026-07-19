@@ -62,6 +62,8 @@
       ],
       "settings": {
         "layout": "static",
+        "show_arrows_desktop": false,
+        "show_arrows_mobile": false,
         "font_weight": "400",
         "font_style": "normal",
         "font_size": "0.8125rem",
