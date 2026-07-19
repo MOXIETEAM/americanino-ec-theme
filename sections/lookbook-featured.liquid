@@ -39,7 +39,7 @@
 .lb-thumbs {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   margin-top: 90px;
 }
 
@@ -72,30 +72,24 @@
 /* HOTSPOT */
 .lb-hotspot {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  background: white;
+  width: 29px;
+  height: 29px;
+  background-image: url('https://cdn.shopify.com/s/files/1/0980/2380/1123/files/a9d9692f7e9ecdda3e745c1184e08629e5ec3667_1.gif?v=1784486135');
+  background-size: cover;
+  background-position: center;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 18px;
   box-shadow: 0 2px 8px rgba(0,0,0,.2);
   transform: translate(-50%, -50%);
-  transition: background .2s, color .2s;
+  transition: box-shadow .2s;
   z-index: 2;
 }
 
-.lb-hotspot::after {
-  content: "+";
-  line-height: 1;
-}
-
 .lb-hotspot.active {
-  background: #1E2B51;
-  color: white;
+  /* box-shadow: 0 0 0 2px #1E2B51, 0 2px 8px rgba(0,0,0,.2); */
 }
 
 /* RIGHT PANEL */
@@ -248,8 +242,9 @@ text-transform: capitalize;
   }
 
   .lb-thumb {
-    width: 72px;
-    aspect-ratio: 2 / 3;
+    min-width: 90px;
+    max-width: 92px;
+    aspect-ratio: 92 / 114;
     flex-shrink: 0;
   }
 }
