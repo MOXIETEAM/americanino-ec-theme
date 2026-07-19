@@ -234,6 +234,8 @@
         "gradient_direction": "to bottom",
         "blurred_reflection": false,
         "reflection_opacity": 75,
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding-block-start": 40,
         "padding-block-end": 40,
         "enable_stacking": true
@@ -274,6 +276,8 @@
         "label_size": 12,
         "text_size": 22,
         "unit_gap": 8,
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding_top": 14,
         "padding_bottom": 14
       }
@@ -358,6 +362,8 @@
         "item_gap": 0,
         "section_width": "full-width",
         "color_scheme": "",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding-block-start": 40,
         "padding-block-end": 40,
         "enable_stacking": true
@@ -444,6 +450,8 @@
         "item_gap": 0,
         "section_width": "full-width",
         "color_scheme": "",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding-block-start": 12,
         "padding-block-end": 12,
         "enable_stacking": true
@@ -607,6 +615,8 @@
         "bg_color": "",
         "show_on_desktop": true,
         "show_on_mobile": true,
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding_top": 40,
         "padding_bottom": 44
       }
@@ -629,6 +639,8 @@
         "max_swatches": 4,
         "color_scheme": "",
         "bg_color": "",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": false,
         "padding_top": 8,
         "padding_bottom": 8
       }
@@ -769,6 +781,8 @@
         "bg_color": "",
         "show_on_desktop": true,
         "show_on_mobile": true,
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": false,
         "padding_top": 8,
         "padding_bottom": 8
       }
@@ -903,6 +917,8 @@
         "show_dots_desktop": true,
         "show_dots_mobile": true,
         "color_scheme": "scheme-1",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "padding_top": 40,
         "padding_bottom": 40
       }
@@ -944,6 +960,8 @@
         "columns_gap": 12,
         "rows_gap": 24,
         "cuotas_text": "0% de interés hasta 3 cuotas ver bancos",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": false,
         "bg_color": "",
         "padding_v": 0
       }
@@ -1007,6 +1025,8 @@
         "show_dots_desktop": false,
         "show_dots_mobile": true,
         "color_scheme": "",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "collapsed_height": 200,
         "full_height": 80,
         "animation_duration": 900,
@@ -1149,6 +1169,8 @@
         "bg_color": "",
         "show_on_desktop": false,
         "show_on_mobile": true,
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": false,
         "padding_top": 40,
         "padding_bottom": 40
       }

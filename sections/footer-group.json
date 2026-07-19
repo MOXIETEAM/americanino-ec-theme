@@ -66,6 +66,8 @@
         "label_less": "Ver menos",
         "bg_color": "",
         "border_color": "",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": false,
         "padding_v": 40
       }
     },
@@ -144,6 +146,8 @@
         "trust_badge_1_url": "",
         "legal_text": "<p>Comodin S.A.S | NIT: 800.069.933-6 ©2025 Americanino, todos los derechos reservados  |  Sitio desarrollado en Shopify por Moxie Digital</p>",
         "bottom_bar_bg": "#ffffff",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
         "color_scheme": "scheme-1",
         "bg_color": "#1e2b51"
       }
