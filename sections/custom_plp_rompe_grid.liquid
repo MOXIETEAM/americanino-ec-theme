@@ -69,7 +69,7 @@
 {%- endif -%}
 
 {%- comment -%} Placeholder visible solo en el editor de Shopify {%- endcomment -%}
-{%- if request.design_mode -%}
+{% comment %} {%- if request.design_mode -%}
   <div class="plp-rompe-grid__editor-placeholder">
     <strong>Moxie PLP Rompe-Grid</strong><br>
     Los banners se configuran desde el metacampo <code>custom.mox_plp_banners_rompegrids</code> de cada coleccion (metaobjeto <code>banner_rompegrids_plp</code>).
@@ -79,7 +79,7 @@
       <br>Sin banners configurados para esta coleccion.
     {%- endif -%}
   </div>
-{%- endif -%}
+{%- endif -%} {% endcomment %}
 
 {%- comment -%} Serializar datos de banners como JSON para el JS {%- endcomment -%}
 {%- if plp_banners != blank and plp_banners.size > 0 -%}
