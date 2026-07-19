@@ -235,7 +235,7 @@
         "blurred_reflection": false,
         "reflection_opacity": 75,
         "padding_lateral_desktop": false,
-        "padding_lateral_mobile": true,
+        "padding_lateral_mobile": false,
         "padding-block-start": 40,
         "padding-block-end": 40,
         "enable_stacking": true
@@ -277,7 +277,7 @@
         "text_size": 22,
         "unit_gap": 8,
         "padding_lateral_desktop": false,
-        "padding_lateral_mobile": true,
+        "padding_lateral_mobile": false,
         "padding_top": 14,
         "padding_bottom": 14
       }
