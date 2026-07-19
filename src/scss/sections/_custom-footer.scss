@@ -581,13 +581,17 @@
           align-items: center;
 
           img {
-            max-width: 140px;
+            max-width: 240px;
           }
         }
 
         .custom-footer__contact-list {
           align-items: center;
         }
+      }
+
+      .custom-footer__brand-cta  {
+        max-height: 33px;
       }
     }
   }
@@ -610,7 +614,7 @@
 
   .custom-footer__brand-identity {
     order: 1;
-    padding-bottom: 28px;
+    // padding-bottom: 28px;
   }
 
   .custom-footer__nav-col {
@@ -647,7 +651,7 @@
     justify-content: space-between;
     align-items: center;
     padding-block: 18px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     list-style: none;
 

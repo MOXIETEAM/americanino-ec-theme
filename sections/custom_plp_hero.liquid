@@ -38,6 +38,20 @@
   unless section.settings.show_arrows_mobile
     assign cat_nav_class = cat_nav_class | append: ' mox-hidden-mobile'
   endunless
+
+  assign show_breadcrumb_desktop = section.settings.show_breadcrumb_desktop
+  assign show_breadcrumb_mobile  = section.settings.show_breadcrumb_mobile
+  assign show_breadcrumb_any = false
+  if show_breadcrumb_desktop or show_breadcrumb_mobile
+    assign show_breadcrumb_any = true
+  endif
+  assign breadcrumb_class = ''
+  unless show_breadcrumb_desktop
+    assign breadcrumb_class = breadcrumb_class | append: ' mox-hidden-desktop'
+  endunless
+  unless show_breadcrumb_mobile
+    assign breadcrumb_class = breadcrumb_class | append: ' mox-hidden-mobile'
+  endunless
 -%}
 
 {%- comment -%} Swiper CDN (idempotente — no se duplica si ya existe) {%- endcomment -%}
@@ -82,8 +96,8 @@
     {%- comment -%} ── Panel izquierdo: info ─────────────────────────────────── {%- endcomment -%}
     <div class="custom-plp-hero__info">
 
-      {%- if section.settings.show_breadcrumb -%}
-        <nav class="plp-hero__breadcrumb" aria-label="Breadcrumb">
+      {%- if show_breadcrumb_any -%}
+        <nav class="plp-hero__breadcrumb{{ breadcrumb_class }}" aria-label="Breadcrumb">
           <span class="plp-hero__bc-brand">{{ breadcrumb }}</span>
           <span class="plp-hero__bc-sep" aria-hidden="true">/</span>
           <span class="plp-hero__bc-collection">{{ collection.title }}</span>
@@ -315,8 +329,14 @@
     },
     {
       "type": "checkbox",
-      "id": "show_breadcrumb",
-      "label": "Mostrar breadcrumb",
+      "id": "show_breadcrumb_desktop",
+      "label": "Breadcrumb — mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb_mobile",
+      "label": "Breadcrumb — mostrar en móvil",
       "default": true
     },
     {
@@ -449,7 +469,8 @@
       "name": "Moxie PLP Hero",
       "category": "Moxie",
       "settings": {
-        "show_breadcrumb": true,
+        "show_breadcrumb_desktop": true,
+        "show_breadcrumb_mobile": true,
         "slides_desktop": 4,
         "slides_mobile": 2,
         "card_ratio": "1 / 1",

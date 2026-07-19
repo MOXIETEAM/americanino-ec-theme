@@ -49,13 +49,34 @@
     assign bc_t = _product.title
   endif
   assign bc_u = bc_u | append: sep | append: ''
+
+  assign bc_class = ''
+  unless block.settings.show_breadcrumb_desktop
+    assign bc_class = bc_class | append: ' mox-hidden-desktop'
+  endunless
+  unless block.settings.show_breadcrumb_mobile
+    assign bc_class = bc_class | append: ' mox-hidden-mobile'
+  endunless
 -%}
 
-{%- render 'custom_breadcrumb', crumbs_t: bc_t, crumbs_u: bc_u -%}
+{%- render 'custom_breadcrumb', crumbs_t: bc_t, crumbs_u: bc_u, class: bc_class -%}
 
 {% schema %}
 {
   "name": "Moxie Breadcrumb",
-  "settings": []
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb_desktop",
+      "label": "Mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb_mobile",
+      "label": "Mostrar en móvil",
+      "default": true
+    }
+  ]
 }
 {% endschema %}
