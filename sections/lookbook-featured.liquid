@@ -279,7 +279,7 @@ text-transform: capitalize;
   box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.15);
 }
 .lb-mobile-drawer__body {
-  padding: 16px 20px 40px;
+  padding: 20px 20px 0px;
   max-height: 85vh;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -349,7 +349,14 @@ text-transform: capitalize;
 .lb-md-info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+}
+
+.lb-swatches-add-to-cart-btn {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  /* flex-wrap: wrap; */
 }
 .lb-md-installments {
   margin: 0;
@@ -382,6 +389,13 @@ text-transform: capitalize;
   font-size: 14px;
   color: #2C2C2C;
 }
+
+.lb-md-variant-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .lb-md-option-label {
   font-weight: 500;
   font-size: 13px;
@@ -389,8 +403,9 @@ text-transform: capitalize;
   margin-top: 4px;
 }
 .lb-md-select {
-  max-width: 90px;
-  min-height: 32px;
+  min-width: 90px;
+  max-width: 94px;
+  min-height: 27px;
   padding: 0 10px;
   border: 1px solid #1E2B51;
   border-radius: 23px;
@@ -403,7 +418,9 @@ text-transform: capitalize;
 }
 .lb-md-add-btn {
   width: 100%;
-  margin-top: 6px;
+  max-width: 147px;
+  max-height: 27px;
+  /* margin-top: 6px; */
   padding: 10px 16px;
   font-size: 14px;
   font-weight: 500;
@@ -415,6 +432,9 @@ text-transform: capitalize;
   cursor: pointer;
   text-align: center;
   transition: background 0.18s ease, opacity 0.18s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .lb-md-add-btn:disabled {
   opacity: 0.5;
@@ -607,15 +627,21 @@ document.addEventListener("DOMContentLoaded", () => {
             {% if pin_has_disc %}<s class="lb-md-compare">{{ pin_prod.compare_at_price | money }}</s>{% endif %}
             <span class="lb-md-current">{{ pin_prod.price | money }}</span>
           </div>
+          <div class="lb-swatches-add-to-cart-btn">
+            {% for cval in pin_color_list %}{% if cval != blank %}<span class="lb-swatch" title="{{ cval | escape }}" style="background-color:{{ cval | downcase | replace: ' ', '' }};"></span>{% endif %}{% endfor %}
           {% if pin_prod.variants.size > 1 %}
-          <label class="lb-md-option-label" for="lb-sel-{{ pin_prod.id }}-{{ block.id }}">{{ pin_prod.options.first | escape }}</label>
-          <select id="lb-sel-{{ pin_prod.id }}-{{ block.id }}" class="lb-md-select">
-            {% for variant in pin_prod.variants %}<option value="{{ variant.id }}"{% unless variant.available %} disabled{% endunless %}{% if variant == pin_selected %} selected{% endif %}>{{ variant.title | escape }}</option>{% endfor %}
-          </select>
+           <div class="lb-md-variant-selector">
+            <label class="lb-md-option-label" for="lb-sel-{{ pin_prod.id }}-{{ block.id }}">{{ pin_prod.options.first | escape }}</label>
+            <select id="lb-sel-{{ pin_prod.id }}-{{ block.id }}" class="lb-md-select">
+              {% for variant in pin_prod.variants %}<option value="{{ variant.id }}"{% unless variant.available %} disabled{% endunless %}{% if variant == pin_selected %} selected{% endif %}>{{ variant.title | escape }}</option>{% endfor %}
+            </select>
+           </div>
           {% endif %}
           <button class="lb-md-add-btn" data-variant-id="{{ pin_selected.id }}"{% unless pin_selected.available %} disabled{% endunless %}>
             {% if pin_selected.available %}Añadir a la bolsa{% else %}Agotado{% endif %}
           </button>
+          
+          </div>
         </div>
       </div>`
     },
