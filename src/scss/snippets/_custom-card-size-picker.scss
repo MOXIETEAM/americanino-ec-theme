@@ -207,6 +207,7 @@ mox-size-picker-component[data-adding] .mox-sp__options {
   // Toggle button: visible en mobile cuando está cerrado
   .mox-sp__toggle {
     display: flex;
+    bottom: 10px;
 
     svg {
       width: 10px;
