@@ -186,7 +186,17 @@
 
 // stylelint-disable declaration-no-important
 
-.facets--drawer {
+.facets--drawer,
+.facets--drawer[open] {
+  // ── Alto completo ──────────────────────────────────────────────────────
+  // filters.liquid (base) fuerza height:100% en .facets--drawer[open], pero
+  // ese porcentaje depende de que el <dialog> (renderizado en el top layer)
+  // resuelva un containing block definido — en la práctica el drawer termina
+  // ajustándose al alto de su contenido en vez de ocupar toda la pantalla.
+  // dvh no depende de ese cálculo: se fuerza aquí con !important para blindarlo.
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+
   // ── Header ─────────────────────────────────────────────────────────────
 
   .facets__title-wrapper {
