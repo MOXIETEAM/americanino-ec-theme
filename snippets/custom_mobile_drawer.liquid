@@ -423,7 +423,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--padding-lg);
+    /* padding: 0 var(--padding-lg); */
     min-height: 64px;
     flex-shrink: 0;
     border-bottom: 1px solid #A6A6A6;
@@ -471,15 +471,17 @@
   .custom-mobile-drawer__nav {
     overflow-y: auto;
     overflow-x: hidden;
+    /* height: 70dvh; */
   }
 
   .custom-mobile-drawer__list {
     margin: 0;
-    padding: 0 20px;
+    /* padding: 0 20px; */
   }
 
   .custom-mobile-drawer__item {
     /* border-bottom: 1px solid #A6A6A6; */
+    max-height: 45px;
   }
 
   .custom-mobile-drawer__item:last-child {
@@ -530,16 +532,9 @@
   }
 
   .custom-mobile-drawer__link-text {
-    flex: 1;
-
-    font-family: Archivo;
-font-weight: 700;
-font-style: Bold;
-font-size: 16px;
-leading-trim: NONE;
-line-height: 100%;
-letter-spacing: 0%;
-color: #1E2B51;
+    font-weight: 700;
+    font-size: 16px;
+    color: #1E2B51;
   }
 
   .custom-mobile-drawer__link--active .custom-mobile-drawer__link-text,
@@ -563,7 +558,7 @@ color: #1E2B51;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px;
-    padding: 16px var(--padding-lg);
+    padding: 20px 0;
     flex-shrink: 0;
   }
 
@@ -583,7 +578,7 @@ color: #1E2B51;
 
   /* Menú secundario */
   .custom-mobile-drawer__secondary-nav {
-    border-top: 1px solid var(--color-border);
+    /* border-top: 1px solid var(--color-border); */
     flex-shrink: 0;
   }
 
@@ -608,7 +603,9 @@ color: #1E2B51;
   }
 
   .custom-mobile-drawer__secondary-link--active {
-    color: var(--brand-color-primary, var(--color-foreground));
+    color: #1E2B51;
+    font-size: 14px;
+    font-weight: 500;
   }
 
   /* Utilidades al pie */
