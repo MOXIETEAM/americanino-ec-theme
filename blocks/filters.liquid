@@ -500,6 +500,7 @@
                 {% assign total_active_values = 0 %}
                 {% assign is_active = false %}
 
+                {%- comment -%} MOXIE: is_first → solo el primer filtro abre por defecto en el drawer (acordeón exclusivo, ver list-filter.liquid / price-filter.liquid) {%- endcomment -%}
                 {%- for filter in filters -%}
                   {% case filter.type %}
                     {% when 'price_range' %}
@@ -509,7 +510,7 @@
                           assign is_active = true
                         endif
 
-                        render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false, id_prefix: 'dialog'
+                        render 'price-filter', filter: filter, filter_style: 'vertical', should_render_clear: false, id_prefix: 'dialog', in_drawer: true, is_first: forloop.first
                       -%}
                     {% else %}
                       {% liquid
@@ -519,7 +520,7 @@
 
                         assign active_value_count = filter.active_values | size
                         assign total_active_values = total_active_values | plus: active_value_count
-                        render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, sectionId: section.id
+                        render 'list-filter', filter: filter, filter_style: 'vertical', active_value_count: active_value_count, should_render_clear: false, in_drawer: true, is_first: forloop.first, sectionId: section.id
                       %}
                   {% endcase %}
                 {%- endfor -%}

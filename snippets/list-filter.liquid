@@ -8,6 +8,7 @@
   @param {boolean} [should_render_clear] - Whether to render the clear button
   @param {boolean} [show_swatch_label] - Whether to show the swatch label
   @param {boolean} [in_drawer] - Whether the filter is in a drawer
+  @param {boolean} [is_first] - MOXIE: whether this is the first filter rendered in the drawer (only this one opens by default)
 {%- enddoc -%}
 
 {% liquid
@@ -33,6 +34,14 @@
     assign is_vertical = true
   endif
   assign filter_param_name = filter.param_name | escape | replace: '.', '-'
+
+  # MOXIE: en el drawer, solo el primer filtro abre por defecto; el resto
+  # arranca contraído. Los <details> comparten "name" para que el navegador
+  # cierre el resto automáticamente al abrir uno (acordeón exclusivo nativo).
+  assign accordion_open = is_vertical
+  if in_drawer
+    assign accordion_open = is_first
+  endif
 -%}
 {% capture accordion_children %}
   <details
@@ -41,7 +50,10 @@
     {% if filter_style == 'horizontal' %}
       data-auto-close-details="desktop"
     {% endif %}
-    {% if filter_style == 'vertical' %}
+    {% if in_drawer %}
+      name="facets-drawer-accordion-{{ section.id }}"
+    {% endif %}
+    {% if accordion_open %}
       open
     {% endif %}
   >
@@ -426,9 +438,9 @@
 {% render 'accordion-custom-component',
   children: accordion_children,
   class: 'facets__item',
-  open: is_vertical,
-  open_by_default_on_desktop: is_vertical,
-  open_by_default_on_mobile: is_vertical,
+  open: accordion_open,
+  open_by_default_on_desktop: accordion_open,
+  open_by_default_on_mobile: accordion_open,
   disable_animation_on_desktop: is_horizontal,
   close_with_escape: is_horizontal,
   data_filter_param_name: filter_param_name

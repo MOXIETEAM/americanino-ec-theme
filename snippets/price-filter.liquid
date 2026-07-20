@@ -5,6 +5,8 @@
   @param {string} filter_style - The filter style, can be 'horizontal' or 'vertical'.
   @param {boolean} [should_render_clear] - Whether to render the clear button.
   @param {string} [id_prefix] - Unique prefix to avoid duplicate IDs when rendered multiple times.
+  @param {boolean} [in_drawer] - MOXIE: whether the filter is in the drawer
+  @param {boolean} [is_first] - MOXIE: whether this is the first filter rendered in the drawer (only this one opens by default)
 
   @example
   {% render 'price-filter', filter: filter, filter_style: 'vertical', id_prefix: 'dialog' %}
@@ -18,6 +20,14 @@
   elsif filter_style == 'vertical'
     assign is_vertical = true
   endif
+
+  # MOXIE: en el drawer, solo el primer filtro abre por defecto; el resto
+  # arranca contraído. Los <details> comparten "name" con list-filter.liquid
+  # para que el navegador cierre el resto al abrir uno (acordeón exclusivo).
+  assign accordion_open = is_vertical
+  if in_drawer
+    assign accordion_open = is_first
+  endif
 -%}
 {% capture accordion_children %}
   <details
@@ -25,7 +35,10 @@
     {% if filter_style == 'horizontal' %}
       data-auto-close-details="desktop"
     {% endif %}
-    {% if filter_style == 'vertical' %}
+    {% if in_drawer %}
+      name="facets-drawer-accordion-{{ section.id }}"
+    {% endif %}
+    {% if accordion_open %}
       open
     {% endif %}
   >
@@ -181,9 +194,9 @@
 {% render 'accordion-custom-component',
   children: accordion_children,
   class: 'facets__item',
-  open: is_vertical,
-  open_by_default_on_desktop: is_vertical,
-  open_by_default_on_mobile: is_vertical,
+  open: accordion_open,
+  open_by_default_on_desktop: accordion_open,
+  open_by_default_on_mobile: accordion_open,
   disable_animation_on_desktop: is_horizontal,
   close_with_escape: is_horizontal
 %}
