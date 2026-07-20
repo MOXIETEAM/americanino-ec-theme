@@ -98,7 +98,7 @@
 
   @include mobile-only {
     aspect-ratio: 4 / 5;
-    min-height: unset;
+    min-height: 540px;
   }
 }
 
