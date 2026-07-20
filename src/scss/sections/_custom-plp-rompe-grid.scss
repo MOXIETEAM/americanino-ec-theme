@@ -22,6 +22,23 @@
   }
 }
 
+/* VISTA DE LISTA 1 ITEM */
+[product-grid-view='list-2'] .plp-rompe-grid.plp-rompe-grid--span-2 {
+  aspect-ratio: 1 / 1;
+  min-height: 260px;
+}
+
+[product-grid-view='list-2'] .plp-rompe-grid.plp-rompe-grid--span-1 {
+  aspect-ratio: 9 / 16;
+  min-height: 260px;
+}
+
+/* VISTA DE 2 ITEM POR FILA (2 COLUMNAS) */
+[product-grid-view='col-2'] .plp-rompe-grid.plp-rompe-grid--span-2 {
+  aspect-ratio: 4 / 3;
+  min-height: 260px;
+}
+
 // ── Wrapper interior (a o div) ────────────────────────────────────────────────
 
 .plp-rompe-grid__inner {
