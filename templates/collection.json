@@ -24,26 +24,14 @@
       "name": "Moxie PLP Breadcrumb",
       "settings": {
         "show_breadcrumb_desktop": true,
-        "show_breadcrumb_mobile": true,
+        "show_breadcrumb_mobile": false,
+        "breadcrumb_brand": "Americanino",
         "color_scheme": "",
         "bg_color": "",
         "padding_lateral_desktop": false,
         "padding_lateral_mobile": true,
         "padding_top": 16,
-        "padding_bottom": 16
-      }
-    },
-    "plp_breadcrumb": {
-      "type": "custom_plp_breadcrumb",
-      "settings": {
-        "show_breadcrumb_desktop": true,
-        "show_breadcrumb_mobile": true,
-        "color_scheme": "scheme-1",
-        "bg_color": "",
-        "padding_lateral_desktop": false,
-        "padding_lateral_mobile": true,
-        "padding_top": 16,
-        "padding_bottom": 16
+        "padding_bottom": 0
       }
     },
     "plp_hero": {
@@ -250,7 +238,6 @@
   "order": [
     "custom_plp_rompe_grid_De7LFz",
     "custom_plp_breadcrumb_mY9bgW",
-    "plp_breadcrumb",
     "plp_hero",
     "plp_filtros",
     "main"
