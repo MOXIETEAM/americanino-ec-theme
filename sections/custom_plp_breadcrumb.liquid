@@ -1,11 +1,14 @@
 {%- comment -%}
   MOXIE: PLP Breadcrumb — sección independiente y reposicionable.
-  Reutiliza snippets/custom_breadcrumb.liquid en "modo auto" (jerarquía vía
-  metafield custom.parent_collection en la colección), igual que el breadcrumb
-  de PDP (blocks/custom_pdp_breadcrumb.liquid).
+  Misma lógica simple y probada que el breadcrumb de Moxie PLP Hero
+  (sections/custom_plp_hero.liquid): Marca / Colección, sin depender de
+  metafields de jerarquía (custom.parent_collection) que no siempre están
+  configurados.
 {%- endcomment -%}
 
 {%- liquid
+  assign breadcrumb_brand = section.settings.breadcrumb_brand | default: 'Americanino'
+
   assign bc_class = ''
   unless section.settings.show_breadcrumb_desktop
     assign bc_class = bc_class | append: ' mox-hidden-desktop'
@@ -26,7 +29,11 @@
     {{ section.shopify_attributes }}
   >
     <div class="custom-plp-breadcrumb__inner page-width">
-      {%- render 'custom_breadcrumb', collection: collection, class: bc_class -%}
+      <nav class="plp-hero__breadcrumb{{ bc_class }}" aria-label="Breadcrumb">
+        <span class="plp-hero__bc-brand">{{ breadcrumb_brand }}</span>
+        <span class="plp-hero__bc-sep" aria-hidden="true">/</span>
+        <span class="plp-hero__bc-collection">{{ collection.title }}</span>
+      </nav>
     </div>
   </div>
 </div>
@@ -56,6 +63,12 @@
       "id": "show_breadcrumb_mobile",
       "label": "Mostrar en móvil",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_brand",
+      "label": "Nombre de la marca en breadcrumb",
+      "default": "Americanino"
     },
     {
       "type": "header",
