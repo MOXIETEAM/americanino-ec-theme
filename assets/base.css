@@ -2859,8 +2859,8 @@ form.payment-terms {
   }
 
   &:checked + .checkbox__label .icon-checkmark {
-    background-color: var(--color-foreground);
-    border-color: var(--color-foreground);
+    background-color: #1E2B51;
+    border-color: #1E2B51;
   }
 
   &:disabled + .checkbox__label .icon-checkmark {
@@ -2882,7 +2882,7 @@ form.payment-terms {
   width: var(--checkbox-size);
   flex-shrink: 0;
   border: var(--checkbox-border);
-  border-radius: var(--checkbox-border-radius);
+  border-radius: 2px;
   background-color: var(--color-background);
 }
 
