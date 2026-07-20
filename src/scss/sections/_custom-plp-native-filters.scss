@@ -97,10 +97,21 @@
     --product-grid-columns-desktop: repeat(4, 1fr);
   }
 
-  // Vista lista — 2 columnas, card horizontal (imagen izq. + info der.)
+  // Vista lista — 1 sola columna, card horizontal (imagen izq. + info der.)
   .product-grid.product-grid[product-grid-view='list-2'] {
-    --product-grid-columns-desktop: repeat(2, 1fr);
+    --product-grid-columns-desktop: 1fr;
   }
+}
+
+// Layout "organic" (product-grid.liquid) ubica algunos .product-grid__item en
+// columnas explícitas (grid-column: 1/span 2, 3/span 2, etc.) vía nth-of-type,
+// sin excluir la vista list-2. Con 1 sola columna definida, esas posiciones
+// explícitas fuerzan al grid a crear columnas implícitas extra → los productos
+// terminan uno al lado del otro en vez de apilados. Se resetea a "auto" con
+// !important porque esas reglas nativas (selector con :is()/:not()/nth-of-type)
+// tienen mayor especificidad que un selector de atributo simple.
+[product-grid-view='list-2'] .product-grid__item {
+  grid-column: auto !important; // stylelint-disable-line declaration-no-important
 }
 
 // Modo lista: imagen flotada a la izquierda, el resto del contenido (título,
