@@ -21,6 +21,15 @@ $bp-mobile-max:        749px;
 
 // ── Tarjeta ────────────────────────────────────────────────────────────────
 
+.custom-product-card-name
+.text-block
+p {
+  text-transform: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .quick-add__button {
   display: none !important;
 }
