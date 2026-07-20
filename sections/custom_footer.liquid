@@ -279,10 +279,26 @@
   {%- endif -%}
 
   {%- comment -%} ── Barra inferior: sellos + texto legal ──────────────────────── {%- endcomment -%}
+  {%- assign _show_legal_desktop = section.settings.show_legal_text_desktop -%}
+  {%- assign _show_legal_mobile  = section.settings.show_legal_text_mobile -%}
+
+  {%- assign _any_device_shows_legal = false -%}
+  {%- if _show_legal_desktop or _show_legal_mobile -%}
+    {%- assign _any_device_shows_legal = true -%}
+  {%- endif -%}
+
   {%- assign _show_legal_text = false -%}
-  {%- if section.settings.show_legal_text and section.settings.legal_text != blank -%}
+  {%- if section.settings.legal_text != blank and _any_device_shows_legal -%}
     {%- assign _show_legal_text = true -%}
   {%- endif -%}
+
+  {%- assign _legal_class = 'custom-footer__legal' -%}
+  {%- unless _show_legal_desktop -%}
+    {%- assign _legal_class = _legal_class | append: ' mox-hidden-desktop' -%}
+  {%- endunless -%}
+  {%- unless _show_legal_mobile -%}
+    {%- assign _legal_class = _legal_class | append: ' mox-hidden-mobile' -%}
+  {%- endunless -%}
 
   {%- assign _has_bottom = false -%}
   {%- if _show_legal_text or section.settings.trust_badge_1 != blank -%}
@@ -320,7 +336,7 @@
         {%- endif -%}
 
         {%- if _show_legal_text -%}
-          <div class="custom-footer__legal">{{ section.settings.legal_text }}</div>
+          <div class="{{ _legal_class }}">{{ section.settings.legal_text }}</div>
         {%- endif -%}
 
       </div>
@@ -585,15 +601,21 @@
     },
     {
       "type": "checkbox",
-      "id": "show_legal_text",
-      "label": "Mostrar texto legal / copyright",
+      "id": "show_legal_text_desktop",
+      "label": "Mostrar texto legal / copyright — desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_legal_text_mobile",
+      "label": "Mostrar texto legal / copyright — mobile",
       "default": true
     },
     {
       "type": "richtext",
       "id": "legal_text",
       "label": "Texto legal / copyright",
-      "visible_if": "{{ section.settings.show_legal_text }}",
+      "visible_if": "{{ section.settings.show_legal_text_desktop or section.settings.show_legal_text_mobile }}",
       "default": "<p>Comodin S.A.S | NIT: 800.069.933-6 ©2025 Americanino, todos los derechos reservados  |  Sitio desarrollado en Shopify por <a href='https://www.moxiedigital.co' target='_blank' rel='noopener noreferrer'>Moxie Digital</a></p>"
     },
     {
