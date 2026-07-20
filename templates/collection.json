@@ -167,8 +167,9 @@
               "settings": {
                 "installments_text": "<p>0% de interés hasta 3 cuotas</p>",
                 "installments_link_label": "ver bancos",
-                "installments_link_url": ""
-              }
+                "installments_link_url": "/"
+              },
+              "blocks": {}
             },
             "product_title_4nY4eT": {
               "type": "product-title",
