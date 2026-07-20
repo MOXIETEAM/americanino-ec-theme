@@ -65,6 +65,17 @@ p {
     }
   }
 
+  @media (max-width: 990px) {
+    .cg-card__cuotas {
+      font-size: 8px;
+      line-height: 10px;
+
+      .cg-card__cuotas-link {
+        font-size: 8px;
+        line-height: 10px;
+      }
+    }
+  }
   .cg-card__title {
     font-weight: 500;
     font-size: 13px;
