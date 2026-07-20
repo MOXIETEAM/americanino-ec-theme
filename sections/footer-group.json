@@ -11,66 +11,6 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
-    "custom_seo_text_MqLxez": {
-      "type": "custom_seo_text",
-      "blocks": {
-        "content_hzzT4F": {
-          "type": "content",
-          "settings": {
-            "heading": "Ropa de hombre y mujer",
-            "body": "<p>Nada mejor para una aventura que contar con prendas atemporales, llenas de estilo y que vibran en sincronía con espíritus que aman los desafíos y emprenden retos diarios. Inspirados en este pensamiento, creamos ropa para hombre. Modernas elecciones que trazarán un antes y un después en la vida de quienes la lleven puesta. Nada mejor para una aventura que contar con prendas atemporales, llenas de estilo y que vibran en sincronía con espíritus que aman los desafíos y emprenden retos diarios. Inspirados en este pensamiento, creamos ropa para hombre. Modernas elecciones que trazarán un antes y un después en la vida de quienes la lleven puesta. Nada mejor para una aventura que contar con prendas atemporales, llenas de estilo y que vibran en sincronía con espíritus que aman los desafíos y emprenden retos diarios. Inspirados en este pensamiento, creamos ropa para hombre. Modernas elecciones que trazarán un antes y un después en la vida de quienes la lleven puesta.</p>"
-          }
-        },
-        "tag_njg6FD": {
-          "type": "tag",
-          "settings": {
-            "label": "Somos Denim",
-            "link": ""
-          }
-        },
-        "tag_etTzCa": {
-          "type": "tag",
-          "settings": {
-            "label": "Nueva Coleccion",
-            "link": ""
-          }
-        },
-        "tag_RYaHLA": {
-          "type": "tag",
-          "settings": {
-            "label": "Camisetas para Hombres",
-            "link": ""
-          }
-        },
-        "tag_dbT8Kk": {
-          "type": "tag",
-          "settings": {
-            "label": "Camisetas para Mujeres",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "content_hzzT4F",
-        "tag_njg6FD",
-        "tag_etTzCa",
-        "tag_RYaHLA",
-        "tag_dbT8Kk"
-      ],
-      "name": "Moxie SEO Text",
-      "settings": {
-        "text_align": "center",
-        "collapse_enabled": true,
-        "collapse_height": 100,
-        "label_more": "Ver mas",
-        "label_less": "Ver menos",
-        "bg_color": "",
-        "border_color": "",
-        "padding_lateral_desktop": false,
-        "padding_lateral_mobile": false,
-        "padding_v": 40
-      }
-    },
     "custom_footer_moxie": {
       "type": "custom_footer",
       "blocks": {
@@ -154,7 +94,6 @@
     }
   },
   "order": [
-    "custom_seo_text_MqLxez",
     "custom_footer_moxie"
   ]
 }
