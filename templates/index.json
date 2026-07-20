@@ -1224,6 +1224,7 @@
       "name": "Moxie SEO Text",
       "settings": {
         "text_align": "center",
+        "pills_count_mobile": 10,
         "collapse_enabled": true,
         "collapse_height": 100,
         "label_more": "Ver mas",
