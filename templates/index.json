@@ -623,7 +623,6 @@
     },
     "custom_best_seller_3gRU3k": {
       "type": "custom-best-seller",
-      "disabled": true,
       "name": "Best Sellers Custom",
       "settings": {
         "title": "Best Sellers",
