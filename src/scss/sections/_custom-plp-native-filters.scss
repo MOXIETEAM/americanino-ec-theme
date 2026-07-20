@@ -193,7 +193,7 @@
     min-height: 60px;
     // padding-inline: 20px;
     padding-block: 0;
-    border-bottom: 1px solid #a6a6a6;
+    border-bottom: 1px solid #DFDFDF;
     background-color: #fff;
   }
 
@@ -211,16 +211,20 @@
 
   // ── Chips de filtros activos ──────────────────────────────────────────
 
+  // MOXIE: sin display:flex incondicional — mantiene oculto (display:none nativo
+  // de filter-remove-buttons.liquid) cuando no hay filtros aplicados, y solo se
+  // muestra cuando contiene al menos un facet-remove-component.
   .facets-remove {
+    display: none;
+  }
+
+  .facets-remove:has(facet-remove-component) {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     padding: 14px 20px;
-    border-bottom: 1px solid #a6a6a6;
-  }
-
-  // Anula márgenes del stylesheet inline de filter-remove-buttons.liquid
-  .facets-remove:has(facet-remove-component) {
+    border-bottom: 1px solid #DFDFDF;
+    // Anula márgenes del stylesheet inline de filter-remove-buttons.liquid
     margin-block-start: 0;
     margin-block-end: 0;
   }
@@ -242,6 +246,14 @@
     line-height: 1;
     cursor: pointer;
     box-shadow: none;
+  }
+
+  // Separador entre chips: borde a la derecha en todos excepto el último filtro
+  // y el chip "Borrar filtros" (que no lleva la clase facets-remove__pill).
+  .facets-remove__pill:has(~ .facets-remove__pill) {
+    border-right: 1px solid #D4D4D4;
+    padding-right: 14px;
+    border-radius: 0;
   }
 
   .facets-remove__pill .svg-wrapper {
@@ -305,7 +317,7 @@
 
   .facets__panel {
     padding: 0 20px;
-    border-bottom: 1px solid #a6a6a6;
+    border-bottom: 1px solid #DFDFDF;
   }
 
   .facets__summary {
