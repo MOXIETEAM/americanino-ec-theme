@@ -125,9 +125,15 @@
   display: block;
 }
 
+// Antes de pasar a 1 sola columna, la imagen (42%) se medía contra media
+// columna del grid de 2; ahora esa misma columna ocupa casi todo el ancho
+// de la página y 42% se vuelve enorme (la altura escala con el aspect-ratio
+// de la imagen). Se reduce el porcentaje para devolverle un tamaño similar
+// al que tenía antes, más un tope en px por si la página es muy ancha.
 [product-grid-view='list-2'] .card-gallery {
   float: left;
-  width: 42%;
+  width: 22%;
+  max-width: 360px;
   margin-right: 10px;
 }
 
@@ -160,12 +166,11 @@
   white-space: nowrap;
 }
 
-// Los flags (Nuevo/Sale) se posicionan sobre toda la fila imagen+info, pero en
-// lista la imagen ocupa solo 42% de una columna ya angosta: sin límite de ancho
-// el pill se desborda sobre el texto de al lado. Se acota al ancho de la imagen
-// y se reduce el tamaño para que quepa cómodamente.
+// Los flags (Nuevo/Sale) se posicionan sobre toda la fila imagen+info; sin
+// límite de ancho el pill se desborda sobre el texto de al lado. Se acota al
+// ancho de la imagen (ver .card-gallery arriba) y se reduce el tamaño.
 [product-grid-view='list-2'] .mox-flags--card {
-  max-width: calc(42% - 16px);
+  max-width: calc(22% - 16px);
 }
 
 [product-grid-view='list-2'] .mox-flag {
