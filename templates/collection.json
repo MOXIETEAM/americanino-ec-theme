@@ -162,6 +162,14 @@
               },
               "blocks": {}
             },
+            "custom_installments_mox1": {
+              "type": "custom_installments",
+              "settings": {
+                "installments_text": "<p>0% de interés hasta 3 cuotas</p>",
+                "installments_link_label": "ver bancos",
+                "installments_link_url": ""
+              }
+            },
             "product_title_4nY4eT": {
               "type": "product-title",
               "name": "t:names.product_title",
@@ -212,6 +220,7 @@
           },
           "block_order": [
             "card-gallery",
+            "custom_installments_mox1",
             "product_title_4nY4eT",
             "price_EzJzMm"
           ]

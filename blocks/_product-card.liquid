@@ -1,4 +1,4 @@
-
+{%- comment -%} MOXIE: se agregó "@theme" a la lista de blocks del schema (abajo) para poder añadir bloques Moxie (ej. custom_installments) a esta card nativa {%- endcomment -%}
 
 {% liquid
   assign product = closest.product
@@ -54,6 +54,9 @@
     },
     {
       "type": "@app"
+    },
+    {
+      "type": "@theme"
     }
   ],
   "tag": null,
