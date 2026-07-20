@@ -3590,7 +3590,7 @@ shop-the-look-item.mox-bs__card-media {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #F5F2EA;
+  background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
   border: none;
   cursor: pointer;
