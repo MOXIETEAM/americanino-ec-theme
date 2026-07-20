@@ -74,6 +74,8 @@
               product: product,
               section_id: section.id,
               cuotas_text: s.installments_text,
+              installments_link_url: s.installments_link_url,
+              installments_link_label: s.installments_link_label,
               max_swatches: s.max_swatches
             -%}
           {%- endfor -%}
@@ -171,11 +173,23 @@
       "label": "Colección"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "installments_text",
       "label": "Texto de cuotas",
-      "default": "0% de interés hasta 3 cuotas",
+      "default": "<p>0% de interés hasta 3 cuotas</p>",
       "info": "Deja vacío para ocultar. Ej: 0% de interés hasta 3 cuotas"
+    },
+    {
+      "type": "text",
+      "id": "installments_link_label",
+      "label": "Texto del enlace \"ver bancos\"",
+      "default": "ver bancos",
+      "info": "Deja vacío para no mostrar el enlace"
+    },
+    {
+      "type": "url",
+      "id": "installments_link_url",
+      "label": "Enlace de \"ver bancos\""
     },
     {
       "type": "select",

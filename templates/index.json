@@ -634,7 +634,7 @@
         "hero_title": "Lorem ipsum",
         "hero_text": "Lorem ipsum",
         "collection": "test-collection",
-        "installments_text": "0% de interés hasta 3 cuotas",
+        "installments_text": "<p>0% de interés hasta 3 cuotas ver bancos</p>",
         "image_ratio": "3/4",
         "max_swatches": 4,
         "color_scheme": "",
@@ -867,7 +867,7 @@
         "subtitle": "Lorem ipsum es simplemente texto",
         "small": "Lorem ipsum is a text",
         "heading": "Lorem ipsum",
-        "installments_text": "0% de interés hasta 3 cuotas ver bancos"
+        "installments_text": "<p>0% de interés hasta 3 cuotas ver bancos</p>"
       }
     },
     "custom_expandable_banner_moxEB": {
@@ -959,7 +959,7 @@
         "cols_mobile": 2,
         "columns_gap": 12,
         "rows_gap": 24,
-        "cuotas_text": "0% de interés hasta 3 cuotas ver bancos",
+        "cuotas_text": "<p>0% de interés hasta 3 cuotas ver bancos</p>",
         "padding_lateral_desktop": false,
         "padding_lateral_mobile": false,
         "bg_color": "",

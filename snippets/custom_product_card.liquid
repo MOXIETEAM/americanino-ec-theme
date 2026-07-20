@@ -76,7 +76,12 @@
   {%- comment -%} Info ───────────────────────────────────── {%- endcomment -%}
   <div class="cg-card__info">
     {%- if cuotas_text != blank -%}
-      <p class="cg-card__cuotas">{{ cuotas_text }}</p>
+      <div class="cg-card__cuotas">
+        {{- cuotas_text -}}
+        {%- if installments_link_url != blank and installments_link_label != blank -%}
+          <a href="{{ installments_link_url }}" class="cg-card__cuotas-link">{{ installments_link_label }}</a>
+        {%- endif -%}
+      </div>
     {%- endif -%}
 
     <a href="{{ product.url }}" class="cg-card__title"><h3>{{ product.title | truncate: 55 }}</h3></a>

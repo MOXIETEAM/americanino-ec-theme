@@ -19,6 +19,18 @@
         "pin_gif_url": "https://cdn.shopify.com/s/files/1/0980/2380/1123/files/a9d9692f7e9ecdda3e745c1184e08629e5ec3667.gif?v=1783195571"
       }
     },
+    "plp_breadcrumb": {
+      "type": "custom_plp_breadcrumb",
+      "settings": {
+        "show_breadcrumb_desktop": true,
+        "show_breadcrumb_mobile": true,
+        "color_scheme": "scheme-1",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
+        "padding_top": 16,
+        "padding_bottom": 16
+      }
+    },
     "plp_hero": {
       "type": "custom_plp_hero",
       "blocks": {
@@ -59,6 +71,8 @@
       ],
       "settings": {
         "show_breadcrumb": true,
+        "show_breadcrumb_desktop": false,
+        "show_breadcrumb_mobile": false,
         "breadcrumb_brand": "Americanino",
         "title_override": "{{ collection.title }}",
         "description_override": "{{ collection.metafields.custom.seo_descripcionlarga_mic | metafield_tag }}",
@@ -221,6 +235,7 @@
   },
   "order": [
     "custom_plp_rompe_grid_De7LFz",
+    "plp_breadcrumb",
     "plp_hero",
     "plp_filtros",
     "main"

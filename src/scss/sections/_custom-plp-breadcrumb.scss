@@ -1,0 +1,11 @@
+// ─── MOXIE: PLP Breadcrumb (sección standalone) ──────────────────────────────
+// El componente visual (.mox-breadcrumb) ya está estilizado en
+// snippets/_custom-breadcrumb.scss — acá solo el wrapper/espaciado de la sección.
+
+.custom-plp-breadcrumb {
+  padding-block: var(--plp-breadcrumb-pt, 16px) var(--plp-breadcrumb-pb, 16px);
+}
+
+.custom-plp-breadcrumb__inner {
+  display: flex;
+}

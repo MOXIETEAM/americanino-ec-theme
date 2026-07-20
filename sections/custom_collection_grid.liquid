@@ -90,7 +90,7 @@
                 </div>
                 <div class="cg-card__info">
                   {%- if section.settings.cuotas_text != blank -%}
-                    <p class="cg-card__cuotas">{{ section.settings.cuotas_text }}</p>
+                    <div class="cg-card__cuotas">{{ section.settings.cuotas_text }}</div>
                   {%- endif -%}
                   <span class="cg-card__title">Nombre del producto</span>
                   <div class="cg-card__bottom">
@@ -359,10 +359,10 @@
       "content": "Cuotas"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "cuotas_text",
       "label": "Texto de cuotas",
-      "default": "0% de interés hasta 3 cuotas ver bancos"
+      "default": "<p>0% de interés hasta 3 cuotas ver bancos</p>"
     },
     {
       "type": "header",
@@ -411,7 +411,7 @@
         "image_ratio": "3/4",
         "columns_gap": 12,
         "rows_gap": 24,
-        "cuotas_text": "0% de interés hasta 3 cuotas ver bancos",
+        "cuotas_text": "<p>0% de interés hasta 3 cuotas ver bancos</p>",
         "padding_v": 56
       },
       "blocks": [
