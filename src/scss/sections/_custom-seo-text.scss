@@ -134,4 +134,24 @@
   .custom-seo-text__body {
     max-width: 315px;
   }
+
+  // MOXIE: en mobile el contenedor de pills pasa de wrap a slider horizontal
+  // — el límite de pills visibles (nth-child) se genera vía Liquid en un
+  // <style> por sección, porque CSS no admite variables en :nth-child().
+  .custom-seo-text__tags {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .seo-tag {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
 }

@@ -7,6 +7,7 @@
   assign content_blocks    = section.blocks | where: 'type', 'content'
   assign tag_blocks        = section.blocks | where: 'type', 'tag'
   assign padding_v         = section.settings.padding_v        | default: 40
+  assign pills_count_mobile = section.settings.pills_count_mobile | default: 10
 -%}
 
 <div
@@ -68,6 +69,22 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+      {%- comment -%}
+        MOXIE: límite de pills visibles en mobile (section.settings.pills_count_mobile).
+        En mobile el contenedor es un slider horizontal (ver _custom-seo-text.scss);
+        esto oculta los pills que excedan el límite ahí — no hace falta si hay
+        menos pills que el límite configurado. CSS no admite variables dentro de
+        :nth-child(), por eso el número literal se genera aquí vía Liquid.
+      {%- endcomment -%}
+      {%- if tag_blocks.size > pills_count_mobile -%}
+        <style>
+          @media screen and (max-width: 768px) {
+            #seo-text-{{ section.id }} .seo-tag:nth-child(n + {{ pills_count_mobile | plus: 1 }}) {
+              display: none;
+            }
+          }
+        </style>
+      {%- endif -%}
     {%- endif -%}
 
   </div>
@@ -181,6 +198,20 @@
         { "value": "center", "label": "Centro" }
       ],
       "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Pills de keyword"
+    },
+    {
+      "type": "range",
+      "id": "pills_count_mobile",
+      "label": "Cantidad de pills visibles en mobile",
+      "info": "En mobile los pills se muestran en un slider horizontal; este límite oculta los pills adicionales (siguen existiendo en desktop).",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 10
     },
     {
       "type": "header",
