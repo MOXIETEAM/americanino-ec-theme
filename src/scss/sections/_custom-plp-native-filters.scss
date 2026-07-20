@@ -178,6 +178,30 @@
   font-size: 0.5625rem;
 }
 
+// ── Card de producto Moxie (cg-card) en vista lista ───────────────────────────
+// MOXIE: la grilla principal del PLP (sections/custom_main_collection.liquid)
+// ahora renderiza snippets/custom_product_card.liquid (.cg-card) en vez de la
+// card nativa (.product-grid__card / .card-gallery) — las reglas de arriba
+// quedan sin efecto para esta grilla (las dejamos por si algún otro grid nativo
+// todavía usa product-grid-view). .cg-card ya es flex, así que no hace falta
+// el hack de float: alcanza con cambiar la dirección a fila.
+[product-grid-view='list-2'] .cg-card {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+[product-grid-view='list-2'] .cg-card__media {
+  width: 22%;
+  max-width: 260px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+[product-grid-view='list-2'] .cg-card__info {
+  flex: 1 1 auto;
+  min-width: 0; // permite truncar título/precio en vez de desbordar
+}
+
 // Mobile: col-2 mantiene 2 columnas; list-2 pasa a 1 sola columna a ancho
 // completo — la vista de lista es un producto por fila (imagen + info en fila),
 // no dos cards angostas lado a lado.
