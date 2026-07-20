@@ -42,6 +42,13 @@ $bp-mobile-max:        749px;
     }
   }
 
+  .cg-card__title {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #2C2C2C;
+  }
+
   &__img {
     display: block;
     width: 100%;
@@ -116,7 +123,7 @@ $bp-mobile-max:        749px;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-top: 2px;
+    // margin-top: 2px;
   }
 
   // ── Precios ───────────────────────────────────────────────────────────
@@ -130,12 +137,26 @@ $bp-mobile-max:        749px;
       font-size: 0.75rem;
       color: rgb(var(--color-foreground-rgb) / 0.5);
       text-decoration: line-through;
+
+       @media (max-width: 990px) {
+        font-size: 11px;
+        line-height: 18px;
+        font-weight: 400;
+        color: #666666;
+      }
     }
 
     &-current {
       font-size: 0.875rem;
       font-weight: 600;
       color: inherit;
+
+      @media (max-width: 990px) {
+        font-size: 11px;
+        line-height: 18px;
+        font-weight: 600;
+        color: #2C2C2C;
+      }
     }
   }
 
