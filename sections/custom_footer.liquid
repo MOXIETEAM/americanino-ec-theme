@@ -36,66 +36,6 @@
     </div>
   {%- endif -%}
 
-  {%- comment -%} ── Decoradores GIF (zona entre newsletter y footer) ─────────── {%- endcomment -%}
-  {%- liquid
-    assign _gd1_img    = section.settings.gif_dec_1_image
-    assign _gd1_sz     = section.settings.gif_dec_1_size | default: 80
-    assign _gd1_pos    = section.settings.gif_dec_1_position | default: 'top-center'
-    assign _gd1_top    = section.settings.gif_dec_1_top    | default: 0
-    assign _gd1_right  = section.settings.gif_dec_1_right  | default: 0
-    assign _gd1_bottom = section.settings.gif_dec_1_bottom | default: 0
-    assign _gd1_left   = section.settings.gif_dec_1_left   | default: 0
-
-    assign _gd2_img    = section.settings.gif_dec_2_image
-    assign _gd2_sz     = section.settings.gif_dec_2_size | default: 80
-    assign _gd2_pos    = section.settings.gif_dec_2_position | default: 'top-center'
-    assign _gd2_top    = section.settings.gif_dec_2_top    | default: 0
-    assign _gd2_right  = section.settings.gif_dec_2_right  | default: 0
-    assign _gd2_bottom = section.settings.gif_dec_2_bottom | default: 0
-    assign _gd2_left   = section.settings.gif_dec_2_left   | default: 0
-
-    assign _gd3_img    = section.settings.gif_dec_3_image
-    assign _gd3_sz     = section.settings.gif_dec_3_size | default: 80
-    assign _gd3_pos    = section.settings.gif_dec_3_position | default: 'top-center'
-    assign _gd3_top    = section.settings.gif_dec_3_top    | default: 0
-    assign _gd3_right  = section.settings.gif_dec_3_right  | default: 0
-    assign _gd3_bottom = section.settings.gif_dec_3_bottom | default: 0
-    assign _gd3_left   = section.settings.gif_dec_3_left   | default: 0
-
-    assign _gd4_img    = section.settings.gif_dec_4_image
-    assign _gd4_sz     = section.settings.gif_dec_4_size | default: 80
-    assign _gd4_pos    = section.settings.gif_dec_4_position | default: 'top-center'
-    assign _gd4_top    = section.settings.gif_dec_4_top    | default: 0
-    assign _gd4_right  = section.settings.gif_dec_4_right  | default: 0
-    assign _gd4_bottom = section.settings.gif_dec_4_bottom | default: 0
-    assign _gd4_left   = section.settings.gif_dec_4_left   | default: 0
-
-    assign _has_gif_decs = false
-    if _gd1_img or _gd2_img or _gd3_img or _gd4_img
-      assign _has_gif_decs = true
-    endif
-  -%}
-  {%- if _has_gif_decs -%}
-    <div class="custom-footer__gif-strip" aria-hidden="true">
-      {%- if _gd1_img -%}
-        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd1_pos }}" style="--dec-top:{{ _gd1_top }}px;--dec-right:{{ _gd1_right }}px;--dec-bottom:{{ _gd1_bottom }}px;--dec-left:{{ _gd1_left }}px;--dec-h:{{ _gd1_sz }}px;"
-        ><img src="{{ _gd1_img | image_url: height: _gd1_sz }}" alt="" loading="lazy"></span>
-      {%- endif -%}
-      {%- if _gd2_img -%}
-        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd2_pos }}" style="--dec-top:{{ _gd2_top }}px;--dec-right:{{ _gd2_right }}px;--dec-bottom:{{ _gd2_bottom }}px;--dec-left:{{ _gd2_left }}px;--dec-h:{{ _gd2_sz }}px;"
-        ><img src="{{ _gd2_img | image_url: height: _gd2_sz }}" alt="" loading="lazy"></span>
-      {%- endif -%}
-      {%- if _gd3_img -%}
-        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd3_pos }}" style="--dec-top:{{ _gd3_top }}px;--dec-right:{{ _gd3_right }}px;--dec-bottom:{{ _gd3_bottom }}px;--dec-left:{{ _gd3_left }}px;--dec-h:{{ _gd3_sz }}px;"
-        ><img src="{{ _gd3_img | image_url: height: _gd3_sz }}" alt="" loading="lazy"></span>
-      {%- endif -%}
-      {%- if _gd4_img -%}
-        <span class="custom-footer__gif-dec custom-footer__gif-dec--{{ _gd4_pos }}" style="--dec-top:{{ _gd4_top }}px;--dec-right:{{ _gd4_right }}px;--dec-bottom:{{ _gd4_bottom }}px;--dec-left:{{ _gd4_left }}px;--dec-h:{{ _gd4_sz }}px;"
-        ><img src="{{ _gd4_img | image_url: height: _gd4_sz }}" alt="" loading="lazy"></span>
-      {%- endif -%}
-    </div>
-  {%- endif -%}
-
   {%- comment -%} ── Main footer ──────────────────────────────────────────────── {%- endcomment -%}
   <div
     class="custom-footer__main custom-center-container color-{{ section.settings.color_scheme }}"

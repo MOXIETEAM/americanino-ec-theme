@@ -115,10 +115,6 @@
   gap: 10px;
 }
 
-.grid-panel--bottom-spread .grid-panel__decorator {
-  display: none; // decorator not shown in spread layout
-}
-
 // ── Content align: bottom-center ─────────────────────────────────────────────
 
 .grid-panel--bottom-center .grid-panel__content {
@@ -137,23 +133,6 @@
   justify-content: center;
   gap: 12px;
   text-align: center;
-}
-
-// ── Decorator image ───────────────────────────────────────────────────────────
-
-.grid-panel__decorator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-
-  img {
-    display: block;
-    height: auto;
-    width: auto;
-    max-height: 48px;
-    object-fit: contain;
-  }
 }
 
 // ── Title ─────────────────────────────────────────────────────────────────────

@@ -113,3 +113,21 @@ media-gallery {
   left: 12px;
   z-index: 10;
 }
+
+
+@media (max-width: 990px) {
+  .mox-flag {
+    max-width: 53px;
+    max-height: 13px;
+    font-size: 6px !important;
+    line-height: 10px !important;
+    font-weight: 600 !important;
+
+    .mox-flag__img {
+      width: 8px;
+      height: 8px;
+    }
+
+    
+  }
+}

@@ -110,31 +110,6 @@
   @include reduced-motion { transition: none; }
 }
 
-// ── Decorator (legacy) ────────────────────────────────────────────────────────
-
-.custom-footer__decorator {
-  display: flex;
-  justify-content: center;
-  left: 50%;
-  transform: translateX(-50%);
-  position: absolute;
-  top: 230px;
-  background-color: var(--color-background);
-  border-radius: 50%;
-  z-index: 2;
-  margin-block-start: -12px;
-  margin-block-end: -12px;
-  pointer-events: none;
-
-  img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    border-radius: 50%;
-    display: block;
-  }
-}
-
 // ── Main footer ───────────────────────────────────────────────────────────────
 
 .custom-footer__main {
@@ -535,11 +510,6 @@
 
 @media (max-width: 989px) {
   .custom-main-container-footer {
-    .custom-footer__decorator {
-      max-width: 85px;
-      top: -40px;
-    }
-
     .custom-footer__newsletter-inner {
       flex-direction: column;
       align-items: center;

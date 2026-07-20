@@ -87,60 +87,6 @@
   margin-top: calc(42px + var(--promo-bar-height, 0px) - 0.6rem);
 }
 
-// --- Nav Decorators ----------------------------------------------------------
-// Override brand system's display:block with inline-flex for inline decorators
-
-.nav-decorator {
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-
-.nav-decorator__img {
-  display: block;
-  width: auto;
-  object-fit: contain;
-}
-
-// Link layout modifiers - applied when a decorator is present
-.custom-navbar__link--dec-left,
-.custom-navbar__link--dec-right {
-  display: inline-flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 4px;
-}
-
-.custom-navbar__link--dec-above,
-.custom-navbar__link--dec-below {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-
-// DECORADORES DE TITULOS HEADER
-
-// .custom-navbar__link {
-//   border: 2px solid red;
-// }
-.custom-navbar__link 
-.nav-decorator--below {
-  position: absolute !important;
-  bottom: 6px;
-}
-
-.custom-navbar__link
-.nav-decorator--above {
-  position: absolute !important;
-  top: -2px;
-}
-
-
 /* =============================================================================
    MOXIE: Header siempre negro en PLP (collection), PDP (product) y búsqueda
    En la home el header es transparente con iconos blancos. En el resto de

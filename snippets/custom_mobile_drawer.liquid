@@ -102,28 +102,12 @@
           role="list"
         >
           {%- for link in block_settings.menu.links -%}
-            {%- assign dec_image = blank -%}{%- assign dec_position = 'right' -%}{%- assign dec_size = 20 -%}
-            {%- for n in (1..10) -%}
-              {%- assign _dk = 'decorator_' | append: n | append: '_item' -%}
-              {%- assign _dv = block_settings[_dk] -%}
-              {%- if _dv != blank and _dv == link.title -%}
-                {%- assign dec_key_img  = 'decorator_' | append: n | append: '_image' -%}
-                {%- assign dec_key_pos  = 'decorator_' | append: n | append: '_position' -%}
-                {%- assign dec_key_sz   = 'decorator_' | append: n | append: '_size' -%}
-                {%- assign dec_image    = block_settings[dec_key_img] -%}
-                {%- assign dec_position = block_settings[dec_key_pos] -%}
-                {%- assign dec_size     = block_settings[dec_key_sz] -%}
-                {%- break -%}
-              {%- endif -%}
-            {%- endfor -%}
             <li class="custom-mobile-drawer__item" style="--menu-drawer-animation-index: {{ forloop.index }};">
               {%- if link.links.size > 0 -%}
                 <details id="Mobile-drawer-{{ link.handle }}" class="custom-mobile-drawer__submenu-details">
                   <summary class="custom-mobile-drawer__link menu-drawer__animated-element focus-inset" on:click="header-drawer/open/submenu">
                     <span class="custom-mobile-drawer__link-inner">
-                      {%- if dec_image != blank and dec_position == 'left' -%}<span class="nav-decorator nav-decorator--left"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
                       <span class="custom-mobile-drawer__link-text{% if link.active %} custom-mobile-drawer__link-text--active{% endif %}">{{ link.title | escape }}</span>
-                      {%- if dec_image != blank and dec_position == 'right' -%}<span class="nav-decorator nav-decorator--right"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
                     </span>
                     <span class="svg-wrapper icon-plus" aria-hidden="true">{{- 'icon-plus.svg' | inline_asset_content -}}</span>
                   </summary>
@@ -243,9 +227,7 @@
               {%- else -%}
                 <a href="{{ link.url }}" class="custom-mobile-drawer__link menu-drawer__animated-element focus-inset{% if link.current %} custom-mobile-drawer__link--active{% endif %}" {% if link.current %}aria-current="page"{% endif %}>
                   <span class="custom-mobile-drawer__link-inner">
-                    {%- if dec_image != blank and dec_position == 'left' -%}<span class="nav-decorator nav-decorator--left"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
                     <span class="custom-mobile-drawer__link-text{% if link.active %} custom-mobile-drawer__link-text--active{% endif %}">{{ link.title | escape }}</span>
-                    {%- if dec_image != blank and dec_position == 'right' -%}<span class="nav-decorator nav-decorator--right"><img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img"></span>{%- endif -%}
                   </span>
                 </a>
               {%- endif -%}

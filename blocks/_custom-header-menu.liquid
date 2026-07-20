@@ -72,24 +72,7 @@
     >
       <ul class="custom-navbar__list list-unstyled" role="list">
         {%- for link in block_settings.menu.links -%}
-          {%- assign dec_image = blank -%}
-          {%- assign dec_position = 'right' -%}
-          {%- assign dec_size = 20 -%}
           {%- assign link_title_normalized = link.title | strip | downcase -%}
-          {%- for n in (1..10) -%}
-            {%- assign _dk = 'decorator_' | append: n | append: '_item' -%}
-            {%- assign _dv = block_settings[_dk] -%}
-            {%- assign _dv_normalized = _dv | strip | downcase -%}
-            {%- if _dv != blank and _dv_normalized == link_title_normalized -%}
-              {%- assign _ik = 'decorator_' | append: n | append: '_image' -%}
-              {%- assign _pk = 'decorator_' | append: n | append: '_position' -%}
-              {%- assign _sk = 'decorator_' | append: n | append: '_size' -%}
-              {%- assign dec_image    = block_settings[_ik] -%}
-              {%- assign dec_position = block_settings[_pk] -%}
-              {%- assign dec_size     = block_settings[_sk] -%}
-              {%- break -%}
-            {%- endif -%}
-          {%- endfor -%}
           {%- comment -%} MOXIE: Verificar si este item está en la lista de destacados {%- endcomment -%}
           {%- assign is_highlighted = false -%}
           {%- for highlight_item in highlight_items_array -%}
@@ -102,32 +85,12 @@
           <li class="custom-navbar__item">
             <a
               href="{{ link.url }}"
-              class="custom-navbar__link{% if link.active %} custom-navbar__link--active{% endif %}{% if dec_image != blank %} custom-navbar__link--decorated custom-navbar__link--dec-{{ dec_position }}{% endif %}{% if is_highlighted %} custom-navbar__link--highlighted{% endif %}"
+              class="custom-navbar__link{% if link.active %} custom-navbar__link--active{% endif %}{% if is_highlighted %} custom-navbar__link--highlighted{% endif %}"
               {% if link.current %}aria-current="page"{% endif %}
               {% if link.links.size > 0 %}data-mega-trigger="{{ link.title | handleize }}"{% endif %}
               {% if is_highlighted %}style="color: {{ highlight_color }}; font-weight: {{ highlight_font_weight }};"{% endif %}
             >
-              {%- if dec_image != blank and dec_position == 'above' -%}
-                <span class="nav-decorator nav-decorator--above">
-                  <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
-                </span>
-              {%- endif -%}
-              {%- if dec_image != blank and dec_position == 'left' -%}
-                <span class="nav-decorator nav-decorator--left">
-                  <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
-                </span>
-              {%- endif -%}
               {{- link.title -}}
-              {%- if dec_image != blank and dec_position == 'right' -%}
-                <span class="nav-decorator nav-decorator--right">
-                  <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
-                </span>
-              {%- endif -%}
-              {%- if dec_image != blank and dec_position == 'below' -%}
-                <span class="nav-decorator nav-decorator--below">
-                  <img src="{{ dec_image | image_url: height: dec_size }}" height="{{ dec_size }}" width="{{ dec_image.aspect_ratio | times: dec_size | ceil }}" alt="" loading="eager" class="nav-decorator__img">
-                </span>
-              {%- endif -%}
             </a>
           </li>
         {%- endfor -%}
