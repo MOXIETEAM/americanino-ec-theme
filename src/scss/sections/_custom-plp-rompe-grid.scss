@@ -124,13 +124,15 @@
   align-items: center;
   align-self: flex-start;
   padding: 8px 20px;
-  border: 2px solid currentColor;
-  border-radius: 999px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  border: 1px solid #ffffff;
+  border-radius: 28px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+  letter-spacing: 0;
   white-space: nowrap;
   transition: opacity var(--animation-speed, 0.2s) ease;
+  max-height: 31px;
 
   @include reduced-motion {
     transition: none;
@@ -177,21 +179,24 @@
   }
 
   .plp-rompe-grid__desc {
-    font-size: 0.875rem;
-    font-weight: 300;
-    letter-spacing: 0.06em;
+    font-weight: 200;
     color: #fff;
-    opacity: 0.9;
     margin: 0 0 20px;
+    font-size: 13px;
+    line-height: 100%;
+    letter-spacing: 32%;
   }
 
   .plp-rompe-grid__btn {
     align-self: center;
-    border: 1.5px solid #fff;
+    border: 1px solid #fff;
+    max-height: 31px;
     padding: 12px 32px;
     color: #fff;
-    font-weight: 600;
-    background: rgba(255, 255, 255, 0.15);
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    // background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(13px);
     -webkit-backdrop-filter: blur(13px);
     box-shadow: 0 5px 33px 0 rgba(0, 0, 0, 0.25);
