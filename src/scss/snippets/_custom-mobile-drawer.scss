@@ -80,11 +80,21 @@ details[open] > .menu-drawer__submenu {
   opacity: 1;
   display: flex;
   flex-direction: column;
-  // background-color:rgba(255, 255, 255, 0.3) !important;
-  background: linear-gradient(105.06deg, 
-    rgba(255, 255, 255, 0.8) 2.72%, 
+}
+
+// El nivel 1 mantiene el efecto glass sobre el contenido de la página.
+.menu-open > .menu-drawer {
+  background: linear-gradient(105.06deg,
+    rgba(255, 255, 255, 0.8) 2.72%,
     rgba(255, 255, 255, 0.15) 217.45%);
   backdrop-filter: blur(13px);
+}
+
+// MOXIE: los submenús (niveles 2 y 3) deben ser opacos — al ser position:absolute
+// y cubrir el 100% del panel, el fondo translúcido dejaba ver el nivel anterior
+// "transparentado" debajo, dando sensación de capas superpuestas.
+.menu-open > .menu-drawer__submenu:not(.menu-drawer__menu--childlist) {
+  background-color: var(--color-background);
 }
 
 // ── Icono hamburger / cerrar ──────────────────────────────────────────────────

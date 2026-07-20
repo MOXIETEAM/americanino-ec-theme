@@ -9,6 +9,55 @@
   assign logo_h   = settings.logo_height_mobile | default: 40
 -%}
 
+{%- comment -%} MOXIE: cabecera (logo + cerrar) reutilizada en todos los niveles del drawer {%- endcomment -%}
+{%- capture drawer_logo_header -%}
+  <div class="custom-mobile-drawer__header">
+    <a href="{{ routes.root_url }}" class="custom-mobile-drawer__logo-link" aria-label="{{ alt_text }}">
+
+      {%- comment -%} Logo del drawer: custom si está configurado, sino el logo general {%- endcomment -%}
+      {%- if block_settings.mobile_logo_video != blank -%}
+        {%- liquid assign logo_v_w = logo_h | times: block_settings.mobile_logo_video.aspect_ratio | ceil -%}
+        <video
+          class="custom-mobile-drawer__logo-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          width="{{ logo_v_w }}"
+          height="{{ logo_h }}"
+          aria-label="{{ alt_text }}"
+        >
+          {%- for source in block_settings.mobile_logo_video.sources -%}
+            <source src="{{ source.url }}" type="{{ source.mime_type }}">
+          {%- endfor -%}
+        </video>
+      {%- elsif settings.logo != blank -%}
+        {%- liquid assign def_w = logo_h | times: settings.logo.aspect_ratio | ceil -%}
+        <img
+          src="{{ settings.logo | image_url: height: logo_h }}"
+          height="{{ logo_h }}"
+          width="{{ def_w }}"
+          alt="{{ alt_text }}"
+          loading="eager"
+          class="custom-mobile-drawer__logo-img"
+        >
+      {%- else -%}
+        <span class="custom-mobile-drawer__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+
+    </a>
+
+    <button
+      class="button button-unstyled custom-mobile-drawer__close-btn"
+      type="button"
+      aria-label="{{ 'actions.close' | t }}"
+      on:click="/close"
+    >
+      <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+    </button>
+  </div>
+{%- endcapture -%}
+
 <script src="{{ 'header-drawer.js' | asset_url }}" type="module" fetchpriority="low"></script>
 
 <header-drawer
@@ -44,51 +93,7 @@
     >
 
       {%- comment -%} ── Cabecera: logo + botón cerrar ──────────────────── {%- endcomment -%}
-      <div class="custom-mobile-drawer__header">
-        <a href="{{ routes.root_url }}" class="custom-mobile-drawer__logo-link" aria-label="{{ alt_text }}">
-
-          {%- comment -%} Logo del drawer: custom si está configurado, sino el logo general {%- endcomment -%}
-          {%- if block_settings.mobile_logo_video != blank -%}
-            {%- liquid assign logo_v_w = logo_h | times: block_settings.mobile_logo_video.aspect_ratio | ceil -%}
-            <video
-              class="custom-mobile-drawer__logo-video"
-              autoplay
-              muted
-              loop
-              playsinline
-              width="{{ logo_v_w }}"
-              height="{{ logo_h }}"
-              aria-label="{{ alt_text }}"
-            >
-              {%- for source in block_settings.mobile_logo_video.sources -%}
-                <source src="{{ source.url }}" type="{{ source.mime_type }}">
-              {%- endfor -%}
-            </video>
-          {%- elsif settings.logo != blank -%}
-            {%- liquid assign def_w = logo_h | times: settings.logo.aspect_ratio | ceil -%}
-            <img
-              src="{{ settings.logo | image_url: height: logo_h }}"
-              height="{{ logo_h }}"
-              width="{{ def_w }}"
-              alt="{{ alt_text }}"
-              loading="eager"
-              class="custom-mobile-drawer__logo-img"
-            >
-          {%- else -%}
-            <span class="custom-mobile-drawer__logo-text">{{ shop.name }}</span>
-          {%- endif -%}
-
-        </a>
-
-        <button
-          class="button button-unstyled custom-mobile-drawer__close-btn"
-          type="button"
-          aria-label="{{ 'actions.close' | t }}"
-          on:click="/close"
-        >
-          <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
-        </button>
-      </div>
+      {{ drawer_logo_header }}
 
       {%- comment -%} ── Navegación ─────────────────────────────────────── {%- endcomment -%}
       <nav
@@ -114,7 +119,10 @@
                   <div id="Mobile-drawer-submenu-{{ link.handle }}" class="menu-drawer__submenu has-submenu" tabindex="-1" style="--menu-drawer-animation-index: {{ forloop.index }};">
                     <div class="menu-drawer__inner-submenu">
 
-                      {%- comment -%} Breadcrumb nivel 2: ← Volver | Título | X {%- endcomment -%}
+                      {%- comment -%} MOXIE: logo repetido en cada nivel del drawer {%- endcomment -%}
+                      {{ drawer_logo_header }}
+
+                      {%- comment -%} Breadcrumb nivel 2: ← Volver | Título {%- endcomment -%}
                       <div class="custom-mobile-drawer__breadcrumb-bar">
                         <button
                           class="button custom-mobile-drawer__breadcrumb-back focus-inset"
@@ -125,14 +133,6 @@
                           <span class="custom-mobile-drawer__breadcrumb-back-label">{{ 'moxie.nav.back' | t }}</span>
                         </button>
                         <span class="custom-mobile-drawer__breadcrumb-title">{{ link.title | escape }}</span>
-                        <button
-                          class="button button-unstyled custom-mobile-drawer__close-btn"
-                          type="button"
-                          aria-label="{{ 'actions.close' | t }}"
-                          on:click="header-drawer/close"
-                        >
-                          <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
-                        </button>
                       </div>
 
                       {%- comment -%} Lista nivel 2: featured (sin hijos) + expandibles (con hijos → nivel 3) {%- endcomment -%}
@@ -161,7 +161,10 @@
                                 <div id="Mobile-l2-submenu-{{ link.handle }}-{{ childlink.handle }}" class="menu-drawer__submenu has-submenu menu-drawer__submenu--l3" tabindex="-1">
                                   <div class="menu-drawer__inner-submenu">
 
-                                    {%- comment -%} Breadcrumb nivel 3: ← Volver | Título | X {%- endcomment -%}
+                                    {%- comment -%} MOXIE: logo repetido en cada nivel del drawer {%- endcomment -%}
+                                    {{ drawer_logo_header }}
+
+                                    {%- comment -%} Breadcrumb nivel 3: ← Volver | Título {%- endcomment -%}
                                     <div class="custom-mobile-drawer__breadcrumb-bar">
                                       <button
                                         class="button custom-mobile-drawer__breadcrumb-back focus-inset"
@@ -172,14 +175,6 @@
                                         <span class="custom-mobile-drawer__breadcrumb-back-label">{{ 'moxie.nav.back' | t }}</span>
                                       </button>
                                       <span class="custom-mobile-drawer__breadcrumb-title">{{ childlink.title | escape }}</span>
-                                      <button
-                                        class="button button-unstyled custom-mobile-drawer__close-btn"
-                                        type="button"
-                                        aria-label="{{ 'actions.close' | t }}"
-                                        on:click="header-drawer/close"
-                                      >
-                                        <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
-                                      </button>
                                     </div>
 
                                     {%- comment -%} Subcategorías nivel 3 {%- endcomment -%}
@@ -427,6 +422,13 @@
     min-height: 64px;
     flex-shrink: 0;
     border-bottom: 1px solid #A6A6A6;
+  }
+
+  /* MOXIE: la cabecera del nivel 1 hereda el gutter de 20px de .menu-drawer;
+     los submenús (niveles 2 y 3) no tienen ese padding en su contenedor, así
+     que la cabecera repetida ahí necesita su propio inset horizontal. */
+  .menu-drawer__inner-submenu > .custom-mobile-drawer__header {
+    padding: 0 20px;
   }
 
   .custom-mobile-drawer__logo-link {
