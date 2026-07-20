@@ -99,6 +99,8 @@
   @include mobile-only {
     aspect-ratio: 4 / 5;
     min-height: 540px;
+    width: 100%;
+    max-width: 100%;
   }
 }
 
