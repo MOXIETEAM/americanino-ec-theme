@@ -107,11 +107,14 @@
   // metacampo rich text (collection.metafields.seo.links) renderizado con
   // metafield_tag, que envuelve cada link en uno o más niveles de bloques
   // (div/p/h1-h6, según lo que haya escrito el merchant en el editor). TODO
-  // lo que no sea el propio <a> se aplana con display:contents —
-  // recursivamente, cualquiera sea la profundidad del anidamiento — para que
-  // los <a> queden como hijos directos del flex y no rompan la fila de pills
-  // ni el slider horizontal en mobile.
-  :not(a) {
+  // lo que no sea el propio <a> ni un .seo-tag ya armado se aplana con
+  // display:contents — recursivamente, cualquiera sea la profundidad del
+  // anidamiento — para que los <a> queden como hijos directos del flex y no
+  // rompan la fila de pills ni el slider horizontal en mobile.
+  // IMPORTANTE: excluir .seo-tag acá — el Moxie SEO Text original (home)
+  // genera <span class="seo-tag"> (no <a>) para pills sin link, y sin este
+  // :not(.seo-tag) ese span perdía toda su caja/estilo.
+  :not(a):not(.seo-tag) {
     display: contents;
   }
 
