@@ -392,7 +392,10 @@ class CompleteTheLookItemComponent extends Component {
 
       if (!response.ok) throw new Error(`Cart add failed: ${response.status}`);
 
-      const cart = await response.json();
+      // MOXIE: use the full cart (with item_count) as the event resource, not the raw
+      // /cart/add.js response — that's only the added line, which was making the header
+      // cart bubble reset to "1" on every add instead of the real total.
+      const cart = await fetch('/cart.js').then((r) => r.json());
 
       this.dispatchEvent(
         new CartAddEvent(cart, variantId, {

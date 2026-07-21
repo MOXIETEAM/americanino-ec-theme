@@ -89,8 +89,13 @@ class MoxSizePickerComponent extends Component {
         return;
       }
 
+      // MOXIE: use the full cart (with item_count) as the event resource, not the raw
+      // /cart/add.js response — that only contains the just-added line(s), which was
+      // making the header cart bubble reset to "1" on every add instead of the real total.
+      const cart = await fetch('/cart.js').then((r) => r.json());
+
       this.dispatchEvent(
-        new CartAddEvent(data, variantId, {
+        new CartAddEvent(cart, variantId, {
           source: 'mox-size-picker',
           itemCount: 1,
           variantId,

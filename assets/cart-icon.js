@@ -54,6 +54,18 @@ class CartIcon extends Component {
    * @param {CartUpdateEvent} event - The cart update event.
    */
   onCartUpdate = async (event) => {
+    // MOXIE: prefer the authoritative total from the cart resource (when the event carries one)
+    // over the optimistic itemCount-delta math below. The delta approach drifts from reality
+    // whenever the requested quantity differs from what was actually added (stock/quantity caps,
+    // overlapping add requests, custom add-to-cart flows, etc.), which was causing the header
+    // bubble to disagree with the minicart's own (server-rendered) count.
+    const resourceItemCount = event.detail.resource?.item_count;
+
+    if (typeof resourceItemCount === 'number') {
+      this.renderCartBubble(resourceItemCount, false);
+      return;
+    }
+
     const itemCount = event.detail.data?.itemCount ?? 0;
     const comingFromProductForm = event.detail.data?.source === 'product-form-component';
 
