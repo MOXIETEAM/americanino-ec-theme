@@ -102,6 +102,29 @@
     </span>
   {%- endif -%}
 
+  {%- comment -%}
+    MOXIE: Logo animado Americanino — máxima prioridad, reemplaza cualquier
+    otro logo (imagen, marca, video) mientras esté activo. Colapsa
+    "AMERICANINO®" a "AMCNO®" una sola vez al cargar (ver stylesheet/javascript
+    más abajo para la animación y el fallback de prefers-reduced-motion).
+  {%- endcomment -%}
+  {%- if block.settings.enable_animated_logo -%}
+    {%- comment -%} MOXIE: Montserrat 900 solo se carga si este logo está activo {%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <span
+      class="header-logo__image-container header-logo__image-container--animated mox-anim-logo"
+      data-animated-logo
+      aria-label="{{ alt_text_fallback }}"
+      style="--header-logo-image-height: {{ logo_h }}px; --header-logo-image-height-mobile: {{ logo_h_mobile }}px;"
+    >
+      {%- comment -%} MOXIE: sin saltos de línea entre spans a propósito — el whitespace del source se renderiza como espacio real a este tamaño de fuente y dejaba huecos donde las letras deberían colapsar {%- endcomment -%}
+      <span class="mox-anim-logo__word" aria-hidden="true"><span class="mox-anim-logo__letter" data-keep style="--i: 0;">A</span><span class="mox-anim-logo__letter" data-keep style="--i: 1;">M</span><span class="mox-anim-logo__letter" style="--i: 2;">E</span><span class="mox-anim-logo__letter" style="--i: 3;">R</span><span class="mox-anim-logo__letter" style="--i: 4;">I</span><span class="mox-anim-logo__letter" data-keep style="--i: 5;">C</span><span class="mox-anim-logo__letter" style="--i: 6;">A</span><span class="mox-anim-logo__letter" style="--i: 7;">N</span><span class="mox-anim-logo__letter" style="--i: 8;">I</span><span class="mox-anim-logo__letter" data-keep style="--i: 9;">N</span><span class="mox-anim-logo__letter" data-keep style="--i: 10;">O</span></span>
+      <span class="mox-anim-logo__registered" aria-hidden="true">&reg;</span>
+    </span>
+  {%- endif -%}
+
   {%- comment -%} MOXIE: Video logo — highest priority, overrides all image logos {%- endcomment -%}
   {%- if block.settings.logo_video != blank -%}
     {%- liquid
@@ -126,6 +149,11 @@
 </a>
 
 {% stylesheet %}
+.mox-anim-logo__word {
+  display: flex;
+  height: 100%;
+  max-height: 100%;
+}
   .header-logo {
     display: flex;
     height: 100%;
@@ -194,6 +222,97 @@
     display: none;
   }
 
+  /* MOXIE: Logo animado — máxima prioridad, oculta cualquier otro logo mientras esté activo */
+  .header-logo:has([data-animated-logo]) .header-logo__image-container--original,
+  .header-logo:has([data-animated-logo]) .header-logo__image-container--inverse,
+  .header-logo:has([data-animated-logo]) .header-logo__image-container--brand,
+  .header-logo:has([data-animated-logo]) .header-logo__image-container--video {
+    display: none;
+  }
+
+  .mox-anim-logo {
+    display: inline-flex;
+    align-items: baseline;
+    /* font-family: 'Montserrat', sans-serif; */
+    font-weight: 900;
+    letter-spacing: 0px;
+    color: #1a2744;
+    line-height: 0.75;
+    white-space: nowrap;
+    /* MOXIE: timing exacto del diseño original (0.6s ease-out) — el
+       --animation-speed del theme (0.125s) es para micro-interacciones y
+       hacía que la revelación se sintiera instantánea en vez de gradual. */
+    animation: mox-anim-logo-in 0.6s ease-out both;
+    /* MOXIE: mismas variables que .header-logo__image, así respeta el
+       "Alto desktop/Alto móvil" del bloque en vez de un tamaño fijo */
+    font-size: var(--header-logo-image-height-mobile, 24px);
+
+    @media screen and (min-width: 750px) {
+      font-size: 65px;
+    }
+  }
+
+  .mox-anim-logo__letter {
+    display: inline-block;
+    /* MOXIE: tope generoso (no recorta ninguna letra en su ancho natural)
+       para poder animar max-width de forma pareja — a diferencia de width,
+       max-width transiciona suave desde un número concreto; width no se
+       puede animar desde "auto" (el ancho natural de un inline-block sin
+       ancho fijo), así que colapsaba de golpe en vez de achicarse gradual. */
+    max-width: 2em;
+    /* MOXIE: 0.4s ease, igual que el original */
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      max-width 0.4s ease,
+      margin 0.4s ease;
+    /* MOXIE: efecto escalonado vía transition-delay en vez de un setTimeout
+       por letra — --i lo inyecta el Liquid de arriba, una sola vez, sin JS.
+       Mismo delay que el original (index * 50ms). */
+    transition-delay: calc(var(--i, 0) * 50ms);
+  }
+
+  /* MOXIE: [data-collapsed] lo agrega el javascript de abajo, una vez, tras
+     la pausa inicial — colapsa a "AMCNO" ocultando las letras sin [data-keep] */
+  .mox-anim-logo[data-collapsed] .mox-anim-logo__letter:not([data-keep]) {
+    opacity: 0;
+    transform: scaleX(0);
+    max-width: 0;
+    margin: 0;
+    overflow: hidden;
+    transition-delay: calc(var(--i, 0) * 50ms);
+  }
+
+  .mox-anim-logo__registered {
+    /* MOXIE: mismas proporciones que el original (20px/5px a font-size 80px),
+       en em para que escalen con el alto de logo configurado en el bloque */
+    font-size: 0.25em;
+    vertical-align: super;
+    margin-left: 0.0625em;
+    font-weight: 700;
+  }
+
+  @keyframes mox-anim-logo-in {
+    from {
+      opacity: 0;
+      translate: 0 20px;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mox-anim-logo {
+      animation: none;
+    }
+
+    .mox-anim-logo__letter {
+      transition: none;
+    }
+  }
+
   .header-logo__image--video {
     width: auto;
     height: var(--header-logo-image-height-mobile);
@@ -219,15 +338,40 @@
       });
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', playVideoLogos);
-    } else {
+    // MOXIE: colapsa el logo animado Americanino ("AMERICANINO®" → "AMCNO®")
+    // una sola vez por elemento — [data-anim-done] evita reprogramar el
+    // timer si el theme editor re-renderiza la sección/bloque. El stagger
+    // entre letras es puro CSS (transition-delay con --i), así que acá solo
+    // hace falta un timer por logo, no uno por letra.
+    function revealAnimatedLogos() {
+      document.querySelectorAll('[data-animated-logo]:not([data-anim-done])').forEach(function (logo) {
+        logo.setAttribute('data-anim-done', '');
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          logo.setAttribute('data-collapsed', '');
+          return;
+        }
+
+        setTimeout(function () {
+          logo.setAttribute('data-collapsed', '');
+        }, 2500);
+      });
+    }
+
+    function init() {
       playVideoLogos();
+      revealAnimatedLogos();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
     }
 
     // Re-trigger cuando el theme editor re-renderiza la sección o el bloque
-    document.addEventListener('shopify:section:load', playVideoLogos);
-    document.addEventListener('shopify:block:select', playVideoLogos);
+    document.addEventListener('shopify:section:load', init);
+    document.addEventListener('shopify:block:select', init);
   })();
 {% endjavascript %}
 
@@ -250,6 +394,20 @@
       "id": "hide_logo_on_home_page",
       "label": "t:settings.hide_logo_on_home_page",
       "info": "t:info.hide_logo_on_home_page_help"
+    },
+    {
+      "type": "header",
+      "content": "Logo animado Americanino"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reemplaza cualquier otro logo (imagen, marca o video) mientras esté activo. Anima \"AMERICANINO®\" colapsando a \"AMCNO®\" al cargar la página."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animated_logo",
+      "label": "Activar logo animado Americanino",
+      "default": false
     },
     {
       "type": "header",
