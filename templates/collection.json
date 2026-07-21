@@ -115,6 +115,22 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "custom_plp_seo_text_ytjRT7": {
+      "type": "custom_plp_seo_text",
+      "name": "Moxie PLP SEO Text",
+      "settings": {
+        "text_align": "center",
+        "collapse_enabled": true,
+        "collapse_height": 120,
+        "label_more": "Ver mas",
+        "label_less": "Ver menos",
+        "bg_color": "",
+        "border_color": "",
+        "padding_lateral_desktop": false,
+        "padding_lateral_mobile": true,
+        "padding_v": 8
+      }
     }
   },
   "order": [
@@ -122,6 +138,7 @@
     "custom_plp_breadcrumb_mY9bgW",
     "plp_hero",
     "plp_filtros",
-    "main"
+    "main",
+    "custom_plp_seo_text_ytjRT7"
   ]
 }
