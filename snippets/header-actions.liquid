@@ -631,9 +631,10 @@
   }
 
   .header__column--right header-actions {
-    margin-inline-start: calc(var(--gap-md) * -1);
+    /* margin-inline-start: calc(var(--gap-md) * -1); */
     display: flex;
     align-items: center;
+    gap: 5px;
   }
 
   .header-actions__cart-icon {
@@ -783,6 +784,12 @@
 
     .header__column--right .header-actions--text {
       margin-inline-start: 0;
+    }
+  }
+  
+  @media screen and (max-width: 990px) {
+    .custom-account-dropdown__trigger {
+      min-width: 0px;
     }
   }
 {% endstylesheet %}
