@@ -102,6 +102,22 @@
   justify-content: var(--seo-text-align, center);
   gap: 8px;
   width: 100%;
+
+  // MOXIE: variante PLP (custom_plp_seo_text.liquid) — los links vienen de un
+  // metacampo rich text (collection.metafields.seo.links) renderizado con
+  // metafield_tag, que envuelve cada link en uno o más niveles de bloques
+  // (div/p/h1-h6, según lo que haya escrito el merchant en el editor). TODO
+  // lo que no sea el propio <a> se aplana con display:contents —
+  // recursivamente, cualquiera sea la profundidad del anidamiento — para que
+  // los <a> queden como hijos directos del flex y no rompan la fila de pills
+  // ni el slider horizontal en mobile.
+  :not(a) {
+    display: contents;
+  }
+
+  a:not(.seo-tag) {
+    @extend .seo-tag;
+  }
 }
 
 .seo-tag {
@@ -114,6 +130,7 @@
   font-weight: 300;
   line-height: 16px;
   text-decoration: underline;
+  text-transform: none;
   text-underline-offset: 3px;
   color: #1E2B51;
   transition: border-color var(--animation-speed) var(--animation-easing),

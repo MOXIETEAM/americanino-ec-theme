@@ -1,0 +1,230 @@
+{%- comment -%}
+  MOXIE: PLP SEO Text — variante dinámica de "Moxie SEO Text" para páginas de
+  colección. A diferencia del original (bloques de contenido/tags cargados a
+  mano en el editor), acá todo sale de la colección:
+  - Título + contenido: collection.description
+  - Botones SEO: metacampo collection.metafields.seo.links (rich text) — el
+    merchant escribe los links ahí mismo (con <a href="...">Texto</a>), y acá
+    solo se renderiza y se le da estilo de pill vía CSS (ver _custom-seo-text.scss).
+{%- endcomment -%}
+
+{%- liquid
+  assign text_align       = section.settings.text_align       | default: 'center'
+  assign collapse_enabled = section.settings.collapse_enabled
+  assign collapse_height  = section.settings.collapse_height  | default: 120
+  assign padding_v        = section.settings.padding_v        | default: 40
+  assign seo_links        = collection.metafields.seo.links
+-%}
+
+<div
+  class="custom-seo-text custom-center-container"
+  id="plp-seo-text-{{ section.id }}"
+  style="
+    padding-block: {{ padding_v }}px;
+    --seo-text-align: {{ text_align }};
+    {%- if section.settings.bg_color != blank -%} background-color: {{ section.settings.bg_color }};{%- endif -%}
+    {%- if section.settings.border_color != blank -%}
+      border-top: 1px solid {{ section.settings.border_color }};
+    {%- endif -%}
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="custom-seo-text__inner page-width custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}">
+
+    {%- comment -%} ── Título + contenido (collection.description) ──────────── {%- endcomment -%}
+    {%- if collection.description != blank -%}
+      <div
+        class="custom-seo-text__body{% if collapse_enabled %} custom-seo-text__body--collapsible custom-seo-text__body--collapsed{% endif %}"
+        {%- if collapse_enabled -%}
+          style="--seo-collapse-height: {{ collapse_height }}px;"
+          data-collapsible
+        {%- endif -%}
+      >
+        <div class="seo-content-block">
+          <div class="seo-content-block__body rte">{{ collection.description }}</div>
+        </div>
+      </div>
+
+      {%- if collapse_enabled -%}
+        <div class="custom-seo-text__toggle-wrap" data-toggle-wrap>
+          <button class="custom-seo-text__toggle" data-toggle aria-expanded="false">
+            {%- assign _show_more = 'moxie.content.show_more' | t -%}
+            {%- assign _show_less = 'moxie.content.show_less' | t -%}
+            <span data-label-more>{{ section.settings.label_more | default: _show_more }}</span>
+            <span data-label-less hidden>{{ section.settings.label_less | default: _show_less }}</span>
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} ── Botones SEO (collection.metafields.seo.links) ─────────── {%- endcomment -%}
+    {%- if seo_links != blank -%}
+      <div class="custom-seo-text__tags">
+        {{- seo_links | metafield_tag -}}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<script>
+(function () {
+  var section = document.getElementById('plp-seo-text-{{ section.id }}');
+  if (!section) return;
+
+  var body       = section.querySelector('[data-collapsible]');
+  var toggleWrap = section.querySelector('[data-toggle-wrap]');
+  var toggle     = section.querySelector('[data-toggle]');
+  if (!body || !toggle) return;
+
+  var collapseH  = parseFloat(getComputedStyle(body).getPropertyValue('--seo-collapse-height')) || 120;
+
+  function checkOverflow() {
+    body.style.maxHeight = 'none';
+    var fullH = body.scrollHeight;
+    if (fullH <= collapseH) {
+      toggleWrap.style.display = 'none';
+      body.classList.remove('custom-seo-text__body--collapsed');
+    } else {
+      toggleWrap.style.display = '';
+      body.classList.add('custom-seo-text__body--collapsed');
+      body.style.maxHeight = '';
+    }
+  }
+
+  checkOverflow();
+
+  toggle.addEventListener('click', function () {
+    var isCollapsed = body.classList.contains('custom-seo-text__body--collapsed');
+    if (isCollapsed) {
+      body.classList.remove('custom-seo-text__body--collapsed');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.querySelector('[data-label-more]').hidden = true;
+      toggle.querySelector('[data-label-less]').hidden = false;
+    } else {
+      body.classList.add('custom-seo-text__body--collapsed');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.querySelector('[data-label-more]').hidden = false;
+      toggle.querySelector('[data-label-less]').hidden = true;
+    }
+  });
+
+  document.addEventListener('shopify:section:load', function (e) {
+    if (e.detail && e.detail.sectionId === '{{ section.id }}') checkOverflow();
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Moxie PLP SEO Text",
+  "tag": "section",
+  "class": "section-wrapper",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "paragraph",
+      "content": "El título y el texto salen de la descripción de la colección (Shopify admin → Colección → Descripción). Los botones inferiores salen del metacampo collection.metafields.seo.links."
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alineacion del texto",
+      "options": [
+        { "value": "left",   "label": "Izquierda" },
+        { "value": "center", "label": "Centro" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Colapso de contenido"
+    },
+    {
+      "type": "checkbox",
+      "id": "collapse_enabled",
+      "label": "Activar colapso (Ver mas / Ver menos)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "collapse_height",
+      "label": "Altura visible al colapsar (px)",
+      "min": 60,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "text",
+      "id": "label_more",
+      "label": "Texto del boton expandir",
+      "default": "Ver mas"
+    },
+    {
+      "type": "text",
+      "id": "label_less",
+      "label": "Texto del boton colapsar",
+      "default": "Ver menos"
+    },
+    {
+      "type": "header",
+      "content": "Apariencia"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Color de fondo"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Linea separadora superior"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_desktop",
+      "label": "Padding lateral — desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "padding_lateral_mobile",
+      "label": "Padding lateral — mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_v",
+      "label": "Relleno vertical",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Moxie PLP SEO Text",
+      "category": "Moxie",
+      "settings": {
+        "text_align": "center",
+        "collapse_enabled": true,
+        "collapse_height": 120
+      }
+    }
+  ]
+}
+{% endschema %}
