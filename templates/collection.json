@@ -36,48 +36,12 @@
     },
     "plp_hero": {
       "type": "custom_plp_hero",
-      "blocks": {
-        "card_camisetas": {
-          "type": "card",
-          "settings": {
-            "label": "Camisetas",
-            "link": ""
-          }
-        },
-        "card_buzos": {
-          "type": "card",
-          "settings": {
-            "label": "Buzos y Chaquetas",
-            "link": ""
-          }
-        },
-        "card_pijamas": {
-          "type": "card",
-          "settings": {
-            "label": "Pijamas",
-            "link": ""
-          }
-        },
-        "card_inferiores": {
-          "type": "card",
-          "settings": {
-            "label": "Inferiores",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "card_camisetas",
-        "card_buzos",
-        "card_pijamas",
-        "card_inferiores"
-      ],
       "settings": {
         "show_breadcrumb_desktop": false,
         "show_breadcrumb_mobile": false,
         "breadcrumb_brand": "Americanino",
         "title_override": "{{ collection.title }}",
-        "description_override": "<p>{{ collection.metafields.custom.seo_descripcionlarga_mic | metafield_tag }}</p>",
+        "description_override": "{{ collection.metafields.custom.seo_descripcionlarga_mic | metafield_tag }}",
         "card_ratio": "1 / 1",
         "slides_desktop": 4,
         "slides_mobile": 2,
