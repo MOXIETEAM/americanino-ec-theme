@@ -21,6 +21,23 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
+  // MOXIE: sin categorias (ni metacampo ni bloques manuales) no hay panel de
+  // slider — el panel de info pasa a ser la única columna y el texto se centra.
+  &--no-slider {
+    grid-template-columns: 1fr;
+
+    .custom-plp-hero__info {
+      border-inline-end: none;
+      padding-inline-end: 0;
+      align-items: center;
+      text-align: center;
+    }
+
+    .plp-hero__breadcrumb {
+      justify-content: center;
+    }
+  }
 }
 
 // ── Panel izquierdo ───────────────────────────────────────────────────────────

@@ -31,6 +31,15 @@
     assign has_meta_cards = true
   endif
 
+  comment
+    Sin categorias (ni metacampo ni bloques manuales) no hay slider — el panel
+    de info pasa a ocupar todo el ancho y el texto se centra.
+  endcomment
+  assign has_slider = false
+  if has_meta_cards or card_blocks.size > 0
+    assign has_slider = true
+  endif
+
   assign cat_nav_class = ''
   unless section.settings.show_arrows_desktop
     assign cat_nav_class = cat_nav_class | append: ' mox-hidden-desktop'
@@ -72,7 +81,6 @@
   })();
 </script>
 
-{%- if has_meta_cards -%}
 <div class="custom-center-container">
 <div
   class="custom-plp-hero custom-standar-max-width{% if section.settings.padding_lateral_desktop %} custom-padding-left-right-only-desktop{% endif %}{% if section.settings.padding_lateral_mobile %} custom-padding-left-right-only-tablet-mobile{% endif %}"
@@ -91,7 +99,7 @@
   "
   {{ section.shopify_attributes }}
 >
-  <div class="custom-plp-hero__inner page-width">
+  <div class="custom-plp-hero__inner page-width{% unless has_slider %} custom-plp-hero__inner--no-slider{% endunless %}">
 
     {%- comment -%} ── Panel izquierdo: info ─────────────────────────────────── {%- endcomment -%}
     <div class="custom-plp-hero__info">
@@ -117,7 +125,7 @@
     </div>
 
     {%- comment -%} ── Panel derecho: slider de subcategorias ────────────────── {%- endcomment -%}
-    {%- if has_meta_cards or card_blocks.size > 0 -%}
+    {%- if has_slider -%}
       <div class="custom-plp-hero__slider">
         <div class="cat-swiper-wrap">
           <div class="swiper cat-swiper" id="plp-swiper-{{ section.id }}">
@@ -229,7 +237,6 @@
 </div>
 {%- content_for 'blocks' -%}
 </div>
-{%- endif -%}
 
 <script>
 (function () {
