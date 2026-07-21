@@ -246,13 +246,20 @@ details.menu-open .header__icon--menu .header-drawer-icon--open {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--padding-lg);
+  padding: 14px !important;
 }
 
 .header__icon--summary .header-drawer-icon {
   margin: auto;
-  width: var(--icon-size-xs);
-  height: var(--icon-size-xs);
+  // width: var(--icon-size-xs);
+  // height: var(--icon-size-xs);
+  width: auto;
+  height: auto;
+
+  svg {
+    width: auto !important;
+    height: auto !important;
+  }
 }
 
 // ── Animación de entrada ──────────────────────────────────────────────────────
