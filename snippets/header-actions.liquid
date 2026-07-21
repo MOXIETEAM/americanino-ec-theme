@@ -35,7 +35,7 @@
       {% comment %} <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M13.6625 7.5V4.5C13.6625 2.29086 11.8716 0.5 9.66248 0.5C7.45334 0.5 5.66248 2.29086 5.66248 4.5V7.5M1.25448 8.85196L0.654482 15.252C0.483885 17.0717 0.398586 17.9815 0.700529 18.6843C0.965777 19.3016 1.4306 19.8121 2.0205 20.1338C2.692 20.5 3.60585 20.5 5.43353 20.5H13.8914C15.7191 20.5 16.633 20.5 17.3045 20.1338C17.8944 19.8121 18.3592 19.3016 18.6244 18.6843C18.9264 17.9815 18.8411 17.0717 18.6705 15.252L18.0705 8.85197C17.9264 7.31535 17.8544 6.54704 17.5088 5.96616C17.2045 5.45458 16.7548 5.04511 16.2171 4.78984C15.6065 4.5 14.8348 4.5 13.2914 4.5L6.03353 4.5C4.49017 4.5 3.71849 4.5 3.1079 4.78984C2.57014 5.04511 2.12049 5.45458 1.81614 5.96616C1.47057 6.54704 1.39854 7.31534 1.25448 8.85196Z" stroke="#1E2B51" stroke-linecap="round" stroke-linejoin="round"/>
       </svg> {% endcomment %}
-      <svg width="12" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <svg width="12" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M11.5242 6.35V3.95C11.5242 2.18269 10.0583 0.75 8.25 0.75C6.4417 0.75 4.97578 2.18269 4.97578 3.95V6.35M1.36759 7.43157L0.876452 12.5516C0.736809 14.0073 0.666987 14.7352 0.914144 15.2974C1.13126 15.7913 1.51175 16.1997 1.99461 16.457C2.54428 16.75 3.29231 16.75 4.78837 16.75H11.7116C13.2077 16.75 13.9557 16.75 14.5054 16.457C14.9883 16.1997 15.3687 15.7913 15.5859 15.2974C15.833 14.7352 15.7632 14.0073 15.6235 12.5516L15.1324 7.43157C15.0145 6.20228 14.9555 5.58763 14.6727 5.12293C14.4235 4.71367 14.0555 4.38609 13.6153 4.18188C13.1155 3.95 12.4838 3.95 11.2205 3.95L5.2795 3.95C4.01618 3.95 3.38451 3.95 2.88471 4.18187C2.44453 4.38609 2.07646 4.71367 1.82733 5.12293C1.54447 5.58763 1.48551 6.20228 1.36759 7.43157Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
@@ -637,10 +637,9 @@
   }
 
   .header-actions__cart-icon {
-    --cart-bubble-size: 20px;
-    --cart-bubble-top: 4.5px;
-    --cart-bubble-right: 2.5px;
-
+    --cart-bubble-size: 13px;
+    --cart-bubble-top: 7%;
+    --cart-bubble-right: 8%;
     position: relative;
   }
 
@@ -649,6 +648,7 @@
     width: var(--cart-bubble-size, 20px);
     top: var(--cart-bubble-top);
     right: var(--cart-bubble-right);
+    font-size: 8px;
   }
 
   @media screen and (min-width: 750px) {
@@ -692,7 +692,6 @@
 
   .cart-drawer__heading .cart-bubble__text {
     color: var(--color-foreground);
-    font-size: clamp(var(--font-size--3xs), 0.75em, var(--font-size--xs));
   }
 
   .cart-bubble.cart-bubble--animating .cart-bubble__background {
