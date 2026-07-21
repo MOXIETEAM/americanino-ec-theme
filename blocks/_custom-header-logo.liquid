@@ -153,6 +153,9 @@
   display: flex;
   height: 100%;
   max-height: 100%;
+  width: 100%;
+  /* border: 3px solid red; */
+  position: relative;
 }
   .header-logo {
     display: flex;
@@ -233,42 +236,27 @@
   .mox-anim-logo {
     display: inline-flex;
     align-items: baseline;
-    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 900;
     letter-spacing: 0px;
     color: #1a2744;
     line-height: 0.75;
     white-space: nowrap;
-    /* MOXIE: timing exacto del diseño original (0.6s ease-out) — el
-       --animation-speed del theme (0.125s) es para micro-interacciones y
-       hacía que la revelación se sintiera instantánea en vez de gradual. */
     animation: mox-anim-logo-in 0.6s ease-out both;
-    /* MOXIE: mismas variables que .header-logo__image, así respeta el
-       "Alto desktop/Alto móvil" del bloque en vez de un tamaño fijo */
-    font-size: var(--header-logo-image-height-mobile, 24px);
+    font-size: 45px;
 
-    @media screen and (min-width: 750px) {
-      font-size: 65px;
+    @media screen and (max-width: 1024px) {
+      font-size: 20px;
     }
   }
 
   .mox-anim-logo__letter {
     display: inline-block;
-    /* MOXIE: tope generoso (no recorta ninguna letra en su ancho natural)
-       para poder animar max-width de forma pareja — a diferencia de width,
-       max-width transiciona suave desde un número concreto; width no se
-       puede animar desde "auto" (el ancho natural de un inline-block sin
-       ancho fijo), así que colapsaba de golpe en vez de achicarse gradual. */
     max-width: 2em;
-    /* MOXIE: 0.4s ease, igual que el original */
     transition:
       opacity 0.4s ease,
       transform 0.4s ease,
       max-width 0.4s ease,
       margin 0.4s ease;
-    /* MOXIE: efecto escalonado vía transition-delay en vez de un setTimeout
-       por letra — --i lo inyecta el Liquid de arriba, una sola vez, sin JS.
-       Mismo delay que el original (index * 50ms). */
     transition-delay: calc(var(--i, 0) * 50ms);
   }
 
@@ -290,6 +278,9 @@
     vertical-align: super;
     margin-left: 0.0625em;
     font-weight: 700;
+    position: absolute;
+    top: 0;
+    right: -5px;
   }
 
   @keyframes mox-anim-logo-in {

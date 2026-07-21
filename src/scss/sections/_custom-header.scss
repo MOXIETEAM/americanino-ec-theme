@@ -76,6 +76,27 @@ custom-search-drawer {
   display: contents;
 }
 
+.header__column.header__column--left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 100%;
+  max-width: 250px;
+  // border: 10px solid yellow;
+
+  @media (max-width: 1024px) {
+    display: block
+  }
+}
+
+.header-logo__image-container--animated {
+  display: flex;
+  width: 100%;
+  // border: 1px solid red;
+  position: relative;
+}
+
 // ── Píldora con input real en el header ──────────────────────────────────────
 .mox-spill {
   max-width: 257px;
