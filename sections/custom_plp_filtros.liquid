@@ -83,6 +83,7 @@
             assign pill_url = filtro.url_del_filtro.value | default: '#'
             assign pill_label = filtro.etiqueta_del_filtro.value
           -%}
+          <h2>
           <a
             class="plp-filtro plp-filtro--{{ forma }}"
             href="{{ pill_url }}"
@@ -95,6 +96,7 @@
           >
             {{- pill_label -}}
           </a>
+        </h2>
         {%- endfor -%}
       </div>
     </div>
