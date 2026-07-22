@@ -5,11 +5,11 @@
 .custom-navbar {
   display: none;
 
-  @include tablet-up {
+  @media screen and (min-width: 1024px) {
     display: flex;
     align-items: center;
     height: 100%;
-  }
+  } 
 
   @include reduced-motion {
     transition: none;
