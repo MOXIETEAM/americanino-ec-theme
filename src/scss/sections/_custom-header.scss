@@ -472,7 +472,8 @@ custom-search-drawer[data-open] .mox-spill__input {
 // botón de menú suelto en la columna izquierda junto al logo, separado de
 // buscador/cuenta/bolsa en la derecha.
 #header-component.mox-custom-header-component[data-menu-style='drawer'] .header__columns {
-  grid-template-columns: 1fr auto auto var(--header-mobile-bookend);
+  // grid-template-columns: 1fr auto auto var(--header-mobile-bookend);
+  grid-template-columns: 30% auto auto var(--header-mobile-bookend);
   grid-template-areas: 'logo search actions menu';
   column-gap: 0;
   padding-inline: var(--padding-xs) 0;
