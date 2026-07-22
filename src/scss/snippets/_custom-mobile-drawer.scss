@@ -88,6 +88,7 @@ details[open] > .menu-drawer__submenu {
     rgba(255, 255, 255, 0.8) 2.72%,
     rgba(255, 255, 255, 0.15) 217.45%);
   backdrop-filter: blur(13px);
+  overflow-y: auto;
 }
 
 // MOXIE: los submenús (niveles 2 y 3) deben ser opacos — al ser position:absolute
