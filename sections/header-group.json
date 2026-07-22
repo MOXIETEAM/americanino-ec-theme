@@ -190,6 +190,7 @@
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false,
+            "mobile_enable_animated_logo": true,
             "mobile_logo_video": "shopify://files/videos/americanino-amcno.mp4",
             "mobile_util_1_url": "",
             "mobile_util_1_label": "Guardados",
