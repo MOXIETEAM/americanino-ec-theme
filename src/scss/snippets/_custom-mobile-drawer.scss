@@ -243,11 +243,17 @@ details.menu-open .header__icon--menu .header-drawer-icon--open {
 
 // ── Summary del menú drawer ───────────────────────────────────────────────────
 .menu-drawer-container .header__icon--summary {
-  color: var(--color-foreground);
+  color: #1E2B51;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 14px !important;
+}
+
+@media screen and (max-width: 1280px) {
+  .menu-drawer-container .header__icon--summary {
+    padding: 0px !important;
+  }
 }
 
 .header__icon--summary .header-drawer-icon {
