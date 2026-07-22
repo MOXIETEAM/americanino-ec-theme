@@ -1,16 +1,16 @@
 {% style %}
 .lookbook {
-  padding: 60px 20px;
+  padding: {{ section.settings.padding_top | default: 60 }}px 20px {{ section.settings.padding_bottom | default: 60 }}px;
 }
 
 .lookbook-header {
-  margin-bottom: 32px;
+  margin-bottom: {{ section.settings.header_gap | default: 32 }}px;
 }
 
 .lookbook-mox-header-title {
   h1, h2, h3, h4, h5, h6, p {
   font-weight: 500;
-  font-size: 32px;
+  font-size: {{ section.settings.title_size | default: 32 }}px;
   line-height: 100%;
   color: #1E2B51;
   text-transform: none;
@@ -39,7 +39,7 @@
 .lb-thumbs {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: {{ section.settings.slides_gap | default: 8 }}px;
   margin-top: 90px;
 }
 
@@ -67,6 +67,11 @@
   width: 100%;
   border-radius: 4px;
   display: block;
+  {% unless section.settings.banner_ratio == 'auto' %}
+  aspect-ratio: {{ section.settings.banner_ratio }};
+  object-fit: cover;
+  height: auto;
+  {% endunless %}
 }
 
 /* HOTSPOT */
@@ -479,7 +484,7 @@ text-transform: capitalize;
   assign inst = s.installments_text
 -%}
 
-<div class="custom-center-container">
+<div class="custom-center-container{% unless s.show_on_desktop %} mox-hidden-desktop{% endunless %}{% unless s.show_on_mobile %} mox-hidden-mobile{% endunless %}">
 <div class="lookbook custom-standar-max-width" {{ section.shopify_attributes }}>
 
   <!-- HEADER -->
@@ -837,16 +842,40 @@ document.addEventListener("DOMContentLoaded", () => {
   "name": "Lookbook Advanced PRO",
   "settings": [
     {
+      "type": "header",
+      "content": "Encabezado"
+    },
+    {
       "type": "text",
       "id": "title",
       "label": "Título",
       "default": "Best Sellers"
     },
     {
+      "type": "range",
+      "id": "title_size",
+      "label": "Tamaño del título",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
       "type": "text",
       "id": "subtitle",
       "label": "Subtítulo",
       "default": "Lorem ipsum es simplemente texto"
+    },
+    {
+      "type": "range",
+      "id": "header_gap",
+      "label": "Espacio entre encabezado y banners",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 32
     },
     {
       "type": "text",
@@ -866,6 +895,73 @@ document.addEventListener("DOMContentLoaded", () => {
       "label": "Texto de cuotas",
       "default": "<p>0% de interés hasta 3 cuotas ver bancos</p>",
       "info": "Se muestra bajo la imagen del producto. Deja vacío para ocultar."
+    },
+    {
+      "type": "header",
+      "content": "Banners"
+    },
+    {
+      "type": "range",
+      "id": "slides_gap",
+      "label": "Espacio entre slides (miniaturas)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "banner_ratio",
+      "label": "Tamaño de banner (proporción)",
+      "options": [
+        { "value": "auto", "label": "Automático (tamaño original)" },
+        { "value": "1/1", "label": "Cuadrado (1:1)" },
+        { "value": "4/5", "label": "Retrato (4:5)" },
+        { "value": "3/4", "label": "Retrato (3:4)" },
+        { "value": "16/9", "label": "Paisaje (16:9)" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "header",
+      "content": "Visibilidad"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Mostrar en desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Mostrar en móvil",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding superior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding inferior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
     }
   ],
   "blocks": [
