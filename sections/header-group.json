@@ -161,6 +161,7 @@
           "static": true,
           "settings": {
             "hide_logo_on_home_page": false,
+            "enable_animated_logo": false,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "logo_height_override": 100,
