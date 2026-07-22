@@ -132,9 +132,11 @@
     min-height: var(--header-drawer-min-height);
   }
 
-  @media screen and (min-width: 750px) {
+  /* MOXIE: breakpoint mobile↔desktop del header movido de 750px a 1024px */
+  @media screen and (min-width: 1024px) {
     #header-component[data-menu-style='menu'] .header__drawer {
       display: none;
+      border: 10px solid red !important;
       min-height: 0;
     }
   }

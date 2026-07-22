@@ -1,4 +1,4 @@
-
+{% comment %} 
 {%- doc -%}
   Renders a header menu block.
 
@@ -199,9 +199,10 @@
     min-height: var(--header-drawer-min-height);
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 1024px) {
     #header-component[data-menu-style='menu'] .header__drawer {
       display: none;
+      border: 10px solid red !important;
       min-height: 0;
     }
   }
@@ -909,5 +910,11 @@
       "default": false
     }
   ]
+}
+{% endschema %} {% endcomment %}
+
+{% schema %}
+{
+ "name": "t:names.menu"
 }
 {% endschema %}
