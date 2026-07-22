@@ -1239,7 +1239,7 @@ custom-search-drawer {
 }
 @media (max-width: 1024px) {
   .header__column.header__column--left {
-    display: block;
+    display: contents;
   }
 }
 
