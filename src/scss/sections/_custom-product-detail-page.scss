@@ -1,3 +1,46 @@
+// MOXIE: barra sticky de "Añadir al carrito"
+@media screen and (min-width: 700px) and (max-width: 989px) {
+  .sticky-add-to-cart__bar {
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    border-radius: 0;
+
+    &::before {
+      --border: 1px;
+    }
+  }
+
+  // .sticky-add-to-cart__bar .add-to-cart-text__content {
+  //   display: none;
+  // }
+
+  .sticky-add-to-cart__info[data-has-image='false'] {
+    padding-left: 0;
+  }
+
+  .sticky-add-to-cart__title {
+    font-size: var(--font-paragraph--size);
+  }
+
+  .sticky-add-to-cart__button {
+    padding: var(--padding-lg);
+    width: var(--height-buy-buttons);
+  }
+
+  .sticky-add-to-cart__price {
+    font-size: var(--font-paragraph-small--size);
+  }
+
+  sticky-add-to-cart:not([data-variant-available='true']) .add-to-cart-text__content {
+    display: initial;
+  }
+
+  sticky-add-to-cart:not([data-variant-available='true']) .sticky-add-to-cart__button {
+    width: auto;
+  }
+}
+
 .product-information {
   // ── Título del producto — máx. 2 líneas con puntos suspensivos ────────────
   .product-details h1 {

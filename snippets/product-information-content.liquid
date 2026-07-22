@@ -113,6 +113,13 @@
 </div>
 
 {% stylesheet %}
+
+    .product-information__grid:not(
+        .product-information__grid--half,
+        .product-information--media-none
+      ).product-information--media-left {
+      max-width: 100%;
+    }
   .product-information {
     gap: var(--gap) 0;
   }
