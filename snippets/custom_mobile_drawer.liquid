@@ -26,7 +26,25 @@
       <a href="{{ routes.root_url }}" class="custom-mobile-drawer__logo-link" aria-label="{{ alt_text }}">
   
         {%- comment -%} Logo del drawer: custom si está configurado, sino el logo general {%- endcomment -%}
-        {%- if block_settings.mobile_logo_video != blank -%}
+        {%- if block_settings.mobile_enable_animated_logo -%}
+          {%- comment -%}
+            MOXIE: Logo animado Americanino en el drawer móvil — máxima prioridad,
+            reemplaza video/imagen mientras esté activo. Reutiliza las clases
+            mox-anim-logo del bloque _custom-header-logo (mismo CSS/JS globales,
+            ese bloque siempre está presente en el header-group).
+          {%- endcomment -%}
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+          <span
+            class="mox-anim-logo custom-mobile-drawer__logo-animated"
+            data-animated-logo
+            aria-label="{{ alt_text }}"
+          >
+            <span class="mox-anim-logo__word" aria-hidden="true"><span class="mox-anim-logo__letter" data-keep style="--i: 0;">A</span><span class="mox-anim-logo__letter" data-keep style="--i: 1;">M</span><span class="mox-anim-logo__letter" style="--i: 2;">E</span><span class="mox-anim-logo__letter" style="--i: 3;">R</span><span class="mox-anim-logo__letter" style="--i: 4;">I</span><span class="mox-anim-logo__letter" data-keep style="--i: 5;">C</span><span class="mox-anim-logo__letter" style="--i: 6;">A</span><span class="mox-anim-logo__letter" style="--i: 7;">N</span><span class="mox-anim-logo__letter" style="--i: 8;">I</span><span class="mox-anim-logo__letter" data-keep style="--i: 9;">N</span><span class="mox-anim-logo__letter" data-keep style="--i: 10;">O</span></span>
+            <span class="mox-anim-logo__registered" aria-hidden="true">&reg;</span>
+          </span>
+        {%- elsif block_settings.mobile_logo_video != blank -%}
           {%- liquid assign logo_v_w = logo_h | times: block_settings.mobile_logo_video.aspect_ratio | ceil -%}
           <video
             class="custom-mobile-drawer__logo-video"

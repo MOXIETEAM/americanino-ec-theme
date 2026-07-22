@@ -850,9 +850,17 @@
       "content": "Logo que aparece dentro del menú móvil al abrirlo. Si no se configura, se usa el logo general de la tienda."
     },
     {
+      "type": "checkbox",
+      "id": "mobile_enable_animated_logo",
+      "label": "Activar logo animado Americanino (drawer móvil)",
+      "info": "Tiene prioridad sobre el logo en video y la imagen. Anima \"AMERICANINO®\" colapsando a \"AMCNO®\" al abrir el drawer.",
+      "default": false
+    },
+    {
       "type": "video",
       "id": "mobile_logo_video",
-      "label": "Logo — video (drawer móvil)"
+      "label": "Logo — video (drawer móvil)",
+      "visible_if": "{{ block.settings.mobile_enable_animated_logo == false }}"
     },
     {
       "type": "header",
