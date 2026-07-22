@@ -667,9 +667,28 @@ document.addEventListener("DOMContentLoaded", () => {
   drawer.className = 'lb-mobile-drawer';
   document.body.appendChild(drawer);
 
+  // MOXIE: bloquea el scroll del body mientras el drawer mobile está abierto
+  let lockedScrollY = 0;
+
+  function lockBodyScroll() {
+    lockedScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.width = '100%';
+  }
+
+  function unlockBodyScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo({ top: lockedScrollY, behavior: 'instant' });
+  }
+
   function closeDrawer() {
+    const wasOpen = drawer.classList.contains('lb-mobile-drawer--open');
     overlay.classList.remove('lb-mobile-overlay--visible');
     drawer.classList.remove('lb-mobile-drawer--open');
+    if (wasOpen) unlockBodyScroll();
   }
 
   overlay.addEventListener('click', closeDrawer);
@@ -744,6 +763,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     drawer.querySelector('.lb-md-add-btn')
       ?.addEventListener('click', handleAddToCart);
+
+    lockBodyScroll();
 
     void overlay.offsetWidth;
     overlay.classList.add('lb-mobile-overlay--visible');
