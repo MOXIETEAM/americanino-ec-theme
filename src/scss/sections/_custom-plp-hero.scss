@@ -17,7 +17,8 @@
   align-items: center;
   gap: 0 24px;
 
-  @include mobile-only {
+  // MOXIE: breakpoint mobile↔desktop del PLP Hero en 990px (no 750px del tema base)
+  @media screen and (max-width: 989px) {
     grid-template-columns: 1fr;
     gap: 20px;
   }
@@ -50,7 +51,8 @@
   flex-direction: column;
   justify-content: center;
 
-  @include mobile-only {
+  // MOXIE: breakpoint mobile↔desktop del PLP Hero en 990px (no 750px del tema base)
+  @media screen and (max-width: 989px) {
     padding-inline-end: 0;
     border-inline-end: none;
     border-block-end: 1px solid var(--plp-col-sep-color, #e0e0e0);
@@ -128,7 +130,8 @@
   // ancho = espacio disponible ÷ slides visibles
   width: calc(100% / var(--spv-mobile, 2));
 
-  @include tablet-up {
+  // MOXIE: breakpoint mobile↔desktop del PLP Hero en 990px (no 750px del tema base)
+  @media screen and (min-width: 990px) {
     width: calc(100% / var(--spv-desktop, 4));
   }
 }

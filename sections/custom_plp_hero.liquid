@@ -245,7 +245,6 @@
 
   var spvDesktop = parseFloat(sectionEl.dataset.slidesDesktop) || 4;
   var spvMobile  = parseFloat(sectionEl.dataset.slidesMobile)  || 2;
-  var spvTablet  = Math.round((spvDesktop + spvMobile) / 2);
   var swiperEl   = sectionEl.querySelector('.cat-swiper');
   var swiper;
 
@@ -262,8 +261,9 @@
         prevEl: sectionEl.querySelector('.cat-nav--prev'),
         nextEl: sectionEl.querySelector('.cat-nav--next')
       },
+      // MOXIE: breakpoint mobile↔desktop del PLP Hero en 990px (antes 750/990 con
+      // un tercer nivel "tablet" intermedio; ahora es binario: mobile <990, desktop ≥990)
       breakpoints: {
-        750: { slidesPerView: spvTablet, spaceBetween: 14 },
         990: { slidesPerView: spvDesktop, spaceBetween: 18 }
       }
     });
