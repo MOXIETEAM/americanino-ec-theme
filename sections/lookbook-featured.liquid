@@ -239,7 +239,8 @@ text-transform: capitalize;
 }
 
 /* MOBILE */
-@media(max-width: 900px){
+/* MOXIE: breakpoint mobile↔desktop en 990px (no 900px) */
+@media(max-width: 990px){
   .lookbook-grid {
     grid-template-columns: 1fr;
     padding: 0 !important;
@@ -255,6 +256,26 @@ text-transform: capitalize;
     max-width: 92px;
     aspect-ratio: 92 / 114;
     flex-shrink: 0;
+  }
+
+    .lookbook {
+    padding: 30px 20px;
+  }
+
+  .lookbook-header {
+    margin-bottom: 10px;
+  }
+
+  .lookbook-grid {
+    gap: 20px;
+  }
+
+  .lb-thumbs {
+    margin-top: 0;
+  }
+
+  .lb-info {
+    display: none;
   }
 }
 
@@ -455,7 +476,8 @@ text-transform: capitalize;
 }
 
 
-@media (max-width: 900px) {
+/* MOXIE: breakpoint mobile↔desktop en 990px (no 900px)
+@media (max-width: 989px) {
   .lookbook {
     padding: 30px 20px;
   }
@@ -475,7 +497,7 @@ text-transform: capitalize;
   .lb-info {
     display: none;
   }
-}
+} */
 
 {% endstyle %}
 
@@ -796,7 +818,7 @@ document.addEventListener("DOMContentLoaded", () => {
         mainWrap.querySelectorAll(".lb-hotspot").forEach(h => h.classList.remove("active"));
         el.classList.add("active");
 
-        if (window.matchMedia('(max-width: 900px)').matches) {
+        if (window.matchMedia('(max-width: 989px)').matches) {
           openMobileDrawer(pin.mobileHtml);
         } else {
           productBox.innerHTML = pin.html;
@@ -810,7 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Auto-activate default: show product card on desktop, not on mobile
     if (defaultEl) {
       defaultEl.classList.add("active");
-      if (!window.matchMedia('(max-width: 900px)').matches) {
+      if (!window.matchMedia('(max-width: 989px)').matches) {
         productBox.innerHTML = defaultPin.html;
       }
     }
