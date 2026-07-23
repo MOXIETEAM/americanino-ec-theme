@@ -31,7 +31,8 @@
 
 {% stylesheet %}
   /* Clear padding on mobile, if not full-width */
-  @media screen and (max-width: 749px) {
+  /* MOXIE: breakpoint mobile↔desktop de la PDP movido de 749px a 989px */
+  @media screen and (max-width: 989px) {
     .product-information.section--page-width .product-details > .group-block {
       padding-inline: 0;
     }
@@ -48,7 +49,8 @@
     justify-content: center;
   }
 
-  @media screen and (min-width: 750px) {
+  /* MOXIE: breakpoint mobile↔desktop de la PDP movido de 750px a 990px */
+  @media screen and (min-width: 990px) {
     .product-details > .group-block {
       height: min-content;
     }

@@ -207,7 +207,7 @@
       }
 
       /* Desktop constraint wrapper sizing */
-      @media screen and (min-width: 750px) {
+      @media screen and (min-width: 990px) {
         .product-media-constraint-wrapper {
           width: min(100%, calc(var(--constrained-height) * {{ block_settings.aspect_ratio }}));
         }
@@ -549,7 +549,7 @@
                       | image_url: width: 1024
                       | image_tag:
                         loading: 'lazy',
-                        sizes: 'auto, 110, (min-width: 750px) 160',
+                        sizes: 'auto, 110, (min-width: 990px) 160',
                         widths: '240, 352, 832, 1200',
                         alt: media.alt,
                         style: focal_point_style
@@ -643,6 +643,9 @@
 {% render 'product-media-gallery-content-styles' %}
 
 {% stylesheet %}
+  /* MOXIE: todos los breakpoints mobile↔desktop de este archivo se movieron
+     de 750/749px a 990/989px para que la PDP coincida con el nuevo breakpoint
+     mobile del sitio. */
   .dialog-thumbnails-list-container {
     position: fixed;
     width: 100%;
@@ -672,7 +675,7 @@
     animation: thumbnailsSlideOutBottom var(--animation-speed) var(--animation-easing) forwards;
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 990px) {
     .dialog-thumbnails-list {
       position: fixed;
       flex-direction: column;
@@ -746,7 +749,7 @@
     right: var(--padding-lg);
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 990px) {
     .dialog-zoomed-gallery .shopify-model-viewer-ui__controls-area.shopify-model-viewer-ui__controls-area {
       /* Move the controls up to match the padding on the thumbnails */
       bottom: var(--padding-lg);
@@ -756,7 +759,7 @@
     }
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 989px) {
     /* Media gallery has a peeking slide on the right side always, and on the left side when the current slide is the last one */
     .media-gallery--hint
       :is(
@@ -784,7 +787,7 @@
     opacity: 0;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 989px) {
     .dialog-zoomed-gallery {
       /* Prevent scroll wheel or swipe scrolling */
       overscroll-behavior: none;
@@ -873,7 +876,7 @@
   }
 
   /* Mobile thumbnails styling */
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 989px) {
     .media-gallery__mobile-controls[thumbnails] {
       --thumbnail-width: 44px;
     }
@@ -917,7 +920,7 @@
     animation-timing-function: step-end;
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 990px) {
     :root:active-view-transition .product-media__image {
       background-color: transparent;
     }
@@ -940,7 +943,7 @@
     animation-duration: var(--spring-d220-b0-duration);
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 989px) {
     ::view-transition-group(gallery-item-open),
     ::view-transition-group(gallery-item-close) {
       animation-timing-function: step-start;
@@ -975,19 +978,19 @@
    * Product media gallery slideshow context styles
    */
   .product-media-gallery__slideshow--single-media slideshow-container {
-    @media screen and (max-width: 749px) {
+    @media screen and (max-width: 989px) {
       grid-area: unset;
     }
   }
 
   /* Display grid view as a carousel on mobile, grid on desktop */
   media-gallery:is(.media-gallery--grid) slideshow-component {
-    @media screen and (min-width: 750px) {
+    @media screen and (min-width: 990px) {
       display: none;
     }
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 989px) {
     /* Media gallery has a peeking slide on the right side always, and on the left side when the current slide is the last one */
     .media-gallery--hint
       :is(
@@ -1002,7 +1005,7 @@
     }
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 990px) {
     .media-gallery--carousel slideshow-component:has(slideshow-controls[thumbnails]) {
       &:has(slideshow-controls[pagination-position='right']) {
         display: grid;
@@ -1031,7 +1034,7 @@
     opacity: 1;
   }
 
-  @media screen and (max-width: 749px) {
+  @media screen and (max-width: 989px) {
     slideshow-component:has(:not(.mobile\:hidden) :is(.slideshow-controls__dots, .slideshow-controls__counter))
       .shopify-model-viewer-ui__controls-area {
       /* Position the controls just above the counter */
@@ -1039,7 +1042,7 @@
     }
   }
 
-  @media screen and (min-width: 750px) {
+  @media screen and (min-width: 990px) {
     slideshow-component:has(:not(.desktop\:hidden) :is(.slideshow-controls__dots, .slideshow-controls__counter))
       .shopify-model-viewer-ui__controls-area {
       /* Position the controls just above the counter */
